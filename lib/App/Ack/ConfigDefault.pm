@@ -70,6 +70,9 @@ sub _options_block {
 # https://www.mercurial-scm.org/
 --ignore-directory=is:.hg
 
+# openSUSE Commander
+--ignore-directory=is:.osc
+
 # Quilt
 # https://directory.fsf.org/wiki/Quilt
 --ignore-directory=is:.pc
