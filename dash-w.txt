@@ -1,8 +1,8 @@
-# Sample file
-
+# BEGIN comment here
+#
 # ACK
 # arguments to ack
-
+#
 # YESLINES
 # Lines that should match with underlines shown
 #                              ^^^^^^^^^^
@@ -11,6 +11,8 @@
 #
 # NO
 # Lines that should not match.
+#
+# END
 #
 # Blank lines are always ignored.
 
@@ -41,7 +43,7 @@ END
 
 BEGIN -w and optional character
 ACK
--w foot?
+-w 'foot?'
 
 YES
 foo
@@ -68,7 +70,7 @@ END
 
 BEGIN -w and optional group
 ACK
--w foo(bar)?
+-w 'foo(bar)?'
 
 YES
 foo
@@ -98,8 +100,8 @@ END
 
 BEGIN -w and alternation
 ACK
--w foo|bar
--w (foo|bar)
+-w 'foo|bar'
+-w '(foo|bar)'
 
 YES
 foo
@@ -118,18 +120,18 @@ END
 
 BEGIN -w and a function definition
 ACK
--w (set|get)_user_(name|perm)
+ack -w '(set|get)_user_(name|perm)'
 
- YES
- set_user_name
- get_user_perm
+YES
+set_user_name
+et_user_perm
 
- YESLINES
- my $foo = set_user_name( $bar );
-           ^^^^^^^^^^^^^
+YESLINES
+my $foo = set_user_name( $bar );
+          ^^^^^^^^^^^^^
 
- NO
- reset_user_name
- get_user_permission
+NO
+reset_user_name
+get_user_permission
 
- END
+END
