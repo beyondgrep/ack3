@@ -1,0 +1,46 @@
+# Sample file
+
+# ACK
+# arguments to ack
+
+# YES
+# lines that should match with underlines shown
+#                              ^^^^^^^^^^
+#
+# NO
+# Lines that should
+# not match.
+#
+# Blank lines are always ignored.
+
+
+
+ACK
+-w foo
+
+YES
+foo
+^^^
+
+I pity da foo'.
+          ^^^
+
+NO
+foot
+underfoot
+
+
+ACK
+-w foo(bar?)
+
+YES
+foobar
+^^^^^^
+
+Now everything's all foobar.
+                     ^^^^^^
+
+NO
+foobarf
+foo-bar
+foo-bart
