@@ -114,3 +114,22 @@ barometric
 subarometric
 
 END
+
+
+BEGIN -w and a function definition
+ACK
+-w (set|get)_user_(name|perm)
+
+ YES
+ set_user_name
+ get_user_perm
+
+ YESLINES
+ my $foo = set_user_name( $bar );
+           ^^^^^^^^^^^^^
+
+ NO
+ reset_user_name
+ get_user_permission
+
+ END
