@@ -11,3 +11,5 @@
 * Add feature to group consecutive lines: the clumping feature
 
 * Add flag to force line number on output.
+
+* `--output` will be redone to be safe.
