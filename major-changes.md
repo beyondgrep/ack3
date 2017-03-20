@@ -17,3 +17,7 @@
 * -I for --no-smart-case
 
 * --auto-spacing that replaces any whitespace in the pattern with \w+, so "insert into table" becomes "insert\s+into\s+table".
+
+* Add flag to force line number on output.
+
+* `--output` will be redone to be safe.
