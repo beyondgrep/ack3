@@ -39,3 +39,7 @@
 * Move docs into a new module App::Ack::Docs, to make it easier to work on the docs.
 
 * Update DEVELOPERS.md
+
+* Maybe even make a --faq and App::Ack::FAQ.
+
+* Add the barfly stuff from ack2.
