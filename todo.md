@@ -41,3 +41,7 @@
 * Remove the docs about differences from ack 1.
 
 * Move docs into a new module App::Ack::Docs, to make it easier to work on the docs.
+
+* Maybe even make a --faq and App::Ack::FAQ.
+
+* Add the barfly stuff from ack2.
