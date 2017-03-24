@@ -4,11 +4,13 @@
 
 # Tasks for start of ack3 codebase.
 
+* Copy over 2.18 and tag it.
+
+* Put the modules in the tree properly, but add symlinks in the repo.
+
 # Tasks for `2.999_01`
 
 * Remove all XXXes
-
-* Get rid of the underscore methods that shouldn't be underscored.
 
 * Design --ignore-file
 
@@ -18,13 +20,9 @@
 
 * Stop using eval for output.
 
-* Put the modules in the tree properly, but add symlinks in the repo.
-
 * Rename ::Resource to ::File.
 
 * Rename ::Resources to ::FileFactory.
-
-* Verify underscoreness of each method/function.
 
 * Remove the -a warning.
 
