@@ -6,25 +6,25 @@ README.md
 Makefile.PL
 
 ack
-Ack.pm
-Collection.pm
-ConfigDefault.pm
-ConfigFinder.pm
-ConfigLoader.pm
-Default.pm
-Extension.pm
-ExtensionGroup.pm
-Filter.pm
-FirstLineMatch.pm
-Inverse.pm
-Is.pm
-IsGroup.pm
-IsPath.pm
-IsPathGroup.pm
-Match.pm
-MatchGroup.pm
-Resource.pm
-Resources.pm
+lib/App/Ack.pm
+lib/App/Ack/ConfigDefault.pm
+lib/App/Ack/ConfigFinder.pm
+lib/App/Ack/ConfigLoader.pm
+lib/App/Ack/Filter.pm
+lib/App/Ack/Resource.pm
+lib/App/Ack/Resources.pm
+lib/App/Ack/Filter/Collection.pm
+lib/App/Ack/Filter/Default.pm
+lib/App/Ack/Filter/Extension.pm
+lib/App/Ack/Filter/ExtensionGroup.pm
+lib/App/Ack/Filter/FirstLineMatch.pm
+lib/App/Ack/Filter/Inverse.pm
+lib/App/Ack/Filter/Is.pm
+lib/App/Ack/Filter/IsGroup.pm
+lib/App/Ack/Filter/IsPath.pm
+lib/App/Ack/Filter/IsPathGroup.pm
+lib/App/Ack/Filter/Match.pm
+lib/App/Ack/Filter/MatchGroup.pm
 
 record-options
 squash
@@ -120,27 +120,6 @@ t/etc/shebang.pl.xxx
 t/etc/shebang.py.xxx
 t/etc/shebang.rb.xxx
 t/etc/shebang.sh.xxx
-
-t/lib/00-coverage.t
-t/lib/Ack.t
-t/lib/Collection.t
-t/lib/ConfigDefault.t
-t/lib/ConfigFinder.t
-t/lib/ConfigLoader.t
-t/lib/Default.t
-t/lib/Extension.t
-t/lib/ExtensionGroup.t
-t/lib/Filter.t
-t/lib/FirstLineMatch.t
-t/lib/Inverse.t
-t/lib/Is.t
-t/lib/IsGroup.t
-t/lib/IsPath.t
-t/lib/IsPathGroup.t
-t/lib/Match.t
-t/lib/MatchGroup.t
-t/lib/Resource.t
-t/lib/Resources.t
 
 t/home/.ackrc
 t/swamp/#emacs-workfile.pl#
@@ -238,3 +217,4 @@ t/text/shut-up-be-happy.txt
 
 xt/man.t
 xt/pod.t
+

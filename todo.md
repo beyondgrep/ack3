@@ -1,14 +1,6 @@
-# Tasks for 2.18
-
-* All modules must have proper POD.
-
-# Tasks for start of ack3 codebase.
-
-* Copy over 2.18 and tag it.
-
-* Put the modules in the tree properly, but add symlinks in the repo.
-
 # Tasks for `2.999_01`
+
+* Make a test file to test all the libs to replace t/lib/
 
 * Remove all XXXes
 

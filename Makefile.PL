@@ -12,29 +12,8 @@ my %parms = (
     NAME                => 'ack',
     AUTHOR              => 'Andy Lester <andy@petdance.com>',
     ABSTRACT            => 'A grep-like program for searching source code',
-    VERSION_FROM        => 'Ack.pm',
+    VERSION_FROM        => 'lib/App/Ack.pm',
 
-    PM                  => {
-        'Ack.pm'            => '$(INST_LIBDIR)/App/Ack.pm',
-        'Resource.pm'       => '$(INST_LIBDIR)/App/Ack/Resource.pm',
-        'Resources.pm'      => '$(INST_LIBDIR)/App/Ack/Resources.pm',
-        'ConfigDefault.pm'  => '$(INST_LIBDIR)/App/Ack/ConfigDefault.pm',
-        'ConfigFinder.pm'   => '$(INST_LIBDIR)/App/Ack/ConfigFinder.pm',
-        'ConfigLoader.pm'   => '$(INST_LIBDIR)/App/Ack/ConfigLoader.pm',
-        'Filter.pm'         => '$(INST_LIBDIR)/App/Ack/Filter.pm',
-        'Extension.pm'      => '$(INST_LIBDIR)/App/Ack/Filter/Extension.pm',
-        'FirstLineMatch.pm' => '$(INST_LIBDIR)/App/Ack/Filter/FirstLineMatch.pm',
-        'Is.pm'             => '$(INST_LIBDIR)/App/Ack/Filter/Is.pm',
-        'Match.pm'          => '$(INST_LIBDIR)/App/Ack/Filter/Match.pm',
-        'Default.pm'        => '$(INST_LIBDIR)/App/Ack/Filter/Default.pm',
-        'Inverse.pm'        => '$(INST_LIBDIR)/App/Ack/Filter/Inverse.pm',
-        'Collection.pm'     => '$(INST_LIBDIR)/App/Ack/Filter/Collection.pm',
-        'IsGroup.pm'        => '$(INST_LIBDIR)/App/Ack/Filter/IsGroup.pm',
-        'ExtensionGroup.pm' => '$(INST_LIBDIR)/App/Ack/Filter/ExtensionGroup.pm',
-        'MatchGroup.pm'     => '$(INST_LIBDIR)/App/Ack/Filter/MatchGroup.pm',
-        'IsPath.pm'         => '$(INST_LIBDIR)/App/Ack/Filter/IsPath.pm',
-        'IsPathGroup.pm'    => '$(INST_LIBDIR)/App/Ack/Filter/IsPathGroup.pm',
-    },
     EXE_FILES               => [ 'ack' ],
 
     PREREQ_PM => {
@@ -91,10 +70,27 @@ sub MY::postamble {
     my $postamble = sprintf(<<'MAKE_FRAG', $debug_mode);
 ACK    = ack
 ALL_PM = \
-    Ack.pm \
-    Resource.pm Resources.pm \
-    ConfigDefault.pm ConfigFinder.pm ConfigLoader.pm \
-    Filter.pm Extension.pm FirstLineMatch.pm Is.pm Match.pm Default.pm Inverse.pm Collection.pm IsGroup.pm ExtensionGroup.pm MatchGroup.pm IsPath.pm IsPathGroup.pm
+    lib/App/Ack.pm \
+    \
+    lib/App/Ack/Resource.pm \
+    lib/App/Ack/Resources.pm \
+    lib/App/Ack/ConfigDefault.pm \
+    lib/App/Ack/ConfigFinder.pm \
+    lib/App/Ack/ConfigLoader.pm \
+    lib/App/Ack/Filter.pm \
+    \
+    lib/App/Ack/Filter/Collection.pm \
+    lib/App/Ack/Filter/Default.pm \
+    lib/App/Ack/Filter/Extension.pm \
+    lib/App/Ack/Filter/ExtensionGroup.pm \
+    lib/App/Ack/Filter/FirstLineMatch.pm \
+    lib/App/Ack/Filter/Inverse.pm \
+    lib/App/Ack/Filter/Is.pm \
+    lib/App/Ack/Filter/IsGroup.pm \
+    lib/App/Ack/Filter/IsPath.pm \
+    lib/App/Ack/Filter/IsPathGroup.pm \
+    lib/App/Ack/Filter/Match.pm \
+    lib/App/Ack/Filter/MatchGroup.pm \
 
 TEST_VERBOSE=0
 TEST_FILES=t/*.t t/lib/*.t
