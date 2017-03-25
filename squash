@@ -1,0 +1,93 @@
+#!perl
+
+=pod
+
+Squashes together the parts of ack into the single ack-standalone
+file.
+
+The arguments to squash are either filenames from the ack distro
+like Ack.pm, or module names like File::Next.  For modules, squash
+loads them and then pushes them into ack-standalone.
+
+=cut
+
+use warnings;
+use strict;
+
+use File::Next;
+
+# Make clear that ack is not supposed to be edited.
+my $NO_EDIT_COMMENT = <<'EOCOMMENT';
+#
+# This file, ack, is generated code.
+# Please DO NOT EDIT or send patches for it.
+#
+# Please take a look at the source from
+# https://github.com/petdance/ack2
+# and submit patches against the individual files
+# that build ack.
+#
+EOCOMMENT
+
+my $debug_mode = grep { $_ eq '--debug' } @ARGV;
+@ARGV          = grep { $_ ne '--debug' } @ARGV;
+
+my $code = "#!/usr/bin/env perl\n$NO_EDIT_COMMENT\n";
+for my $arg ( @ARGV ) {
+    my $filename = $arg;
+    if ( $arg =~ /::/ ) {
+        my $key = "$arg.pm";
+        $key =~ s{::}{/}g;
+        $filename = $INC{$key} or die "Can't find the file for $arg";
+    }
+
+    warn "Reading $filename\n";
+    open( my $fh, '<', $filename ) or die "Can't open $filename: $!";
+    my $was_in_pod = 0;
+    my $in_pod     = 0;
+    $code .= "#line 1 '$filename'\n" if $debug_mode && $filename ne 'ack';
+    while ( <$fh> ) {
+        next if /^use (?:File::Next|App::Ack)/;
+
+        s/^use base (.+)/BEGIN {\n    our \@ISA = $1\n}/;
+
+        if ( $was_in_pod && !$in_pod ) {
+            $was_in_pod = 0;
+            if ($debug_mode) {
+                $code .= "#line $. '$filename'\n";
+            }
+        }
+
+        # See if we're in module POD blocks
+        if ( $filename ne 'ack' ) {
+            $was_in_pod = $in_pod;
+
+            if ( /^=(\w+)/ ) {
+                $in_pod = ($1 ne 'cut');
+                next;
+            }
+            elsif ( $in_pod ) {
+                next;
+            }
+        }
+
+        # Replace the shebang line and append 'no edit' comment
+        if ( s{^#!.+}{package main;} ) {
+            # Skip the shebang line and replace it with package statement.
+        }
+
+        # Remove Perl::Critic comments.
+        # I'd like to remove all comments, but this is a start
+        s{\s*##.+critic.*}{};
+        $code .= $_;
+    }
+    close $fh;
+}
+
+# We only use two of the four constructors in File::Next, so delete the other two.
+for my $unused_func ( qw( dirs everything ) ) {
+    $code =~ s/^sub $unused_func\b.*?^}//sm or die qq{Unable to find the sub "$unused_func" to remove from ack-standalone};
+}
+print $code;
+
+exit 0;
