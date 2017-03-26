@@ -1,4 +1,4 @@
-# ack 2
+# ack 3
 
 ack is a code-searching tool, similar to grep but optimized for
 programmers searching large trees of source code.  It runs in pure
