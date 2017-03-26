@@ -12,11 +12,12 @@
 
 # Minor changes
 
-* Allow --output and --regex only on the command line, not in an ackrc (ack2 GH #414)
+* Allow `--output` and `--regex` only on the command line, not in an ackrc (ack2 GH #414)
 
-* -I for --no-smart-case
+* `-I` for `--no-smart-case`
 
-* --auto-spacing that replaces any whitespace in the pattern with \w+, so "insert into table" becomes "insert\s+into\s+table".
+* `--auto-spacing` that replaces any whitespace in the pattern with `\w+`,
+so `insert into table` becomes `insert\s+into\s+table`.
 
 * Add flag to force line number on output.
 
