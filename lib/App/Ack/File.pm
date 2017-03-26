@@ -1,4 +1,4 @@
-package App::Ack::Resource;
+package App::Ack::File;
 
 use App::Ack;
 
@@ -9,7 +9,7 @@ use overload
 
 =head1 NAME
 
-App::Ack::Resource
+App::Ack::File
 
 =head1 DESCRIPTION
 

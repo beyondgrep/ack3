@@ -72,11 +72,11 @@ ACK    = ack
 ALL_PM = \
     lib/App/Ack.pm \
     \
-    lib/App/Ack/Resource.pm \
-    lib/App/Ack/Resources.pm \
     lib/App/Ack/ConfigDefault.pm \
     lib/App/Ack/ConfigFinder.pm \
     lib/App/Ack/ConfigLoader.pm \
+    lib/App/Ack/File.pm \
+    lib/App/Ack/Files.pm \
     lib/App/Ack/Filter.pm \
     \
     lib/App/Ack/Filter/Collection.pm \

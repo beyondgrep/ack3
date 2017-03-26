@@ -5,7 +5,7 @@ use strict;
 use Test::More tests => 1;
 
 use App::Ack;
-use App::Ack::Resource;
+use App::Ack::File;
 use App::Ack::ConfigDefault;
 use App::Ack::ConfigFinder;
 use App::Ack::ConfigLoader;

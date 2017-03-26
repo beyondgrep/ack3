@@ -13,8 +13,8 @@ use File::Next ();
 
 use App::Ack ();
 use App::Ack::ConfigLoader ();
-use App::Ack::Resources;
-use App::Ack::Resource ();
+use App::Ack::File ();
+use App::Ack::Files ();
 
 # XXX Don't make this so brute force
 # See also: https://github.com/petdance/ack2/issues/89
@@ -122,7 +122,7 @@ sub _compile_descend_filter {
     $idirs = $opt->{idirs};
 
     return sub {
-        my $resource = App::Ack::Resource->new($File::Next::dir);
+        my $resource = App::Ack::File->new($File::Next::dir);
         return !grep { $_->filter($resource) } @{$idirs};
     };
 }
@@ -182,7 +182,7 @@ sub _compile_file_filter {
                 my $is_ignoring = 0;
 
                 for ( my $i = 0; $i < @dirs; $i++) {
-                    my $dir_rsrc = App::Ack::Resource->new(File::Spec->catfile(@dirs[0 .. $i]));
+                    my $dir_rsrc = App::Ack::File->new(File::Spec->catfile(@dirs[0 .. $i]));
 
                     my $j = 0;
                     for my $filter (@ignore_dir_filter) {
@@ -220,7 +220,7 @@ sub _compile_file_filter {
             }
         }
 
-        my $resource = App::Ack::Resource->new($File::Next::name);
+        my $resource = App::Ack::File->new($File::Next::name);
 
         if ( $ifiles_filters && $ifiles_filters->filter($resource) ) {
             return 0;
@@ -888,7 +888,7 @@ sub main {
 
     my $resources;
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
-        $resources    = App::Ack::Resources->from_stdin( $opt );
+        $resources    = App::Ack::Files->from_stdin( $opt );
         $opt_regex = shift @ARGV if not defined $opt_regex;
         $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
     }
@@ -917,7 +917,7 @@ sub main {
         }
 
         if ( defined $opt->{files_from} ) {
-            $resources = App::Ack::Resources->from_file( $opt, $opt->{files_from} );
+            $resources = App::Ack::Files->from_file( $opt, $opt->{files_from} );
             exit 1 unless $resources;
         }
         else {
@@ -931,7 +931,7 @@ sub main {
             $opt->{file_filter}    = _compile_file_filter($opt, \@start);
             $opt->{descend_filter} = _compile_descend_filter($opt);
 
-            $resources = App::Ack::Resources->from_argv( $opt, \@start );
+            $resources = App::Ack::Files->from_argv( $opt, \@start );
         }
     }
     App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};

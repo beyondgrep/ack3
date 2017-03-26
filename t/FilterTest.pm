@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base 'Exporter';
 
-use App::Ack::Resource;
+use App::Ack::File;
 use File::Next;
 use Util;
 use Test::More;
@@ -41,7 +41,7 @@ sub filter_test {
         } grep {
             $filter->filter($_)
         } map {
-            App::Ack::Resource->new($_)
+            App::Ack::File->new($_)
         } swamp_files();
 
         sets_match(\@matches, $expected_matches, $msg);

@@ -6,7 +6,7 @@ App::Ack::Filter
 
 =head1 DESCRIPTION
 
-An abstract superclass that represents objects that can filter `App::Ack::Resource` objects.
+An abstract superclass that represents objects that can filter C<App::Ack::File> objects.
 
 =cut
 
