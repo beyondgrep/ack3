@@ -18,9 +18,11 @@ files in them.
 
 # Design choices that are inviolate.
 
-* ack must run purely as Perl 5.10 using only core modules and File::Next.
+* ack must run purely as Perl 5.10.1 using only core modules and File::Next.
 
 No other modules may be used.  That includes Moose.
+
+* We don't use the Perl smartmatch operator.
 
 * ack must be able to be distributed through CPAN, using the App::Ack:: module tree.
 
