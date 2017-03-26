@@ -1,6 +1,6 @@
 language: perl
 perl:
-  - "5.10.0"
+  - "5.10.1"
 notifications:
 install: "cpanm File::Next && cpanm --notest Perl::Critic && cpanm --notest IO::Pty Test::Whitespaces Test::Pod Test::Perl::Critic::Progressive Perl::Critic::More Perl::Critic::Pulp Perl::Critic::Bangs"
 script:  "perl Makefile.PL && make fulltest"
