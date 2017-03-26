@@ -6,12 +6,13 @@ Perl, is highly portable, and runs on any platform that runs Perl.
 
 ack is written and maintained by Andy Lester (andy@petdance.com).
 
-* Project home page: https://beyondgrep.com/
-* Code home page: https://github.com/petdance/ack3
-* Issue tracker: https://github.com/petdance/ack3/issues
-* Mailing list for announcements: https://groups.google.com/d/forum/ack-announcements
-* Mailing list for users: https://groups.google.com/d/forum/ack-users
-* Mailing list for developers: https://groups.google.com/d/forum/ack-dev
+* [Project home page](https://beyondgrep.com/)
+* [Code home page](https://github.com/petdance/ack3)
+* [Issue tracker](https://github.com/petdance/ack3/issues)
+* Mailing lists
+    * [Announcements](https://groups.google.com/d/forum/ack-announcements)
+    * [Users](https://groups.google.com/d/forum/ack-users)
+    * [Developers](https://groups.google.com/d/forum/ack-dev)
 
 # Building
 
@@ -21,10 +22,10 @@ ack requires Perl 5.10 or higher.  Perl 5.10.0 was released December 2007.
     perl Makefile.PL
     make
     make test
-    sudo make install # for a system-wide installation (recommended)
+    sudo make install # For a system-wide installation
     # - or -
     make ack-standalone
-    cp ack-standalone ~/bin/ack3 # for a personal installation
+    cp ack-standalone ~/bin/ack3 # For a personal installation
 
 Build status: [![Build Status](https://travis-ci.org/petdance/ack3.png?branch=dev)](https://travis-ci.org/petdance/ack3)
 
