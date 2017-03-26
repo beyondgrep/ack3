@@ -13,7 +13,7 @@ The class that implements filtering resources by their first line.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 sub new {
     my ( $class, $re ) = @_;

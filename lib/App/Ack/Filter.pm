@@ -29,7 +29,7 @@ App::Ack::Filter - Filter objects to filter files
 
     use strict;
     use warnings;
-    use base 'App::Ack::Filter';
+    use parent 'App::Ack::Filter';
 
     sub filter {
         my ( $self, $resource ) = @_;

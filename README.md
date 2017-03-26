@@ -16,7 +16,7 @@ ack is written and maintained by Andy Lester (andy@petdance.com).
 
 # Building
 
-ack requires Perl 5.10 or higher.  Perl 5.10.0 was released December 2007.
+ack requires Perl 5.10.1 or higher.  Perl 5.10.1 was released August 2009.
 
     # Required
     perl Makefile.PL

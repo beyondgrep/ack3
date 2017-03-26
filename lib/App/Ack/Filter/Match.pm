@@ -2,7 +2,7 @@ package App::Ack::Filter::Match;
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 use File::Spec 3.00;
 use App::Ack::Filter::MatchGroup ();

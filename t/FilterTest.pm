@@ -2,7 +2,7 @@ package FilterTest;
 
 use strict;
 use warnings;
-use base 'Exporter';
+use parent 'Exporter';
 
 use App::Ack::File;
 use File::Next;

@@ -13,7 +13,7 @@ into one container.  See App::Ack::Filter::IsGroup for details.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 sub new {
     my ( $class ) = @_;

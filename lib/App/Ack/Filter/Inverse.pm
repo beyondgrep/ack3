@@ -13,7 +13,7 @@ The filter class that inverts another filter.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 sub new {
     my ( $class, $filter ) = @_;

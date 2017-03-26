@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use autodie;
-use 5.10.0;
+use 5.10.1;
 
 use Getopt::Long;
 use File::Slurp qw(read_dir read_file write_file);

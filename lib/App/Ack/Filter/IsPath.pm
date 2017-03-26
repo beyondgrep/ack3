@@ -12,7 +12,7 @@ Filters based on path.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 use App::Ack::Filter::IsPathGroup;
 

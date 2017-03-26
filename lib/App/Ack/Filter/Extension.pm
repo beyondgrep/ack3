@@ -12,7 +12,7 @@ Implements filters based on extensions.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 use App::Ack::Filter ();
 use App::Ack::Filter::ExtensionGroup ();

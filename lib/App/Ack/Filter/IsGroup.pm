@@ -27,7 +27,7 @@ overhead, etc.  So ::Is filters know how to organize themselves into an
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 use File::Spec 3.00 ();
 

@@ -13,7 +13,7 @@ default if you don't specify any filters on the command line.
 
 use strict;
 use warnings;
-use base 'App::Ack::Filter';
+use parent 'App::Ack::Filter';
 
 sub new {
     my ( $class ) = @_;
