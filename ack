@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = '2.18'; # Check https://beyondgrep.com/ for updates
+our $VERSION = '2.999_01'; # Check https://beyondgrep.com/ for updates
 
 use 5.008008;
 use Getopt::Long 2.38 ();
@@ -16,8 +16,6 @@ use App::Ack::ConfigLoader ();
 use App::Ack::File ();
 use App::Ack::Files ();
 
-# XXX Don't make this so brute force
-# See also: https://github.com/petdance/ack2/issues/89
 use App::Ack::Filter ();
 use App::Ack::Filter::Default;
 use App::Ack::Filter::Extension;
