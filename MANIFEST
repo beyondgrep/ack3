@@ -30,6 +30,7 @@ record-options
 squash
 test-pager
 
+t/Barfly.pm
 t/FilterTest.pm
 t/Util.pm
 

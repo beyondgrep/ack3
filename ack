@@ -315,11 +315,7 @@ sub build_regex {
 
     $str = quotemeta( $str ) if $opt->{Q};
     if ( $opt->{w} ) {
-        my $pristine_str = $str;
-
-        $str = "(?:$str)";
-        $str = "\\b$str" if $pristine_str =~ /^\w/;
-        $str = "$str\\b" if $pristine_str =~ /\w$/;
+        $str = "\\b(?:$str)\\b";
     }
 
     my $regex_is_lc = $str eq lc $str;
