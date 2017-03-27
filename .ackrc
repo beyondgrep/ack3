@@ -1,0 +1,2 @@
+--ignore-dir=garage/
+--ignore-file=is:ack-standalone
