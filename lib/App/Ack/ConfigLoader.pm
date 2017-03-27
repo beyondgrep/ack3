@@ -245,29 +245,8 @@ sub process_filetypes {
 }
 
 
-sub removed_option {
-    my ( $option, $explanation ) = @_;
-
-    $explanation ||= '';
-    return sub {
-        warn "Option '$option' is not valid in ack 2.\n$explanation";
-        exit 1;
-    };
-}
-
-
 sub get_arg_spec {
     my ( $opt, $extra_specs ) = @_;
-
-    my $dash_a_explanation = <<'EOT';
-You don't need -a, ack 1.x users.  This is because ack 2.x has
--k/--known-types which makes it only select files of known types, rather
-than any text file (which is the behavior of ack 1.x).
-
-If you're surprised to see this message because you didn't put -a on the
-command line, you may have options in an .ackrc, or in the ACKRC_OPTIONS
-environment variable.  Try using the --dump flag to help find it.
-EOT
 
 =begin Adding-Options
 
@@ -304,8 +283,6 @@ EOT
         'A|after-context:-1'  => sub { shift; $opt->{after_context}  = _context_value(shift) },
         'B|before-context:-1' => sub { shift; $opt->{before_context} = _context_value(shift) },
         'C|context:-1'        => sub { shift; $opt->{before_context} = $opt->{after_context} = _context_value(shift) },
-        'a'                 => removed_option('-a', $dash_a_explanation),
-        'all'               => removed_option('--all', $dash_a_explanation),
         'break!'            => \$opt->{break},
         c                   => \$opt->{count},
         'color|colour!'     => \$opt->{color},
@@ -328,7 +305,6 @@ EOT
         flush               => \$opt->{flush},
         'follow!'           => \$opt->{follow},
         g                   => \$opt->{g},
-        G                   => removed_option('-G'),
         'group!'            => sub { shift; $opt->{heading} = $opt->{break} = shift },
         'heading!'          => \$opt->{heading},
         'h|no-filename'     => \$opt->{h},
@@ -389,8 +365,6 @@ EOT
                 Carp::croak( "Unknown type '$value'" );
             }
         },
-        'u'                 => removed_option('-u'),
-        'unrestricted'      => removed_option('--unrestricted'),
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
