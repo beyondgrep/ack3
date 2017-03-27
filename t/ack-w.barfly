@@ -155,14 +155,35 @@ get_user_permission
 
 END
 
-BEGIN trivial
+
+BEGIN Word with trailing punc
 RUN
-ack -w foo
+ack -w -i f\w+!
 
 YES
-foo
+Friends!
+Hey, friends! How's it going?
+Hey, friends!How's it going?
 
 NO
-bar
+friends
+Superfriends!
+
+END
+
+
+BEGIN Single-letter words
+RUN
+ack -w \w
+
+YES
+A
+b
+c
+!E!
+
+NO
+dd
+xxx
 
 END
