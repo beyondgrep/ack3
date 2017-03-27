@@ -159,6 +159,9 @@ sub _options_block {
 # Common graphics, just as an optimization
 --ignore-file=ext:gif,jpg,jpeg,png
 
+# Common archives, as an optimization
+--ignore-file=ext:gz,tar,tgz,zip
+
 
 ### Filetypes defined
 
@@ -206,7 +209,7 @@ sub _options_block {
 # Assembly
 --type-add=asm:ext:asm,s
 
-# Batch
+# DOS/Windows batch
 --type-add=batch:ext:bat,cmd
 
 # ColdFusion
