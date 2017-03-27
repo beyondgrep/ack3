@@ -311,12 +311,20 @@ sub build_regex {
 
     defined $str or App::Ack::die( 'No regular expression found.' );
 
+    my $regex_is_lc = $str eq lc $str;
     $str = quotemeta( $str ) if $opt->{Q};
+
+    # Whole words only.
     if ( $opt->{w} ) {
-        $str = "\\b(?:$str)\\b";
+        if ( $str =~ /^\w+$/ ) {
+            # No need for fancy regex if it's a simple word.
+            $str = sprintf( '\b(?:%s)\b', $str );
+        }
+        else {
+            $str = sprintf( '(?:^|\b|\s)\K(?:%s)(?=\s|\b|$)', $str );
+        }
     }
 
-    my $regex_is_lc = $str eq lc $str;
     if ( $opt->{i} || ($opt->{smart_case} && $regex_is_lc) ) {
         $str = "(?i)$str";
     }

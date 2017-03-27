@@ -22,10 +22,7 @@ TRAILING_PUNC: {
     my @files = qw( t/text );
     my @args = qw( Sue! -w -h --sort-files );
 
-    TODO: {
-        local $TODO = 'How are we going to handle trailing bangs?  Just live with it?';
-        ack_lists_match( [ @args, @files ], \@expected, 'Looking for Sue!' );
-    }
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Sue!' );
 }
 
 TRAILING_METACHAR_BACKSLASH_W: {
