@@ -1,8 +1,8 @@
 # ack 3
 
 ack is a code-searching tool, similar to grep but optimized for
-programmers searching large trees of source code.  It runs in pure
-Perl, is highly portable, and runs on any platform that runs Perl.
+programmers searching large trees of source code.  It is highly
+portable and runs on any platform that runs Perl.
 
 ack is written and maintained by Andy Lester (andy@petdance.com).
 
@@ -33,13 +33,13 @@ Build status: [![Build Status](https://travis-ci.org/petdance/ack3.png?branch=de
 
 # Development
 
-[Developer's Guide](DEVELOPERS.md)
-
-[Design Guide](DESIGN.md)
+* [How to contribute](CONTRIBUTING.md)
+* [Developer's Guide](DEVELOPERS.md)
+* [Design Guide](DESIGN.md)
 
 # Community
 
-See the [Community](https://beyondgrep.com/community/) page.:w
+See the [Community](https://beyondgrep.com/community/) page.
 
 # License
 

@@ -30,6 +30,7 @@ No other modules may be used.  That includes Moose.
 
 This file is intended to be able to be copied & pasted if necessary.
 It will not contain any characters out the range of `[ -~]`.
+See `xt/coding-standards.t`.
 
 * ack must be cross-platform.  Specifically, it must run on Windows.
 
