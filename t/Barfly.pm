@@ -3,8 +3,8 @@ package Barfly;
 use Test::More;
 
 sub run_tests {
-    my $class = shift;
-    my @lines = @_;
+    my $class    = shift;
+    my $filename = shift;
 
     my $self = bless {
         blocks => [],
@@ -13,7 +13,9 @@ sub run_tests {
     my $block;
     my $section;
 
-    while ( my $line = shift @lines ) {
+    open( my $fh, '<', $filename ) or die "Can't open $filename: $!";
+
+    while ( my $line = <$fh> ) {
         chomp $line;
         next if $line =~ /^#/;
         next unless $line =~ /./;
@@ -36,6 +38,7 @@ sub run_tests {
             $block->add_line( $section, $line );
         }
     }
+    close $fh or die "Can't close $filename: $!";
 
     my @blocks = @{$self->{blocks}} or return fail( "No blocks found in $filename!" );
     for my $block ( @blocks ) {
