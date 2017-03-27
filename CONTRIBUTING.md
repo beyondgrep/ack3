@@ -30,10 +30,6 @@ Also appreciated with an issue are the following:
   - A `.t` test file that tests and verifies the behavior you expect
   - A patch that fixes your issue
 
-# Ack 1.x
-
-Keep in mind that if you're using ack 1.x, you should probably upgrade, as ack 1.x is no longer supported.
-
 # Getting Help
 
 Also, feel free to discuss your issues on the [ack mailing list](http://groups.google.com/group/ack-users)!
