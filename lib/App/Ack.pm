@@ -449,7 +449,7 @@ Returns the version information for ack.
 sub get_version_statement {
     require Config;
 
-    my $copyright = get_copyright();
+    my $copyright = $App::Ack::COPYRIGHT;
     my $this_perl = $Config::Config{perlpath};
     if ($^O ne 'VMS') {
         my $ext = $Config::Config{_exe};
@@ -478,16 +478,6 @@ sub print_version_statement {
     App::Ack::print( get_version_statement() );
 
     return;
-}
-
-=head2 get_copyright
-
-Return the copyright for ack.
-
-=cut
-
-sub get_copyright {
-    return $COPYRIGHT;
 }
 
 
@@ -574,15 +564,5 @@ sub exit_from_ack {
     my $rc = $nmatches ? 0 : 1;
     exit $rc;
 }
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2005-2017 Andy Lester.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the Artistic License v2.0.
-
-=cut
 
 1; # End of App::Ack
