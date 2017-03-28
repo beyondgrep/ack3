@@ -1,15 +1,5 @@
 package App::Ack::Files;
 
-=head1 NAME
-
-App::Ack::Files
-
-=head1 SYNOPSIS
-
-A factory object for creating a stream of L<App::Ack::File> objects.
-
-=cut
-
 use App::Ack;
 use App::Ack::File;
 
@@ -19,25 +9,13 @@ use Errno qw(EACCES);
 use warnings;
 use strict;
 
-sub _generate_error_handler {
-    my $opt = shift;
+=head1 NAME
 
-    if ( $opt->{dont_report_bad_filenames} ) {
-        return sub {
-            my $msg = shift;
-            if ( $! == EACCES ) {
-                return;
-            }
-            App::Ack::warn( $msg );
-        };
-    }
-    else {
-        return sub {
-            my $msg = shift;
-            App::Ack::warn( $msg );
-        };
-    }
-}
+App::Ack::Files
+
+=head1 SYNOPSIS
+
+A factory object for creating a stream of L<App::Ack::File> objects.
 
 =head1 METHODS
 
@@ -100,10 +78,17 @@ sub from_file {
     }, $class;
 }
 
-# This is for reading input lines from STDIN, not the list of files from STDIN
+
+=head2 from_stdin()
+
+This is for reading input lines from STDIN, not the list of files
+from STDIN.
+
+=cut
+
+
 sub from_stdin {
     my $class = shift;
-    my $opt   = shift;
 
     my $self  = bless {}, $class;
 
@@ -120,12 +105,34 @@ sub from_stdin {
     return $self;
 }
 
+
 sub next {
     my $self = shift;
 
     my $file = $self->{iter}->() or return;
 
     return App::Ack::File->new( $file );
+}
+
+
+sub _generate_error_handler {
+    my $opt = shift;
+
+    if ( $opt->{dont_report_bad_filenames} ) {
+        return sub {
+            my $msg = shift;
+            if ( $! == EACCES ) {
+                return;
+            }
+            App::Ack::warn( $msg );
+        };
+    }
+    else {
+        return sub {
+            my $msg = shift;
+            App::Ack::warn( $msg );
+        };
+    }
 }
 
 1;

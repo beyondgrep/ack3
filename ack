@@ -846,7 +846,7 @@ sub main {
 
     my $resources;
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
-        $resources    = App::Ack::Files->from_stdin( $opt );
+        $resources    = App::Ack::Files->from_stdin();
         $opt_regex = shift @ARGV if not defined $opt_regex;
         $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
     }
