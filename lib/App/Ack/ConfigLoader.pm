@@ -2,6 +2,7 @@ package App::Ack::ConfigLoader;
 
 use strict;
 use warnings;
+use feature 'say';
 
 use App::Ack ();
 use App::Ack::ConfigDefault ();
@@ -291,7 +292,7 @@ sub get_arg_spec {
         'color-lineno=s'    => \$ENV{ACK_COLOR_LINENO},
         'column!'           => \$opt->{column},
         count               => \$opt->{count},
-        'create-ackrc'      => sub { print "$_\n" for ( '--ignore-ack-defaults', App::Ack::ConfigDefault::options() ); exit; },
+        'create-ackrc'      => sub { say for ( '--ignore-ack-defaults', App::Ack::ConfigDefault::options() ); exit; },
         'env!'              => sub {
             my ( undef, $value ) = @_;
 
@@ -574,9 +575,9 @@ sub dump_options {
     foreach my $name (@source_names) {
         my $contents = $opts_by_source{$name};
 
-        print $name, "\n";
-        print '=' x length($name), "\n";
-        print '  ', join(' ', @{$_}), "\n" foreach sort { compare_opts($a, $b) } @{$contents};
+        say $name;
+        say '=' x length($name);
+        say '  ', join(' ', @{$_}) for sort { compare_opts($a, $b) } @{$contents};
     }
 
     return;
