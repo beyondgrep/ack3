@@ -573,7 +573,7 @@ sub output_to_pipe {
     return $output_to_pipe;
 }
 
-=head2 exit_from_ack
+=head2 exit_from_ack( $nmatches )
 
 Exit from the application with the correct exit code.
 
@@ -588,5 +588,66 @@ sub exit_from_ack {
     my $rc = $nmatches ? 0 : 1;
     exit $rc;
 }
+
+=head2 show_types( $resource, $ors )
+
+Shows the filetypes associated with a given file.
+
+=cut
+
+sub show_types {
+    my $resource = shift;
+    my $ors      = shift;
+
+    my @types = filetypes( $resource );
+    my $types = join( ',', @types );
+    my $arrow = @types ? ' => ' : ' =>';
+    App::Ack::print( $resource->name, $arrow, join( ',', @types ), $ors );
+
+    return;
+}
+
+
+=head2 load_colors()
+
+Sets up colors for ack.
+
+=cut
+
+sub load_colors {
+    eval 'use Term::ANSIColor 1.10 ()';
+    eval 'use Win32::Console::ANSI' if $App::Ack::is_windows;
+
+    $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
+    $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
+    $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
+
+    return;
+}
+
+
+sub filetypes {
+    my ( $resource ) = @_;
+
+    my @matches;
+
+    foreach my $k (keys %App::Ack::mappings) {
+        my $filters = $App::Ack::mappings{$k};
+
+        foreach my $filter (@{$filters}) {
+            # Clone the resource.
+            my $clone = $resource->clone;
+            if ( $filter->filter($clone) ) {
+                push @matches, $k;
+                last;
+            }
+        }
+    }
+
+    # http://search.cpan.org/dist/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitReturnSort.pm
+    @matches = sort @matches;
+    return @matches;
+}
+
 
 1; # End of App::Ack

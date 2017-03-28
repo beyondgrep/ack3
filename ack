@@ -77,7 +77,7 @@ MAIN: {
         my @keys = ( 'ACKRC', grep { /^ACK_/ } keys %ENV );
         delete @ENV{@keys};
     }
-    load_colors();
+    App::Ack::load_colors();
 
     Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version');
     Getopt::Long::Configure('pass_through', 'no_auto_abbrev');
@@ -236,52 +236,6 @@ sub _compile_file_filter {
     };
 }
 
-sub show_types {
-    my $resource = shift;
-    my $ors      = shift;
-
-    my @types = filetypes( $resource );
-    my $types = join( ',', @types );
-    my $arrow = @types ? ' => ' : ' =>';
-    App::Ack::print( $resource->name, $arrow, join( ',', @types ), $ors );
-
-    return;
-}
-
-# Set default colors, load Term::ANSIColor
-sub load_colors {
-    eval 'use Term::ANSIColor 1.10 ()';
-    eval 'use Win32::Console::ANSI' if $App::Ack::is_windows;
-
-    $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
-    $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
-    $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
-
-    return;
-}
-
-sub filetypes {
-    my ( $resource ) = @_;
-
-    my @matches;
-
-    foreach my $k (keys %App::Ack::mappings) {
-        my $filters = $App::Ack::mappings{$k};
-
-        foreach my $filter (@{$filters}) {
-            # Clone the resource.
-            my $clone = $resource->clone;
-            if ( $filter->filter($clone) ) {
-                push @matches, $k;
-                last;
-            }
-        }
-    }
-
-    # http://search.cpan.org/dist/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitReturnSort.pm
-    @matches = sort @matches;
-    return @matches;
-}
 
 # Returns a (fairly) unique identifier for a file.
 # Use this function to compare two files to see if they're
@@ -956,7 +910,7 @@ RESOURCES:
 
         if ( $opt_f ) {
             if ( $opt->{show_types} ) {
-                show_types( $resource, $ors );
+                App::Ack::show_types( $resource, $ors );
             }
             else {
                 App::Ack::print( $resource->name, $ors );
@@ -966,7 +920,7 @@ RESOURCES:
         }
         elsif ( $opt_g ) {
             if ( $opt->{show_types} ) {
-                show_types( $resource, $ors );
+                App::Ack::show_types( $resource, $ors );
             }
             else {
                 local $opt_show_filename = 0; # XXX Why is this local?
