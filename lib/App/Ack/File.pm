@@ -4,8 +4,6 @@ use App::Ack;
 
 use warnings;
 use strict;
-use overload
-    '""' => 'name';
 
 =head1 NAME
 
