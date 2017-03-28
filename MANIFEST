@@ -26,6 +26,10 @@ lib/App/Ack/Filter/IsPathGroup.pm
 lib/App/Ack/Filter/Match.pm
 lib/App/Ack/Filter/MatchGroup.pm
 
+lib/App/Ack/Docs/Manual.pm
+lib/App/Ack/Docs/FAQ.pm
+lib/App/Ack/Docs/Cookbook.pm
+
 record-options
 squash
 test-pager
@@ -59,6 +63,7 @@ t/ack-k.t
 t/ack-line.t
 t/ack-match.t
 t/ack-m.t
+t/ack-man.t
 t/ack-named-pipes.t
 t/ack-n.t
 t/ack-o.t

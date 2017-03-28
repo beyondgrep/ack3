@@ -69,7 +69,7 @@ sub MY::test {
 sub MY::postamble {
     my $postamble = sprintf(<<'MAKE_FRAG', $debug_mode);
 ACK    = ack
-ALL_PM = \
+CODE_PM = \
     lib/App/Ack.pm \
     \
     lib/App/Ack/ConfigDefault.pm \
@@ -92,6 +92,11 @@ ALL_PM = \
     lib/App/Ack/Filter/Match.pm \
     lib/App/Ack/Filter/MatchGroup.pm \
 
+DOCS_PM = \
+    lib/App/Ack/Docs/Manual.pm \
+    lib/App/Ack/Docs/FAQ.pm \
+    lib/App/Ack/Docs/Cookbook.pm \
+
 TEST_VERBOSE=0
 TEST_FILES=t/*.t t/lib/*.t
 TEST_XT_FILES=xt/*.t
@@ -107,10 +112,10 @@ tags:
 		--languages=Perl --langmap=Perl:+.t \
 
 critic:
-	perlcritic -1 -q -profile perlcriticrc $(ACK) $(ALL_PM) t/*.t t/lib/*.t xt/*.t
+	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(DOCS_PM) t/*.t t/lib/*.t xt/*.t
 
-ack-standalone : $(ACK) $(ALL_PM) squash Makefile
-	$(PERL) squash $(ACK) $(ALL_PM) File::Next %s > ack-standalone
+ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
+	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
 	$(FIXIN) ack-standalone
 	-$(NOECHO) $(CHMOD) $(PERM_RWX) ack-standalone
 	$(PERL) -c ack-standalone

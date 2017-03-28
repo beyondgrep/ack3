@@ -9,6 +9,8 @@ The arguments to squash are either filenames from the ack distro
 like Ack.pm, or module names like File::Next.  For modules, squash
 loads them and then pushes them into ack-standalone.
 
+POD gets stripped from all modules except for App::Ack::Docs:: modules.
+
 =cut
 
 use warnings;
@@ -23,7 +25,7 @@ my $NO_EDIT_COMMENT = <<'EOCOMMENT';
 # Please DO NOT EDIT or send patches for it.
 #
 # Please take a look at the source from
-# https://github.com/petdance/ack2
+# https://github.com/petdance/ack3
 # and submit patches against the individual files
 # that build ack.
 #
@@ -32,7 +34,12 @@ EOCOMMENT
 my $debug_mode = grep { $_ eq '--debug' } @ARGV;
 @ARGV          = grep { $_ ne '--debug' } @ARGV;
 
-my $code = "#!/usr/bin/env perl\n$NO_EDIT_COMMENT\n";
+my $code = <<"PERL";
+#!/usr/bin/env perl
+$NO_EDIT_COMMENT
+\$App::Ack::STANDALONE = 1;
+PERL
+
 for my $arg ( @ARGV ) {
     my $filename = $arg;
     if ( $arg =~ /::/ ) {
@@ -58,8 +65,8 @@ for my $arg ( @ARGV ) {
             }
         }
 
-        # See if we're in module POD blocks
-        if ( $filename ne 'ack' ) {
+        # Omit any POD unless it's the doc modules.
+        if ( $filename !~ m{/App/Ack/Docs/} ) {
             $was_in_pod = $in_pod;
 
             if ( /^=(\w+)/ ) {

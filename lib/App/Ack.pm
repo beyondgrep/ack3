@@ -23,6 +23,8 @@ BEGIN {
     $VERSION = '2.999_01';
     $COPYRIGHT = 'Copyright 2005-2017 Andy Lester.';
 }
+our $STANDALONE = 0;
+our $ORIGINAL_PROGRAM_NAME;
 
 our $fh;
 
@@ -428,17 +430,37 @@ END_OF_HELP
     return;
 }
 
-sub show_man {
+
+sub show_docs {
+    my $section = shift;
+
     require Pod::Usage;
 
-    Pod::Usage::pod2usage({
-        -input   => $App::Ack::orig_program_name,
-        -verbose => 2,
-        -exitval => 0,
-    });
+    # XXX These use -noperldoc for now.  Do we want ack --man to use perldoc?
+    if ( $App::Ack::STANDALONE ) {
+        # Right now we just show all POD for the standalone.
+        Pod::Usage::pod2usage({
+            -input     => $App::Ack::ORIGINAL_PROGRAM_NAME,
+            -noperldoc => 1,
+            -verbose   => 2,
+            -exitval   => 0,
+        });
+    }
+    else {
+        my $module = "App::Ack::Docs::$section";
+        eval "require $module";
+
+        Pod::Usage::pod2usage({
+            -input     => $INC{ "App/Ack/Docs/$section.pm" },
+            -noperldoc => 1,
+            -verbose   => 2,
+            -exitval   => 0,
+        });
+    }
 
     return;
 }
+
 
 =head2 get_version_statement
 
@@ -457,8 +479,10 @@ sub get_version_statement {
     }
     my $ver = sprintf( '%vd', $^V );
 
+    my $build_type = $App::Ack::STANDALONE ? 'standalone version' : 'standard build';
+
     return <<"END_OF_VERSION";
-ack ${VERSION}
+ack ${VERSION} ($build_type)
 Running under Perl $ver at $this_perl
 
 $copyright
