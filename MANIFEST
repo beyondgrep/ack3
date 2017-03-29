@@ -102,7 +102,6 @@ t/incomplete-last-line.t
 t/inverted-file-filter.t
 t/is-filter.t
 t/issue244.t
-t/issue276.t
 t/issue491.t
 t/issue522.t
 t/issue562.t

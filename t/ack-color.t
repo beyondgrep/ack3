@@ -8,7 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 13;
+plan tests => 10;
 
 prep_environment();
 
@@ -52,12 +52,6 @@ MULTIPLE_MATCHES: {
         'multiple matches highlighted' );
 }
 
-ADJACENT_CAPTURE_COLORING: {
-    my @files = qw( t/text/boy-named-sue.txt );
-    my @args = qw( (cal)(led) --color );
-    my @results = run_ack( @args, @files );
+done_testing();
 
-    is( @results, 1, 'backref pattern matches once' );
-    # The double end + start is kinda weird; this test could probably be more robust.
-    is( $results[0], "I ${match_start}cal${match_end}${match_start}led${match_end} him my pa, and he ${match_start}cal${match_end}${match_start}led${match_end} me his son,", 'adjacent capture groups should highlight correctly');
-}
+exit 0;

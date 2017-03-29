@@ -542,7 +542,7 @@ sub print_line_with_options {
             push @line_parts, get_match_column();
         }
     }
-    if( $opt_output ) {
+    if ( $opt_output ) {
         while ( $line =~ /$opt_regex/og ) {
             # XXX We need to stop using eval() for --output.  See https://github.com/petdance/ack2/issues/421
             my $output = eval $opt_output;
@@ -551,61 +551,29 @@ sub print_line_with_options {
     }
     else {
         if ( $opt_color ) {
-            # This match is redundant, but we need to perfom it in order to get if capture groups are set.
-            $line =~ /$opt_regex/o;
+            my $matched = 0; # If matched, need to escape afterwards.
 
-            if ( @+ > 1 ) { # If we have captures...
-                while ( $line =~ /$opt_regex/og ) {
-                    my $offset = 0; # Additional offset for when we add stuff.
-                    my $previous_match_end = 0;
+            while ( $line =~ /$opt_regex/og ) {
+                $matched = 1;
+                my $match_start = $-[0];
+                next unless defined($match_start);
 
-                    last if $-[0] == $+[0];
+                my $match_end = $+[0];
+                last if $match_start == $match_end;
 
-                    for ( my $i = 1; $i < @+; $i++ ) {
-                        my ( $match_start, $match_end ) = ( $-[$i], $+[$i] );
+                my $substring = substr( $line, $match_start,
+                    $match_end - $match_start );
+                my $substitution = Term::ANSIColor::colored( $substring,
+                    $ENV{ACK_COLOR_MATCH} );
 
-                        next unless defined($match_start);
-                        next if $match_start < $previous_match_end;
+                substr( $line, $match_start, $match_end - $match_start,
+                    $substitution );
 
-                        my $substring = substr( $line,
-                            $offset + $match_start, $match_end - $match_start );
-                        my $substitution = Term::ANSIColor::colored( $substring,
-                            $ENV{ACK_COLOR_MATCH} );
-
-                        substr( $line, $offset + $match_start,
-                            $match_end - $match_start, $substitution );
-
-                        $previous_match_end  = $match_end; # Offsets do not need to be applied.
-                        $offset             += length( $substitution ) - length( $substring );
-                    }
-
-                    pos($line) = $+[0] + $offset;
-                }
+                pos($line) = $match_end +
+                (length( $substitution ) - length( $substring ));
             }
-            else {
-                my $matched = 0; # If matched, need to escape afterwards.
-
-                while ( $line =~ /$opt_regex/og ) {
-
-                    $matched = 1;
-                    my ( $match_start, $match_end ) = ($-[0], $+[0]);
-                    next unless defined($match_start);
-                    last if $match_start == $match_end;
-
-                    my $substring = substr( $line, $match_start,
-                        $match_end - $match_start );
-                    my $substitution = Term::ANSIColor::colored( $substring,
-                        $ENV{ACK_COLOR_MATCH} );
-
-                    substr( $line, $match_start, $match_end - $match_start,
-                        $substitution );
-
-                    pos($line) = $match_end +
-                    (length( $substitution ) - length( $substring ));
-                }
-                # XXX Why do we do this?
-                $line .= "\033[0m\033[K" if $matched;
-            }
+            # XXX Why do we do this?
+            $line .= "\033[0m\033[K" if $matched;
         }
 
         push @line_parts, $line;
