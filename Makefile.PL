@@ -98,7 +98,7 @@ DOCS_PM = \
     lib/App/Ack/Docs/Cookbook.pm \
 
 TEST_VERBOSE=0
-TEST_FILES=t/*.t t/lib/*.t
+TEST_FILES=t/*.t
 TEST_XT_FILES=xt/*.t
 
 .PHONY: tags critic
@@ -112,7 +112,7 @@ tags:
 		--languages=Perl --langmap=Perl:+.t \
 
 critic:
-	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(DOCS_PM) t/*.t t/lib/*.t xt/*.t
+	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(DOCS_PM) $(TEST_FILES) $(TEST_XT_FILES)
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
