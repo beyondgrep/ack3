@@ -309,8 +309,8 @@ sub test_loader {
             close $file or die $!;
         }
 
-        my ( $got_opts, $got_targets );
-
+        my $got_opts;
+        my $got_targets;
         do {
             local $ENV{'ACK_OPTIONS'} = $env;
             local @ARGV;
