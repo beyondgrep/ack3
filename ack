@@ -28,23 +28,24 @@ use App::Ack::Filter::Collection;
 
 our $opt_after_context;
 our $opt_before_context;
-our $opt_output;
-our $opt_print0;
-our $opt_color;
-our $opt_heading;
-our $opt_show_filename;
-our $opt_regex;
 our $opt_break;
+our $opt_color;
+our $opt_column;
 our $opt_count;
-our $opt_v;
-our $opt_m;
-our $opt_g;
 our $opt_f;
-our $opt_lines;
+our $opt_g;
+our $opt_heading;
 our $opt_L;
 our $opt_l;
+our $opt_lines;
+our $opt_m;
+our $opt_output;
 our $opt_passthru;
-our $opt_column;
+our $opt_print0;
+our $opt_regex;
+our $opt_show_filename;
+our $opt_u;
+our $opt_v;
 
 # Flag if we need any context tracking.
 our $is_tracking_context;
@@ -799,23 +800,24 @@ sub main {
 
     $opt_after_context  = $opt->{after_context};
     $opt_before_context = $opt->{before_context};
-    $opt_output         = $opt->{output};
-    $opt_print0         = $opt->{print0};
-    $opt_color          = $opt->{color};
-    $opt_heading        = $opt->{heading};
-    $opt_show_filename  = $opt->{show_filename};
-    $opt_regex          = $opt->{regex};
     $opt_break          = $opt->{break};
+    $opt_color          = $opt->{color};
+    $opt_column         = $opt->{column};
     $opt_count          = $opt->{count};
-    $opt_v              = $opt->{v};
-    $opt_m              = $opt->{m};
-    $opt_g              = $opt->{g};
     $opt_f              = $opt->{f};
-    $opt_lines          = $opt->{lines};
+    $opt_g              = $opt->{g};
+    $opt_heading        = $opt->{heading};
     $opt_L              = $opt->{L};
     $opt_l              = $opt->{l};
+    $opt_lines          = $opt->{lines};
+    $opt_m              = $opt->{m};
+    $opt_output         = $opt->{output};
     $opt_passthru       = $opt->{passthru};
-    $opt_column         = $opt->{column};
+    $opt_print0         = $opt->{print0};
+    $opt_regex          = $opt->{regex};
+    $opt_show_filename  = $opt->{show_filename};
+    $opt_u              = $opt->{u};
+    $opt_v              = $opt->{v};
 
     $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
 
