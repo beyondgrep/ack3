@@ -1,2 +1,3 @@
 --ignore-dir=garage/
 --ignore-file=is:ack-standalone
+--ignore-file=is:tags
