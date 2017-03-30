@@ -362,20 +362,22 @@ File type specification:
 
 
 Miscellaneous:
+  --version                     Display version & copyright
   --[no]env                     Ignore environment variables and global ackrc
                                 files.  --env is legal but redundant.
   --ackrc=filename              Specify an ackrc file to use
   --ignore-ack-defaults         Ignore default definitions included with ack.
   --create-ackrc                Outputs a default ackrc for your customization
                                 to standard output.
-  --help, -?                    This help
-  --help-types                  Display all known types
   --dump                        Dump information on which options are loaded
-                                from which RC files
   --[no]filter                  Force ack to treat standard input as a pipe
                                 (--filter) or tty (--nofilter)
-  --man                         Man page
-  --version                     Display version & copyright
+  --help, -?                    This help
+  --help-types                  Display all known types
+                                from which RC files
+  --man                         Print the manual
+  --faq                         Print the frequently asked questions
+  --cookbook                    Print a list of tips and tricks for using ack
   --thpppt                      Bill the Cat
   --bar                         The warning admiral
   --cathy                       Chocolate! Chocolate! Chocolate!

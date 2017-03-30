@@ -7,6 +7,18 @@ package App::Ack::Docs::FAQ;
 This is the Frequently Asked Questions list for ack.  You can also see the
 manual in the Perl module App::Ack::Docs::Manual, or running F<ack --man>.
 
+=head2 Can I stop using grep now?
+
+I<ack> trumps I<grep> as an everyday tool 99% of the time, but don't
+throw I<grep> away, because there are times you'll still need it.
+
+E.g., searching through huge files looking for regexes that can be
+expressed with I<grep> syntax should be quicker with I<grep>.
+
+If your script or parent program uses I<grep> C<--quiet> or C<--silent>
+or needs exit 2 on IO error, use I<grep>.
+
+
 =head2 Why isn't ack finding a match in (some file)?
 
 First, take a look and see if ack is even looking at the file.  ack is

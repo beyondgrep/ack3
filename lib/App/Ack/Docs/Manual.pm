@@ -81,17 +81,6 @@ to add/remove multiple directories from the ignore list.
 For a complete list of directories that do not get searched, run
 C<ack --dump>.
 
-=head1 WHEN TO USE GREP
-
-I<ack> trumps I<grep> as an everyday tool 99% of the time, but don't
-throw I<grep> away, because there are times you'll still need it.
-
-E.g., searching through huge files looking for regexes that can be
-expressed with I<grep> syntax should be quicker with I<grep>.
-
-If your script or parent program uses I<grep> C<--quiet> or C<--silent>
-or needs exit 2 on IO error, use I<grep>.
-
 =head1 OPTIONS
 
 =over 4
@@ -155,6 +144,10 @@ Sets the color to be used for line numbers.
 Show the column number of the first match.  This is helpful for
 editors that can place your cursor at a given position.
 
+=item B<--cookbook>
+
+Print the ack cookbook, a list of common tricks and recipes for using ack.
+
 =item B<--create-ackrc>
 
 Dumps the default ack options to standard output.  This is useful for
@@ -170,6 +163,10 @@ output.  Handy for debugging.
 B<--noenv> disables all environment processing. No F<.ackrc> is
 read and all environment variables are ignored. By default, F<ack>
 considers F<.ackrc> and settings in the environment.
+
+=item B<--faq>
+
+Print the list of frequently asked questions.
 
 =item B<--flush>
 
@@ -289,9 +286,10 @@ Limit selected files to those with types that ack knows about.
 
 =item B<--lines=I<NUM>>
 
-Only print line I<NUM> of each file. Multiple lines can be given with multiple
-B<--lines> options or as a comma separated list (B<--lines=3,5,7>). B<--lines=4-7>
-also works. The lines are always output in ascending order, no matter the
+Only print line I<NUM> of each file. Multiple lines can be given
+with multiple B<--lines> options or as a comma separated list
+(B<--lines=3,5,7>). Using a range such as B<--lines=4-7> also works. The
+lines are always output in the order found in the file, no matter the
 order given on the command line.
 
 =item B<-l>, B<--files-with-matches>
@@ -314,7 +312,8 @@ same set of files.
 
 =item B<-m=I<NUM>>, B<--max-count=I<NUM>>
 
-Stop reading a file after I<NUM> matches.
+Print only I<NUM> matches out of each file.  If you want to stop ack
+after printing the first match of any kind, use the B<-1> options.
 
 =item B<--man>
 
@@ -344,7 +343,7 @@ via the C<ACK_PAGER> and C<ACK_PAGER_COLOR> environment variables.
 Using --pager does not suppress grouping and coloring like piping
 output on the command-line does.
 
-B<--nopager> cancels any setting in ~/.ackrc, C<ACK_PAGER> or C<ACK_PAGER_COLOR>.
+B<--nopager> cancels any setting in F<~/.ackrc>, C<ACK_PAGER> or C<ACK_PAGER_COLOR>.
 No output will be sent through a pager.
 
 =item B<--passthru>
@@ -353,16 +352,17 @@ Prints all lines, whether or not they match the expression.  Highlighting
 will still work, though, so it can be used to highlight matches while
 still seeing the entire file, as in:
 
-    # Watch a log file, and highlight a certain IP address
+    # Watch a log file, and highlight a certain IP address.
     $ tail -f ~/access.log | ack --passthru 123.45.67.89
 
 =item B<--print0>
 
-Only works in conjunction with -f, -g, -l or -c (filename output). The filenames
-are output separated with a null byte instead of the usual newline. This is
-helpful when dealing with filenames that contain whitespace, e.g.
+Only works in conjunction with B<-f>, B<-g>, B<-l> or B<-c>, options
+that only list filenames.  The filenames are output separated with a
+null byte instead of the usual newline. This is helpful when dealing
+with filenames that contain whitespace, e.g.
 
-    # remove all files of type html
+    # Remove all files of type HTML.
     ack -f --html --print0 | xargs -0 rm -f
 
 =item B<-Q>, B<--literal>
@@ -419,7 +419,6 @@ Files with the given FILTERARGS applied to the given FILTER
 are recognized as being of (the existing) type TYPE.
 See also L</"Defining your own types">.
 
-
 =item B<--type-set I<TYPE>:I<FILTER>:I<FILTERARGS>>
 
 Files with the given FILTERARGS applied to the given FILTER are recognized as
@@ -433,7 +432,7 @@ for searches.
 
 =item B<-v>, B<--invert-match>
 
-Invert match: select non-matching lines
+Invert match: select non-matching lines.
 
 =item B<--version>
 
@@ -441,27 +440,11 @@ Display version and copyright information.
 
 =item B<-w>, B<--word-regexp>
 
-=item B<-w>, B<--word-regexp>
-
-Turn on "words mode".  This sometimes matches a whole word, but the
-semantics is quite subtle.  If the passed regexp begins with a word
-character, then a word boundary is required before the match.  If the
-passed regexp ends with a word character, or with a word character
-followed by newline, then a word boundary is required after the match.
-
-Thus, for example, B<-w> with the regular expression C<ox> will not
-match the strings C<box> or C<oxen>.  However, if the regular
-expression is C<(ox|ass)> then it will match those strings.  Because
-the regular expression's first character is C<(>, the B<-w> flag has
-no effect at the start, and because the last character is C<)>, it has
-no effect at the end.
-
-Force PATTERN to match only whole words.  The PATTERN is wrapped with
-C<\b> metacharacters.
+Force PATTERN to match only whole words.
 
 =item B<-x>
 
-An abbreviation for B<--files-from=->; the list of files to search are read
+An abbreviation for B<--files-from=->. The list of files to search are read
 from standard input, with one line per file.
 
 =item B<-1>
@@ -840,11 +823,6 @@ This shows how to pick out particular parts of a match using ( ) within regular 
   input file contains "=head1 NAME"
   output  "1 : NAME"
 
-=head1 COMMUNITY
-
-There are ack mailing lists and a Slack channel for ack.  See
-L<https://beyondgrep.com/community/> for details.
-
 =head1 ACKRC LOCATION SEMANTICS
 
 Ack can load its configuration from many sources.  The following list
@@ -976,6 +954,11 @@ L<http://metacpan.org/release/ack>
 L<https://github.com/petdance/ack2>
 
 =back
+
+=head1 COMMUNITY
+
+There are ack mailing lists and a Slack channel for ack.  See
+L<https://beyondgrep.com/community/> for details.
 
 =head1 ACKNOWLEDGEMENTS
 
