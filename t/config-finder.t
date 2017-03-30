@@ -234,8 +234,7 @@ do {
     my $user_file = File::Spec->catfile($ENV{'HOME'}, '.ackrc');
     touch_ackrc( $user_file );
 
-    my $ackrc = File::Temp->new;
-    close $ackrc;
+    my $ackrc = create_tempfile();
     local $ENV{'ACKRC'} = $ackrc->filename;
 
     expect_ackrcs [ @global_files, { path => $ackrc->filename } ], q{ACKRC overrides user's HOME ackrc};

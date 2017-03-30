@@ -67,3 +67,7 @@ EOF
         lists_match( \@results, \@expected, "Looking for strict in multiple files with $opt" );
     }
 }
+
+done_testing();
+
+exit 0;

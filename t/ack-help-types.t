@@ -37,3 +37,7 @@ foreach my $option ( @options ) {
         }
     }
 }
+
+done_testing();
+
+exit 0;

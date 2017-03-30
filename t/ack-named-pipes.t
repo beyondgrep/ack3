@@ -40,6 +40,8 @@ dir_cleanup( $tempdir );
 
 done_testing();
 
+exit 0;
+
 sub dir_cleanup {
     my $tempdir = shift;
 

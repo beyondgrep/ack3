@@ -173,3 +173,5 @@ LINE_WITH_REGEX: {
 }
 
 done_testing();
+
+exit 0;

@@ -27,3 +27,7 @@ lists_match( \@results, \@expected, '-i flag' );
 @results = run_ack( @args );
 
 lists_match( \@results, \@expected, '--ignore-case flag' );
+
+done_testing();
+
+exit 0;

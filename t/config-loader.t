@@ -8,7 +8,6 @@ use Util;
 use Test::More tests => 37;
 
 use Carp qw(croak);
-use File::Temp;
 
 use App::Ack::Filter::Default;
 use App::Ack::ConfigLoader;
@@ -277,6 +276,8 @@ do {
 
 done_testing;
 
+exit 0;
+
 
 sub test_loader {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
@@ -303,11 +304,6 @@ sub test_loader {
 
             $a_end <=> $b_end;
         } grep { /^file\d+/ } keys %opts;
-        foreach my $contents (@files) {
-            my $file = File::Temp->new;
-            print {$file} $contents;
-            close $file or die $!;
-        }
 
         my $got_opts;
         my $got_targets;

@@ -108,11 +108,8 @@ sub build_ack_invocation {
 
     if ( my $ackrc = $options->{ackrc} ) {
         if ( ref($ackrc) eq 'SCALAR' ) {
-            my $temp_ackrc = File::Temp->new;
+            my $temp_ackrc = create_tempfile( ${$ackrc} );
             push @temp_files, $temp_ackrc;
-
-            print { $temp_ackrc } $$ackrc, "\n";
-            close $temp_ackrc;
             $ackrc = $temp_ackrc->filename;
         }
 
@@ -367,14 +364,10 @@ sub pipe_into_ack_with_stderr {
     my $input = shift;
     my @args = @_;
 
-    my $tempfile;
-
     if ( ref($input) eq 'SCALAR' ) {
         # We could easily do this without temp files, but that would take
         # slightly more time than I'm willing to spend on this right now.
-        $tempfile = File::Temp->new;
-        print {$tempfile} $$input . "\n";
-        close $tempfile;
+        my $tempfile = create_tempfile( ${$input} );
         $input = $tempfile->filename;
     }
 
@@ -796,6 +789,17 @@ sub windows_slashify {
     $str =~ s{/}{\\}g;
 
     return $str;
+}
+
+
+sub create_tempfile {
+    my @lines = @_;
+
+    my $tempfile = File::Temp->new();
+    print {$tempfile} join( "\n", @lines );
+    close $tempfile;
+
+    return $tempfile;
 }
 
 1;
