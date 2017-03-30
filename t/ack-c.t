@@ -101,8 +101,8 @@ DASH_LC: {
 }
 
 PIPE_INTO_C: {
-    my $file = 't/text/science-of-myth.txt';
-    my @args = qw( religion -i -c );
+    my $file    = 't/text/science-of-myth.txt';
+    my @args    = qw( religion -i -c );
     my @results = pipe_into_ack( $file, @args );
 
     is_deeply( \@results, [2], 'Piping into ack --count should return one line of results' );

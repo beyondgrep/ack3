@@ -11,9 +11,7 @@ use File::Next;
 
 prep_environment();
 
-my @text  = sort map {
-    untaint($_)
-} glob( 't/text/s*.txt' );
+my @text  = sort map { untaint($_) } glob( 't/text/s*.txt' );
 
 my $myth  = File::Next::reslash( 't/text/science-of-myth.txt' );
 my $happy = File::Next::reslash( 't/text/shut-up-be-happy.txt' );
@@ -46,3 +44,7 @@ DASH_L: {
 
     is_deeply(\@results, \@expected);
 }
+
+done_testing();
+
+exit 0;

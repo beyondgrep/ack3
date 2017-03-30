@@ -81,7 +81,9 @@ ACKRC_ACKRC_MATCH_PERMITTED: {
 
     chdir $wd or die;
 }
-done_testing;
+done_testing();
+
+exit 0;
 
 # Call ack normally and compare output to calling with --match regex.
 #

@@ -4,9 +4,9 @@ use strict;
 use warnings;
 use lib 't';
 
-use File::Temp;
-use File::Next;
 use Test::More tests => 3;
+
+use File::Next;
 use Util;
 
 prep_environment();
@@ -20,7 +20,7 @@ subtest 'Basic reading from files, no switches' => sub {
 $target_file:2:use strict;
 EOF
 
-    my $tempfile = fill_temp_file( qw( t/swamp/options.pl t/swamp/pipe-stress-freaks.F ) );
+    my $tempfile = create_tempfile( qw( t/swamp/options.pl t/swamp/pipe-stress-freaks.F ) );
 
     ack_lists_match( [ '--files-from=' . $tempfile->filename, 'strict' ], \@expected, 'Looking for strict in multiple files' );
 
@@ -44,7 +44,7 @@ subtest 'Non-existent file specified' => sub {
 subtest 'Source file exists, but non-existent files mentioned in the file' => sub {
     plan tests => 4;
 
-    my $tempfile = fill_temp_file( qw( t/swamp/options.pl file-that-isnt-there ) );
+    my $tempfile = create_tempfile( qw( t/swamp/options.pl file-that-isnt-there ) );
     my ( $stdout, $stderr ) = run_ack_with_stderr( '--files-from=' . $tempfile->filename, 'CASE');
 
     is( scalar @{$stdout}, 1, 'One hit found' );
@@ -54,13 +54,6 @@ subtest 'Source file exists, but non-existent files mentioned in the file' => su
     like( $stderr->[0], qr/file-that-isnt-there: No such file/, 'Correct warning message for non-existent file' );
 };
 
+done_testing();
 
-sub fill_temp_file {
-    my @lines = @_;
-
-    my $tempfile = File::Temp->new;
-    print {$tempfile} "$_\n" for @lines;
-    close $tempfile;
-
-    return $tempfile;
-}
+exit 0;
