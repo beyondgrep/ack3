@@ -561,16 +561,14 @@ sub print_line_with_options {
                 my $match_end = $+[0];
                 last if $match_start == $match_end;
 
-                my $substring = substr( $line, $match_start,
-                    $match_end - $match_start );
-                my $substitution = Term::ANSIColor::colored( $substring,
-                    $ENV{ACK_COLOR_MATCH} );
+                my $substring    = substr( $line, $match_start, $match_end - $match_start );
+                my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
 
-                substr( $line, $match_start, $match_end - $match_start,
-                    $substitution );
+                # Fourth argument replaces the string specified by the first three.
+                substr( $line, $match_start, $match_end - $match_start, $substitution );
 
-                pos($line) = $match_end +
-                (length( $substitution ) - length( $substring ));
+                # Move the offset of where /g left off forward the number of spaces of highlighting.
+                pos($line) = $match_end + (length( $substitution ) - length( $substring ));
             }
             # XXX Why do we do this?
             $line .= "\033[0m\033[K" if $matched;
