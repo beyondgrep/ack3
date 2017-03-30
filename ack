@@ -551,10 +551,9 @@ sub print_line_with_options {
     }
     else {
         if ( $opt_color ) {
-            my $matched = 0; # If matched, need to escape afterwards.
+            my $highlighted = 0; # If highlighted, need to escape afterwards.
 
             while ( $line =~ /$opt_regex/og ) {
-                $matched = 1;
                 my $match_start = $-[0];
                 next unless defined($match_start);
 
@@ -569,9 +568,10 @@ sub print_line_with_options {
 
                 # Move the offset of where /g left off forward the number of spaces of highlighting.
                 pos($line) = $match_end + (length( $substitution ) - length( $substring ));
+                $highlighted = 1;
             }
-            # XXX Why do we do this?
-            $line .= "\033[0m\033[K" if $matched;
+            # Reset formatting and delete everything to the end of the line.
+            $line .= "\033[0m\033[K" if $highlighted;
         }
 
         push @line_parts, $line;
