@@ -465,7 +465,7 @@ sub should_dump_options {
     foreach my $source (@{$sources}) {
         my ( $name, $options ) = @{$source}{qw/name contents/};
 
-        if($name eq 'ARGV') {
+        if ( $name eq 'ARGV' ) {
             my $dump;
             local @ARGV = @{$options};
             Getopt::Long::Configure('default', 'pass_through', 'no_auto_help', 'no_auto_version');
@@ -642,7 +642,7 @@ sub check_for_mutually_exclusive_options {
     my %mutually_exclusive_with;
     my @copy = @{$arg_sources};
 
-    for(my $i = 0; $i < @INVALID_COMBINATIONS; $i += 2) {
+    for ( my $i = 0; $i < @INVALID_COMBINATIONS; $i += 2 ) {
         my ( $lhs, $rhs ) = @INVALID_COMBINATIONS[ $i, $i + 1 ];
 
         foreach my $l_opt ( @{$lhs} ) {
@@ -653,7 +653,7 @@ sub check_for_mutually_exclusive_options {
         }
     }
 
-    while( @copy ) {
+    while ( @copy ) {
         my %set_opts;
 
         my $source = shift @copy;
@@ -664,7 +664,7 @@ sub check_for_mutually_exclusive_options {
             next unless $opt =~ /^[-+]/;
             last if $opt eq '--';
 
-            if( $opt =~ /^(.*)=/ ) {
+            if ( $opt =~ /^(.*)=/ ) {
                 $opt = $1;
             }
             elsif ( $opt =~ /^(-[^-]).+/ ) {
@@ -678,7 +678,7 @@ sub check_for_mutually_exclusive_options {
             next unless $mutex_opts;
 
             foreach my $mutex_opt ( @{$mutex_opts} ) {
-                if($set_opts{ $mutex_opt }) {
+                if ( $set_opts{ $mutex_opt } ) {
                     die "Options '$mutex_opt' and '$opt' are mutually exclusive\n";
                 }
             }
@@ -760,7 +760,7 @@ sub retrieve_arg_sources {
     if ( $ackrc ) {
         # We explicitly use open so we get a nice error message.
         # XXX This is a potential race condition!.
-        if(open my $fh, '<', $ackrc) {
+        if ( open my $fh, '<', $ackrc ) {
             close $fh;
         }
         else {
@@ -777,7 +777,7 @@ sub retrieve_arg_sources {
     foreach my $file ( @files) {
         my @lines = App::Ack::ConfigFinder::read_rcfile($file->{path});
 
-        if(@lines) {
+        if ( @lines ) {
             push @arg_sources, {
                 name     => $file->{path},
                 contents => \@lines,

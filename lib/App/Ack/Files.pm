@@ -35,7 +35,7 @@ sub from_argv {
     my $file_filter    = undef;
     my $descend_filter = $opt->{descend_filter};
 
-    if( $opt->{n} ) {
+    if ( $opt->{n} ) {
         $descend_filter = sub {
             return 0;
         };

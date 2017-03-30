@@ -35,7 +35,7 @@ unlike( $help_types_output, qr/\Q--[no]perl/ );
 DUMP: {
     my @dump_output = run_ack( '--type-del=perl', '--type-del=perltest', '--dump' );
     # discard everything up to the ARGV section
-    while(@dump_output && $dump_output[0] ne 'ARGV') {
+    while ( @dump_output && $dump_output[0] ne 'ARGV' ) {
         shift @dump_output;
     }
     shift @dump_output; # discard ARGV

@@ -131,9 +131,9 @@ sub find_config_files {
     $cwd =~ /(.+)/;
     $cwd = $1;
     my @dirs = File::Spec->splitdir( $cwd );
-    while(@dirs) {
+    while ( @dirs ) {
         my $ackrc = _check_for_ackrc(@dirs);
-        if(defined $ackrc) {
+        if ( defined $ackrc ) {
             push @config_files, { project => 1, path => $ackrc };
             last;
         }

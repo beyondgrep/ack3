@@ -566,14 +566,14 @@ BEGIN {
 
             my $pid = fork;
 
-            if($pid) {
+            if ( $pid ) {
                 $pty->close_slave();
                 $pty->set_raw();
 
-                if(wantarray) {
+                if ( wantarray ) {
                     my @lines;
 
-                    while(<$pty>) {
+                    while ( <$pty> ) {
                         chomp;
                         push @lines, $_;
                     }
@@ -584,7 +584,7 @@ BEGIN {
                 else {
                     my $output = '';
 
-                    while(<$pty>) {
+                    while ( <$pty> ) {
                         $output .= $_;
                     }
                     close $pty;
@@ -595,7 +595,7 @@ BEGIN {
             else {
                 $pty->make_slave_controlling_terminal();
                 my $slave = $pty->slave();
-                if(-t *STDIN) {
+                if ( -t *STDIN ) {
                     # Is there something we can fall back on? Maybe re-opening /dev/console?
                     $slave->clone_winsize_from(\*STDIN);
                 }

@@ -36,7 +36,7 @@ my @output;
 
 if ( $pid ) {
     close $write;
-    while(<$read>) {
+    while ( <$read> ) {
         chomp;
         push @output, $_;
     }

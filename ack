@@ -249,7 +249,7 @@ sub get_file_id {
     }
     else {
         # XXX Is this the best method? It always hits the FS.
-        if( my ( $dev, $inode ) = (stat($filename))[0, 1] ) {
+        if ( my ( $dev, $inode ) = (stat($filename))[0, 1] ) {
             return join(':', $dev, $inode);
         }
         else {
@@ -523,22 +523,20 @@ sub print_line_with_options {
 
     my @line_parts;
 
-    if( $opt_color ) {
-        $filename = Term::ANSIColor::colored($filename,
-            $ENV{ACK_COLOR_FILENAME});
-        $line_no  = Term::ANSIColor::colored($line_no,
-            $ENV{ACK_COLOR_LINENO});
+    if ( $opt_color ) {
+        $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
+        $line_no  = Term::ANSIColor::colored( $line_no,  $ENV{ACK_COLOR_LINENO} );
     }
 
-    if($opt_show_filename) {
-        if( $opt_heading ) {
+    if ( $opt_show_filename ) {
+        if ( $opt_heading ) {
             push @line_parts, $line_no;
         }
         else {
             push @line_parts, $filename, $line_no;
         }
 
-        if( $opt_column ) {
+        if ( $opt_column ) {
             push @line_parts, get_match_column();
         }
     }
