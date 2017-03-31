@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use File::Next ();
 use Test::More tests => 2;
 
 use lib 't';
@@ -56,9 +55,9 @@ sub do_parent {
 
 prep_environment();
 
-my $freedom = File::Next::reslash( 't/text/freedom-of-choice.txt' );
-my $fourth  = File::Next::reslash( 't/text/4th-of-july.txt' );
-my $science = File::Next::reslash( 't/text/science-of-myth.txt' );
+my $freedom = reslash( 't/text/freedom-of-choice.txt' );
+my $fourth  = reslash( 't/text/4th-of-july.txt' );
+my $science = reslash( 't/text/science-of-myth.txt' );
 
 my @expected = split /\n/, <<"EOF";
 $freedom:1:A victim of collision on the open sea

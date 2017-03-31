@@ -4,7 +4,6 @@ use warnings;
 use strict;
 
 use Test::More tests => 12;
-use File::Next ();
 use File::Spec ();
 use File::Temp ();
 
@@ -66,7 +65,7 @@ WITH_OUTPUT: {
     my @files = qw( t/text/ );
     my @args = qw/ --output=x$1x question(\\S+) --sort-files /;
 
-    my @target_file = map { File::Next::reslash($_) } qw(
+    my @target_file = map { reslash($_) } qw(
         t/text/science-of-myth.txt
         t/text/shut-up-be-happy.txt
     );
@@ -83,7 +82,7 @@ OUTPUT_DOUBLE_QUOTES: {
     my @files = qw( t/text/ );
     my @args  = ( '--output="$1"', 'question(\\S+)', '--sort-files' );
 
-    my @target_file = map { File::Next::reslash($_) } qw(
+    my @target_file = map { reslash($_) } qw(
         t/text/science-of-myth.txt
         t/text/shut-up-be-happy.txt
     );

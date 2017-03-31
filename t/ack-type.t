@@ -6,7 +6,6 @@ use lib 't';
 
 use Cwd ();
 use Test::More tests => 16;
-use File::Next ();
 use Util;
 
 prep_environment();
@@ -27,7 +26,7 @@ t/swamp/perl.pm:1:#!perl -T
 EOF
 
     foreach my $line ( @expected ) {
-        $line =~ s/^(.*?)(?=:)/File::Next::reslash( $1 )/ge;
+        $line =~ s/^(.*?)(?=:)/reslash( $1 )/ge;
     }
 
     my @args    = qw( --type=perl --nogroup --noheading --nocolor );
@@ -45,7 +44,7 @@ t/swamp/Makefile:1:# This Makefile is for the ack extension to perl.
 EOF
 
     foreach my $line ( @expected ) {
-        $line =~ s/^(.*?)(?=:)/File::Next::reslash( $1 )/ge;
+        $line =~ s/^(.*?)(?=:)/reslash( $1 )/ge;
     }
 
     my @args    = qw( --type=noperl --nogroup --noheading --nocolor );
@@ -80,8 +79,8 @@ TEST_NOTYPES: {
 
 TEST_NOTYPE_OVERRIDE: {
     my @expected = (
-        File::Next::reslash('t/swamp/html.htm') . ':2:<html><head><title>Boring test file </title></head>',
-        File::Next::reslash('t/swamp/html.html') . ':2:<html><head><title>Boring test file </title></head>',
+        reslash('t/swamp/html.htm') . ':2:<html><head><title>Boring test file </title></head>',
+        reslash('t/swamp/html.html') . ':2:<html><head><title>Boring test file </title></head>',
     );
 
     my @lines = run_ack( '--nohtml', '--html', '--sort-files', '<title>', @SWAMP );
@@ -99,8 +98,8 @@ TEST_NOTYPE_ACKRC_CMD_LINE_OVERRIDE: {
 END_ACKRC
 
     my @expected = (
-        File::Next::reslash('t/swamp/html.htm') . ':2:<html><head><title>Boring test file </title></head>',
-        File::Next::reslash('t/swamp/html.html') . ':2:<html><head><title>Boring test file </title></head>',
+        reslash('t/swamp/html.htm') . ':2:<html><head><title>Boring test file </title></head>',
+        reslash('t/swamp/html.html') . ':2:<html><head><title>Boring test file </title></head>',
     );
 
     my @lines = run_ack('--html', '--sort-files', '<title>', @SWAMP, {

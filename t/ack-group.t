@@ -4,15 +4,14 @@ use strict;
 use warnings;
 
 use Test::More tests => 12;
-use File::Next ();
 
 use lib 't';
 use Util;
 
 prep_environment();
 
-my $freedom = File::Next::reslash( 't/text/freedom-of-choice.txt' );
-my $bobbie  = File::Next::reslash( 't/text/me-and-bobbie-mcgee.txt' );
+my $freedom = reslash( 't/text/freedom-of-choice.txt' );
+my $bobbie  = reslash( 't/text/me-and-bobbie-mcgee.txt' );
 
 my @TEXT_FILES = sort map { untaint($_) } glob( 't/text/*.txt' );
 

@@ -4,7 +4,6 @@ use warnings;
 use strict;
 
 use Test::More tests => 36;
-use File::Next (); # for reslash function
 
 use lib 't';
 use Util;
@@ -28,7 +27,7 @@ EOF
 }
 
 BEFORE_WITH_LINE_NO: {
-    my $target_file = File::Next::reslash( 't/text/boy-named-sue.txt' );
+    my $target_file = reslash( 't/text/boy-named-sue.txt' );
     my @expected = split( /\n/, <<"EOF" );
 $target_file-7-
 $target_file-8-Well, he must have thought that it was quite a joke
@@ -287,7 +286,7 @@ HIGHLIGHTING: {
 
 # Grouping works with context (single file).
 GROUPING_SINGLE_FILE: {
-    my $target_file = File::Next::reslash( 't/etc/shebang.py.xxx' );
+    my $target_file = reslash( 't/etc/shebang.py.xxx' );
     my @expected = split( /\n/, <<"EOF" );
 $target_file
 1:#!/usr/bin/python
@@ -303,7 +302,7 @@ EOF
 # Grouping works with context and multiple files.
 # i.e. a separator line between different matches in the same file and no separator between files
 GROUPING_MULTIPLE_FILES: {
-    my @target_file = map { File::Next::reslash($_) } qw(
+    my @target_file = map { reslash($_) } qw(
         t/text/boy-named-sue.txt
         t/text/me-and-bobbie-mcgee.txt
         t/text/science-of-myth.txt
