@@ -9,11 +9,10 @@ use Test::More tests => 4;
 
 use lib 't';
 use Util;
-use File::Next ();
 
 prep_environment();
 
-my @source_files = map { File::Next::reslash($_) } qw(
+my @source_files = map { reslash($_) } qw(
     t/swamp/options-crlf.pl
     t/swamp/options.pl
     t/swamp/options.pl.bak
@@ -48,7 +47,7 @@ EOF
 }
 
 FILE_NOT_THERE: {
-    my $file = File::Next::reslash( 't/swamp/perl.pod' );
+    my $file = reslash( 't/swamp/perl.pod' );
 
     my @expected_stderr;
 

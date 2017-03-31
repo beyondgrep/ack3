@@ -6,7 +6,6 @@ use lib 't';
 
 use Test::More tests => 3;
 
-use File::Next;
 use Util;
 
 prep_environment();
@@ -15,7 +14,7 @@ prep_environment();
 subtest 'Basic reading from files, no switches' => sub {
     plan tests => 2;
 
-    my $target_file = File::Next::reslash( 't/swamp/options.pl' );
+    my $target_file = reslash( 't/swamp/options.pl' );
     my @expected = split( /\n/, <<"EOF" );
 $target_file:2:use strict;
 EOF

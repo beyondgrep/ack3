@@ -4,7 +4,6 @@ use warnings;
 use strict;
 
 use Test::More tests => 15;
-use File::Next (); # For the reslash() function
 
 use lib 't';
 use Util;
@@ -28,7 +27,7 @@ G_NO_PRINT0: {
 }
 
 G_PRINT0: {
-    my $expected = join( "\0", map { File::Next::reslash($_) } qw(
+    my $expected = join( "\0", map { reslash($_) } qw(
         t/text/4th-of-july.txt
         t/text/freedom-of-choice.txt
         t/text/science-of-myth.txt

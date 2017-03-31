@@ -802,4 +802,8 @@ sub create_tempfile {
     return $tempfile;
 }
 
+sub reslash {
+    return File::Next::reslash( @_ );
+}
+
 1;

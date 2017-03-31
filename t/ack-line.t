@@ -7,7 +7,6 @@ use Test::More;
 
 use lib 't';
 use Util;
-use File::Next;
 
 if ( not has_io_pty() ) {
     plan skip_all => q{You need to install IO::Pty to run this test};
@@ -109,7 +108,7 @@ EOF
 
 
 LINE_1_MULTIPLE_FILES: {
-    my @target_file = map { File::Next::reslash( $_ ) } qw(
+    my @target_file = map { reslash( $_ ) } qw(
         t/swamp/c-header.h
         t/swamp/c-source.c
     );
@@ -126,7 +125,7 @@ EOF
 
 
 LINE_1_CONTEXT: {
-    my @target_file = map { File::Next::reslash( $_ ) } qw(
+    my @target_file = map { reslash( $_ ) } qw(
         t/swamp/c-header.h
         t/swamp/c-source.c
     );

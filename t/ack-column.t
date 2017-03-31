@@ -5,14 +5,13 @@ use strict;
 
 use Test::More tests => 4;
 
-use File::Next ();
 
 use lib 't';
 use Util;
 
 prep_environment();
 
-my $weasel = File::Next::reslash( 't/text/science-of-myth.txt' );
+my $weasel = reslash( 't/text/science-of-myth.txt' );
 my @base_args = qw( the -w -i --with-filename --noenv );
 
 WITH_COLUMNS: {
