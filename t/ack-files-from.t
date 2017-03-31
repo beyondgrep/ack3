@@ -15,7 +15,7 @@ subtest 'Basic reading from files, no switches' => sub {
     plan tests => 2;
 
     my $target_file = reslash( 't/swamp/options.pl' );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file:2:use strict;
 EOF
 

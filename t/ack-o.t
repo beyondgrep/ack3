@@ -15,7 +15,7 @@ prep_environment();
 NO_O: {
     my @files = qw( t/text/boy-named-sue.txt );
     my @args = qw( the\\s+\\S+ );
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
         But the meanest thing that he ever did
         But I made me a vow to the moon and stars
         That I'd search the honky-tonks and bars
@@ -37,7 +37,7 @@ EOF
 WITH_O: {
     my @files = qw( t/text/boy-named-sue.txt );
     my @args = qw( the\\s+\\S+ -o );
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
         the meanest
         the moon
         the honky-tonks

@@ -15,7 +15,7 @@ my $weasel = reslash( 't/text/science-of-myth.txt' );
 my @base_args = qw( the -w -i --with-filename --noenv );
 
 WITH_COLUMNS: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 3:4:In the case of Christianity and Judaism there exists the belief
 6:1:The Buddhists believe that the functional aspects override the myth
 7:27:While other religions use the literal core to build foundations with
@@ -40,7 +40,7 @@ HERE
 
 
 WITHOUT_COLUMNS: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 3:In the case of Christianity and Judaism there exists the belief
 6:The Buddhists believe that the functional aspects override the myth
 7:While other religions use the literal core to build foundations with
@@ -62,3 +62,6 @@ HERE
 
     lists_match( \@results, \@expected, 'Checking without column numbers' );
 }
+
+done_testing();
+exit 0;

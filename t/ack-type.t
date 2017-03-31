@@ -13,7 +13,7 @@ prep_environment();
 my @SWAMP = qw( t/swamp );
 
 TEST_TYPE: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 t/swamp/0:1:#!/usr/bin/perl -w
 t/swamp/Makefile.PL:1:#!perl -T
 t/swamp/options-crlf.pl:1:#!/usr/bin/env perl
@@ -38,7 +38,7 @@ EOF
 }
 
 TEST_NOTYPE: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 t/swamp/c-header.h:1:/*    perl.h
 t/swamp/Makefile:1:# This Makefile is for the ack extension to perl.
 EOF
@@ -120,3 +120,6 @@ END_ACKRC
     });
     is_deeply( \@lines, \@expected );
 }
+
+done_testing();
+exit 0;

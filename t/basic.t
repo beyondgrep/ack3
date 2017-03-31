@@ -10,7 +10,7 @@ use Test::More tests => 12;
 prep_environment();
 
 NO_SWITCHES_ONE_FILE: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 use strict;
 EOF
 
@@ -24,7 +24,7 @@ EOF
 
 NO_SWITCHES_MULTIPLE_FILES: {
     my $target_file = reslash( 't/swamp/options.pl' );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file:2:use strict;
 EOF
 
@@ -39,7 +39,7 @@ EOF
 WITH_SWITCHES_ONE_FILE: {
     my $target_file = reslash( 't/swamp/options.pl' );
     for my $opt ( qw( -H --with-filename ) ) {
-        my @expected = split( /\n/, <<"EOF" );
+        my @expected = line_split( <<"EOF" );
 $target_file:2:use strict;
 EOF
 
@@ -54,7 +54,7 @@ EOF
 
 WITH_SWITCHES_MULTIPLE_FILES: {
     for my $opt ( qw( -h --no-filename ) ) {
-        my @expected = split( /\n/, <<"EOF" );
+        my @expected = line_split( <<"EOF" );
 use strict;
 EOF
 
@@ -65,3 +65,6 @@ EOF
         lists_match( \@results, \@expected, "Looking for strict in multiple files with $opt" );
     }
 }
+
+done_testing();
+exit 0;

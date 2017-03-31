@@ -59,7 +59,7 @@ my $freedom = reslash( 't/text/freedom-of-choice.txt' );
 my $fourth  = reslash( 't/text/4th-of-july.txt' );
 my $science = reslash( 't/text/science-of-myth.txt' );
 
-my @expected = split /\n/, <<"EOF";
+my @expected = line_split( <<"EOF" );
 $freedom:1:A victim of collision on the open sea
 $freedom:3:Sink, swim, go down with the ship
 $freedom:6:I'll say it again in the land of the free
@@ -179,3 +179,6 @@ else {
 
 sets_match( $stdout, \@expected, __FILE__ );
 is_empty_array( $stderr );
+
+done_testing();
+exit 0;

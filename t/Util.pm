@@ -554,7 +554,7 @@ Turns a multi-line input string into its corresponding array of lines, with colo
 sub colorize {
     my $input = shift;
 
-    my @lines = split( /\n/, $input );
+    my @lines = line_split( $input );
 
     for my $line ( @lines ) {
         # File name

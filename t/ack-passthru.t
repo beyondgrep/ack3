@@ -14,7 +14,7 @@ my @full_lyrics = <DATA>;
 chomp @full_lyrics;
 
 NORMAL: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Painting a picture of you
 And I'm looking at you
 Looking at me, telling me you love me,
@@ -55,6 +55,9 @@ SKIP: {
     my @escaped_lines = grep { /\e/ } @results;
     is( scalar @escaped_lines, 2, 'Only two lines are highlighted' );
 }
+
+done_testing();
+exit 0;
 
 __DATA__
 Alone with the morning burning red

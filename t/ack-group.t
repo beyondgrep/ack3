@@ -17,7 +17,7 @@ my @TEXT_FILES = sort map { untaint($_) } glob( 't/text/*.txt' );
 
 
 NO_GROUPING: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $freedom:2:Nobody ever said life was free
 $freedom:4:But use your freedom of choice
 $freedom:6:I'll say it again in the land of the free
@@ -41,7 +41,7 @@ EOF
 
 
 STANDARD_GROUPING: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $freedom
 2:Nobody ever said life was free
 4:But use your freedom of choice
@@ -67,7 +67,7 @@ EOF
 }
 
 HEADING_NO_BREAK: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $freedom
 2:Nobody ever said life was free
 4:But use your freedom of choice
@@ -91,7 +91,7 @@ EOF
 }
 
 BREAK_NO_HEADING: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $freedom:2:Nobody ever said life was free
 $freedom:4:But use your freedom of choice
 $freedom:6:I'll say it again in the land of the free

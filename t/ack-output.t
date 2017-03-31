@@ -23,7 +23,7 @@ ARG: {
 }
 
 ARG_MULTIPLE_FILES: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 And there you were
 He stood there lookin' at me and I saw him smile.
 And I knew I wouldn't be there to help ya along.
@@ -50,7 +50,7 @@ MATCH: {
 }
 
 MATCH_MULTIPLE_FILES: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 t/text/4th-of-july.txt:22:there
 t/text/boy-named-sue.txt:48:there
 t/text/boy-named-sue.txt:52:there
@@ -105,7 +105,7 @@ POSTMATCH: {
 }
 
 POSTMATCH_MULTIPLE_FILES: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
  you were
  lookin' at me and I saw him smile.
  to help ya along.
@@ -132,7 +132,7 @@ SUBPATTERN_MATCH: {
 }
 
 SUBPATTERN_MATCH_MULTIPLE_FILES: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 And-there-you
 stood-there-lookin
 be-there-to
@@ -159,7 +159,7 @@ INPUT_LINE_NUMBER: {
 }
 
 INPUT_LINE_NUMBER_MULTIPLE_FILES: {
-    my @expected = split( /\n/, <<'HERE' );
+    my @expected = line_split( <<'HERE' );
 t/text/4th-of-july.txt:22:line:22
 t/text/boy-named-sue.txt:48:line:48
 t/text/boy-named-sue.txt:52:line:52
@@ -172,3 +172,6 @@ HERE
 
     lists_match( \@results, \@expected, 'Line number' );
 }
+
+done_testing();
+exit 0;

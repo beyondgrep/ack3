@@ -16,7 +16,7 @@ my @files = qw( t/text );
 FRONT_ANCHORED: {
     my @args  = qw( --sort-files -h -i ^science );
 
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Science and religion are not mutually exclusive
 EOF
 
@@ -26,7 +26,7 @@ EOF
 BACK_ANCHORED: {
     my @args  = qw( --sort-files -h -i done$ );
 
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Through all kinds of weather and everything we done
 And if it works, then it gets the job done
 EOF
@@ -37,7 +37,7 @@ EOF
 UNANCHORED: {
     my @args  = qw( --sort-files -h -i science );
 
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Science and religion are not mutually exclusive
 In fact, for better understanding we take the facts of science and apply them
     -- "The Science Of Myth", Screeching Weasel
@@ -47,3 +47,4 @@ EOF
 }
 
 done_testing();
+exit 0;

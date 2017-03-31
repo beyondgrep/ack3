@@ -22,7 +22,7 @@ prep_environment();
 NO_PAGER: {
     my @args = qw(--nocolor --sort-files Sue t/text);
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -41,7 +41,7 @@ END_TEXT
 PAGER: {
     my @args = qw(--nocolor --pager=./test-pager --sort-files Sue t/text);
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -60,7 +60,7 @@ END_TEXT
 PAGER_WITH_OPTS: {
     my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--sort-files', 'Sue', 't/text');
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 13:I tell ya, life ain't easy for a boy named Sue.
 34:And I said: "My name is Sue! How do you do! Now you gonna die!"
@@ -76,7 +76,7 @@ FORCE_NO_PAGER: {
     my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--nopager', '--sort-files',
         'Sue', 't/text');
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -98,7 +98,7 @@ PAGER_ENV: {
 
     my @args = ('--nocolor', '--sort-files', 'Sue', 't/text');
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 13:I tell ya, life ain't easy for a boy named Sue.
 34:And I said: "My name is Sue! How do you do! Now you gonna die!"
@@ -115,7 +115,7 @@ PAGER_ENV_OVERRIDE: {
 
     my @args = ('--nocolor', '--nopager', '--sort-files', 'Sue', 't/text');
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -138,7 +138,7 @@ PAGER_ACKRC: {
 --pager=./test-pager --skip=2
 END_ACKRC
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 13:I tell ya, life ain't easy for a boy named Sue.
 34:And I said: "My name is Sue! How do you do! Now you gonna die!"
@@ -159,7 +159,7 @@ PAGER_ACKRC_OVERRIDE: {
 --pager=./test-pager --skip=2
 END_ACKRC
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -182,7 +182,7 @@ PAGER_NOENV: {
 
     my @args = ('--nocolor', '--noenv', '--sort-files', 'Sue', 't/text');
 
-    my @expected = split /\n/, <<'END_TEXT';
+    my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt
 6:Was before he left, he went and named me Sue.
 13:I tell ya, life ain't easy for a boy named Sue.
@@ -249,3 +249,6 @@ ACKRC_ACKRC_PAGER_PERMITTED: {
 
     chdir $wd;
 }
+
+done_testing();
+exit 0;

@@ -53,7 +53,7 @@ LINE_1_COMMA_5: {
 }
 
 LINES_2_TO_5: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 And he didn't leave very much for my Ma and me
 'cept an old guitar and an empty bottle of booze.
 Now, I don't blame him 'cause he run and hid
@@ -67,7 +67,7 @@ EOF
 }
 
 LINE_1_TO_5_CONTEXT: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Well, my daddy left home when I was three
 And he didn't leave very much for my Ma and me
 'cept an old guitar and an empty bottle of booze.
@@ -94,7 +94,7 @@ LINE_1_AND_5_AND_NON_EXISTENT: {
 }
 
 LINE_AND_PASSTHRU: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 =head1 Dummy document
 
 =head2 There's important stuff in here!
@@ -112,7 +112,7 @@ LINE_1_MULTIPLE_FILES: {
         t/swamp/c-header.h
         t/swamp/c-source.c
     );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file[0]:1:/*    perl.h
 $target_file[1]:1:/*  A Bison parser, made from plural.y
 EOF
@@ -129,7 +129,7 @@ LINE_1_CONTEXT: {
         t/swamp/c-header.h
         t/swamp/c-source.c
     );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file[0]:1:/*    perl.h
 $target_file[0]-2- *
 $target_file[0]-3- *    Copyright (C) 1993, 1994, 1995, 1996, 1997, 1998, 1999,

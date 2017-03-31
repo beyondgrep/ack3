@@ -13,7 +13,7 @@ prep_environment();
 # Check that a match on the last line of a file without a proper
 # ending newline gets this newline appended by ack.
 INCOMPLETE_LAST_LINE: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 but no new line on the last line!
 At last everything is done for you.
 EOF
@@ -25,3 +25,5 @@ EOF
 }
 
 done_testing();
+
+exit 0;

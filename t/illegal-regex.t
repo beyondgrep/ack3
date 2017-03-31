@@ -10,7 +10,7 @@ use Util;
 
 prep_environment();
 
-# test for behavior with illegal regexes
+# Test for behavior with illegal regexes.
 my @tests = (
     [ 'illegal pattern',  '?foo', 't/' ],
     [ 'illegal -g regex', '-g', '?foo', 't/' ],
@@ -21,6 +21,11 @@ plan tests => scalar @tests;
 for ( @tests ) {
     test_ack_with( @{$_} );
 }
+
+done_testing();
+
+exit 0;
+
 
 sub test_ack_with {
     my $testcase = shift;

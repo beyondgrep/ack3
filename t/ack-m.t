@@ -15,7 +15,7 @@ my @text  = sort map { untaint($_) } glob( 't/text/s*.txt' );
 my $myth  = reslash( 't/text/science-of-myth.txt' );
 my $happy = reslash( 't/text/shut-up-be-happy.txt' );
 
-my @expected = split( /\n/, <<"EOF" );
+my @expected = line_split( <<"EOF" );
 $myth:3:In the case of Christianity and Judaism there exists the belief
 $myth:6:The Buddhists believe that the functional aspects override the myth
 $myth:7:While other religions use the literal core to build foundations with
@@ -26,7 +26,7 @@ EOF
 
 ack_lists_match( [ '-m', 3, '-w', 'the', @text ], \@expected, 'Should show only 3 lines per file' );
 
-@expected = split( /\n/, <<"EOF" );
+@expected = line_split( <<"EOF" );
 $myth:3:In the case of Christianity and Judaism there exists the belief
 EOF
 
