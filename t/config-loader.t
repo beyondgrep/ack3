@@ -49,7 +49,6 @@ my %defaults = (
 
 test_loader(
     expected_opts    => { %defaults },
-    expected_targets => [],
     'empty inputs should result in default outputs'
 );
 
@@ -61,28 +60,24 @@ for my $option ( qw( after_context before_context ) ) {
     test_loader(
         argv             => [ "--$long_arg=15" ],
         expected_opts    => { %defaults, $option => 15 },
-        expected_targets => [],
         "--$long_arg=15 should set $option to 15",
     );
 
     test_loader(
         argv             => [ "--$long_arg=0" ],
         expected_opts    => { %defaults, $option => 0 },
-        expected_targets => [],
         "--$long_arg=0 should set $option to 0",
     );
 
     test_loader(
         argv             => [ "--$long_arg" ],
         expected_opts    => { %defaults, $option => 2 },
-        expected_targets => [],
         "--$long_arg without a value should default $option to 2",
     );
 
     test_loader(
         argv             => [ "--$long_arg=-43" ],
         expected_opts    => { %defaults, $option => 2 },
-        expected_targets => [],
         "--$long_arg with a negative value should default $option to 2",
     );
 
@@ -90,28 +85,24 @@ for my $option ( qw( after_context before_context ) ) {
     test_loader(
         argv             => [ $short_arg, 15 ],
         expected_opts    => { %defaults, $option => 15 },
-        expected_targets => [],
         "$short_arg 15 should set $option to 15",
     );
 
     test_loader(
         argv             => [ $short_arg, 0 ],
         expected_opts    => { %defaults, $option => 0 },
-        expected_targets => [],
         "$short_arg 0 should set $option to 0",
     );
 
     test_loader(
         argv             => [ $short_arg ],
         expected_opts    => { %defaults, $option => 2 },
-        expected_targets => [],
         "$short_arg without a value should default $option to 2",
     );
 
     test_loader(
         argv             => [ $short_arg, '-43' ],
         expected_opts    => { %defaults, $option => 2 },
-        expected_targets => [],
         "$short_arg with a negative value should default $option to 2",
     );
 }
@@ -119,56 +110,48 @@ for my $option ( qw( after_context before_context ) ) {
 test_loader(
     argv             => ['-C', 5],
     expected_opts    => { %defaults, after_context => 5, before_context => 5 },
-    expected_targets => [],
     '-C sets both before_context and after_context'
 );
 
 test_loader(
     argv             => ['-C'],
     expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    expected_targets => [],
     '-C sets both before_context and after_context, with default'
 );
 
 test_loader(
     argv             => ['-C', 0],
     expected_opts    => { %defaults, after_context => 0, before_context => 0 },
-    expected_targets => [],
     '-C sets both before_context and after_context, with zero overriding default'
 );
 
 test_loader(
     argv             => ['-C', -43],
     expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    expected_targets => [],
     '-C with invalid value sets both before_context and after_context to default'
 );
 
 test_loader(
     argv             => ['--context=5'],
     expected_opts    => { %defaults, after_context => 5, before_context => 5 },
-    expected_targets => [],
     '--context sets both before_context and after_context'
 );
 
 test_loader(
     argv             => ['--context'],
     expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    expected_targets => [],
     '--context sets both before_context and after_context, with default'
 );
 
 test_loader(
     argv             => ['--context=0'],
     expected_opts    => { %defaults, after_context => 0, before_context => 0 },
-    expected_targets => [],
     '--context sets both before_context and after_context, with zero overriding default'
 );
 
 test_loader(
     argv             => ['--context=-43'],
     expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    expected_targets => [],
     '--context with invalid value sets both before_context and after_context to default'
 );
 
@@ -180,21 +163,18 @@ do {
     test_loader(
         argv             => [],
         expected_opts    => { %defaults, pager => './test-pager --skip=2' },
-        expected_targets => [],
         'ACK_PAGER should set the default pager',
     );
 
     test_loader(
         argv             => ['--pager=./test-pager'],
         expected_opts    => { %defaults, pager => './test-pager' },
-        expected_targets => [],
         '--pager should override ACK_PAGER',
     );
 
     test_loader(
         argv             => ['--nopager'],
         expected_opts    => { %defaults },
-        expected_targets => [],
         '--nopager should suppress ACK_PAGER',
     );
 };
@@ -205,21 +185,18 @@ do {
     test_loader(
         argv             => [],
         expected_opts    => { %defaults, pager => './test-pager --skip=2' },
-        expected_targets => [],
         'ACK_PAGER_COLOR should set the default pager',
     );
 
     test_loader(
         argv             => ['--pager=./test-pager'],
         expected_opts    => { %defaults, pager => './test-pager' },
-        expected_targets => [],
         '--pager should override ACK_PAGER_COLOR',
     );
 
     test_loader(
         argv             => ['--nopager'],
         expected_opts    => { %defaults },
-        expected_targets => [],
         '--nopager should suppress ACK_PAGER_COLOR',
     );
 
@@ -228,21 +205,18 @@ do {
     test_loader(
         argv             => [],
         expected_opts    => { %defaults, pager => './test-pager --skip=2' },
-        expected_targets => [],
         'ACK_PAGER_COLOR should override ACK_PAGER',
     );
 
     test_loader(
         argv             => ['--pager=./test-pager'],
         expected_opts    => { %defaults, pager => './test-pager' },
-        expected_targets => [],
         '--pager should override ACK_PAGER_COLOR and ACK_PAGER',
     );
 
     test_loader(
         argv             => ['--nopager'],
         expected_opts    => { %defaults },
-        expected_targets => [],
         '--nopager should suppress ACK_PAGER_COLOR and ACK_PAGER',
     );
 };
@@ -253,21 +227,18 @@ do {
     test_loader(
         argv             => [],
         expected_opts    => { %defaults },
-        expected_targets => [],
         q{PAGER doesn't affect ack by default},
     );
 
     test_loader(
         argv             => ['--pager'],
         expected_opts    => { %defaults, pager => './test-pager' },
-        expected_targets => [],
         'PAGER is used if --pager is specified with no argument',
     );
 
     test_loader(
         argv             => ['--pager=./test-pager --skip=2'],
         expected_opts    => { %defaults, pager => './test-pager --skip=2' },
-        expected_targets => [],
         'PAGER is not used if --pager is specified with an argument',
     );
 
@@ -290,8 +261,7 @@ sub test_loader {
     return subtest "test_loader( $msg )" => sub {
         plan tests => 2;
 
-        my ( $env, $argv, $expected_opts, $expected_targets ) =
-            delete @opts{qw/env argv expected_opts expected_targets/};
+        my ( $env, $argv, $expected_opts ) = delete @opts{qw( env argv expected_opts )};
 
         $env  = '' unless defined $env;
         $argv = [] unless defined $argv;
@@ -321,6 +291,6 @@ sub test_loader {
         };
 
         is_deeply( $got_opts, $expected_opts, 'Options match' );
-        is_deeply( $got_targets, $expected_targets, 'Targets match' );
+        is_empty_array( $got_targets, 'Got no targets' );
     };
 }
