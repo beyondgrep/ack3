@@ -55,8 +55,6 @@ t/ack-help-types.t
 t/ack-h.t
 t/ack-ignore-dir.t
 t/ack-ignore-file.t
-t/ack-interactive.t
-t/ack-invalid-ackrc.t
 t/ack-i.t
 t/ack-known-types.t
 t/ack-k.t
@@ -64,7 +62,6 @@ t/ack-line.t
 t/ack-match.t
 t/ack-m.t
 t/ack-man.t
-t/ack-named-pipes.t
 t/ack-n.t
 t/ack-o.t
 t/ack-output.t
@@ -99,6 +96,8 @@ t/firstlinematch-filter.t
 t/highlighting.t
 t/illegal-regex.t
 t/incomplete-last-line.t
+t/interactive.t
+t/invalid-ackrc.t
 t/inverted-file-filter.t
 t/is-filter.t
 t/issue244.t
@@ -110,6 +109,7 @@ t/longopts.t
 t/lua-shebang.t
 t/match-filter.t
 t/mutex-options.t
+t/named-pipes.t
 t/noackrc.t
 t/noenv.t
 t/process-substitution.t
