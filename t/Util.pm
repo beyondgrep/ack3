@@ -797,10 +797,21 @@ sub create_tempfile {
 
     my $tempfile = File::Temp->new();
     print {$tempfile} join( "\n", @lines );
-    close $tempfile;
+    close $tempfile or die $!;
 
     return $tempfile;
 }
+
+
+sub touch {
+    my $filename = shift;
+
+    open my $fh, '>>', $filename or die "Unable to append to $filename: $!";
+    close $fh or die $!;
+
+    return;
+}
+
 
 sub reslash {
     return File::Next::reslash( @_ );

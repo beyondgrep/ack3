@@ -51,14 +51,3 @@ sub dir_cleanup {
 
     return;
 }
-
-
-sub touch {
-    my $filename = shift;
-
-    my $fh;
-    open $fh, '>>', $filename or die "Unable to append to $filename: $!";
-    close $fh;
-
-    return;
-}

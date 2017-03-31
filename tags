@@ -7,7 +7,6 @@
 ACKRC_ACKRC_MATCH_PERMITTED	t/ack-match.t	/^ACKRC_ACKRC_MATCH_PERMITTED: {$/;"	l
 ACKRC_ACKRC_OUTPUT_PERMITTED	t/ack-o.t	/^ACKRC_ACKRC_OUTPUT_PERMITTED: {$/;"	l
 ACKRC_ACKRC_PAGER_PERMITTED	t/ack-pager.t	/^ACKRC_ACKRC_PAGER_PERMITTED: {$/;"	l
-ADJACENT_CAPTURE_COLORING	t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
 ALTERNATING_NUMBERS	t/ack-w.t	/^ALTERNATING_NUMBERS: {$/;"	l
 ARG	t/ack-output.t	/^ARG: {$/;"	l
@@ -376,6 +375,7 @@ create_group	lib/App/Ack/Filter/Extension.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Match.pm	/^sub create_group {$/;"	s
+create_tempfile	t/Util.pm	/^sub create_tempfile {$/;"	s
 def_types_from_ARGV	garage/ack-1.96	/^sub def_types_from_ARGV {$/;"	s
 delete_type	garage/ack-1.96	/^sub delete_type {$/;"	s
 die	garage/ack-1.96	/^sub die {$/;"	s
@@ -415,7 +415,6 @@ filetypes_supported	garage/ack-2.04	/^sub filetypes_supported {$/;"	s
 filetypes_supported	garage/ack-2.18	/^sub filetypes_supported {$/;"	s
 filetypes_supported	lib/App/Ack.pm	/^sub filetypes_supported {$/;"	s
 filetypes_supported_set	garage/ack-1.96	/^sub filetypes_supported_set {$/;"	s
-fill_temp_file	t/ack-files-from.t	/^sub fill_temp_file {$/;"	s
 filter	garage/ack-2.04	/^sub filter {$/;"	s
 filter	garage/ack-2.18	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
@@ -671,6 +670,7 @@ reset_total_count	garage/ack-1.96	/^sub reset_total_count {$/;"	s
 reslash	garage/ack-1.96	/^sub reslash {$/;"	s
 reslash	garage/ack-2.04	/^sub reslash {$/;"	s
 reslash	garage/ack-2.18	/^sub reslash {$/;"	s
+reslash	t/Util.pm	/^sub reslash {$/;"	s
 reslash_all	t/Util.pm	/^sub reslash_all {$/;"	s
 resource_has_match	ack	/^sub resource_has_match {$/;"	s
 resource_has_match	garage/ack-2.04	/^sub resource_has_match {$/;"	s
@@ -742,7 +742,7 @@ to_string	lib/App/Ack/Filter/IsPath.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/IsPathGroup.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Match.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/MatchGroup.pm	/^sub to_string {$/;"	s
-touch	t/ack-named-pipes.t	/^sub touch {$/;"	s
+touch	t/Util.pm	/^sub touch {$/;"	s
 touch_ackrc	t/config-finder.t	/^sub touch_ackrc {$/;"	s
 uninvert_filter	garage/ack-2.18	/^sub uninvert_filter {$/;"	s
 uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub uninvert_filter {$/;"	s
