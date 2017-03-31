@@ -16,5 +16,4 @@ oo
 END_OF_FILE
 
 my @results = run_ack('-l', 'fo\s+oo', $tempfile->filename);
-
-lists_match(\@results, [], '\s+ should never match across line boundaries');
+is_empty_array( \@results, '\s+ should never match across line boundaries' );

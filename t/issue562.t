@@ -14,7 +14,7 @@ my $tempfile = create_tempfile( ('') x 3 );
 
 my @results = run_ack('^\s\s+$', $tempfile->filename);
 
-lists_match(\@results, [], '^\s\s+$ should never match a sequence of empty lines');
+is_empty_array( \@results, '^\s\s+$ should never match a sequence of empty lines' );
 
 done_testing();
 

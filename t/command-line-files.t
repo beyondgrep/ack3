@@ -19,7 +19,7 @@ my @source_files = map { reslash($_) } qw(
 );
 
 JUST_THE_DIR: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $source_files[0]:19:notawordhere
 $source_files[1]:19:notawordhere
 EOF
@@ -32,7 +32,7 @@ EOF
 
 # Even a .bak file gets searched if you specify it on the command line.
 SPECIFYING_A_BAK_FILE: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $source_files[1]:19:notawordhere
 $source_files[2]:19:notawordhere
 EOF
@@ -53,17 +53,17 @@ FILE_NOT_THERE: {
 
     # I don't care for this, but it's the least of the evils I could think of
     if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-        @expected_stderr = split( /\n/, <<'EOF' );
+        @expected_stderr = line_split( <<'EOF' );
 ack-standalone: non-existent-file.txt: No such file or directory
 EOF
     }
     else {
-        @expected_stderr = split( /\n/, <<'EOF' );
+        @expected_stderr = line_split( <<'EOF' );
 ack: non-existent-file.txt: No such file or directory
 EOF
     }
 
-    my @expected_stdout = split( /\n/, <<"EOF" );
+    my @expected_stdout = line_split( <<"EOF" );
 ${file}:3:=head2 There's important stuff in here!
 EOF
 

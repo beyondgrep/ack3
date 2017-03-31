@@ -12,7 +12,7 @@ prep_environment();
 
 # Checks also beginning of file.
 BEFORE: {
-    my @expected = split( /\n/, <<'EOF' );
+    my @expected = line_split( <<'EOF' );
 Well, my daddy left home when I was three
 --
 But the meanest thing that he ever did
@@ -28,7 +28,7 @@ EOF
 
 BEFORE_WITH_LINE_NO: {
     my $target_file = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file-7-
 $target_file-8-Well, he must have thought that it was quite a joke
 $target_file:9:And it got a lot of laughs from a' lots of folks,
@@ -50,7 +50,7 @@ EOF
 
 # Checks also end of file.
 AFTER: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 I tell ya, life ain't easy for a boy named Sue.
 
 Well, I grew up quick and I grew up mean,
@@ -67,7 +67,7 @@ EOF
 
 # Context defaults to 2.
 CONTEXT_DEFAULT: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 And it got a lot of laughs from a' lots of folks,
 It seems I had to fight my whole life through.
 Some gal would giggle and I'd turn red
@@ -84,7 +84,7 @@ EOF
 
 # Try context 1.
 CONTEXT_ONE: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 It seems I had to fight my whole life through.
 Some gal would giggle and I'd turn red
 And some guy'd laugh and I'd bust his head,
@@ -99,7 +99,7 @@ EOF
 
 # --context=0 means no context.
 CONTEXT_ONE: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 Some gal would giggle and I'd turn red
 EOF
 
@@ -112,7 +112,7 @@ EOF
 
 # -1 must not stop the ending context from displaying.
 CONTEXT_DEFAULT: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 And it got a lot of laughs from a' lots of folks,
 It seems I had to fight my whole life through.
 Some gal would giggle and I'd turn red
@@ -129,7 +129,7 @@ EOF
 
 # -C with overlapping contexts (adjacent lines)
 CONTEXT_OVERLAPPING: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 This is line 03
 This is line 04
 This is line 05
@@ -147,7 +147,7 @@ EOF
 
 # -C with contexts that touch.
 CONTEXT_ADJACENT: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 This is line 01
 This is line 02
 This is line 03
@@ -169,7 +169,7 @@ EOF
 
 # -C with contexts that just don't touch.
 CONTEXT_NONADJACENT: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 This is line 01
 This is line 02
 This is line 03
@@ -195,7 +195,7 @@ CONTEXT_OVERLAPPING_COLOR: {
     my $match_end   = "\e[0m";
     my $line_end    = "\e[0m\e[K";
 
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 This is line 03
 This is line 04
 This is line ${match_start}05${match_end}${line_end}
@@ -216,7 +216,7 @@ CONTEXT_OVERLAPPING_COLOR_BEFORE: {
     my $match_end   = "\e[0m";
     my $line_end    = "\e[0m\e[K";
 
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 This is line 03
 This is line 04
 This is line ${match_start}05${match_end}${line_end}
@@ -235,7 +235,7 @@ CONTEXT_OVERLAPPING_COLOR_AFTER: {
     my $match_end   = "\e[0m";
     my $line_end    = "\e[0m\e[K";
 
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 This is line ${match_start}05${match_end}${line_end}
 This is line ${match_start}06${match_end}${line_end}
 This is line 07
@@ -253,7 +253,7 @@ EOF
 #    even though there is a 4th match in the after context of the third match
 #    ("give _ya_ that name" in the last line)
 CONTEXT_MAX_COUNT: {
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<'EOF' );
 And some guy'd laugh and I'd bust his head,
 I tell ya, life ain't easy for a boy named Sue.
 
@@ -287,7 +287,7 @@ HIGHLIGHTING: {
 # Grouping works with context (single file).
 GROUPING_SINGLE_FILE: {
     my $target_file = reslash( 't/etc/shebang.py.xxx' );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file
 1:#!/usr/bin/python
 EOF
@@ -307,7 +307,7 @@ GROUPING_MULTIPLE_FILES: {
         t/text/me-and-bobbie-mcgee.txt
         t/text/science-of-myth.txt
     );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $target_file[0]
 1:Well, my daddy left home when I was three
 --
@@ -338,7 +338,7 @@ EOF
 # See https://github.com/petdance/ack2/issues/326 and links there for details.
 WITH_COLUMNS_AND_CONTEXT: {
     my @files = qw( t/text/freedom-of-choice.txt );
-    my @expected = split( /\n/, <<"EOF" );
+    my @expected = line_split( <<"EOF" );
 $files[0]-2-Nobody ever said life was free
 $files[0]-3-Sink, swim, go down with the ship
 $files[0]:4:15:But use your freedom of choice
@@ -383,3 +383,7 @@ EOF
 
     ack_lists_match( [ @args, @files ], \@expected, "Looking for $regex in file $files[0] with columns and context" );
 }
+
+done_testing();
+
+exit 0;

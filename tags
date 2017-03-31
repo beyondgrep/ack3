@@ -257,6 +257,7 @@ Usage	garage/ack-1.96	/^Usage: ack [OPTION]... PATTERN [FILE]$/;"	l
 Usage	garage/ack-2.04	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
 Usage	garage/ack-2.18	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
 Usage	lib/App/Ack.pm	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
+Util	t/Util.pm	/^package Util;$/;"	p
 WITHOUT_COLUMNS	t/ack-column.t	/^WITHOUT_COLUMNS: {$/;"	l
 WITHOUT_S	t/ack-s.t	/^WITHOUT_S: {$/;"	l
 WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
@@ -276,9 +277,11 @@ _bar	garage/ack-2.04	/^sub _bar {$/;"	s
 _candidate_files	garage/ack-1.96	/^sub _candidate_files {$/;"	s
 _candidate_files	garage/ack-2.04	/^sub _candidate_files {$/;"	s
 _candidate_files	garage/ack-2.18	/^sub _candidate_files {$/;"	s
+_check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	garage/ack-2.04	/^sub _check_for_ackrc {$/;"	s
 _check_for_ackrc	garage/ack-2.18	/^sub _check_for_ackrc {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
+_check_message	t/Util.pm	/^sub _check_message {$/;"	s
 _compile_descend_filter	ack	/^sub _compile_descend_filter {$/;"	s
 _compile_descend_filter	garage/ack-2.04	/^sub _compile_descend_filter {$/;"	s
 _compile_descend_filter	garage/ack-2.18	/^sub _compile_descend_filter {$/;"	s
@@ -307,6 +310,7 @@ _pic_decode	garage/ack-2.18	/^sub _pic_decode {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
 _populate_help_options	t/ack-help.t	/^    sub _populate_help_options {$/;"	s
 _populate_man_options	xt/man.t	/^    sub _populate_man_options {$/;"	s
+_record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_redundancies	garage/ack-2.04	/^sub _remove_redundancies {$/;"	s
 _remove_redundancies	garage/ack-2.18	/^sub _remove_redundancies {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
@@ -333,7 +337,6 @@ are_mutually_exclusive	t/mutex-options.t	/^sub are_mutually_exclusive {$/;"	s
 basename	garage/ack-2.18	/^sub basename {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
-break_up_lines	t/Util.pm	/^sub break_up_lines {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
 build_regex	ack	/^sub build_regex {$/;"	s
 build_regex	garage/ack-1.96	/^sub build_regex {$/;"	s
@@ -342,12 +345,10 @@ build_regex	garage/ack-2.18	/^sub build_regex {$/;"	s
 caret_X	t/Util.pm	/^sub caret_X {$/;"	s
 cathy	garage/ack-2.18	/^sub cathy {$/;"	s
 cathy	lib/App/Ack.pm	/^sub cathy {$/;"	s
-check_command_for_taintedness	t/Util.pm	/^sub check_command_for_taintedness {$/;"	s
 check_for_mutually_exclusive_options	garage/ack-2.04	/^sub check_for_mutually_exclusive_options {$/;"	s
 check_for_mutually_exclusive_options	garage/ack-2.18	/^sub check_for_mutually_exclusive_options {$/;"	s
 check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub check_for_mutually_exclusive_options {$/;"	s
 check_for_option_in_man_output	xt/man.t	/^sub check_for_option_in_man_output {$/;"	s
-check_message	t/Util.pm	/^sub check_message {$/;"	s
 check_regex	garage/ack-1.96	/^sub check_regex {$/;"	s
 check_with	t/file-permission.t	/^sub check_with {$/;"	s
 clean_up_globals	t/config-finder.t	/^sub clean_up_globals {$/;"	s
@@ -515,6 +516,7 @@ is_windows	t/Util.pm	/^sub is_windows {$/;"	s
 iterate	ack	/^sub iterate {$/;"	s
 iterate	garage/ack-2.04	/^sub iterate {$/;"	s
 iterate	garage/ack-2.18	/^sub iterate {$/;"	s
+line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 load_colors	garage/ack-1.96	/^sub load_colors {$/;"	s
 load_colors	garage/ack-2.04	/^sub load_colors {$/;"	s
@@ -648,7 +650,6 @@ read_file	t/Util.pm	/^sub read_file {$/;"	s
 read_rcfile	garage/ack-2.04	/^sub read_rcfile {$/;"	s
 read_rcfile	garage/ack-2.18	/^sub read_rcfile {$/;"	s
 read_rcfile	lib/App/Ack/ConfigFinder.pm	/^sub read_rcfile {$/;"	s
-record_option_coverage	t/Util.pm	/^sub record_option_coverage {$/;"	s
 register_filter	garage/ack-2.04	/^sub register_filter {$/;"	s
 register_filter	garage/ack-2.18	/^sub register_filter {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s

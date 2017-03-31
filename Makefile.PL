@@ -26,6 +26,7 @@ my %parms = (
         'File::Temp'        => '0.19', # For newdir()
         'Getopt::Long'      => '2.38',
         'Pod::Usage'        => '1.26',
+        'Scalar::Util'      => 0,
         'Term::ANSIColor'   => '1.10',
         'Test::Harness'     => '2.50', # Something reasonably newish
         'Test::More'        => '0.98', # For subtest()

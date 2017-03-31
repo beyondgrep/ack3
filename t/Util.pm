@@ -1,26 +1,63 @@
+package Util;
+
+use parent 'Exporter';
 
 use Carp ();
-use File::Next ();
-use App::Ack ();
 use Cwd ();
+use File::Next ();
 use File::Spec ();
 use File::Temp ();
+use Scalar::Util qw( tainted );
 use Term::ANSIColor ();
 use Test::More;
 
+our @EXPORT = qw(
+    prep_environment
+
+    has_io_pty
+    is_windows
+    is_cygwin
+
+    is_empty_array
+    is_nonempty_array
+
+    first_line_like
+    build_ack_invocation
+
+    read_file
+    write_file
+    append_file
+    create_tempfile
+    touch
+
+    reslash
+    reslash_all
+    windows_slashify
+
+    run_cmd
+    run_ack
+    run_ack_with_stderr
+    run_ack_interactive
+    pipe_into_ack
+    pipe_into_ack_with_stderr
+
+    lists_match
+    sets_match
+    ack_lists_match
+    ack_sets_match
+
+    untaint
+
+    line_split
+    colorize
+    get_options
+    caret_X
+    get_rc
+    getcwd_clean
+);
+
 my $orig_wd;
 my @temp_files; # We store temp files here to make sure they're properly reclaimed at interpreter shutdown.
-
-sub check_message {
-    my $msg = shift;
-
-    if ( !$msg ) {
-        my (undef,undef,undef,$sub) = caller(1);
-        Carp::croak( "You must pass a message to $sub" );
-    }
-
-    return $msg;
-}
 
 sub prep_environment {
     my @ack_args   = qw( ACK_OPTIONS ACKRC ACK_PAGER HOME ACK_COLOR_MATCH ACK_COLOR_FILENAME ACK_COLOR_LINE );
@@ -168,10 +205,12 @@ sub _write_file {
     return;
 }
 
-sub break_up_lines {
-    my $str = shift;
+sub line_split {
+    return split( /\n/, $_[0] );
+}
 
-    return split( /\n/, $str );
+sub reslash {
+    return File::Next::reslash( shift );
 }
 
 sub reslash_all {
@@ -222,9 +261,9 @@ sub run_cmd {
     }
     @cmd = grep { ref($_) ne 'HASH' } @cmd;
 
-    record_option_coverage(@cmd);
+    _record_option_coverage(@cmd);
 
-    check_command_for_taintedness( @cmd );
+    _check_command_for_taintedness( @cmd );
 
     my ( @stdout, @stderr );
 
@@ -312,7 +351,7 @@ sub run_cmd {
             close $stderr_read;
 
             if (my $input = $options->{input}) {
-                check_command_for_taintedness( @{$input} );
+                _check_command_for_taintedness( @{$input} );
                 open STDIN, '-|', @{$input} or die "Can't open STDIN: $!";
             }
 
@@ -390,7 +429,7 @@ sub lists_match {
 
     my @actual   = @{+shift};
     my @expected = @{+shift};
-    my $msg      = check_message( shift );
+    my $msg      = _check_message( shift );
 
     # Normalize all the paths
     for my $path ( @expected, @actual ) {
@@ -421,7 +460,7 @@ sub ack_lists_match {
 
     my $args     = shift;
     my $expected = shift;
-    my $message  = check_message( shift );
+    my $message  = _check_message( shift );
 
     my @args     = @{$args};
 
@@ -441,7 +480,7 @@ sub sets_match {
 
     my @actual   = @{+shift};
     my @expected = @{+shift};
-    my $msg      = check_message( shift );
+    my $msg      = _check_message( shift );
 
     return subtest "sets_match( $msg )" => sub {
         plan tests => 1;
@@ -455,7 +494,7 @@ sub ack_sets_match {
 
     my $args     = shift;
     my $expected = shift;
-    my $message  = check_message( shift );
+    my $message  = _check_message( shift );
     my @args     = @{$args};
 
     return subtest "ack_sets_match( $message )" => sub {
@@ -470,7 +509,7 @@ sub ack_sets_match {
 }
 
 
-sub record_option_coverage {
+sub _record_option_coverage {
     my ( @command_line ) = @_;
 
     return unless $ENV{ACK_OPTION_COVERAGE};
@@ -553,7 +592,7 @@ BEGIN {
             my @cmd = build_ack_invocation(@args);
             @cmd    = grep { ref($_) ne 'HASH' } @cmd;
 
-            record_option_coverage(@cmd);
+            _record_option_coverage(@cmd);
 
             my $pty = IO::Pty->new;
 
@@ -731,17 +770,12 @@ sub get_options {
 
 
 # This is just a handy diagnostic tool.
-sub check_command_for_taintedness {
+sub _check_command_for_taintedness {
     my @args = @_;
 
     my $bad = 0;
 
-    my @tainted;
-    for my $arg ( @args ) {
-        if ( is_tainted( $arg ) ) {
-            push( @tainted, $arg );
-        }
-    }
+    my @tainted = grep { tainted( $arg ) } @tained;
 
     if ( @tainted ) {
         die "Can't execute this command because of taintedness:\nAll args: @args\nTainted:  @tainted\n";
@@ -813,8 +847,15 @@ sub touch {
 }
 
 
-sub reslash {
-    return File::Next::reslash( @_ );
+sub _check_message {
+    my $msg = shift;
+
+    if ( !$msg ) {
+        my (undef,undef,undef,$sub) = caller(1);
+        Carp::croak( "You must pass a message to $sub" );
+    }
+
+    return $msg;
 }
 
 1;
