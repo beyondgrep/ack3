@@ -4,7 +4,7 @@ use strict;
 use warnings;
 our $VERSION = '2.999_01'; # Check https://beyondgrep.com/ for updates
 
-use 5.10.1;
+use 5.010001;
 use Getopt::Long 2.38 ();
 use Carp 1.04 ();
 

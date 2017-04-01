@@ -9,7 +9,7 @@ allow_leading_tabs = 0
 # I like this one but it gives too many false positives.
 
 [Compatibility::PodMinimumVersion]
-above_version = 5.008008
+above_version = 5.010001
 
 [-ControlStructures::ProhibitPostfixControls]
 

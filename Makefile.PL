@@ -1,6 +1,6 @@
 package main;
 
-require 5.008008;
+require 5.010001;
 
 use strict;
 use warnings;
@@ -55,7 +55,7 @@ if ( $ExtUtils::MakeMaker::VERSION ge '6.46' ) {
 }
 
 if ( $ExtUtils::MakeMaker::VERSION ge '6.48' ) {
-    $parms{MIN_PERL_VERSION} = 5.008008;
+    $parms{MIN_PERL_VERSION} = 5.010001;
 }
 
 WriteMakefile( %parms );
