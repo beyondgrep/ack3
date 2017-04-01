@@ -73,6 +73,13 @@ END
 BEGIN -w and optional character
 RUN
 ack -w foot?
+ack -w (foot?)
+ack -w (?:foot?)
+
+NO
+Trampled underfoot
+football
+foolish
 
 YES
 foo
@@ -92,12 +99,6 @@ I pity da foo'.
 
 Our ten-foot foo-bird is foobar.
         ^^^^ ^^^
-
-NO
-Trampled underfoot
-football
-foobar
-
 END
 
 
@@ -215,6 +216,10 @@ c
 NO
 dd
 xxx
+
+YESLINES
+A man, a plan, a canal: Panama
+^      ^       ^
 
 END
 
