@@ -548,6 +548,25 @@ sub print_line_with_options {
         }
     }
     else {
+        my $underline;
+
+        # We have to do underlining before any highlighting because highlighting modifies string length.
+        if ( $opt_u ) {
+            $underline = '';
+            while ( $line =~ /$opt_regex/og ) {
+                my $match_start = $-[0];
+                next unless defined($match_start);
+
+                my $match_end = $+[0];
+                my $match_length = $match_end - $match_start;
+                last if $match_length <= 0;
+
+                my $spaces_needed = $match_start - length $underline;
+
+                $underline .= (' ' x $spaces_needed);
+                $underline .= ('^' x $match_length);
+            }
+        }
         if ( $opt_color ) {
             my $highlighted = 0; # If highlighted, need to escape afterwards.
 
@@ -556,17 +575,20 @@ sub print_line_with_options {
                 next unless defined($match_start);
 
                 my $match_end = $+[0];
-                last if $match_start == $match_end;
+                my $match_length = $match_end - $match_start;
+                last if $match_length <= 0;
 
-                my $substring    = substr( $line, $match_start, $match_end - $match_start );
-                my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
+                if ( $opt_color ) {
+                    my $substring    = substr( $line, $match_start, $match_length );
+                    my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
 
-                # Fourth argument replaces the string specified by the first three.
-                substr( $line, $match_start, $match_end - $match_start, $substitution );
+                    # Fourth argument replaces the string specified by the first three.
+                    substr( $line, $match_start, $match_length, $substitution );
 
-                # Move the offset of where /g left off forward the number of spaces of highlighting.
-                pos($line) = $match_end + (length( $substitution ) - length( $substring ));
-                $highlighted = 1;
+                    # Move the offset of where /g left off forward the number of spaces of highlighting.
+                    pos($line) = $match_end + (length( $substitution ) - length( $substring ));
+                    $highlighted = 1;
+                }
             }
             # Reset formatting and delete everything to the end of the line.
             $line .= "\033[0m\033[K" if $highlighted;
@@ -574,6 +596,10 @@ sub print_line_with_options {
 
         push @line_parts, $line;
         App::Ack::print( join( $separator, @line_parts ), $ors );
+
+        if ( defined $underline ) {
+            App::Ack::print( $underline, $ors );
+        }
     }
 
     return;

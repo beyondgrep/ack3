@@ -18,9 +18,10 @@ sub run_tests {
     while ( my $line = <$fh> ) {
         chomp $line;
         next if $line =~ /^#/;
-        next unless $line =~ /./;
+        next unless $line =~ /\S/;
 
-        if ( $line =~ /^BEGIN\s*(.*)\s*/ ) {
+        $line =~ s/\s+$//;
+        if ( $line =~ /^BEGIN\s*(.*)/ ) {
             !defined($block) or die 'We are already in the middle of a block';
 
             $block = Barfly::Block->new( $1 );
@@ -80,32 +81,75 @@ sub run {
     my $self = shift;
 
     return subtest $self->{label} => sub {
+        plan tests => 2;
+
         my @command_lines = @{$self->{RUN} // []} or die 'No RUN lines specified!';
 
-        # Set up scratch file
-        my @yes = @{$self->{YES} // []};
-        my @no  = @{$self->{NO} // []};
+        subtest "$self->{label}: YES/NO" => sub {
+            plan tests => scalar @command_lines;
 
-        my $tempfile = File::Temp->new();
-        print {$tempfile} join( "\n", @yes, @no );
-        close $tempfile;
+            # Set up scratch file
+            my @yes = @{$self->{YES} // []};
+            my @no  = @{$self->{NO} // []};
 
-        for my $command_line ( @command_lines ) {
-            subtest $command_line => sub {
-                plan tests => 2;
+            my $tempfile = create_tempfile( @yes, @no );
 
-                $command_line =~ /(.*)/;
-                $command_line = $1;
+            for my $command_line ( @command_lines ) {
+                subtest $command_line => sub {
+                    plan tests => 2;
 
-                my @args = split( / /, $command_line );
-                @args > 1 or die "Invalid command line: $command_line";
-                shift @args eq 'ack' or die 'Command line must begin with ack';
+                    $command_line =~ /(.*)/;
+                    $command_line = $1;
 
-                my @results = main::run_ack( @args, $tempfile->filename );
-                main::lists_match( \@results, \@yes, $command_line );
-            };
+                    my @args = split( / /, $command_line );
+                    @args > 1 or die "Invalid command line: $command_line";
+                    shift @args eq 'ack' or die 'Command line must begin with ack';
+
+                    my @results = main::run_ack( @args, $tempfile->filename );
+                    main::lists_match( \@results, \@yes, $command_line );
+                };
+            }
+        };
+
+        subtest "$self->{label}: YESLINES" => sub {
+            return pass( 'No yeslines' ) if !$self->{YESLINES};
+
+            plan tests => scalar @command_lines;
+
+            my @all_lines   = @{$self->{YESLINES}};
+            my @input_lines = grep { /[^ ^]/ } @all_lines;
+            my $tempfile    = create_tempfile( @input_lines );
+
+            for my $command_line ( @command_lines ) {
+                subtest $command_line => sub {
+                    plan tests => 2;
+
+                    $command_line =~ /(.*)/;
+                    $command_line = $1;
+
+                    my @args = split( / /, $command_line );
+                    @args > 1 or die "Invalid command line: $command_line";
+                    shift @args eq 'ack' or die 'Command line must begin with ack';
+
+                    push( @args, '--underline' );
+
+                    my @results = main::run_ack( @args, $tempfile->filename );
+                    main::lists_match( \@results, \@all_lines, $command_line );
+                };
+            }
         }
     };
+}
+
+
+sub create_tempfile {
+    my @lines = @_;
+
+    my $tempfile = File::Temp->new();
+    print {$tempfile} join( "\n", @lines );
+    close $tempfile;
+
+    return $tempfile;
 }
 
 1;

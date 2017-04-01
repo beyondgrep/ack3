@@ -43,6 +43,7 @@ my %defaults = (
     show_types                => undef,
     smart_case                => undef,
     sort_files                => undef,
+    u                         => undef,
     v                         => undef,
     w                         => undef,
 );

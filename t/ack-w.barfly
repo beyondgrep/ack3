@@ -25,7 +25,19 @@ BEGIN Straight -w
 RUN
 ack -w foo
 
+YES
+foo
+foo bar
+
+NO
+foobar
+foot
+underfoot
+
 YESLINES
+foo-foo football
+^^^ ^^^
+
 foo
 ^^^
 
@@ -34,11 +46,6 @@ End of the line foo
 
 I pity da foo'.
           ^^^
-
-NO
-foobar
-foot
-underfoot
 
 END
 
@@ -55,6 +62,10 @@ foobarf
 foo-bar
 foo-bart
 football
+
+YESLINES
+Our ten-foot foo-bird is foobar.
+        ^^^^ ^^^         ^^^
 
 END
 
@@ -78,6 +89,9 @@ By the foot
 
 I pity da foo'.
           ^^^
+
+Our ten-foot foo-bird is foobar.
+        ^^^^ ^^^
 
 NO
 Trampled underfoot
@@ -134,31 +148,40 @@ fubar
 barometric
 subarometric
 
+YESLINES
+Little bunny foo-foo's ten-foot bar is foobar.
+             ^^^ ^^^            ^^^
+
 END
 
 
 BEGIN -w and a function definition
 RUN
 ack -w (set|get)_user_(name|perm)
+ack -w ((set|get)_user_(name|perm))
+ack -w (?:(?:set|get)_user_(?:name|perm))
+ack -w (?:(set|get)_user_(name|perm))
+ack -w ((?:set|get)_user_(?:name|perm))
 
 YES
 set_user_name
 get_user_perm
 
-YESLINES
-my $foo = set_user_name( $bar );
-          ^^^^^^^^^^^^^
-
 NO
 reset_user_name
 get_user_permission
 
+YESLINES
+my $foo = set_user_name( $bar ) + set_user_perm( $foo );
+          ^^^^^^^^^^^^^           ^^^^^^^^^^^^^
+
 END
 
 
-BEGIN Word with trailing punc
+BEGIN Word with trailing punctuation
 RUN
-ack -w -i f\w+!
+ack -w -i f(\w+)!
+ack -w -i (f(\w+)!)
 
 YES
 Friends!
@@ -166,8 +189,15 @@ Hey, friends! How's it going?
 Hey, friends!How's it going?
 
 NO
-friends
+Friends
 Superfriends!
+
+YESLINES
+Fee Fi Fo Fum! I smell the blood of an Englishman!
+          ^^^^
+
+Fore! After!
+^^^^^
 
 END
 
