@@ -366,7 +366,7 @@ sub get_arg_spec {
                 Carp::croak( "Unknown type '$value'" );
             }
         },
-        'u|underline'       => \$opt->{u},
+        'u|underline!'      => \$opt->{u},
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
