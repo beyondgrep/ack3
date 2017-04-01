@@ -4,7 +4,7 @@ use strict;
 use warnings;
 our $VERSION = '2.999_01'; # Check https://beyondgrep.com/ for updates
 
-use 5.008008;
+use 5.10.1;
 use Getopt::Long 2.38 ();
 use Carp 1.04 ();
 
@@ -513,6 +513,7 @@ sub print_matches_in_resource {
     return $nmatches;
 }
 
+
 sub print_line_with_options {
     my ( $filename, $line, $line_no, $separator ) = @_;
 
@@ -523,12 +524,27 @@ sub print_line_with_options {
 
     my @line_parts;
 
-    if ( $opt_color ) {
-        $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
-        $line_no  = Term::ANSIColor::colored( $line_no,  $ENV{ACK_COLOR_LINENO} );
+    # Figure out how many spaces are used per line for the ANSI coloring.
+    state $chars_used_by_coloring;
+    if ( !defined($chars_used_by_coloring) ) {
+        $chars_used_by_coloring = 0;
+        if ( $opt_color ) {
+            my $filename_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_FILENAME} ) ) - 1;
+            my $line_no_uses  = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
+            if ( $opt_heading ) {
+                $chars_used_by_coloring = $line_no_uses;
+            }
+            else {
+                $chars_used_by_coloring = $filename_uses + $line_no_uses;
+            }
+        }
     }
 
     if ( $opt_show_filename ) {
+        if ( $opt_color ) {
+            $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
+            $line_no  = Term::ANSIColor::colored( $line_no,  $ENV{ACK_COLOR_LINENO} );
+        }
         if ( $opt_heading ) {
             push @line_parts, $line_no;
         }
@@ -540,6 +556,7 @@ sub print_line_with_options {
             push @line_parts, get_match_column();
         }
     }
+
     if ( $opt_output ) {
         while ( $line =~ /$opt_regex/og ) {
             # XXX We need to stop using eval() for --output.  See https://github.com/petdance/ack2/issues/421
@@ -598,6 +615,13 @@ sub print_line_with_options {
         App::Ack::print( join( $separator, @line_parts ), $ors );
 
         if ( defined $underline ) {
+            pop @line_parts; # Leave only the stuff on the left.
+            if ( @line_parts ) {
+                my $stuff_on_the_left = join( $separator, @line_parts );
+                my $spaces_needed = length($stuff_on_the_left) - $chars_used_by_coloring + 1;
+
+                App::Ack::print( ' ' x $spaces_needed );
+            }
             App::Ack::print( $underline, $ors );
         }
     }

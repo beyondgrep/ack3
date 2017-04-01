@@ -141,15 +141,4 @@ sub run {
     };
 }
 
-
-sub create_tempfile {
-    my @lines = @_;
-
-    my $tempfile = File::Temp->new();
-    print {$tempfile} join( "\n", @lines );
-    close $tempfile;
-
-    return $tempfile;
-}
-
 1;
