@@ -39,13 +39,19 @@ this from the Unix shell:
 
 =head2 Can I make ack recognize F<.xyz> files?
 
-Yes!  Please see L</"Defining your own types">.  If you think
-that F<ack> should recognize a type by default, please see
-L</"ENHANCEMENTS">.
+Yes!  Please see L</"Defining your own types"> in the ack manual.
 
-=head2 There's already a program/package called ack.
+=head2 Will you make ack recognize F<.xyz> files by default?
 
-Yes, I know.
+We might, depending on how widely-used the file format is.
+
+Submit an issue at in the GitHub issue queue at
+L<https://github.com/petdance/ack3/issues>.  Explain what the file format
+is, where we can find out more about it, and what you have been using
+in your F<.ackrc> to support it.
+
+Please do not bother creating a pull request.  The code for filetypes
+is trivial compared to the rest of the process we go through.
 
 =head2 Why is it called ack if it's called ack-grep?
 
@@ -96,9 +102,10 @@ can search for C<.{32767}> but not C<.{32768}>.
 
 =head2 Ack does "X" and shouldn't, should it?
 
-We try to remain as close to grep's behavior as possible, so when in doubt,
-see what grep does!  If there's a mismatch in functionality there, please
-bring it up on the ack-users mailing list.
+We try to remain as close to grep's behavior as possible, so when in
+doubt, see what grep does!  If there's a mismatch in functionality there,
+please submit an issue to GitHub, and/or bring it up on the ack-users
+mailing list.
 
 =cut
 

@@ -747,13 +747,13 @@ file is found.  If no files are found, then 1 is returned.
 
 If ack gives you output you're not expecting, start with a few simple steps.
 
-=head2 Use B<--noenv>
+=head2 Try it with B<--noenv>
 
 Your environment variables and F<.ackrc> may be doing things you're
 not expecting, or forgotten you specified.  Use B<--noenv> to ignore
 your environment and F<.ackrc>.
 
-=head2 Use B<-f> to see what files have been selected
+=head2 Use B<-f> to see what files have been selected for searching
 
 Ack's B<-f> was originally added as a debugging tool.  If ack is
 not finding matches you think it should find, run F<ack -f> to see
@@ -763,90 +763,8 @@ options to show the type of each file selected.
 =head2 Use B<--dump>
 
 This lists the ackrc files that are loaded and the options loaded
-from them.
-So for example you can find a list of directories that do not get searched or where filetypes are defined.
-
-=head1 TIPS
-
-=head2 Use the F<.ackrc> file.
-
-The F<.ackrc> is the place to put all your options you use most of
-the time but don't want to remember.  Put all your --type-add and
---type-set definitions in it.  If you like --smart-case, set it
-there, too.  I also set --sort-files there.
-
-=head2 Use F<-f> for working with big codesets
-
-Ack does more than search files.  C<ack -f --perl> will create a
-list of all the Perl files in a tree, ideal for sending into F<xargs>.
-For example:
-
-    # Change all "this" to "that" in all Perl files in a tree.
-    ack -f --perl | xargs perl -p -i -e's/this/that/g'
-
-or if you prefer:
-
-    perl -p -i -e's/this/that/g' $(ack -f --perl)
-
-=head2 Use F<-Q> when in doubt about metacharacters
-
-If you're searching for something with a regular expression
-metacharacter, most often a period in a filename or IP address, add
-the -Q to avoid false positives without all the backslashing.  See
-the following example for more...
-
-=head2 Use ack to watch log files
-
-Here's one I used the other day to find trouble spots for a website
-visitor.  The user had a problem loading F<troublesome.gif>, so I
-took the access log and scanned it with ack twice.
-
-    ack -Q aa.bb.cc.dd /path/to/access.log | ack -Q -B5 troublesome.gif
-
-The first ack finds only the lines in the Apache log for the given
-IP.  The second finds the match on my troublesome GIF, and shows
-the previous five lines from the log in each case.
-
-=head2 Examples of F<--output>
-
-Following variables are useful in the expansion string:
-
-=over 4
-
-=item C<$&>
-
-The whole string matched by PATTERN.
-
-=item C<$1>, C<$2>, ...
-
-The contents of the 1st, 2nd ... bracketed group in PATTERN.
-
-=item C<$`>
-
-The string before the match.
-
-=item C<$'>
-
-The string after the match.
-
-=back
-
-For more details and other variables see
-L<http://perldoc.perl.org/perlvar.html#Variables-related-to-regular-expressions|perlvar>.
-
-This example shows how to add text around a particular pattern
-(in this case adding _ around word with "e")
-
-    ack2.pl "\w*e\w*" quick.txt --output="$`_$&_$'"
-    _The_ quick brown fox jumps over the lazy dog
-    The quick brown fox jumps _over_ the lazy dog
-    The quick brown fox jumps over _the_ lazy dog
-
-This shows how to pick out particular parts of a match using ( ) within regular expression.
-
-  ack '=head(\d+)\s+(.*)' --output=' $1 : $2'
-  input file contains "=head1 NAME"
-  output  "1 : NAME"
+from them.  You may be loading an F<.ackrc> file that you didn't know
+you were loading.
 
 =head1 ACKRC LOCATION SEMANTICS
 
@@ -922,23 +840,23 @@ Options are then loaded from the command line.
 
 Andy Lester, C<< <andy at petdance.com> >>
 
-=head1 BUGS
+=head1 BUGS & ENHANCEMENTS
+
+ack is based at GitHub at L<https://github.com/petdance/ack3>
 
 Please report any bugs or feature requests to the issues list at
-Github: L<https://github.com/petdance/ack2/issues>
+Github: L<https://github.com/petdance/ack3/issues>.
 
-=head1 ENHANCEMENTS
+Please include the operating system that you're using; the output of
+the command C<ack --version>; and any customizations in your F<.ackrc>
+you may have.
 
-All enhancement requests MUST first be posted to the ack-users
-mailing list at L<http://groups.google.com/group/ack-users>.  I
-will not consider a request without it first getting seen by other
-ack users.  This includes requests for new filetypes.
+To suggest enhancements, please submit an issue at
+L<https://github.com/petdance/ack3/issues>.  Also read the
+F<DEVELOPERS.md> file in the ack code repository.
 
-There is a list of enhancements I want to make to F<ack> in the ack
-issues list at Github: L<https://github.com/petdance/ack2/issues>
-
-Patches are always welcome, but patches with tests get the most
-attention.
+Also, feel free to discuss your issues on the ack mailing
+list at L<https://groups.google.com/group/ack-users>.
 
 =head1 SUPPORT
 
@@ -950,33 +868,25 @@ Support for and information about F<ack> can be found at:
 
 L<https://beyondgrep.com/>
 
-=item * The ack-users mailing list
+=item * Source repository
 
-L<http://groups.google.com/group/ack-users>
+L<https://github.com/petdance/ack3>
 
 =item * The ack issues list at Github
 
-L<https://github.com/petdance/ack2/issues>
+L<https://github.com/petdance/ack3/issues>
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * The ack announcements mailing list
 
-L<http://annocpan.org/dist/ack>
+L<http://groups.google.com/group/ack-announcement>
 
-=item * CPAN Ratings
+=item * The ack users' mailing list
 
-L<http://cpanratings.perl.org/d/ack>
+L<http://groups.google.com/group/ack-users>
 
-=item * Search CPAN
+=item * The ack development mailing list
 
-L<http://search.cpan.org/dist/ack>
-
-=item * MetaCPAN
-
-L<http://metacpan.org/release/ack>
-
-=item * Git source repository
-
-L<https://github.com/petdance/ack2>
+L<http://groups.google.com/group/ack-users>
 
 =back
 
