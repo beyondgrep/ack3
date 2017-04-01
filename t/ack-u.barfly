@@ -19,23 +19,12 @@
 # Blank lines are always ignored.
 
 
-
-BEGIN Straight -u
-
-RUN
-ack -u s
-
-YESLINES
-The sheik's sixth sheep's sick.
-    ^     ^ ^     ^     ^ ^
-
-END
-
-
 BEGIN Back-references
 
 RUN
-ack -u (\w+)-(\1)
+ack (\w+)-\1
+ack (?:(\w+)-\1)
+
 
 YES
 Bamm-Bamm
@@ -49,6 +38,9 @@ Bamm-Bam
 YESLINES
 Pebbles & Bamm-Bamm
           ^^^^^^^^^
+
+ha-ha-ha-ha-ho-ho-hee-hee-hoo-hah
+^^^^^ ^^^^^ ^^^^^ ^^^^^^^
 
 END
 
