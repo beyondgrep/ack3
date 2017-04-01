@@ -5,7 +5,7 @@ endif
 
 " The "done" detection could be better here... any X in the string will
 " highlight when we define it this way:
-syn keyword barflyKeyword BEGIN END YES NO YESLINES
+syn keyword barflyKeyword BEGIN END RUN YES NO YESLINES
 syn match barflyComment /^#.*$/ contains=hwdTodo
 
 "
