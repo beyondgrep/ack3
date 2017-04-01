@@ -186,6 +186,11 @@ The list of files to be searched is specified in I<FILE>.  The list of
 files are separated by newlines.  If I<FILE> is C<->, the list is loaded
 from standard input.
 
+Note that the list of files is B<not> filtered in any way.  If you
+add C<--type=html> in addition to C<--files-from>, the C<--type> will
+be ignored.
+
+
 =item B<--[no]filter>
 
 Forces ack to act as if it were receiving input via a pipe.
@@ -430,6 +435,23 @@ also L</"Defining your own types">.
 The filters associated with TYPE are removed from Ack, and are no longer considered
 for searches.
 
+=item B<-u>, B<--[no]underline>
+
+Turns on underlining of matches, where "underlining" is not a true
+underlining, but printing a line of carets under the match.
+
+    $ ack -u foo
+    peanuts.txt
+    17: Come kick the football you fool
+                      ^^^          ^^^
+    623: Price per square foot
+                          ^^^
+
+This is useful if you're dumping the results of an ack run into a text
+file or printer and don't get any coloring.
+
+The setting of underline does not affect highlighting of matches.
+
 =item B<-v>, B<--invert-match>
 
 Invert match: select non-matching lines.
@@ -446,6 +468,9 @@ Force PATTERN to match only whole words.
 
 An abbreviation for B<--files-from=->. The list of files to search are read
 from standard input, with one line per file.
+
+Note that the list of files is B<not> filtered in any way.  If you add
+C<--type=html> in addition to C<-x>, the C<--type> will be ignored.
 
 =item B<-1>
 
