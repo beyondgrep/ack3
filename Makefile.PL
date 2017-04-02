@@ -13,6 +13,17 @@ my %parms = (
     AUTHOR              => 'Andy Lester <andy@petdance.com>',
     ABSTRACT            => 'A grep-like program for searching source code',
     VERSION_FROM        => 'lib/App/Ack.pm',
+    LICENSE             => 'artistic_2',
+    MIN_PERL_VERSION    => 5.010001,
+    META_MERGE          => {
+        resources => {
+            homepage    => 'https://beyondgrep.com/',
+            bugtracker  => 'https://github.com/petdance/ack3',
+            license     => 'http://www.perlfoundation.org/artistic_license_2_0',
+            repository  => 'git://github.com/petdance/ack3.git',
+            MailingList => 'https://groups.google.com/group/ack-users',
+        },
+    },
 
     EXE_FILES               => [ 'ack' ],
 
@@ -24,7 +35,9 @@ my %parms = (
         'File::Next'        => '1.16',
         'File::Spec'        => '3.00',
         'File::Temp'        => '0.19', # For newdir()
+        'if'                => 0,
         'Getopt::Long'      => '2.38',
+        'parent'            => 0,
         'Pod::Usage'        => '1.26',
         'Scalar::Util'      => 0,
         'Term::ANSIColor'   => '1.10',
@@ -37,26 +50,6 @@ my %parms = (
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'ack-2* nytprof* stderr.log stdout.log completion.*' },
 );
-
-if ( $ExtUtils::MakeMaker::VERSION =~ /^\d\.\d\d$/ and $ExtUtils::MakeMaker::VERSION > 6.30 ) {
-    $parms{LICENSE} = 'artistic_2';
-}
-
-if ( $ExtUtils::MakeMaker::VERSION ge '6.46' ) {
-    $parms{META_MERGE} = {
-        resources => {
-            homepage    => 'https://beyondgrep.com/',
-            bugtracker  => 'https://github.com/petdance/ack3',
-            license     => 'http://www.perlfoundation.org/artistic_license_2_0',
-            repository  => 'git://github.com/petdance/ack3.git',
-            MailingList => 'https://groups.google.com/group/ack-users',
-        }
-    };
-}
-
-if ( $ExtUtils::MakeMaker::VERSION ge '6.48' ) {
-    $parms{MIN_PERL_VERSION} = 5.010001;
-}
 
 WriteMakefile( %parms );
 
