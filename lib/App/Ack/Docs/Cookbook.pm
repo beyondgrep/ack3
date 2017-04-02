@@ -104,4 +104,6 @@ This shows how to pick out particular parts of a match using ( ) within regular 
     input file contains "=head1 NAME"
     output  "1 : NAME"
 
+=cut;
+
 1;
