@@ -835,10 +835,6 @@ sub main {
 
     $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
 
-    if ( $opt->{flush} ) {
-        $| = 1;
-    }
-
     if ( !defined($opt_color) && !$opt_g ) {
         my $windows_color = 1;
         if ( $App::Ack::is_windows ) {

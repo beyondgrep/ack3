@@ -23,7 +23,6 @@ my %defaults = (
     f                         => undef,
     files_from                => undef,
     filters                   => [ App::Ack::Filter::Default->new ],
-    flush                     => undef,
     follow                    => undef,
     g                         => undef,
     h                         => undef,
