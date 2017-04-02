@@ -15,16 +15,23 @@ sub run_tests {
 
     open( my $fh, '<', $filename ) or die "Can't open $filename: $!";
 
+    my %blocknames_seen;
+    my $lineno = 0;
     while ( my $line = <$fh> ) {
+        ++$lineno;
         chomp $line;
+        $line =~ s/\s*$//;
         next if $line =~ /^#/;
         next unless $line =~ /\S/;
 
         $line =~ s/\s+$//;
-        if ( $line =~ /^BEGIN\s*(.*)/ ) {
+        if ( $line =~ /^BEGIN\s+(.*)/ ) {
             !defined($block) or die 'We are already in the middle of a block';
 
-            $block = Barfly::Block->new( $1 );
+            my $blockname = $1;
+            $blocknames_seen{ $blockname }++ and die qq{Block "$blockname" is duplicated in $filename at $lineno};
+
+            $block = Barfly::Block->new( $blockname, $filename, $lineno );
             $section = undef;
         }
         elsif ( $line eq 'END' ) {
@@ -56,11 +63,15 @@ use Test::More;
 use Util;
 
 sub new {
-    my $class = shift;
-    my $label = shift // die 'Block label cannot be blank';
+    my $class    = shift;
+    my $label    = shift // die 'Block label cannot be blank';
+    my $filename = shift;
+    my $lineno   = shift;
 
     return bless {
-        label => $label,
+        label    => $label,
+        filename => $filename,
+        lineno   => $lineno,
     }, $class;
 }
 
@@ -80,7 +91,7 @@ sub run {
 
     my $self = shift;
 
-    return subtest $self->{label} => sub {
+    return subtest sprintf( '%s: %s, line %d', $self->{label}, $self->{filename}, $self->{lineno} ) => sub {
         plan tests => 2;
 
         my @command_lines = @{$self->{RUN} // []} or die 'No RUN lines specified!';
