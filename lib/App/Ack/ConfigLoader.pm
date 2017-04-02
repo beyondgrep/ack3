@@ -310,7 +310,8 @@ sub get_arg_spec {
         'heading!'          => \$opt->{heading},
         'h|no-filename'     => \$opt->{h},
         'H|with-filename'   => \$opt->{H},
-        'i|ignore-case'     => \$opt->{i},
+        'i|ignore-case'     => sub { $opt->{i} = 1; $opt->{smart_case} = 0; },
+        'I'                 => sub { $opt->{i} = 0; $opt->{smart_case} = 0; },
         'ignore-directory|ignore-dir=s' => _generate_ignore_dir('--ignore-dir', $opt),
         'ignore-file=s'     => sub {
                                     my ( undef, $file ) = @_;
@@ -347,7 +348,7 @@ sub get_arg_spec {
         'r|R|recurse'       => sub { $opt->{n} = 0 },
         's'                 => \$opt->{dont_report_bad_filenames},
         'show-types'        => \$opt->{show_types},
-        'smart-case!'       => \$opt->{smart_case},
+        'smart-case!'       => sub { my (undef,$value) = @_; $opt->{smart_case} = $value; $opt->{i} = 0 if $value; },
         'sort-files'        => \$opt->{sort_files},
         'type=s'            => sub {
             my ( $getopt, $value ) = @_;

@@ -4,29 +4,35 @@ use strict;
 use warnings;
 use lib 't';
 
+use Test::More tests => 9;
+
 use Util;
-use Test::More tests => 4;
+use Barfly;
 
 prep_environment();
 
-my @expected = (
-    't/swamp/groceries/fruit:1:apple',
-    't/swamp/groceries/junk:1:apple fritters',
-);
+Barfly->run_tests( 't/ack-i.barfly' );
 
-my @targets = map {
-    "t/swamp/groceries/$_"
-} qw/fruit junk meat/;
+subtest 'Straight -i' => sub {
+    plan tests => 4;
 
-my @args    = ( qw( --nocolor APPLE -i ), @targets );
-my @results = run_ack( @args );
+    my @expected = (
+        't/swamp/groceries/fruit:1:apple',
+        't/swamp/groceries/junk:1:apple fritters',
+    );
 
-lists_match( \@results, \@expected, '-i flag' );
+    my @targets = map { "t/swamp/groceries/$_" } qw( fruit junk meat );
 
-@args    = ( qw( --nocolor APPLE --ignore-case ), @targets );
-@results = run_ack( @args );
+    my @args    = qw( --nocolor APPLE -i );
+    my @results = run_ack( @args, @targets );
 
-lists_match( \@results, \@expected, '--ignore-case flag' );
+    lists_match( \@results, \@expected, '-i flag' );
+
+    @args    = qw( --nocolor APPLE --ignore-case );
+    @results = run_ack( @args, @targets );
+
+    lists_match( \@results, \@expected, '--ignore-case flag' );
+};
 
 done_testing();
 

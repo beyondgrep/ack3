@@ -258,7 +258,11 @@ Print all known types.
 
 =item B<-i>, B<--ignore-case>
 
-Ignore case distinctions in PATTERN
+Ignore case distinctions in PATTERN.  This option overrides B<--smart-case> and B<-I>.
+
+=item B<-I>
+
+Turns on case distinctions in PATTERN.  This option overrides B<--smart-case> and B<-i>.
 
 =item B<--ignore-ack-defaults>
 
@@ -387,8 +391,8 @@ from fgrep.
 =item B<--[no]smart-case>, B<--no-smart-case>
 
 Ignore case in the search strings if PATTERN contains no uppercase
-characters. This is similar to C<smartcase> in vim. This option is
-off by default, and ignored if C<-i> is specified.
+characters. This is similar to C<smartcase> in the vim text editor.
+The options overrides B<-i> and B<-I>.
 
 B<-i> always overrides this option.
 

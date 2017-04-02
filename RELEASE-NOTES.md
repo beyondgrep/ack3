@@ -8,6 +8,8 @@ Improvements over ack 2 include:
 
 * Improved `-w` function.
 
+* `-i`, `-I` and `--smart-case`
+
 
 # Incompatibilities with ack 2
 

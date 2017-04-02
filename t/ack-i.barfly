@@ -1,0 +1,134 @@
+BEGIN No -i, or -I
+
+RUN
+ack foo
+ack -I foo
+ack --no-smart-case foo
+
+YES
+football
+foo bar
+
+NO
+Football
+foOtball
+
+END
+
+
+BEGIN Normal -i
+
+RUN
+ack -i foo
+ack -i Foo
+ack --ignore-case foo
+ack --ignore-case Foo
+
+YES
+football
+foo bar
+Football
+foOtball
+
+NO
+
+END
+
+
+BEGIN --smart-case invoked
+
+RUN
+ack --smart-case foo
+
+YES
+football
+foo bar
+Football
+foOtball
+
+NO
+
+END
+
+
+BEGIN --smart-case bypassed
+
+RUN
+ack --smart-case Foo
+
+YES
+Football
+
+NO
+football
+foo bar
+foOtball
+
+END
+
+
+BEGIN --smart-case overrides -i
+
+RUN
+ack -i --smart-case Foo
+
+YES
+Football
+
+NO
+football
+foo bar
+foOtball
+
+END
+
+
+BEGIN -i overrides --smart-case
+
+RUN
+ack --smart-case -i Foo
+ack --smart-case -i foo
+
+YES
+Football
+football
+foo bar
+foOtball
+
+NO
+
+END
+
+
+BEGIN -I overrides -i
+
+RUN
+ack --i -I Foo
+
+YES
+Football
+
+NO
+foOtball
+football
+foo bar
+
+END
+
+
+BEGIN -I overrides --smart-case
+
+RUN
+ack --smart-case -I Foo
+
+YES
+Football
+
+NO
+football
+foo bar
+foOtball
+
+END
+
+# vi:set ft=barfly:
