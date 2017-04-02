@@ -73,8 +73,7 @@ END_TEXT
 }
 
 FORCE_NO_PAGER: {
-    my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--nopager', '--sort-files',
-        'Sue', 't/text');
+    my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--nopager', '--sort-files', 'Sue', 't/text');
 
     my @expected = line_split( <<'END_TEXT' );
 t/text/boy-named-sue.txt

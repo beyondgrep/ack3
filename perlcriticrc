@@ -49,6 +49,7 @@ functions = open opendir read readline readdir
 
 [-NamingConventions::ProhibitAmbiguousNames]
 
+[-RegularExpressions::ProhibitComplexRegexes]
 [-RegularExpressions::ProhibitEscapedMetacharacters]
 [-RegularExpressions::RequireDotMatchAnything]
 [-RegularExpressions::RequireExtendedFormatting]

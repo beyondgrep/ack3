@@ -78,12 +78,13 @@ PREMATCH: {
 
 PREMATCH_MULTIPLE_FILES: {
 
-# No HEREDOC here since we do not want our editor/IDE messing with trailing whitespace.
+    # No HEREDOC here since we do not want our editor/IDE messing with trailing whitespace.
     my @expected = (
-    "And ",
-    "He stood ",
-    "And I knew I wouldn't be ",
-    "In the case of Christianity and Judaism " );
+        'And ',
+        'He stood ',
+        'And I knew I wouldn\'t be ',
+        'In the case of Christianity and Judaism ',
+    );
 
     my @files = qw( t/text/);
     my @args = qw( there -h --sort-files --output=$` );
