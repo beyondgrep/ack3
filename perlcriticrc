@@ -1,5 +1,8 @@
 verbose = %f:%l:%c %m (%p)\n
 
+[Bangs::ProhibitFlagComments]
+severity = 5
+
 [-CodeLayout::ProhibitParensWithBuiltins]
 [CodeLayout::ProhibitHardTabs]
 allow_leading_tabs = 0
