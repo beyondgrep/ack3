@@ -83,9 +83,8 @@ sub _generate_ignore_dir {
             $collection = $opt->{idirs}[-1];
 
             if ( $is_inverted ) {
-                # XXX this relies on invert of an inverted filter
-                #     to return the original
-                $collection = $collection->invert()
+                # This relies on invert of an inverted filter to return the original.
+                $collection = $collection->invert();
             }
         }
         else {
