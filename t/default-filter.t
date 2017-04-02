@@ -8,6 +8,7 @@ use FilterTest;
 use Test::More tests => 1;
 
 use App::Ack::Filter::Default;
+use App::Ack::Filter;
 
 App::Ack::Filter->register_filter('default' => 'App::Ack::Filter::Default');
 
