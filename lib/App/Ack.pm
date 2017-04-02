@@ -612,19 +612,23 @@ sub show_types {
 
 =head2 load_colors()
 
-Sets up colors for ack.
+Sets up colors for ack, if the proper modules load.
 
 =cut
 
 sub load_colors {
-    eval 'use Term::ANSIColor 1.10 ()';
-    eval 'use Win32::Console::ANSI' if $App::Ack::is_windows;
+    my $rc = eval 'use Term::ANSIColor 1.10 (); 1;';
+    if ( $rc && $App::Ack::is_windows ) {
+        $rc = eval 'use Win32::Console::ANSI; 1;';
+    }
 
-    $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
-    $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
-    $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
+    if ( $rc ) {
+        $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
+        $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
+        $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
+    }
 
-    return;
+    return $rc;
 }
 
 
