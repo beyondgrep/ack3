@@ -2,6 +2,7 @@ verbose = %f:%l:%c %m (%p)\n
 
 [Bangs::ProhibitFlagComments]
 severity = 5
+[-Bangs::ProhibitNumberedNames]
 
 [-CodeLayout::ProhibitParensWithBuiltins]
 [CodeLayout::ProhibitHardTabs]
@@ -15,6 +16,7 @@ allow_leading_tabs = 0
 above_version = 5.010001
 
 [-ControlStructures::ProhibitPostfixControls]
+[-ControlStructures::ProhibitCStyleForLoops]
 
 [-Documentation::PodSpelling]
 [-Documentation::RequireEndBeforeLastPod]
@@ -69,6 +71,7 @@ functions = open opendir read readline readdir
 
 [-ValuesAndExpressions::ProhibitConstantPragma]
 [-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-ValuesAndExpressions::ProhibitFiletest_f]
 [-ValuesAndExpressions::ProhibitMagicNumbers]
 [-ValuesAndExpressions::ProhibitNoisyQuotes]
 [-ValuesAndExpressions::RequireConstantOnLeftSideOfEquality]

@@ -277,8 +277,8 @@ sub test_loader {
         my $got_opts;
         my $got_targets;
         do {
-            local $ENV{'ACK_OPTIONS'} = $env;
-            local @ARGV;
+            local $ENV{ACK_OPTIONS} = $env;
+            local @ARGV = ();
 
             my @arg_sources = (
                 { name => 'ARGV', contents => $argv },

@@ -59,7 +59,7 @@ DASH_G: {
 
 DASH_L: {
     my @files    = reslash( 't/text' );
-    my @args     = ( '-1', '-l', '--sort-files', 'the' );   # --sort-files to make sure we get the same first file each time.
+    my @args     = qw( -1 -l --sort-files the );   # --sort-files to make sure we get the same first file each time.
     my @results  = run_ack( @args, @files );
     my $expected = reslash( 't/text/4th-of-july.txt' );
 

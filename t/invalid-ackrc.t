@@ -17,7 +17,7 @@ my @types = (
     ruby   => [qw{.rb Rakefile}],
 );
 
-plan tests => sum(map { ref($_) ? scalar(@$_) : 1 } @types) + 14;
+plan tests => sum(map { ref($_) ? scalar(@{$_}) : 1 } @types) + 14; ## no critic ( BuiltinFunctions::ProhibitUselessTopic )
 
 prep_environment();
 
@@ -60,9 +60,9 @@ like $output, qr/Usage: ack/;
     ($output, my $stderr) = run_ack_with_stderr( '--env', '--man' );
     # Don't worry if man complains about long lines,
     # or if the terminal doesn't handle Unicode:
-    is( scalar(grep !m{can't\ break\ line
+    is( scalar(grep { !m{can't\ break\ line
                      |Wide\ character\ in\ print
-                     |Unknown\ escape\ E<0x[[:xdigit:]]+>}x, @{$stderr}),
+                     |Unknown\ escape\ E<0x[[:xdigit:]]+>}x } @{$stderr}),
         0,
         'Should have no output to stderr: ack --env --man' )
         or diag( join( "\n", 'STDERR:', @{$stderr} ) );
