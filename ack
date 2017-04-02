@@ -651,7 +651,7 @@ sub iterate {
         }
     }
     else {
-        local $_;
+        local $_ = undef;
 
         while ( <$fh> ) {
             last unless $cb->();
@@ -956,7 +956,7 @@ RESOURCES:
 
             my $filename = $resource->name;
 
-            local $opt_color = 0;
+            local $opt_color = 0;   ## no critic ( Variables::ProhibitLocalVars ) We are masking the package version.
 
             iterate( $resource, sub {
                 chomp;
