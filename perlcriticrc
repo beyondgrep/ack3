@@ -40,6 +40,10 @@ functions = open opendir read readline readdir
 
 [-Miscellanea::RequireRcsKeywords]
 
+[-Modules::RequireExplicitInclusion]
+# We'd really like to use this, but it's too noisy as is.
+# If https://github.com/Perl-Critic/Perl-Critic-StricterSubs/issues/9 ever gets implemented, add this back in.
+
 [-Modules::RequirePerlVersion]
 [-Modules::RequireVersionVar]
 
