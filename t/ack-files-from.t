@@ -12,7 +12,7 @@ prep_environment();
 
 
 subtest 'Basic reading from files, no switches' => sub {
-    plan tests => 2;
+    plan tests => 1;
 
     my $target_file = reslash( 't/swamp/options.pl' );
     my @expected = line_split( <<"EOF" );

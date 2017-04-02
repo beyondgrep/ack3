@@ -13,7 +13,7 @@ prep_environment();
 my @text  = sort map { untaint($_) } glob( 't/text/s*.txt' );
 
 subtest 'Basic -m' => sub {
-    plan tests => 4;
+    plan tests => 2;
 
     my $myth  = reslash( 't/text/science-of-myth.txt' );
     my $happy = reslash( 't/text/shut-up-be-happy.txt' );

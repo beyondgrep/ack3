@@ -462,13 +462,11 @@ sub ack_lists_match {
     my $expected = shift;
     my $message  = _check_message( shift );
 
-    my @args     = @{$args};
-
-    my @results = run_ack( @args );
-
     return subtest "ack_lists_match( $message )" => sub {
-        plan tests => 1;
+        plan tests => 2;
 
+        my @args = @{$args};
+        my @results = run_ack( @args );
         my $ok = lists_match( \@results, $expected, $message );
         $ok or diag( join( ' ', '$ ack', @args ) );
     };

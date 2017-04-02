@@ -14,7 +14,7 @@ prep_environment();
 Barfly->run_tests( 't/ack-u.barfly' );
 
 subtest 'Single file' => sub {
-    plan tests => 2;
+    plan tests => 1;
 
     my $target_file = reslash( 't/text/boy-named-sue.txt' );
     my @expected = line_split( <<"EOF" );
@@ -32,7 +32,7 @@ EOF
 
 
 subtest 'Grouped' => sub {
-    plan tests => 2;
+    plan tests => 1;
 
     my $target_file = reslash( 't/text/boy-named-sue.txt' );
     my @expected = line_split( <<"EOF" );

@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 12;
+use Test::More tests => 10;
 use File::Spec ();
 use File::Temp ();
 
