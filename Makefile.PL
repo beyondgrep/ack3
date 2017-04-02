@@ -113,7 +113,7 @@ tags:
 		--languages=Perl --langmap=Perl:+.t \
 
 critic:
-	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(DOCS_PM) $(TEST_FILES) $(TEST_XT_FILES)
+	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_FILES) $(TEST_XT_FILES) # Don't run critic on docs.
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
