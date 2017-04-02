@@ -15,8 +15,11 @@ allow_leading_tabs = 0
 [Compatibility::PodMinimumVersion]
 above_version = 5.010001
 
-[-ControlStructures::ProhibitPostfixControls]
+[-ControlStructures::ProhibitCascadingIfElse]
 [-ControlStructures::ProhibitCStyleForLoops]
+[-ControlStructures::ProhibitDeepNests]
+[-ControlStructures::ProhibitPostfixControls]
+[-ControlStructures::ProhibitUnlessBlocks]
 
 [-Documentation::PodSpelling]
 [-Documentation::RequireEndBeforeLastPod]
@@ -36,6 +39,8 @@ above_version = 5.010001
 
 [-InputOutput::ProhibitInteractiveTest]
 [-InputOutput::ProhibitBacktickOperators]
+[-InputOutput::RequireBriefOpen]
+# We open files in functions and pass them around.
 [-InputOutput::RequireCheckedClose]
 [InputOutput::RequireCheckedSyscalls]
 functions = open opendir read readline readdir
@@ -49,6 +54,8 @@ functions = open opendir read readline readdir
 [-Modules::RequirePerlVersion]
 [-Modules::RequireVersionVar]
 
+[-NamingConventions::Capitalization]
+# Some of our variables are mixed case, like $opt_L.
 [-NamingConventions::ProhibitAmbiguousNames]
 
 [-RegularExpressions::ProhibitComplexRegexes]
@@ -61,6 +68,8 @@ functions = open opendir read readline readdir
 # We have plenty of funcs that we know are homonyms in ack, like open and close, but that's OK
 [-Subroutines::ProhibitCallsToUndeclaredSubs]
 [-Subroutines::ProhibitCallsToUnexportedSubs]
+[-Subroutines::ProhibitExcessComplexity]
+# Some of our subroutines are necessarily complex.
 [-Subroutines::ProhibitExplicitReturnUndef]
 [-Subroutines::RequireArgUnpacking]
 
@@ -75,6 +84,7 @@ functions = open opendir read readline readdir
 [-ValuesAndExpressions::ProhibitMagicNumbers]
 [-ValuesAndExpressions::ProhibitNoisyQuotes]
 [-ValuesAndExpressions::RequireConstantOnLeftSideOfEquality]
+[-ValuesAndExpressions::RequireInterpolationOfMetachars]
 [-ValuesAndExpressions::RestrictLongStrings]
 
 [-Variables::ProhibitPackageVars]
