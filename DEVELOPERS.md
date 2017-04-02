@@ -1,7 +1,6 @@
 # Ack Developer's Guide
 
-This is a guide intended to help new developers work on ack.  You may also want to read
-[CONTRIBUTING.md](https://github.com/petdance/ack2/blob/dev/CONTRIBUTING.md).
+This is a guide intended to help new developers work on ack.
 
 ## Helper Scripts
 
@@ -80,7 +79,7 @@ release.  There are no branches off of `master` other than `dev`.
 
 ## Coding Standards
 
-Our policy on commits is that they're cheap; we tend to throw files
+Our policy on commits is that they're cheap.  We tend to throw files
 into the repository that could prove useful to others, even if we
 will remove them later.
 
@@ -96,7 +95,7 @@ files.
 These can be done by anyone, except for the upload to CPAN.
 
 * Prep all source files for release.
-    * If this is a final release, replace all `2.XX_01` version numbers with `2.YY`, where XX is odd and YY is even.
+    * If this is a final release, replace all `3.XXX_01` version numbers with `3.YYY`, where XXX is odd and YYY is even.
     * Update the `Changes` file with the new version numbers and put a date in the header.
 * `make clean` and `make test` repeatedly.
 * `make disttest`
@@ -105,10 +104,10 @@ These can be done by anyone, except for the upload to CPAN.
     * Creates a tarball
 * Upload the tarball to pause.cpan.org
 * Tag the release
-    * `git tag 2.XX`
+    * `git tag 3.XXX`
     * `git push --tags`
 
-### For an official release (like `2.06`)
+### For an official release (like `3.XXX`)
 
 Do all of the above for a development release, plus:
 
@@ -124,7 +123,7 @@ Do all of the above for a development release, plus:
 
 ## Guidelines
 
-### Adding new files to ack2
+### Adding new files to ack3
 
 TODO
 
@@ -132,7 +131,7 @@ TODO
 
 Our issues are hosted on GitHub.
 
-https://github.com/petdance/ack2/issues
+https://github.com/petdance/ack3/issues
 
 ### Tags
 
@@ -147,10 +146,8 @@ Every test file, every issue solved, every bug fixed matters!
 
 ### ...I don't know Perl.
 
-That's ok; it's easy to learn!  Perl may have a reputation for being unreadable, but ack is written
-in a very easy-to-read style.
-
-TODO Mention http://perl-begin.org/
+That's OK.  Perl is easy to learn!  Perl may have a reputation for being
+unreadable, but ack is written in a very easy-to-read style.
 
 ### ...I don't know where to start.
 

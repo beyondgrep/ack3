@@ -2,7 +2,7 @@
 
 # This script looks through the list of dependencies in
 # @dependencies (see below) and tries to find the minimum
-# version of each with which ack2 will run.
+# version of each with which ack3 will run.
 #
 # This script considers each version in isolation, so
 # it won't catch things like "Getopt::Long 10 + File::Spec 5 works,

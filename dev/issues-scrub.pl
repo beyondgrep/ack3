@@ -13,7 +13,7 @@ use Net::GitHub;
 
 sub retrieve_issues {
     my $gh     = Net::GitHub->new;
-    $gh->set_default_user_repo('petdance', 'ack2');
+    $gh->set_default_user_repo('petdance', 'ack3');
     my $issue  = $gh->issue;
     my @issues = $issue->repos_issues( { state => 'open', per_page => 100 });
 

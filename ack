@@ -559,7 +559,6 @@ sub print_line_with_options {
 
     if ( $opt_output ) {
         while ( $line =~ /$opt_regex/og ) {
-            # XXX We need to stop using eval() for --output.  See https://github.com/petdance/ack2/issues/421
             my $output = eval $opt_output;
             App::Ack::print( join( $separator, @line_parts, $output ), $ors );
         }

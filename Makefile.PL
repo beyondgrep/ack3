@@ -46,9 +46,9 @@ if ( $ExtUtils::MakeMaker::VERSION ge '6.46' ) {
     $parms{META_MERGE} = {
         resources => {
             homepage    => 'https://beyondgrep.com/',
-            bugtracker  => 'https://github.com/petdance/ack2',
+            bugtracker  => 'https://github.com/petdance/ack3',
             license     => 'http://www.perlfoundation.org/artistic_license_2_0',
-            repository  => 'git://github.com/petdance/ack2.git',
+            repository  => 'git://github.com/petdance/ack3.git',
             MailingList => 'https://groups.google.com/group/ack-users',
         }
     };
@@ -122,8 +122,8 @@ ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) -c ack-standalone
 
 bininst : $(ACK)
-	$(CP) $(ACK) ~/bin/ack2
-	$(CP) ackrc ~/.ack2rc
+	$(CP) $(ACK) ~/bin/ack3
+	$(CP) ackrc ~/.ack3rc
 
 test: test_classic test_standalone
 
