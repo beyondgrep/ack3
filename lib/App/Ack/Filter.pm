@@ -1,15 +1,5 @@
 package App::Ack::Filter;
 
-=head1 NAME
-
-App::Ack::Filter
-
-=head1 DESCRIPTION
-
-An abstract superclass that represents objects that can filter C<App::Ack::File> objects.
-
-=cut
-
 use strict;
 use warnings;
 
@@ -21,6 +11,12 @@ my %filter_types;
 =head1 NAME
 
 App::Ack::Filter - Filter objects to filter files
+
+=head1 DESCRIPTION
+
+An abstract superclass that represents objects that can filter
+C<App::Ack::File> objects.  App::Ack::Filter implementations are
+responsible for filtering filenames to be searched.
 
 =head1 SYNOPSIS
 
@@ -44,11 +40,6 @@ App::Ack::Filter - Filter objects to filter files
     # users
     App::Ack::Filter->create_filter('mine', @args);
 
-
-=head1 DESCRIPTION
-
-App::Ack::Filter implementations are responsible for filtering filenames
-to be searched.
 
 =head1 METHODS
 
