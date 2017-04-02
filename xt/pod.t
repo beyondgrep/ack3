@@ -5,7 +5,7 @@ use strict;
 
 use Test::More;
 
-if ( eval 'use Test::Pod 1.14; 1;' ) { ## no critic (ProhibitStringyEval)
+if ( eval 'use Test::Pod 1.14; 1;' ) {
     all_pod_files_ok();
 }
 else {

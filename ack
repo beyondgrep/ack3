@@ -54,7 +54,7 @@ our $is_tracking_context;
 
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
-    $0 = join(' ', 'ack', $0);
+    $0 = join(' ', 'ack', $0);  ## no critic ( Variables::RequireLocalizedPunctuationVars )
     if ( $App::Ack::VERSION ne $main::VERSION ) {
         App::Ack::die( "Program/library version mismatch\n\t$0 is $main::VERSION\n\t$INC{'App/Ack.pm'} is $App::Ack::VERSION" );
     }
@@ -608,7 +608,7 @@ sub print_line_with_options {
                 }
             }
             # Reset formatting and delete everything to the end of the line.
-            $line .= "\033[0m\033[K" if $highlighted;
+            $line .= "\033[0m\033[K" if $highlighted;   ## no critic ( ValuesAndExpressions::ProhibitEscapedCharacters )
         }
 
         push @line_parts, $line;

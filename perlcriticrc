@@ -4,6 +4,9 @@ verbose = %f:%l:%c %m (%p)\n
 severity = 5
 [-Bangs::ProhibitNumberedNames]
 
+[-BuiltinFunctions::ProhibitStringyEval]
+# That's how we have to load our modules.
+
 [-CodeLayout::ProhibitParensWithBuiltins]
 [CodeLayout::ProhibitHardTabs]
 allow_leading_tabs = 0
@@ -44,8 +47,6 @@ above_version = 5.010001
 [-InputOutput::RequireCheckedClose]
 [InputOutput::RequireCheckedSyscalls]
 functions = open opendir read readline readdir
-
-[-Miscellanea::RequireRcsKeywords]
 
 [-Modules::RequireExplicitInclusion]
 # We'd really like to use this, but it's too noisy as is.

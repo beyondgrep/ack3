@@ -9,8 +9,6 @@ use Util;
 
 prep_environment();
 
-## no critic ( ValuesAndExpressions::RequireInterpolationOfMetachars ) Way too many metacharacters in this file
-
 # --line
 are_mutually_exclusive('--line', '-l', ['--line=1', '-l', 't/text/science-of-myth.txt']);
 are_mutually_exclusive('--line', '-l', ['--line', 1, '-l', 't/text/science-of-myth.txt']);
