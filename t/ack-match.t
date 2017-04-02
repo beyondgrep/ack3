@@ -18,24 +18,29 @@ my @tests = (
     [ qw/gon -w/ ], # words            is handled correctly with --match
 );
 
-plan tests => @tests + 10;
+plan tests => @tests + 5;
 
 test_match( @{$_} ) for @tests;
 
 # Giving only the --match argument (and no other args) should not result in an error.
 run_ack( '--match', 'Sue' );
 
-# Not giving a regex when piping into ack should result in an error.
-my ($stdout, $stderr) = pipe_into_ack_with_stderr( 't/text/4th-of-july.txt', '--perl' );
-isnt( get_rc(), 0, 'ack should return an error when piped into without a regex' );
-is_empty_array( $stdout, 'ack should return no STDOUT when piped into without a regex' );
-is( scalar @{$stderr}, 1, 'ack should return one line of error message when piped into without a regex' ) or diag(explain($stderr));
+subtest 'Not giving a regex when piping into ack should result in an error' => sub {
+    plan tests => 3;
+
+    my ($stdout, $stderr) = pipe_into_ack_with_stderr( 't/text/4th-of-july.txt', '--perl' );
+    isnt( get_rc(), 0, 'ack should return an error when piped into without a regex' );
+    is_empty_array( $stdout, 'ack should return no STDOUT when piped into without a regex' );
+    is( scalar @{$stderr}, 1, 'ack should return one line of error message when piped into without a regex' ) or diag(explain($stderr));
+};
 
 my $wd      = getcwd_clean();
 my $tempdir = File::Temp->newdir;
 mkdir File::Spec->catdir($tempdir->dirname, 'subdir');
 
-PROJECT_ACKRC_MATCH_FORBIDDEN: {
+subtest 'Project .ackrc match forbidden' => sub {
+    plan tests => 2;
+
     my @files = untaint( File::Spec->rel2abs('t/text/') );
     my @args = qw/ --env /;
 
@@ -48,9 +53,12 @@ PROJECT_ACKRC_MATCH_FORBIDDEN: {
     first_line_like( $stderr, qr/\QOptions --output, --pager and --match are forbidden in project .ackrc files/ );
 
     chdir $wd or die;
-}
+};
 
-HOME_ACKRC_MATCH_PERMITTED: {
+
+subtest 'Home .ackrc match permitted' => sub {
+    plan tests => 2;
+
     my @files = untaint( File::Spec->rel2abs('t/text/') );
     my @args = qw/ --env /;
 
@@ -64,9 +72,12 @@ HOME_ACKRC_MATCH_PERMITTED: {
     is_empty_array( $stderr );
 
     chdir $wd or die;
-}
+};
 
-ACKRC_ACKRC_MATCH_PERMITTED: {
+
+subtest 'ACKRC .ackrc match permitted' => sub {
+    plan tests => 2;
+
     my @files = untaint( File::Spec->rel2abs('t/text/') );
     my @args = qw/ --env /;
 
@@ -80,7 +91,7 @@ ACKRC_ACKRC_MATCH_PERMITTED: {
     is_empty_array( $stderr );
 
     chdir $wd or die;
-}
+};
 done_testing();
 
 exit 0;

@@ -69,3 +69,5 @@ functions = open opendir read readline readdir
 [-Variables::ProhibitPackageVars]
 [-Variables::ProhibitPunctuationVars]
 
+[Variables::ProhibitReusedNames]
+severity = 5
