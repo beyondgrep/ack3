@@ -96,7 +96,8 @@ MAIN: {
         exit 1;
     }
 
-    main();
+    my $nmatches = main();
+    App::Ack::exit_from_ack( $nmatches );
 }
 
 sub _compile_descend_filter {
@@ -1017,5 +1018,6 @@ RESOURCES:
     }
 
     close $App::Ack::fh;
-    App::Ack::exit_from_ack( $nmatches );
+
+    return $nmatches;
 }
