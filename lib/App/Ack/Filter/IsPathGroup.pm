@@ -36,9 +36,7 @@ sub add {
 sub filter {
     my ( $self, $resource ) = @_;
 
-    my $data = $self->{'data'};
-
-    return exists $data->{$resource->name};
+    return exists $self->{data}->{$resource->name};
 }
 
 sub inspect {

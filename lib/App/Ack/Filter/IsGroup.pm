@@ -50,10 +50,7 @@ sub add {
 sub filter {
     my ( $self, $resource ) = @_;
 
-    my $data = $self->{'data'};
-    my $base = $resource->basename;
-
-    return exists $data->{$base};
+    return exists $self->{data}->{ $resource->basename };
 }
 
 sub inspect {
