@@ -29,7 +29,7 @@ if ( $tmpdir && ($tmpdir =~ /^\Q$home/) ) {
 plan tests => 26;
 
 # Set HOME to a known value, so we get predictable results:
-$ENV{'HOME'} = realpath('t/home');
+local $ENV{HOME} = realpath('t/home');
 
 # Clear the users ACKRC so it doesn't throw out expect_ackrcs().
 delete $ENV{'ACKRC'};
@@ -63,8 +63,7 @@ sub set_up_globals {
 
 sub clean_up_globals {
     foreach my $path (@created_globals) {
-        my $filename = $path->{path};
-        unlink $filename or warn "Couldn't unlink $path";
+        unlink $path->{path} or warn "Couldn't unlink $path: $!";
     }
 
     return;
@@ -74,9 +73,11 @@ sub clean_up_globals {
 sub no_home (&) { ## no critic (ProhibitSubroutinePrototypes)
     my ( $fn ) = @_;
 
-    my $home = delete $ENV{'HOME'}; # Localized delete isn't supported in earlier Perls.
+    # We have to manually store the value of HOME because localized
+    # delete isn't supported until Perl 5.12.0.
+    my $home_saved = delete $ENV{HOME};
     $fn->();
-    $ENV{'HOME'} = $home; # XXX this won't work on exceptions...
+    $ENV{HOME} = $home_saved;   ## no critic ( Variables::RequireLocalizedPunctuationVars )
 
     return;
 }

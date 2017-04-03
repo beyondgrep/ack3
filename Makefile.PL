@@ -105,8 +105,8 @@ tags:
 		--exclude=ack-standalone \
 		--languages=Perl --langmap=Perl:+.t \
 
+# Don't run critic on docs.
 critic:
-	# Don't run critic on docs.
 	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_FILES) $(TEST_XT_FILES)
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
