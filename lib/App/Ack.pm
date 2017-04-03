@@ -91,7 +91,7 @@ sub warn {
     return CORE::warn( _my_program(), ': ', @_, "\n" );
 }
 
-=head2 die( @_ )
+=head2 die( @msgs )
 
 Die in an ack-specific way.
 
@@ -450,7 +450,7 @@ sub show_docs {
     }
     else {
         my $module = "App::Ack::Docs::$section";
-        eval "require $module";
+        eval "require $module" or App::Ack::die( "Can't load $module" );
 
         Pod::Usage::pod2usage({
             -input     => $INC{ "App/Ack/Docs/$section.pm" },
