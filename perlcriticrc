@@ -1,4 +1,4 @@
-verbose = %f:%l:%c %m (%p)\n
+verbose = %f:%l:%c %m (%p)\n    %r\n\n
 
 [Bangs::ProhibitFlagComments]
 severity = 5
