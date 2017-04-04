@@ -8,9 +8,12 @@ use Test::More tests => 19;
 use lib 't';
 use Util;
 
-my %types_for_file;
 
 prep_environment();
+
+my %types_for_file;
+populate_filetypes();
+
 
 sets_match( [filetypes( 't/swamp/perl.pod' )], [qw( parrot perl )], 'foo.pod can be multiple things' );
 sets_match( [filetypes( 't/swamp/perl.pm' )], [qw( perl )], 't/swamp/perl.pm' );
@@ -45,6 +48,9 @@ MATCH_VIA_CONTENT: {
 
 done_testing;
 
+exit 0;
+
+
 sub populate_filetypes {
     my ( $type_lines, undef ) = run_ack_with_stderr('--help-types');
 
@@ -68,16 +74,13 @@ sub populate_filetypes {
     return;
 }
 
-# XXX Implement me with --show-types.
+
 sub filetypes {
     my $filename = reslash(shift);
 
-    if ( !%types_for_file ) {
-        populate_filetypes();
-    }
-
     return @{ $types_for_file{$filename} || [] };
 }
+
 
 sub is_filetype {
     my ( $filename, $wanted_type ) = @_;

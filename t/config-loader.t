@@ -5,9 +5,7 @@ use warnings;
 use lib 't';
 use Util;
 
-use Test::More tests => 37;
-
-use Carp qw(croak);
+use Test::More tests => 28;
 
 use App::Ack::Filter::Default;
 use App::Ack::ConfigLoader;
@@ -153,9 +151,10 @@ test_loader(
     '--context with invalid value sets both before_context and after_context to default'
 );
 
-# XXX These tests should all be replicated to work off of the ack command line
-#     tools instead of its internal APIs!
-do {
+
+subtest 'ACK_PAGER' => sub {
+    plan tests => 3;
+
     local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
 
     test_loader(
@@ -177,7 +176,10 @@ do {
     );
 };
 
-do {
+
+subtest 'ACK_PAGER_COLOR' => sub {
+    plan tests => 6;
+
     local $ENV{'ACK_PAGER_COLOR'} = './test-pager --skip=2';
 
     test_loader(
@@ -219,7 +221,10 @@ do {
     );
 };
 
-do {
+
+subtest 'PAGER' => sub {
+    plan tests => 3;
+
     local $ENV{'PAGER'} = './test-pager';
 
     test_loader(
@@ -239,11 +244,9 @@ do {
         expected_opts    => { %defaults, pager => './test-pager --skip=2' },
         'PAGER is not used if --pager is specified with an argument',
     );
-
-    # XXX what if --pager is specified but PAGER isn't set?
 };
 
-done_testing;
+done_testing();
 
 exit 0;
 
@@ -257,21 +260,13 @@ sub test_loader {
     my %opts = @_;
 
     return subtest "test_loader( $msg )" => sub {
-        plan tests => 2;
+        plan tests => 3;
 
-        my ( $env, $argv, $expected_opts ) = delete @opts{qw( env argv expected_opts )};
+        my $env           = delete $opts{env}  // '';
+        my $argv          = delete $opts{argv} // [];
+        my $expected_opts = delete $opts{expected_opts};
 
-        $env  = '' unless defined $env;
-        $argv = [] unless defined $argv;
-
-        my @files = map {
-            $opts{$_}
-        } sort {
-            my ( $a_end ) = $a =~ /(\d+)/;
-            my ( $b_end ) = $b =~ /(\d+)/;
-
-            $a_end <=> $b_end;
-        } grep { /^file\d+/ } keys %opts;
+        is( scalar keys %opts, 0, 'All the keys are gone' );
 
         my $got_opts;
         my $got_targets;
@@ -281,7 +276,6 @@ sub test_loader {
 
             my @arg_sources = (
                 { name => 'ARGV', contents => $argv },
-                map { +{ name => $_, contents => scalar read_file($_) } } @files,
             );
 
             $got_opts    = App::Ack::ConfigLoader::process_args( @arg_sources );
