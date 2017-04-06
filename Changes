@@ -3,3 +3,5 @@ History file for ack.  https://beyondgrep.com/
 
 2.999_01
 ====================================
+[ENHANCEMENTS]
+Added --pod as a filetype.

@@ -165,14 +165,6 @@ sub _options_block {
 
 ### Filetypes defined
 
-# Perl
-# http://perl.org/
---type-add=perl:ext:pl,pm,pod,t,psgi
---type-add=perl:firstlinematch:/^#!.*\bperl/
-
-# Perl tests
---type-add=perltest:ext:t
-
 # Makefiles
 # http://www.gnu.org/s/make/
 --type-add=make:ext:mk
@@ -319,6 +311,11 @@ sub _options_block {
 --type-add=lua:ext:lua
 --type-add=lua:firstlinematch:/^#!.*\blua(jit)?/
 
+# Matlab
+# http://en.wikipedia.org/wiki/MATLAB
+--type-add=matlab:ext:m
+
+
 # Objective-C
 --type-add=objc:ext:m,h
 
@@ -329,13 +326,20 @@ sub _options_block {
 # http://caml.inria.fr/
 --type-add=ocaml:ext:ml,mli,mll,mly
 
-# Matlab
-# http://en.wikipedia.org/wiki/MATLAB
---type-add=matlab:ext:m
-
 # Parrot
 # http://www.parrot.org/
 --type-add=parrot:ext:pir,pasm,pmc,ops,pod,pg,tg
+
+# Perl
+# http://perl.org/
+--type-add=perl:ext:pl,pm,pod,t,psgi
+--type-add=perl:firstlinematch:/^#!.*\bperl/
+
+# Perl tests
+--type-add=perltest:ext:t
+
+# Perl's Plain Old Documentation format, POD
+--type-add=pod:ext:pod
 
 # PHP
 # http://www.php.net/
