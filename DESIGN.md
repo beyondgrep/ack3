@@ -38,7 +38,8 @@ See `xt/coding-standards.t`.
 
 * The detection of whether a file is text or not is decided by Perl's `-T` operator.
 
-* Filetype detection is only through user-defined rules.
+* Filetype detection is only through user-defined rules.  ack will not
+shell out to `file` or any similar utilities.
 
 * ack must be able to be run under taint mode.
 
