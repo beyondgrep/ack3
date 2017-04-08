@@ -29,18 +29,14 @@ sub new {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    for my $group (values %{$self->{'groups'}}) {
-        if ($group->filter($resource)) {
-            return 1;
-        }
+    for my $group (values %{$self->{groups}}) {
+        return 1 if $group->filter($file);
     }
 
-    for my $filter (@{$self->{'ungrouped'}}) {
-        if ($filter->filter($resource)) {
-            return 1;
-        }
+    for my $filter (@{$self->{ungrouped}}) {
+        return 1 if $filter->filter($file);
     }
 
     return 0;
@@ -69,9 +65,7 @@ sub inspect {
 sub to_string {
     my ( $self ) = @_;
 
-    my $ungrouped = $self->{'ungrouped'};
-
-    return join(', ', map { "($_)" } @{$ungrouped});
+    return join(', ', map { "($_)" } @{$self->{ungrouped}});
 }
 
 1;

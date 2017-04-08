@@ -45,7 +45,7 @@ sub new {
 
 =head2 $res->name()
 
-Returns the name of the resource.
+Returns the name of the file.
 
 =cut
 
@@ -57,7 +57,7 @@ sub name {
 =head2 $res->basename()
 
 Returns the basename (the last component the path)
-of the resource.
+of the file.
 
 =cut
 
@@ -75,7 +75,7 @@ sub basename {
 
 =head2 $res->open()
 
-Opens a filehandle for reading this resource and returns it, or returns
+Opens a filehandle for reading this file and returns it, or returns
 undef if the operation fails (the error is in C<$!>).  Instead of calling
 C<close $fh>, C<$res-E<gt>close> should be called.
 
@@ -101,7 +101,7 @@ sub open {
 
 Tells if the file needs a line-by-line scan.  This is a big
 optimization because if you can tell from the outset that the pattern
-is not found in the resource at all, then there's no need to do the
+is not found in the file at all, then there's no need to do the
 line-by-line iteration.
 
 Slurp up an entire file up to 100K, see if there are any matches
@@ -139,7 +139,7 @@ sub needs_line_scan {
 
 =head2 $res->reset()
 
-Resets the resource back to the beginning.  This is only called if
+Resets the file back to the beginning.  This is only called if
 C<needs_line_scan()> is true, but not always if C<needs_line_scan()>
 is true.
 
@@ -148,13 +148,10 @@ is true.
 sub reset {
     my $self = shift;
 
-    # Return if we haven't opened the file yet.
-    if ( !defined($self->{fh}) ) {
-        return;
-    }
-
-    if ( !seek( $self->{fh}, 0, 0 ) && $App::Ack::report_bad_filenames ) {
-        App::Ack::warn( "$self->{filename}: $!" );
+    if ( defined($self->{fh}) ) {
+        if ( !seek( $self->{fh}, 0, 0 ) && $App::Ack::report_bad_filenames ) {
+            App::Ack::warn( "$self->{filename}: $!" );
+        }
     }
 
     return;
@@ -187,7 +184,7 @@ sub close {
 
 =head2 $res->clone()
 
-Clones this resource.
+Clones this file.
 
 =cut
 

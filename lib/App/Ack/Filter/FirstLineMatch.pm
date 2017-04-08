@@ -6,7 +6,7 @@ App::Ack::Filter::FirstLineMatch
 
 =head1 DESCRIPTION
 
-The class that implements filtering resources by their first line.
+The class that implements filtering files by their first line.
 
 =cut
 
@@ -31,21 +31,16 @@ sub new {
 # .min.js file (which might be only one "line" long) into memory.
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $re = $self->{'regex'};
-
-    my $line = $resource->firstliney;
-
-    return $line =~ /$re/;
+    return $file->firstliney =~ /$self->{regex}/;
 }
 
 sub inspect {
     my ( $self ) = @_;
 
-    my $re = $self->{'regex'};
 
-    return ref($self) . " - $re";
+    return ref($self) . ' - ' . $self->{regex};
 }
 
 sub to_string {
@@ -53,7 +48,7 @@ sub to_string {
 
     (my $re = $self->{regex}) =~ s{\([^:]*:(.*)\)$}{$1};
 
-    return "first line matches /$re/";
+    return "First line matches /$re/";
 }
 
 BEGIN {

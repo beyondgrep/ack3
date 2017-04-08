@@ -79,6 +79,7 @@ subtest 'Front anchor' => sub {
     plan tests => 1;
 
     my @expected = qw(
+        t/file-iterator.t
         t/file-permission.t
         t/filetypes.t
         t/filter.t

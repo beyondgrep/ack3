@@ -24,10 +24,9 @@ sub new {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $filter = $self->{'filter'};
-    return !$filter->filter( $resource );
+    return !$self->{filter}->filter( $file );
 }
 
 sub invert {

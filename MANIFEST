@@ -91,6 +91,7 @@ t/context.t
 t/default-filter.t
 t/exit-code.t
 t/ext-filter.t
+t/file-iterator.t
 t/file-permission.t
 t/filetypes.t
 t/filter.t
@@ -115,7 +116,6 @@ t/named-pipes.t
 t/noackrc.t
 t/noenv.t
 t/process-substitution.t
-t/resource-iterator.t
 t/r-lang-ext.t
 t/runtests.pl
 t/zero.t

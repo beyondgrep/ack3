@@ -35,27 +35,21 @@ sub create_group {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $re = $self->{'regex'};
-
-    return $resource->name =~ /$re/;
+    return $file->name =~ /$self->{regex}/;
 }
 
 sub inspect {
     my ( $self ) = @_;
 
-    my $re = $self->{'regex'};
-
-    return ref($self) . " - $re";
+    return ref($self) . ' - ' . $self->{regex};
 }
 
 sub to_string {
     my ( $self ) = @_;
 
-    my $exts = $self->{'extensions'};
-
-    return join(' ', map { ".$_" } @{$exts});
+    return join( ' ', map { ".$_" } @{$self->{extensions}} );
 }
 
 BEGIN {

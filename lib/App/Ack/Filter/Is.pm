@@ -31,28 +31,21 @@ sub create_group {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $filename = $self->{'filename'};
-    my $base     = (File::Spec->splitpath($resource->name))[2];
-
-    return $base eq $filename;
+    return (File::Spec->splitpath($file->name))[2] eq $self->{filename};
 }
 
 sub inspect {
     my ( $self ) = @_;
 
-    my $filename = $self->{'filename'};
-
-    return ref($self) . " - $filename";
+    return ref($self) . ' - ' . $self->{filename};
 }
 
 sub to_string {
     my ( $self ) = @_;
 
-    my $filename = $self->{'filename'};
-
-    return $filename;
+    return $self->{filename};
 }
 
 BEGIN {

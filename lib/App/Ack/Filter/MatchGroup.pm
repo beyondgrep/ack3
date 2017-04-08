@@ -36,11 +36,9 @@ sub add {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $re = $self->{big_re};
-
-    return $resource->basename =~ /$re/;
+    return $file->basename =~ /$self->{big_re}/;
 }
 
 sub inspect {

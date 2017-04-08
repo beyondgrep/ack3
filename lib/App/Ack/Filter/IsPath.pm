@@ -30,25 +30,21 @@ sub create_group {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    return $resource->name eq $self->{'filename'};
+    return $file->name eq $self->{filename};
 }
 
 sub inspect {
     my ( $self ) = @_;
 
-    my $filename = $self->{'filename'};
-
-    return ref($self) . " - $filename";
+    return ref($self) . ' - ' . $self->{filename};
 }
 
 sub to_string {
     my ( $self ) = @_;
 
-    my $filename = $self->{'filename'};
-
-    return $filename;
+    return $self->{filename};
 }
 
 1;

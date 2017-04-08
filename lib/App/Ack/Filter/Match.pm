@@ -13,7 +13,7 @@ App::Ack::Filter::Match
 
 =head1 DESCRIPTION
 
-Implements filtering resources by their filename (regular expression).
+Implements filtering files by their filename (regular expression).
 
 =cut
 
@@ -34,29 +34,21 @@ sub create_group {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    my $re = $self->{'regex'};
-
-    return $resource->basename =~ /$re/;
+    return $file->basename =~ /$self->{regex}/;
 }
 
 sub inspect {
     my ( $self ) = @_;
 
-    my $re = $self->{'regex'};
-
-    print ref($self) . " - $re";
-
-    return;
+    return ref($self) . ' - ' . $self->{regex};
 }
 
 sub to_string {
     my ( $self ) = @_;
 
-    my $re = $self->{'regex'};
-
-    return "filename matches $re";
+    return "Filename matches $self->{regex}";
 }
 
 BEGIN {

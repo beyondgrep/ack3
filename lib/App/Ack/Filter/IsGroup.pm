@@ -48,9 +48,9 @@ sub add {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    return exists $self->{data}->{ $resource->basename };
+    return exists $self->{data}->{ $file->basename };
 }
 
 sub inspect {

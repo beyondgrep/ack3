@@ -34,9 +34,9 @@ sub add {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    if ($resource->name =~ /[.]([^.]*)$/) {
+    if ($file->name =~ /[.]([^.]*)$/) {
         return exists $self->{'data'}->{lc $1};
     }
 

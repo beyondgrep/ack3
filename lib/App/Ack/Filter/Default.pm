@@ -22,9 +22,9 @@ sub new {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    return -T $resource->name;
+    return -T $file->name;
 }
 
 1;

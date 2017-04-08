@@ -28,7 +28,7 @@ responsible for filtering filenames to be searched.
     use parent 'App::Ack::Filter';
 
     sub filter {
-        my ( $self, $resource ) = @_;
+        my ( $self, $file ) = @_;
     }
 
     BEGIN {
@@ -74,11 +74,11 @@ sub register_filter {
     return;
 }
 
-=head2 $filter->filter($resource)
+=head2 $filter->filter( $file )
 
 Must be implemented by filter implementations.  Returns
 true if the filter passes, false otherwise.  This method
-must B<not> alter the passed-in C<$resource> object.
+must B<not> alter the passed-in C<$file> object.
 
 =head2 $filter->invert()
 

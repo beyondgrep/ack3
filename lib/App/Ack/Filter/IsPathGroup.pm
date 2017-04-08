@@ -1,6 +1,5 @@
 package App::Ack::Filter::IsPathGroup;
 
-
 =head1 NAME
 
 App::Ack::Filter::IsPathGroup
@@ -11,7 +10,6 @@ The App::Ack::Filter::IsPathGroup class optimizes multiple ::IsPath
 calls into one container.  See App::Ack::Filter::IsGroup for details.
 
 =cut
-
 
 use strict;
 use warnings;
@@ -34,9 +32,9 @@ sub add {
 }
 
 sub filter {
-    my ( $self, $resource ) = @_;
+    my ( $self, $file ) = @_;
 
-    return exists $self->{data}->{$resource->name};
+    return exists $self->{data}->{$file->name};
 }
 
 sub inspect {

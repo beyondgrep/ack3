@@ -591,20 +591,20 @@ sub exit_from_ack {
     exit $rc;
 }
 
-=head2 show_types( $resource, $ors )
+=head2 show_types( $file, $ors )
 
 Shows the filetypes associated with a given file.
 
 =cut
 
 sub show_types {
-    my $resource = shift;
-    my $ors      = shift;
+    my $file = shift;
+    my $ors  = shift;
 
-    my @types = filetypes( $resource );
+    my @types = filetypes( $file );
     my $types = join( ',', @types );
     my $arrow = @types ? ' => ' : ' =>';
-    App::Ack::print( $resource->name, $arrow, join( ',', @types ), $ors );
+    App::Ack::print( $file->name, $arrow, join( ',', @types ), $ors );
 
     return;
 }
@@ -633,7 +633,7 @@ sub load_colors {
 
 
 sub filetypes {
-    my ( $resource ) = @_;
+    my ( $file ) = @_;
 
     my @matches;
 
@@ -641,8 +641,8 @@ sub filetypes {
         my $filters = $App::Ack::mappings{$k};
 
         foreach my $filter (@{$filters}) {
-            # Clone the resource.
-            my $clone = $resource->clone;
+            # Clone the file.
+            my $clone = $file->clone;
             if ( $filter->filter($clone) ) {
                 push @matches, $k;
                 last;
