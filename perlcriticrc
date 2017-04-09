@@ -1,9 +1,11 @@
 verbose = %f:%l:%c %m (%p)\n    %r\n\n
 
 [Bangs::ProhibitFlagComments]
-severity = 5
+severity = 4
 [-Bangs::ProhibitNumberedNames]
 
+[-BuiltinFunctions::ProhibitBooleanGrep]
+# Boolean grep is OK since we can't use List::Util
 [-BuiltinFunctions::ProhibitStringyEval]
 # That's how we have to load our modules.
 
@@ -94,3 +96,5 @@ functions = open opendir read readline readdir
 
 [Variables::ProhibitReusedNames]
 severity = 5
+[-Variables::RequireLocalizedPunctuationVars]
+# We do lots of mucking with punctuation vars and @ARGV.

@@ -302,7 +302,7 @@ sub get_arg_spec {
         f                   => \$opt->{f},
         'files-from=s'      => \$opt->{files_from},
         'filter!'           => \$App::Ack::is_filter_mode,
-        flush               => sub { $| = 1 },  ## no critic ( Variables::RequireLocalizedPunctuationVars )
+        flush               => sub { $| = 1 },
         'follow!'           => \$opt->{follow},
         g                   => \$opt->{g},
         'group!'            => sub { shift; $opt->{heading} = $opt->{break} = shift },
