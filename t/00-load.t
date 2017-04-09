@@ -39,7 +39,8 @@ while ( my $file = $iter->() ) {
 
     $module =~ /^([a-z::]+)$/i or die "Invalid module name $module";
     $module = $1;   # Untainted
-    ok( eval "use $module; 1;", "use $module" );
+    my $rc = eval "use $module; 1;";
+    ok( $rc, "use $module" );
 }
 
 done_testing();
