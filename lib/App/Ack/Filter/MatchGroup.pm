@@ -41,16 +41,7 @@ sub filter {
     return $file->basename =~ /$self->{big_re}/;
 }
 
-sub inspect {
-    my ( $self ) = @_;
-
-    # XXX Needs an explicit return.
-}
-
-sub to_string {
-    my ( $self ) = @_;
-
-    # XXX Needs an explicit return.
-}
+# This class has no inspect() or to_string() method.
+# It will just use the default one unless someone writes something useful.
 
 1;
