@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 16;
+use Test::More tests => 14;
 
 use lib 't';
 use Util;
@@ -12,21 +12,6 @@ use Barfly;
 prep_environment();
 
 Barfly->run_tests( 't/ack-w.barfly' );
-
-
-subtest '-w with trailing punctuation' => sub {
-    plan tests => 1;
-
-    my @expected = line_split( <<'EOF' );
-And I said: "My name is Sue! How do you do! Now you gonna die!"
-Bill or George! Anything but Sue! I still hate that name!
-EOF
-
-    my @files = qw( t/text );
-    my @args = qw( Sue! -w -h --sort-files );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Sue!' );
-};
 
 
 subtest '-w with trailing metachar \w' => sub {
@@ -47,8 +32,6 @@ EOF
 subtest '-w with trailing dot' => sub {
     plan tests => 1;
 
-    # Because the . at the end of the regular expression is not a word
-    # character, a word boundary is not required after the match.
     my @expected = line_split( <<'EOF' );
 At an old saloon on a street of mud,
 Kicking and a-gouging in the mud and the blood and the beer.
@@ -77,7 +60,7 @@ EOF
 };
 
 
-subtest 'Begins but not ends with word char' => sub {
+subtest 'Ends with grouping parens' => sub {
     plan tests => 1;
 
     # The last character of the regexp is not a word, disabling the word boundary check at the end of the match.
@@ -92,10 +75,9 @@ subtest 'Begins but not ends with word char' => sub {
 };
 
 
-subtest 'Ends but not begins with word char' => sub {
+subtest 'Begins with grouping parens' => sub {
     plan tests => 1;
 
-    # The first character of the regexp is not a word, disabling the word boundary check at the start of the match.
     my @expected = line_split( <<'EOF' );
 If you ain't got no one
 He said: "Now you just fought one hell of a fight
@@ -112,10 +94,9 @@ EOF
 };
 
 
-subtest 'Neither begins nor ends with word char' => sub {
+subtest 'Wrapped in grouping parens' => sub {
     plan tests => 1;
 
-    # Because the regular expression doesn't begin or end with a word character, the 'words mode' doesn't affect the match.
     my @expected = (
         'Consider the case of the woman whose faith helped her make it through',
         'When she was raped and cut up, left for dead in her trunk, her beliefs held true'

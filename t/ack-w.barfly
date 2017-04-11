@@ -175,31 +175,6 @@ get_user_permission
 YESLINES
 my $foo = set_user_name( $bar ) + set_user_perm( $foo );
           ^^^^^^^^^^^^^           ^^^^^^^^^^^^^
-
-END
-
-
-BEGIN Word with trailing punctuation
-RUN
-ack -w -i f(\w+)!
-ack -w -i (f(\w+)!)
-
-YES
-Friends!
-Hey, friends! How's it going?
-Hey, friends!How's it going?
-
-NO
-Friends
-Superfriends!
-
-YESLINES
-Fee Fi Fo Fum! I smell the blood of an Englishman!
-          ^^^^
-
-Fore! After!
-^^^^^
-
 END
 
 
@@ -220,7 +195,6 @@ xxx
 YESLINES
 A man, a plan, a canal: Panama
 ^      ^       ^
-
 END
 
 # vi:set ft=barfly:
