@@ -6,9 +6,11 @@ ack 3 is a greplike tool optimized for searching large code trees.
 
 Improvements over ack 2 include:
 
-* Improved `-w` function.
+* Improved `-w` option.
 
 * `-i`, `-I` and `--smart-case`
+
+* `--proximate` option
 
 
 # Incompatibilities with ack 2

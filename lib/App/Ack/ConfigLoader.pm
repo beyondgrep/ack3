@@ -343,6 +343,7 @@ sub get_arg_spec {
         'nopager'           => sub { $opt->{pager} = undef },
         'passthru'          => \$opt->{passthru},
         'print0'            => \$opt->{print0},
+        'proximate!'        => \$opt->{proximate},
         'Q|literal'         => \$opt->{Q},
         'r|R|recurse'       => sub { $opt->{n} = 0 },
         's'                 => \$opt->{dont_report_bad_filenames},

@@ -42,6 +42,7 @@ our $opt_m;
 our $opt_output;
 our $opt_passthru;
 our $opt_print0;
+our $opt_proximate;
 our $opt_regex;
 our $opt_show_filename;
 our $opt_u;
@@ -318,11 +319,7 @@ my $printed_line_no;
 my $is_iterating;
 
 my $is_first_match;
-my $has_printed_something;
-
-BEGIN {
-    $has_printed_something = 0;
-}
+state $has_printed_something = 0;
 
 # Set up context tracking variables.
 sub set_up_line_context {
@@ -426,7 +423,7 @@ sub print_matches_in_file {
             last if ($max_count == 0) && ($after_context_pending == 0);
         }
     }
-    else {
+    else {  # Not tracking context
         if ( $opt_passthru ) {
             local $_;
 
@@ -485,6 +482,7 @@ sub print_matches_in_file {
         else {
             local $_;
 
+            my $last_match_lineno;
             while ( <$fh> ) {
                 $match_column_number = undef;
                 if ( /$opt_regex/o ) {
@@ -497,11 +495,22 @@ sub print_matches_in_file {
                             App::Ack::print_filename( $display_filename, $ors );
                         }
                     }
+                    if ( $opt_proximate ) {
+                        if ( $last_match_lineno ) {
+                            if ( $. != $last_match_lineno + 1 ) {
+                                App::Ack::print_blank_line();
+                            }
+                        }
+                        elsif ( !$opt_break && $has_printed_something ) {
+                            App::Ack::print_blank_line();
+                        }
+                    }
                     s/[\r\n]+$//g;
                     print_line_with_options( $filename, $_, $., ':' );
                     $has_printed_for_this_file = 1;
                     $nmatches++;
                     $max_count--;
+                    $last_match_lineno = $.
                 }
                 last unless $max_count != 0;
             }
@@ -815,6 +824,7 @@ sub main {
     $opt_after_context  = $opt->{after_context};
     $opt_before_context = $opt->{before_context};
     $opt_break          = $opt->{break};
+    $opt_proximate      = $opt->{proximate};
     $opt_color          = $opt->{color};
     $opt_column         = $opt->{column};
     $opt_count          = $opt->{count};

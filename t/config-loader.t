@@ -34,6 +34,7 @@ my %defaults = (
     pager                     => undef,
     passthru                  => undef,
     print0                    => undef,
+    proximate                 => undef,
     Q                         => undef,
     regex                     => undef,
     show_types                => undef,

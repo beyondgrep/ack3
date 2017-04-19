@@ -314,6 +314,8 @@ File presentation:
                                 files.  (default: on when used interactively)
   --group                       Same as --heading --break
   --nogroup                     Same as --noheading --nobreak
+  --[no]proximate               Separate match output with blank lines unless
+                                they are on adjacent lines.
   --[no]color                   Highlight the matching text (default: on unless
                                 output is redirected, or on Windows)
   --[no]colour                  Same as --[no]color
