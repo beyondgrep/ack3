@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 use lib 't';
 use Util;
@@ -59,6 +59,60 @@ EOF
     my @args = qw( --proximate -i --nogroup --sort some );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate' );
+};
+
+
+subtest 'Grouped proximate=2' => sub {
+    plan tests => 1;
+
+    my $sue = reslash( 't/text/boy-named-sue.txt' );
+    my @expected = line_split( <<"EOF" );
+$sue
+4:Now, I don't blame him 'cause he run and hid
+
+33:And I looked at him and my blood ran cold
+
+36:Well, I hit him hard right between the eyes
+
+46:I heard him laugh and then I heard him cuss,
+48:He stood there lookin' at me and I saw him smile.
+
+65:I called him my pa, and he called me his son,
+67:And I think about him, now and then,
+69:And if I ever have a son, I think I'm gonna name him
+EOF
+
+    my @files = qw( t/text );
+    my @args = qw( --proximate=2 --group -w him );
+
+    ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate=2' );
+};
+
+
+
+subtest 'Ungrouped proximate=2' => sub {
+    plan tests => 1;
+
+    my $sue = reslash( 't/text/boy-named-sue.txt' );
+    my @expected = line_split( <<"EOF" );
+$sue:4:Now, I don't blame him 'cause he run and hid
+
+$sue:33:And I looked at him and my blood ran cold
+
+$sue:36:Well, I hit him hard right between the eyes
+
+$sue:46:I heard him laugh and then I heard him cuss,
+$sue:48:He stood there lookin' at me and I saw him smile.
+
+$sue:65:I called him my pa, and he called me his son,
+$sue:67:And I think about him, now and then,
+$sue:69:And if I ever have a son, I think I'm gonna name him
+EOF
+
+    my @files = qw( t/text );
+    my @args = qw( --proximate=2 --nogroup -w him );
+
+    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=2' );
 };
 
 

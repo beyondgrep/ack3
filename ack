@@ -497,7 +497,7 @@ sub print_matches_in_file {
                     }
                     if ( $opt_proximate ) {
                         if ( $last_match_lineno ) {
-                            if ( $. != $last_match_lineno + 1 ) {
+                            if ( $. > $last_match_lineno + $opt_proximate ) {
                                 App::Ack::print_blank_line();
                             }
                         }

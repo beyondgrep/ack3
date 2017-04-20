@@ -10,7 +10,7 @@ Improvements over ack 2 include:
 
 * `-i`, `-I` and `--smart-case`
 
-* `--proximate` option
+* `--proximate=N` option
 
 
 # Incompatibilities with ack 2
