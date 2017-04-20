@@ -31,9 +31,10 @@ Logic for loading configuration files.
 my @INVALID_COMBINATIONS;
 
 BEGIN {
-    my @context  = qw( -A -B -C --after-context --before-context --context );
-    my @pretty   = qw( --heading --group --break );
-    my @filename = qw( -h -H --with-filename --no-filename );
+    my @context    = qw( -A -B -C --after-context --before-context --context );
+    my @pretty     = qw( --heading --group --break );
+    my @filename   = qw( -h -H --with-filename --no-filename );
+    my @file_lists = qw( -f -g -l -L );
 
     @INVALID_COMBINATIONS = (
         # XXX normalize
@@ -48,10 +49,11 @@ BEGIN {
         [qw(-h --no-filename)]   => [qw(-H --with-filename -f -g --group --heading)],
         [qw(-H --with-filename)] => [qw(-h --no-filename -f -g)],
         [qw(-c --count)]         => [@context, @pretty, qw(--column -f -g)],
-        [qw(--column)]           => [qw(-f -g)],
-        [@context]               => [qw(-f -g)],
+        [qw(--column)]           => [@file_lists],
+        [@context]               => [@file_lists],
         [qw(-f)]                 => [qw(-g), @pretty],
         [qw(-g)]                 => [qw(-f), @pretty],
+        [qw(--proximate)]        => [@context, @file_lists, qw( --passthru --lines -c )],
     );
 }
 
