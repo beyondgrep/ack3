@@ -77,7 +77,7 @@ sub no_home (&) { ## no critic (ProhibitSubroutinePrototypes)
     # delete isn't supported until Perl 5.12.0.
     my $home_saved = delete $ENV{HOME};
     $fn->();
-    $ENV{HOME} = $home_saved;   ## no critic ( Variables::RequireLocalizedPunctuationVars )
+    $ENV{HOME} = $home_saved;
 
     return;
 }
