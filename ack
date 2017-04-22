@@ -55,7 +55,7 @@ our $is_tracking_context;
 
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
-    $0 = join(' ', 'ack', $0);  ## no critic ( Variables::RequireLocalizedPunctuationVars )
+    $0 = join(' ', 'ack', $0);
     if ( $App::Ack::VERSION ne $main::VERSION ) {
         App::Ack::die( "Program/library version mismatch\n\t$0 is $main::VERSION\n\t$INC{'App/Ack.pm'} is $App::Ack::VERSION" );
     }
@@ -965,7 +965,7 @@ FILES:
 
             my $filename = $file->name;
 
-            local $opt_color = 0;   ## no critic ( Variables::ProhibitLocalVars ) We are masking the package version.
+            local $opt_color = 0;
 
             iterate( $file, sub {
                 chomp;

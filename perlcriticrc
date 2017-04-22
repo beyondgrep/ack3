@@ -89,8 +89,10 @@ functions = open opendir read readline readdir
 [-ValuesAndExpressions::ProhibitNoisyQuotes]
 [-ValuesAndExpressions::RequireConstantOnLeftSideOfEquality]
 [-ValuesAndExpressions::RequireInterpolationOfMetachars]
+[-ValuesAndExpressions::RequireNumericVersion]
 [-ValuesAndExpressions::RestrictLongStrings]
 
+[-Variables::ProhibitLocalVars]
 [-Variables::ProhibitPackageVars]
 [-Variables::ProhibitPunctuationVars]
 
