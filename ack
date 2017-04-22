@@ -574,11 +574,10 @@ sub print_line_with_options {
         }
     }
     else {
-        my $underline;
+        my $underline = '';
 
         # We have to do underlining before any highlighting because highlighting modifies string length.
         if ( $opt_u ) {
-            $underline = '';
             while ( $line =~ /$opt_regex/og ) {
                 my $match_start = $-[0];
                 next unless defined($match_start);
