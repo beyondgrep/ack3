@@ -510,7 +510,7 @@ sub print_matches_in_file {
                     $has_printed_for_this_file = 1;
                     $nmatches++;
                     $max_count--;
-                    $last_match_lineno = $.
+                    $last_match_lineno = $.;
                 }
                 last if $max_count == 0;
             }
