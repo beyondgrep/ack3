@@ -366,7 +366,7 @@ must also happen there.
 sub print_matches_in_file {
     my ( $file ) = @_;
 
-    my $max_count = $opt_m || -1;
+    my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
     my $nmatches  = 0;
     my $filename  = $file->name;
     my $ors       = $opt_print0 ? "\0" : "\n";
@@ -454,7 +454,7 @@ sub print_matches_in_file {
                     print_line_with_options( $filename, $_, $., ':' );
                     $has_printed_for_this_file = 1;
                 }
-                last unless $max_count != 0;
+                last if $max_count == 0;
             }
         }
         elsif ( $opt_v ) {
@@ -476,7 +476,7 @@ sub print_matches_in_file {
                     $nmatches++;
                     $max_count--;
                 }
-                last unless $max_count != 0;
+                last if $max_count == 0;
             }
         }
         else {
@@ -512,7 +512,7 @@ sub print_matches_in_file {
                     $max_count--;
                     $last_match_lineno = $.
                 }
-                last unless $max_count != 0;
+                last if $max_count == 0;
             }
         }
 
