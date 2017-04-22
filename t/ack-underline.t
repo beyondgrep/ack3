@@ -23,9 +23,6 @@ my $spc_h = ' ' x length( $happy );
 subtest 'Grouped --underline' => sub {
     plan tests => 1;
 
-    my $july_ = reslash( 't/text/4th-of-july.txt' );
-    my $happy = reslash( 't/text/shut-up-be-happy.txt' );
-
     my @expected = line_split( <<"EOF" );
 $july_
 12:Looking at me, telling me you love me,
@@ -36,10 +33,9 @@ $happy
                             ^^^^
 EOF
 
-    my @files = qw( t/text );
-    my @args = qw( love --underline --sort-files --group );
+    my @args = qw( --underline --sort-files --group love t/text );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for love, grouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for love, grouped' );
 };
 
 
@@ -53,10 +49,9 @@ $happy:5:Do not attempt to contact loved ones, insurance agents or attorneys.
 $spc_h                             ^^^^
 EOF
 
-    my @files = qw( t/text );
-    my @args = qw( love --underline --sort-files --nogroup );
+    my @args = qw( --underline --sort-files --nogroup love t/text );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for love, ungrouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for love, ungrouped' );
 };
 
 
@@ -81,10 +76,9 @@ t/text/shut-up-be-happy.txt
 7-Do not attempt to think or depression may occur.
 EOF
 
-    my @files = qw( t/text );
-    my @args = qw( love --underline --sort-files --group -C );
+    my @args = qw( --underline --sort-files --group -C love t/text );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for love, grouped with context' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for love, grouped with context' );
 };
 
 
@@ -107,10 +101,9 @@ $happy-6-Shut up.
 $happy-7-Do not attempt to think or depression may occur.
 EOF
 
-    my @files = qw( t/text );
-    my @args = qw( love --underline --sort-files --nogroup -C );
+    my @args = qw( --underline --sort-files --nogroup -C love t/text );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for love, ungrouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for love, ungrouped' );
 };
 
 exit 0;
