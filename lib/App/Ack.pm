@@ -441,7 +441,6 @@ sub show_docs {
 
     require Pod::Usage;
 
-    # XXX These use -noperldoc for now.  Do we want ack --man to use perldoc?
     if ( $App::Ack::STANDALONE ) {
         # Right now we just show all POD for the standalone.
         Pod::Usage::pod2usage({

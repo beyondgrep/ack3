@@ -875,7 +875,7 @@ sub main {
         if ( $opt_f || $opt_lines ) {
             if ( $opt_regex ) {
                 App::Ack::warn( "regex ($opt_regex) specified with -f or --lines" );
-                App::Ack::exit_from_ack( 0 ); # XXX the 0 is misleading
+                App::Ack::exit_from_ack( 0 );
             }
         }
         else {
