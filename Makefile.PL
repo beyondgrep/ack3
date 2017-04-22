@@ -107,7 +107,7 @@ tags:
 
 # Don't run critic on docs.
 critic:
-	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_FILES) $(TEST_XT_FILES)
+	perlcritic -1 -q --statistics -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_FILES) $(TEST_XT_FILES)
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
@@ -141,15 +141,6 @@ nytprof: all
 TIMER_ARGS=foo ~/parrot > /dev/null
 time-ack196:
 	time $(PERL) ./garage/ack196 --noenv $(TIMER_ARGS)
-
-time-ack202:
-	time $(PERL) ./garage/ack202 --noenv $(TIMER_ARGS)
-
-time-ack20301:
-	time $(PERL) ./garage/ack20301 --noenv $(TIMER_ARGS)
-
-time-ack20302:
-	time $(PERL) ./garage/ack20302 --noenv $(TIMER_ARGS)
 
 time-head: ack-standalone
 	time $(PERL) ./ack-standalone --noenv $(TIMER_ARGS)
