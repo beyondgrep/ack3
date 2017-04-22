@@ -425,7 +425,7 @@ sub print_matches_in_file {
     }
     else {  # Not tracking context
         if ( $opt_passthru ) {
-            local $_;
+            local $_ = undef;
 
             while ( <$fh> ) {
                 $match_column_number = undef;
@@ -458,7 +458,7 @@ sub print_matches_in_file {
             }
         }
         elsif ( $opt_v ) {
-            local $_;
+            local $_ = undef;
 
             $match_column_number = undef;
             while ( <$fh> ) {
@@ -480,7 +480,7 @@ sub print_matches_in_file {
             }
         }
         else {
-            local $_;
+            local $_ = undef;
 
             my $last_match_lineno;
             while ( <$fh> ) {
