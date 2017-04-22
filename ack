@@ -623,7 +623,7 @@ sub print_line_with_options {
         push @line_parts, $line;
         App::Ack::print( join( $separator, @line_parts ), $ors );
 
-        if ( defined $underline ) {
+        if ( $underline ne '' ) {
             pop @line_parts; # Leave only the stuff on the left.
             if ( @line_parts ) {
                 my $stuff_on_the_left = join( $separator, @line_parts );

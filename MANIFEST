@@ -75,6 +75,7 @@ t/ack-type-del.t
 t/ack-type.t
 t/ack-u.t
 t/ack-u.barfly
+t/ack-underline.t
 t/ack-v.t
 t/ack-version.t
 t/ack-w.t
