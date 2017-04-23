@@ -37,7 +37,6 @@ BEGIN {
     my @file_lists = qw( -f -g -l -L );
 
     @INVALID_COMBINATIONS = (
-        # XXX normalize
         [qw(-l)]                 => [@context, @pretty, @filename, qw(-L -o --passthru --output --max-count --column -f -g --show-types)],
         [qw(-L)]                 => [@context, @pretty, @filename, qw(-l -o --passthru --output --max-count --column -f -g --show-types -c --count)],
         [qw(--line)]             => [@context, @pretty, @filename, qw(-l --files-with-matches --files-without-matches -L -o --passthru --match -m --max-count -1 -c --count --column --print0 -f -g --show-types)],
@@ -497,7 +496,6 @@ sub explode_sources {
     my $add_type = sub {
         my ( undef, $arg ) = @_;
 
-        # XXX refactor?
         if ( $arg =~ /(\w+)=/) {
             $arg_spec->{$1} = sub {};
         }
