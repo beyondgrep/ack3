@@ -205,20 +205,22 @@ comes first).
 sub firstliney {
     my ( $self ) = @_;
 
-    my $fh = $self->open();
-
     if ( !exists $self->{firstliney} ) {
-        my $buffer = '';
-        my $rc     = sysread( $fh, $buffer, 250 );
-        unless($rc) { # XXX handle this better?
+        my $fh = $self->open();
+        my $buffer;
+        my $rc = sysread( $fh, $buffer, 250 );
+        if ( $rc ) {
+            $buffer =~ s/[\r\n].*//s;
+        }
+        else {
+            if ( !defined($rc) ) {
+                App::Ack::warn( $self->name . ': ' . $! );
+            }
             $buffer = '';
         }
-        $buffer =~ s/[\r\n].*//s;
         $self->{firstliney} = $buffer;
         $self->reset;
     }
-
-    $self->close;
 
     return $self->{firstliney};
 }
