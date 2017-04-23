@@ -103,6 +103,7 @@ tags:
 		--exclude=.git \
 		--exclude='*~' \
 		--exclude=ack-standalone \
+		--exclude=garage/* \
 		--languages=Perl --langmap=Perl:+.t \
 
 # Don't run critic on docs.
