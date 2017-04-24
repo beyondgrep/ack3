@@ -8,6 +8,9 @@ Improvements over ack 2 include:
 
 * Improved `-w` option.
 
+* `-w` option will warn if your pattern does not lend itself to
+word matching.
+
 * `-i`, `-I` and `--smart-case`
 
 * `--proximate=N` option

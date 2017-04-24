@@ -270,11 +270,38 @@ sub build_regex {
 
     defined $str or App::Ack::die( 'No regular expression found.' );
 
+    # Check for lowercaseness before we do any modifications.
     my $regex_is_lc = $str eq lc $str;
+
     $str = quotemeta( $str ) if $opt->{Q};
 
     # Whole words only.
     if ( $opt->{w} ) {
+        my $ok = 1;
+
+        if ( $str =~ /^\\[wd]/ ) {
+            # Explicit \w is good.
+        }
+        else {
+            # Can start with \w, (, [ or dot.
+            if ( $str !~ /^[\w\(\[\.]/ ) {
+                $ok = 0;
+            }
+        }
+
+        # Can end with \w, }, ), ], +, *, or dot.
+        if ( $str !~ /[\w\}\)\]\+\*\?\.]$/ ) {
+            $ok = 0;
+        }
+        # ... unless it's escaped.
+        elsif ( $str =~ /\\[\}\)\]\+\*\?\.]$/ ) {
+            $ok = 0;
+        }
+
+        if ( !$ok ) {
+            App::Ack::die( '-w will not do the right thing if your regex does not begin and end with a word character.' );
+        }
+
         if ( $str =~ /^\w+$/ ) {
             # No need for fancy regex if it's a simple word.
             $str = sprintf( '\b(?:%s)\b', $str );
@@ -290,7 +317,9 @@ sub build_regex {
 
     my $re = eval { qr/$str/m };
     if ( !$re ) {
-        die "Invalid regex '$str':\n  $@";
+        my $err = $@;
+        chomp $err;
+        App::Ack::die( "Invalid regex '$str':\n  $err" );
     }
 
     return $re;

@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use lib 't';
 use Util;
@@ -12,7 +12,6 @@ use Barfly;
 prep_environment();
 
 Barfly->run_tests( 't/ack-w.barfly' );
-
 
 subtest '-w with trailing metachar \w' => sub {
     plan tests => 1;
@@ -121,6 +120,124 @@ subtest 'Alternating numbers' => sub {
 
     ack_lists_match( [ @args, @files ], \@expected, 'Alternations should also respect boundaries when using -w' );
 };
+
+
+# In ack3, we try to warn people if they are misusing -w.
+subtest '-w warnings' => sub {
+    my ($good,$bad) = _get_good_and_bad();
+
+    plan tests => @{$good} + @{$bad};
+
+    my $happy = reslash( 't/text/shut-up-be-happy.txt' );
+    for my $pattern ( @{$good} ) {
+        subtest "Good example: $pattern" => sub {
+            plan tests => 1;
+
+            my ( $stdout, $stderr ) = run_ack_with_stderr( $pattern, '-w', $happy );
+            # Don't care what stdout is.
+            is_empty_array( $stderr, 'Should not trigger any warnings' );
+        }
+    };
+
+    for my $pattern ( @{$bad} ) {
+        subtest "Bad example: $pattern" => sub {
+            plan tests => 3;
+
+            # Add the -- because the pattern may have hyphens.
+            my ( $stdout, $stderr ) = run_ack_with_stderr( '-w', '--', $pattern, $happy );
+            is_empty_array( $stdout, 'Should have no output' );
+            is( scalar @{$stderr}, 1, 'One warning' );
+            like( $stderr->[0], qr/ack(-standalone)?: -w will not do the right thing/, 'Got the correct warning' );
+        };
+    }
+};
+
+
+sub _get_good_and_bad {
+    # BAD = should throw a warning with -w
+    # OK  = should not throw a warning with -w
+    my @examples = line_split( <<'EOF' );
+# Anchors
+BAD $foo
+BAD foo^
+BAD ^foo
+BAD foo$
+
+# Dot
+OK  foo.
+OK  .foo
+
+# Parentheses
+OK  (set|get)_foo
+OK  foo_(id|name)
+OK  func()
+OK  (all in one group)
+BAD )start with closing paren
+BAD end with opening paren(
+BAD end with an escaped closing paren\)
+
+# Character classes
+OK  [sg]et
+OK  foo[lt]
+OK  [one big character class]
+OK  [multiple][character][classes]
+BAD ]starting with a closing bracket
+BAD ending with a opening bracket[
+BAD ending with an escaped closing bracket \]
+
+# Quantifiers
+OK  thpppt{1,5}
+BAD }starting with an closing curly brace
+BAD ending with an opening curly brace{
+BAD ending with an escaped closing curly brace\}
+
+OK  foo+
+BAD foo\+
+BAD +foo
+OK  foo*
+BAD foo\*
+BAD *foo
+OK  foo?
+BAD foo\?
+BAD ?foo
+
+# Miscellaneous debris
+BAD -foo
+BAD foo-
+BAD &mpersand
+BAD ampersand&
+BAD function(
+BAD ->method
+BAD <header.h>
+BAD =14
+BAD /slashes/
+BAD ::Class::Whatever
+BAD Class::Whatever::
+OK  Class::Whatever
+
+EOF
+
+    my $good = [];
+    my $bad  = [];
+
+    for my $line ( @examples ) {
+        $line =~ s/\s*$//;
+        if ( $line eq '' || $line =~ /^#/ ) {
+            next;
+        }
+        elsif ( $line =~ /^OK\s+(.+)/ ) {
+            push( @{$good}, $1 );
+        }
+        elsif ( $line =~ /BAD\s+(.+)/ ) {
+            push( @{$bad}, $1 );
+        }
+        else {
+            die "Invalid line: $line";
+        }
+    }
+
+    return ($good,$bad);
+}
 
 done_testing();
 
