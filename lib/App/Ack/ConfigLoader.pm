@@ -424,7 +424,7 @@ sub process_other {
 
         if ( $source->{project} ) {
             my $illegal = sub {
-                die "Options --output, --pager and --match are forbidden in project .ackrc files.\n";
+                App::Ack::die( 'Options --output, --pager and --match are forbidden in project .ackrc files.' );
             };
 
             $args_for_source = {
@@ -681,7 +681,7 @@ sub check_for_mutually_exclusive_options {
 
             foreach my $mutex_opt ( @{$mutex_opts} ) {
                 if ( $set_opts{ $mutex_opt } ) {
-                    die "Options '$mutex_opt' and '$opt' are mutually exclusive\n";
+                    App::Ack::die( "Options '$mutex_opt' and '$opt' are mutually exclusive" );
                 }
             }
         }
@@ -766,7 +766,7 @@ sub retrieve_arg_sources {
             close $fh;
         }
         else {
-            die "Unable to load ackrc '$ackrc': $!"
+            App::Ack::die( "Unable to load ackrc '$ackrc': $!" );
         }
         push( @files, { path => $ackrc } );
     }

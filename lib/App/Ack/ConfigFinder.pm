@@ -89,9 +89,8 @@ sub _check_for_ackrc {
                 map { File::Spec->catfile(@_, $_) }
                 qw(.ackrc _ackrc);
 
-    die File::Spec->catdir(@_) . " contains both .ackrc and _ackrc.\n" .
-        "Please remove one of those files.\n"
-            if @files > 1;
+    App::Ack::die( File::Spec->catdir(@_) . ' contains both .ackrc and _ackrc. Please remove one of those files.' )
+        if @files > 1;
 
     return wantarray ? @files : $files[0];
 } # end _check_for_ackrc

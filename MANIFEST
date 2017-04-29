@@ -90,6 +90,7 @@ t/config-backwards-compat.t
 t/config-finder.t
 t/config-loader.t
 t/context.t
+t/coresubs.t
 t/default-filter.t
 t/exit-code.t
 t/ext-filter.t
