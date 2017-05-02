@@ -147,7 +147,7 @@ EOF
     ack_lists_match( [ @args, @files ], \@expected, 'Looking for first line in multiple files' );
 }
 
-LINE_NO_WARNINGS: {
+LINENO_WARNINGS: {
     my @expected = (
         'Well, my daddy left home when I was three',
     );

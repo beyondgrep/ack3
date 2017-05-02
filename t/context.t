@@ -26,7 +26,7 @@ EOF
     ack_lists_match( [ @args, @files ], \@expected, "Looking for $regex - before" );
 }
 
-BEFORE_WITH_LINE_NO: {
+BEFORE_WITH_LINENO: {
     my $target_file = reslash( 't/text/boy-named-sue.txt' );
     my @expected = line_split( <<"EOF" );
 $target_file-7-

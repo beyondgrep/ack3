@@ -34,7 +34,7 @@ App::Ack::Filter::MatchGroup	lib/App/Ack/Filter/MatchGroup.pm	/^package App::Ack
 BACK_ANCHORED	t/anchored.t	/^BACK_ANCHORED: {$/;"	l
 BASIC	t/highlighting.t	/^BASIC: {$/;"	l
 BEFORE	t/context.t	/^BEFORE: {$/;"	l
-BEFORE_WITH_LINE_NO	t/context.t	/^BEFORE_WITH_LINE_NO: {$/;"	l
+BEFORE_WITH_LINENO	t/context.t	/^BEFORE_WITH_LINENO: {$/;"	l
 BREAK_NO_HEADING	t/ack-group.t	/^BREAK_NO_HEADING: {$/;"	l
 BRITISH_COLOR	t/ack-color.t	/^BRITISH_COLOR: {$/;"	l
 Barfly	t/Barfly.pm	/^package Barfly;$/;"	p
@@ -202,6 +202,7 @@ _compile_file_filter	ack	/^sub _compile_file_filter {$/;"	s
 _context_value	lib/App/Ack/ConfigLoader.pm	/^    sub _context_value {$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
+_get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
@@ -282,7 +283,7 @@ get_arg_spec	lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
 get_file_id	ack	/^sub get_file_id {$/;"	s
 get_help_options	t/ack-help.t	/^    sub get_help_options {$/;"	s
 get_man_options	xt/man.t	/^    sub get_man_options {$/;"	s
-get_match_column	ack	/^sub get_match_column {$/;"	s
+get_match_colno	ack	/^sub get_match_colno {$/;"	s
 get_options	t/Util.pm	/^sub get_options {$/;"	s
 get_rc	t/Util.pm	/^sub get_rc {$/;"	s
 get_releases	dev/find-minimum-dep-versions.pl	/^sub get_releases {$/;"	s
@@ -350,17 +351,11 @@ populate_filetypes	t/filetypes.t	/^sub populate_filetypes {$/;"	s
 prep_environment	t/Util.pm	/^sub prep_environment {$/;"	s
 print	lib/App/Ack.pm	/^sub print                   { print {$fh} @_; return; }$/;"	s
 print_blank_line	lib/App/Ack.pm	/^sub print_blank_line        { App::Ack::print( "\\n" ); return; }$/;"	s
-print_column_no	lib/App/Ack.pm	/^sub print_column_no         { App::Ack::print( $_[0], $_[1] ); return; }$/;"	s
-print_count	lib/App/Ack.pm	/^sub print_count {$/;"	s
-print_count0	lib/App/Ack.pm	/^sub print_count0 {$/;"	s
 print_filename	lib/App/Ack.pm	/^sub print_filename          { App::Ack::print( $_[0], $_[1] ); return; }$/;"	s
-print_first_filename	lib/App/Ack.pm	/^sub print_first_filename    { App::Ack::print( $_[0], "\\n" ); return; }$/;"	s
 print_line_if_context	ack	/^sub print_line_if_context {$/;"	s
-print_line_no	lib/App/Ack.pm	/^sub print_line_no           { App::Ack::print( $_[0], $_[1] ); return; }$/;"	s
 print_line_with_context	ack	/^sub print_line_with_context {$/;"	s
 print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
 print_matches_in_file	ack	/^sub print_matches_in_file {$/;"	s
-print_separator	lib/App/Ack.pm	/^sub print_separator         { App::Ack::print( "--\\n" ); return; }$/;"	s
 print_version_statement	lib/App/Ack.pm	/^sub print_version_statement {$/;"	s
 process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 process_filetypes	lib/App/Ack/ConfigLoader.pm	/^sub process_filetypes {$/;"	s

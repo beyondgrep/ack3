@@ -326,7 +326,7 @@ sub build_regex {
 
 }
 
-my $match_column_number;
+my $match_colno;
 
 {
 
@@ -343,7 +343,7 @@ my $before_context_pos;
 my $after_context_pending;
 
 # Number of latest line that got printed
-my $printed_line_no;
+my $printed_lineno;
 
 my $is_iterating;
 
@@ -367,7 +367,7 @@ sub set_up_line_context {
 
 # Adjust context tracking variables when entering a new file.
 sub set_up_line_context_for_file {
-    $printed_line_no = 0;
+    $printed_lineno = 0;
     $after_context_pending = 0;
     if ( $opt_heading && !$opt_lines ) {
         $is_first_match = 1;
@@ -457,10 +457,10 @@ sub print_matches_in_file {
             local $_ = undef;
 
             while ( <$fh> ) {
-                $match_column_number = undef;
+                $match_colno = undef;
                 if ( $opt_v ? !/$opt_regex/o : /$opt_regex/o ) {
                     if ( !$opt_v ) {
-                        $match_column_number = $-[0] + 1;
+                        $match_colno = $-[0] + 1;
                     }
                     if ( !$has_printed_for_this_file ) {
                         if ( $opt_break && $has_printed_something ) {
@@ -489,7 +489,7 @@ sub print_matches_in_file {
         elsif ( $opt_v ) {
             local $_ = undef;
 
-            $match_column_number = undef;
+            $match_colno = undef;
             while ( <$fh> ) {
                 if ( !/$opt_regex/o ) {
                     if ( !$has_printed_for_this_file ) {
@@ -513,9 +513,9 @@ sub print_matches_in_file {
 
             my $last_match_lineno;
             while ( <$fh> ) {
-                $match_column_number = undef;
+                $match_colno = undef;
                 if ( /$opt_regex/o ) {
-                    $match_column_number = $-[0] + 1;
+                    $match_colno = $-[0] + 1;
                     if ( !$has_printed_for_this_file ) {
                         if ( $opt_break && $has_printed_something ) {
                             App::Ack::print_blank_line();
@@ -554,10 +554,10 @@ sub print_matches_in_file {
 
 
 sub print_line_with_options {
-    my ( $filename, $line, $line_no, $separator ) = @_;
+    my ( $filename, $line, $lineno, $separator ) = @_;
 
     $has_printed_something = 1;
-    $printed_line_no = $line_no;
+    $printed_lineno = $lineno;
 
     my $ors = $opt_print0 ? "\0" : "\n";
 
@@ -569,12 +569,12 @@ sub print_line_with_options {
         $chars_used_by_coloring = 0;
         if ( $opt_color ) {
             my $filename_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_FILENAME} ) ) - 1;
-            my $line_no_uses  = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
+            my $lineno_uses   = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
             if ( $opt_heading ) {
-                $chars_used_by_coloring = $line_no_uses;
+                $chars_used_by_coloring = $lineno_uses;
             }
             else {
-                $chars_used_by_coloring = $filename_uses + $line_no_uses;
+                $chars_used_by_coloring = $filename_uses + $lineno_uses;
             }
         }
     }
@@ -582,17 +582,17 @@ sub print_line_with_options {
     if ( $opt_show_filename ) {
         if ( $opt_color ) {
             $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
-            $line_no  = Term::ANSIColor::colored( $line_no,  $ENV{ACK_COLOR_LINENO} );
+            $lineno   = Term::ANSIColor::colored( $lineno,   $ENV{ACK_COLOR_LINENO} );
         }
         if ( $opt_heading ) {
-            push @line_parts, $line_no;
+            push @line_parts, $lineno;
         }
         else {
-            push @line_parts, $filename, $line_no;
+            push @line_parts, $filename, $lineno;
         }
 
         if ( $opt_column ) {
-            push @line_parts, get_match_column();
+            push @line_parts, get_match_colno();
         }
     }
 
@@ -701,7 +701,7 @@ sub iterate {
 }
 
 sub print_line_with_context {
-    my ( $filename, $matching_line, $line_no ) = @_;
+    my ( $filename, $matching_line, $lineno ) = @_;
 
     my $ors                 = $opt_print0 ? "\0" : "\n";
     my $is_tracking_context = $opt_after_context || $opt_before_context;
@@ -710,8 +710,8 @@ sub print_line_with_context {
 
     # Check if we need to print context lines first.
     if ( $is_tracking_context ) {
-        my $before_unprinted = $line_no - $printed_line_no - 1;
-        if ( !$is_first_match && ( !$printed_line_no || $before_unprinted > $n_before_ctx_lines ) ) {
+        my $before_unprinted = $lineno - $printed_lineno - 1;
+        if ( !$is_first_match && ( !$printed_lineno || $before_unprinted > $n_before_ctx_lines ) ) {
             App::Ack::print('--', $ors);
         }
 
@@ -728,12 +728,12 @@ sub print_line_with_context {
             # Disable $opt->{column} since there are no matches in the context lines.
             local $opt_column = 0;
 
-            print_line_with_options( $filename, $line, $line_no-$before_unprinted, '-' );
+            print_line_with_options( $filename, $line, $lineno-$before_unprinted, '-' );
             $before_unprinted--;
         }
     }
 
-    print_line_with_options( $filename, $matching_line, $line_no, ':' );
+    print_line_with_options( $filename, $matching_line, $lineno, ':' );
 
     # We want to get the next $n_after_ctx_lines printed.
     $after_context_pending = $n_after_ctx_lines;
@@ -745,12 +745,12 @@ sub print_line_with_context {
 
 # Print the line only if it's part of a context we need to display.
 sub print_line_if_context {
-    my ( $filename, $line, $line_no, $separator ) = @_;
+    my ( $filename, $line, $lineno, $separator ) = @_;
 
     if ( $after_context_pending ) {
         # Disable $opt_column since there are no matches in the context lines.
         local $opt_column = 0;
-        print_line_with_options( $filename, $line, $line_no, $separator );
+        print_line_with_options( $filename, $line, $lineno, $separator );
         --$after_context_pending;
     }
     elsif ( $n_before_ctx_lines ) {
@@ -779,7 +779,7 @@ well.
 sub does_match {
     my ( $line ) = @_;
 
-    $match_column_number = undef;
+    $match_colno = undef;
 
     if ( $opt_v ) {
         return ( $line !~ /$opt_regex/o );
@@ -788,7 +788,7 @@ sub does_match {
         if ( $line =~ /$opt_regex/o ) {
             # @- = @LAST_MATCH_START
             # @+ = @LAST_MATCH_END
-            $match_column_number = $-[0] + 1;
+            $match_colno = $-[0] + 1;
             return 1;
         }
         else {
@@ -797,8 +797,8 @@ sub does_match {
     }
 }
 
-sub get_match_column {
-    return $match_column_number;
+sub get_match_colno {
+    return $match_colno;
 }
 
 sub file_has_match {
