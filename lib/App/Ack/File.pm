@@ -43,7 +43,7 @@ sub new {
 }
 
 
-=head2 $res->name()
+=head2 $file->name()
 
 Returns the name of the file.
 
@@ -54,7 +54,7 @@ sub name {
 }
 
 
-=head2 $res->basename()
+=head2 $file->basename()
 
 Returns the basename (the last component the path)
 of the file.
@@ -73,11 +73,11 @@ sub basename {
 }
 
 
-=head2 $res->open()
+=head2 $file->open()
 
 Opens a filehandle for reading this file and returns it, or returns
 undef if the operation fails (the error is in C<$!>).  Instead of calling
-C<close $fh>, C<$res-E<gt>close> should be called.
+C<close $fh>, C<$file-E<gt>close> should be called.
 
 =cut
 
@@ -97,7 +97,7 @@ sub open {
 }
 
 
-=head2 $res->needs_line_scan( \%opts )
+=head2 $file->needs_line_scan( \%opts )
 
 Tells if the file needs a line-by-line scan.  This is a big
 optimization because if you can tell from the outset that the pattern
@@ -137,7 +137,7 @@ sub needs_line_scan {
 }
 
 
-=head2 $res->reset()
+=head2 $file->reset()
 
 Resets the file back to the beginning.  This is only called if
 C<needs_line_scan()> is true, but not always if C<needs_line_scan()>
@@ -158,7 +158,7 @@ sub reset {
 }
 
 
-=head2 $res->close()
+=head2 $file->close()
 
 Close the file.
 
@@ -182,7 +182,7 @@ sub close {
 }
 
 
-=head2 $res->clone()
+=head2 $file->clone()
 
 Clones this file.
 
@@ -195,7 +195,7 @@ sub clone {
 }
 
 
-=head2 $res->firstliney
+=head2 $file->firstliney()
 
 Returns the first line of a file (or first 250 characters, whichever
 comes first).
