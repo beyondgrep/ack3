@@ -1,0 +1,24 @@
+#!/bin/env perl
+
+# Counts the number of lines in each .txt file.
+
+use 5.10.1;
+use warnings;
+use strict;
+
+use File::Next;
+
+my $start = shift or die;
+my $total = 0;
+my $iter = File::Next::files( { descend_filter => sub { $_ ne '.git' }, file_filter => sub { /\.txt/ } }, $start );
+while ( my $file = $iter->() ) {
+    my $n = 0;
+    open( my $fh, '<', $file ) or die "Can't open $file: $!\n";
+    while ( <$fh> ) {
+        ++$n;
+    }
+    close $fh;
+    printf "%5d: %s\n", $n, $file;
+    $total += $n;
+}
+say "$total lines of text in $start";
