@@ -445,7 +445,6 @@ sub show_docs {
         # Right now we just show all POD for the standalone.
         Pod::Usage::pod2usage({
             -input     => $App::Ack::ORIGINAL_PROGRAM_NAME,
-            -noperldoc => 1,
             -verbose   => 2,
             -exitval   => 0,
         });
@@ -456,7 +455,6 @@ sub show_docs {
 
         Pod::Usage::pod2usage({
             -input     => $INC{ "App/Ack/Docs/$section.pm" },
-            -noperldoc => 1,
             -verbose   => 2,
             -exitval   => 0,
         });
