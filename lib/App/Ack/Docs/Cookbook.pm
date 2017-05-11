@@ -1,7 +1,5 @@
 package App::Ack::Docs::Cookbook;
 
-=pod
-
 =head1 COOKBOOK
 
 Here are examples of how to effectively use ack.
@@ -27,9 +25,9 @@ having to get F<xargs> involved.
 =head2 Use the F<.ackrc> file.
 
 The F<.ackrc> is the place to put all your options you use most of
-the time but don't want to remember.  Put all your --type-add and
---type-set definitions in it.  If you like --smart-case, set it
-there, too.  I also set --sort-files there.
+the time but don't want to remember.  Put all your C<--type-add>
+and C<--type-set> definitions in it.  If you like C<--smart-case> and
+C<--sort-files>, set them there, too.
 
 =head2 Use F<-f> for working with big codesets
 
