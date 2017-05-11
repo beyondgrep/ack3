@@ -840,10 +840,6 @@ Options are then loaded from the command line.
 
 =back
 
-=head1 AUTHOR
-
-Andy Lester, C<< <andy at petdance.com> >>
-
 =head1 BUGS & ENHANCEMENTS
 
 ack is based at GitHub at L<https://github.com/petdance/ack3>
@@ -1016,6 +1012,10 @@ Leland Johnson,
 Ricardo Signes,
 Pete Krawczyk and
 Rob Hoelz.
+
+=head1 AUTHOR
+
+Andy Lester, C<< <andy at petdance.com> >>
 
 =head1 COPYRIGHT & LICENSE
 
