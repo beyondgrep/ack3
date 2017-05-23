@@ -137,7 +137,7 @@ subtest '-w warnings' => sub {
             # Don't care what stdout is.
             is_empty_array( $stderr, 'Should not trigger any warnings' );
         }
-    };
+    }
 
     for my $pattern ( @{$bad} ) {
         subtest "Bad example: $pattern" => sub {

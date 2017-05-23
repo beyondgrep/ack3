@@ -25,6 +25,6 @@ for my $word qw( warn die ) {
         like( $results[1], qr/^$ack_pm:\d+:sub $word/, 'sub' );
         is( scalar @results, 2, 'Exactly two hits' );
     };
-};
+}
 
 exit 0;
