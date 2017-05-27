@@ -1,5 +1,12 @@
 language: perl
 perl:
+  - "5.24"
+  - "5.20"
+  - "5.20"
+  - "5.18"
+  - "5.16"
+  - "5.14"
+  - "5.12"
   - "5.10"
 notifications:
 install: "cpanm File::Next && cpanm --notest Perl::Critic && cpanm --notest IO::Pty Test::Whitespaces Test::Pod Test::Perl::Critic::Progressive Perl::Critic::More Perl::Critic::Pulp Perl::Critic::Bangs"
@@ -8,8 +15,5 @@ email:
   recipients:
     - andy@petdance.com
     - rob@hoelz.ro
-  #on_success: never
-  #on_failure: change
-# Until we get it working
-  on_success: always
+  on_success: change
   on_failure: always
