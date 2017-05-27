@@ -88,22 +88,22 @@ sub strip_special_chars {
 }
 
 sub check_for_option_in_man_output {
-    my ( $expected_option ) = @_;
-
     local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $expected_option = shift;
 
     my @options = get_man_options();
 
-    my $found;
-
     foreach my $option ( @options ) {
         if ( $option eq $expected_option ) {
-            $found = 1;
-            last;
+            return pass( "Found $expected_option in --man output" );
         }
     }
 
-    return ok( $found, "Option '$expected_option' found in --man output" );
+    require Data::Dumper;
+    diag Data::Dumper::Dumper( 'Returned options' => \@options );
+
+    return fail( "Option '$expected_option' not found in --man output" );
 }
 
 my @options = get_options();
