@@ -14,7 +14,7 @@ prep_environment();
 
 my $ack_pm = reslash( 'blib/lib/App/Ack.pm' );
 
-for my $word qw( warn die ) {
+for my $word ( qw( warn die ) ) {
     subtest "Finding $word" => sub {
         plan tests => 4;
 
