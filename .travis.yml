@@ -10,7 +10,7 @@ perl:
   - "5.12"
   - "5.10"
 notifications:
-install: "cpanm File::Next && cpanm --notest Perl::Critic && cpanm --notest IO::Pty Test::Whitespaces Test::Pod Test::Perl::Critic::Progressive Perl::Critic::More Perl::Critic::Pulp Perl::Critic::Bangs"
+install: "cpanm File::Next && cpanm --notest IO::Pty Test::Whitespaces Test::Pod"
 script:  "perl Makefile.PL && make fulltest"
 email:
   recipients:
