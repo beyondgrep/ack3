@@ -22,8 +22,15 @@ sub strip_special_chars {
     sub _populate_man_options {
         my ( $man_output, $man_stderr ) = run_ack_with_stderr( '--man' );
 
-        if ( !ok( !@{$man_stderr}, 'Should be nothing in stderr' ) ) {
+        if ( !@{$man_stderr} ) {
+            pass( 'Nothing in stderr' );
+        }
+        elsif ( @{$man_stderr} > 1 ) {
+            fail( 'I have more than two lines in stderr' );
             diag explain $man_stderr;
+        }
+        else {
+            is( $man_stderr->[0], 'stty: standard input: Inappropriate ioctl for device', 'The one warning is one we can ignore' );
         }
 
         my $in_options_section;
