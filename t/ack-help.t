@@ -60,7 +60,7 @@ sub option_in_usage {
     return;
 }
 
-my @options = get_options();
+my @options = get_expected_options();
 
 plan tests => scalar(@options);
 

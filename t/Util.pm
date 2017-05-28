@@ -50,7 +50,7 @@ our @EXPORT = qw(
 
     line_split
     colorize
-    get_options
+    get_expected_options
     caret_X
     get_rc
     getcwd_clean
@@ -669,7 +669,7 @@ END_FAIL
 # This should not be treated as a complete list of the available
 # options, but it's complete enough to rely on until we find a
 # more elegant way to generate this list.
-sub get_options {
+sub get_expected_options {
     return (
         '--ackrc',
         '--after-context',

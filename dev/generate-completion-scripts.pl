@@ -206,10 +206,10 @@ END_TEMPLATE
 
 my $tt = Template->new({});
 
-# XXX do a sanity check on ZSH_DESCRIPTIONS vs get_options, OPTION_ALIASES
+# XXX do a sanity check on ZSH_DESCRIPTIONS vs get_expected_options, OPTION_ALIASES
 
 my $vars = {
-    options      => [ get_options() ],
+    options      => [ get_expected_options() ],
     descriptions => \%ZSH_DESCRIPTIONS,
     aliases      => \%OPTION_ALIASES,
     is_alias     => \%IS_AN_ALIAS,

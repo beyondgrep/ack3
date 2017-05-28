@@ -106,7 +106,7 @@ sub check_for_option_in_man_output {
     return fail( "Option '$expected_option' not found in --man output" );
 }
 
-my @options = get_options();
+my @options = get_expected_options();
 
 plan tests => scalar(@options);
 

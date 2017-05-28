@@ -262,7 +262,7 @@ sub get_arg_spec {
     * Your new option is explained when a user invokes ack --man.
       (See the POD at the end of ./ack)
     * Add your option to t/config-loader.t
-    * Add your option to t/Util.pm#get_options
+    * Add your option to t/Util.pm#get_expected_options
     * Add your option's description and aliases to dev/generate-completion-scripts.pl
     * Go through the list of options already available, and consider
       whether your new option can be considered mutually exclusive
