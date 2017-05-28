@@ -9,12 +9,14 @@ perl:
   - "5.14"
   - "5.12"
   - "5.10"
-notifications:
-install: "cpanm File::Next && cpanm --notest IO::Pty Test::Pod"
+
+#notifications:
+#    email:
+#    recipients:
+#        - andy@petdance.com
+#        - rob@hoelz.ro
+#    on_success: change
+#    on_failure: always
+
+install: "cpanm File::Next && cpanm Pod::PerlDoc && cpanm --notest IO::Pty Test::Pod"
 script:  "perl Makefile.PL && make fulltest"
-email:
-  recipients:
-    - andy@petdance.com
-    - rob@hoelz.ro
-  on_success: change
-  on_failure: always
