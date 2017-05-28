@@ -20,7 +20,11 @@ sub strip_special_chars {
     my $man_options;
 
     sub _populate_man_options {
-        my ( $man_output, undef ) = run_ack_with_stderr( '--man' );
+        my ( $man_output, $man_stderr ) = run_ack_with_stderr( '--man' );
+
+        if ( !ok( !@{$man_stderr}, 'Should be nothing in stderr' ) ) {
+            diag explain $man_stderr;
+        }
 
         my $in_options_section;
 
@@ -108,7 +112,7 @@ sub check_for_option_in_man_output {
 
 my @options = get_expected_options();
 
-plan tests => scalar(@options);
+plan tests => scalar(@options) + 1;
 
 prep_environment();
 
