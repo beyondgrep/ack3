@@ -118,18 +118,18 @@ sub next {
 sub _generate_error_handler {
     my $opt = shift;
 
-    if ( $opt->{dont_report_bad_filenames} ) {
+    if ( $App::Ack::report_bad_filenames ) {
         return sub {
             my $msg = shift;
-            if ( $! == EACCES ) {
-                return;
-            }
             App::Ack::warn( $msg );
         };
     }
     else {
         return sub {
             my $msg = shift;
+            if ( $! == EACCES ) {
+                return;
+            }
             App::Ack::warn( $msg );
         };
     }
