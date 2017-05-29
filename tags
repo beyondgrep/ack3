@@ -280,11 +280,11 @@ from_argv	lib/App/Ack/Files.pm	/^sub from_argv {$/;"	s
 from_file	lib/App/Ack/Files.pm	/^sub from_file {$/;"	s
 from_stdin	lib/App/Ack/Files.pm	/^sub from_stdin {$/;"	s
 get_arg_spec	lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
+get_expected_options	t/Util.pm	/^sub get_expected_options {$/;"	s
 get_file_id	ack	/^sub get_file_id {$/;"	s
 get_help_options	t/ack-help.t	/^    sub get_help_options {$/;"	s
 get_man_options	xt/man.t	/^    sub get_man_options {$/;"	s
 get_match_colno	ack	/^sub get_match_colno {$/;"	s
-get_options	t/Util.pm	/^sub get_options {$/;"	s
 get_rc	t/Util.pm	/^sub get_rc {$/;"	s
 get_releases	dev/find-minimum-dep-versions.pl	/^sub get_releases {$/;"	s
 get_types	t/ack-show-types.t	/^sub get_types {$/;"	s
@@ -318,7 +318,6 @@ iterate	ack	/^sub iterate {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 load_colors	lib/App/Ack.pm	/^sub load_colors {$/;"	s
-main	ack	/^sub main {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
 needs_line_scan	lib/App/Ack/File.pm	/^sub needs_line_scan {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s

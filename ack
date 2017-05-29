@@ -26,6 +26,7 @@ use App::Ack::Filter::IsPath;
 use App::Ack::Filter::Match;
 use App::Ack::Filter::Collection;
 
+# Global command-line options
 our $opt_after_context;
 our $opt_before_context;
 our $opt_break;
@@ -50,8 +51,6 @@ our $opt_v;
 
 # Flag if we need any context tracking.
 our $is_tracking_context;
-
-# These are all our globals.
 
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
@@ -97,9 +96,218 @@ MAIN: {
         exit 1;
     }
 
-    my $nmatches = main();
+    my @arg_sources = App::Ack::ConfigLoader::retrieve_arg_sources();
+
+    my $opt = App::Ack::ConfigLoader::process_args( @arg_sources );
+
+    $opt_after_context  = $opt->{after_context};
+    $opt_before_context = $opt->{before_context};
+    $opt_break          = $opt->{break};
+    $opt_proximate      = $opt->{proximate};
+    $opt_color          = $opt->{color};
+    $opt_column         = $opt->{column};
+    $opt_count          = $opt->{count};
+    $opt_f              = $opt->{f};
+    $opt_g              = $opt->{g};
+    $opt_heading        = $opt->{heading};
+    $opt_L              = $opt->{L};
+    $opt_l              = $opt->{l};
+    $opt_lines          = $opt->{lines};
+    $opt_m              = $opt->{m};
+    $opt_output         = $opt->{output};
+    $opt_passthru       = $opt->{passthru};
+    $opt_print0         = $opt->{print0};
+    $opt_regex          = $opt->{regex};
+    $opt_show_filename  = $opt->{show_filename};
+    $opt_u              = $opt->{u};
+    $opt_v              = $opt->{v};
+
+    $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
+
+    if ( !defined($opt_color) && !$opt_g ) {
+        my $windows_color = 1;
+        if ( $App::Ack::is_windows ) {
+            $windows_color = eval { require Win32::Console::ANSI; };
+        }
+        $opt_color = !App::Ack::output_to_pipe() && $windows_color;
+    }
+    if ( not defined $opt_heading and not defined $opt_break  ) {
+        $opt_heading = $opt_break = $opt->{break} = !App::Ack::output_to_pipe();
+    }
+
+    if ( defined($opt->{H}) || defined($opt->{h}) ) {
+        $opt_show_filename = $opt->{show_filename} = $opt->{H} && !$opt->{h};
+    }
+
+    if ( my $output = $opt_output ) {
+        $output        =~ s{\\}{\\\\}g;
+        $output        =~ s{"}{\\"}g;
+        $opt_output = qq{"$output"};
+    }
+
+    my $files;
+    if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
+        $files     = App::Ack::Files->from_stdin();
+        $opt_regex = shift @ARGV if not defined $opt_regex;
+        $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
+    }
+    else {
+        if ( $opt_f || $opt_lines ) {
+            if ( $opt_regex ) {
+                App::Ack::warn( "regex ($opt_regex) specified with -f or --lines" );
+                App::Ack::exit_from_ack( 0 );
+            }
+        }
+        else {
+            $opt_regex = shift @ARGV if not defined $opt_regex;
+            $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
+        }
+        if ( $opt_regex && $opt_regex =~ /\n/ ) {
+            App::Ack::exit_from_ack( 0 );
+        }
+        my @start;
+        if ( not defined $opt->{files_from} ) {
+            @start = @ARGV;
+        }
+        if ( !exists($opt->{show_filename}) ) {
+            unless(@start == 1 && !(-d $start[0])) {
+                $opt_show_filename = $opt->{show_filename} = 1;
+            }
+        }
+
+        if ( defined $opt->{files_from} ) {
+            $files = App::Ack::Files->from_file( $opt, $opt->{files_from} );
+            exit 1 unless $files;
+        }
+        else {
+            @start = ('.') unless @start;
+            foreach my $target (@start) {
+                if ( !-e $target && $App::Ack::report_bad_filenames) {
+                    App::Ack::warn( "$target: No such file or directory" );
+                }
+            }
+
+            $opt->{file_filter}    = _compile_file_filter($opt, \@start);
+            $opt->{descend_filter} = _compile_descend_filter($opt);
+
+            $files = App::Ack::Files->from_argv( $opt, \@start );
+        }
+    }
+    App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};
+
+    my $ors        = $opt_print0 ? "\0" : "\n";
+    my $only_first = $opt->{1};
+
+    my $nmatches    = 0;
+    my $total_count = 0;
+
+    set_up_line_context();
+
+FILES:
+    while ( my $file = $files->next ) {
+        if ($is_tracking_context) {
+            set_up_line_context_for_file();
+        }
+
+        if ( $opt_f ) {
+            if ( $opt->{show_types} ) {
+                App::Ack::show_types( $file, $ors );
+            }
+            else {
+                App::Ack::print( $file->name, $ors );
+            }
+            ++$nmatches;
+            last FILES if defined($opt_m) && $nmatches >= $opt_m;
+        }
+        elsif ( $opt_g ) {
+            if ( $opt->{show_types} ) {
+                App::Ack::show_types( $file, $ors );
+            }
+            else {
+                local $opt_show_filename = 0; # XXX Why is this local?
+
+                print_line_with_options( '', $file->name, 0, $ors );
+            }
+            ++$nmatches;
+            last FILES if defined($opt_m) && $nmatches >= $opt_m;
+        }
+        elsif ( $opt_lines ) {
+            my %line_numbers;
+            foreach my $line ( @{ $opt_lines } ) {
+                my @lines             = split /,/, $line;
+                @lines                = map {
+                    /^(\d+)-(\d+)$/
+                        ? ( $1 .. $2 )
+                        : $_
+                } @lines;
+                @line_numbers{@lines} = (1) x @lines;
+            }
+
+            my $filename = $file->name;
+
+            local $opt_color = 0;
+
+            iterate( $file, sub {
+                chomp;
+
+                if ( $line_numbers{$.} ) {
+                    print_line_with_context( $filename, $_, $. );
+                }
+                elsif ( $opt_passthru ) {
+                    print_line_with_options( $filename, $_, $., ':' );
+                }
+                elsif ( $is_tracking_context ) {
+                    print_line_if_context( $filename, $_, $., '-' );
+                }
+                return 1;
+            });
+        }
+        elsif ( $opt_count ) {
+            my $matches_for_this_file = count_matches_in_file( $file );
+
+            if ( not $opt_show_filename ) {
+                $total_count += $matches_for_this_file;
+                next FILES;
+            }
+
+            if ( !$opt_l || $matches_for_this_file > 0) {
+                if ( $opt_show_filename ) {
+                    App::Ack::print( $file->name, ':', $matches_for_this_file, $ors );
+                }
+                else {
+                    App::Ack::print( $matches_for_this_file, $ors );
+                }
+            }
+        }
+        elsif ( $opt_l || $opt_L ) {
+            my $is_match = file_has_match( $file );
+
+            if ( $opt_L ? !$is_match : $is_match ) {
+                App::Ack::print( $file->name, $ors );
+                ++$nmatches;
+
+                last FILES if $only_first;
+                last FILES if defined($opt_m) && $nmatches >= $opt_m;
+            }
+        }
+        else {
+            $nmatches += print_matches_in_file( $file, $opt );
+            if ( $nmatches && $only_first ) {
+                last FILES;
+            }
+        }
+    }
+
+    if ( $opt_count && !$opt_show_filename ) {
+        App::Ack::print( $total_count, "\n" );
+    }
+
+    close $App::Ack::fh;
+
     App::Ack::exit_from_ack( $nmatches );
 }
+
+# End of MAIN
 
 sub _compile_descend_filter {
     my ( $opt ) = @_;
@@ -840,218 +1048,6 @@ sub count_matches_in_file {
         }
         close $fh;
     }
-
-    return $nmatches;
-}
-
-sub main {
-    my @arg_sources = App::Ack::ConfigLoader::retrieve_arg_sources();
-
-    my $opt = App::Ack::ConfigLoader::process_args( @arg_sources );
-
-    $opt_after_context  = $opt->{after_context};
-    $opt_before_context = $opt->{before_context};
-    $opt_break          = $opt->{break};
-    $opt_proximate      = $opt->{proximate};
-    $opt_color          = $opt->{color};
-    $opt_column         = $opt->{column};
-    $opt_count          = $opt->{count};
-    $opt_f              = $opt->{f};
-    $opt_g              = $opt->{g};
-    $opt_heading        = $opt->{heading};
-    $opt_L              = $opt->{L};
-    $opt_l              = $opt->{l};
-    $opt_lines          = $opt->{lines};
-    $opt_m              = $opt->{m};
-    $opt_output         = $opt->{output};
-    $opt_passthru       = $opt->{passthru};
-    $opt_print0         = $opt->{print0};
-    $opt_regex          = $opt->{regex};
-    $opt_show_filename  = $opt->{show_filename};
-    $opt_u              = $opt->{u};
-    $opt_v              = $opt->{v};
-
-    $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
-
-    if ( !defined($opt_color) && !$opt_g ) {
-        my $windows_color = 1;
-        if ( $App::Ack::is_windows ) {
-            $windows_color = eval { require Win32::Console::ANSI; };
-        }
-        $opt_color = !App::Ack::output_to_pipe() && $windows_color;
-    }
-    if ( not defined $opt_heading and not defined $opt_break  ) {
-        $opt_heading = $opt_break = $opt->{break} = !App::Ack::output_to_pipe();
-    }
-
-    if ( defined($opt->{H}) || defined($opt->{h}) ) {
-        $opt_show_filename = $opt->{show_filename} = $opt->{H} && !$opt->{h};
-    }
-
-    if ( my $output = $opt_output ) {
-        $output        =~ s{\\}{\\\\}g;
-        $output        =~ s{"}{\\"}g;
-        $opt_output = qq{"$output"};
-    }
-
-    my $files;
-    if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
-        $files     = App::Ack::Files->from_stdin();
-        $opt_regex = shift @ARGV if not defined $opt_regex;
-        $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
-    }
-    else {
-        if ( $opt_f || $opt_lines ) {
-            if ( $opt_regex ) {
-                App::Ack::warn( "regex ($opt_regex) specified with -f or --lines" );
-                App::Ack::exit_from_ack( 0 );
-            }
-        }
-        else {
-            $opt_regex = shift @ARGV if not defined $opt_regex;
-            $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
-        }
-        if ( $opt_regex && $opt_regex =~ /\n/ ) {
-            App::Ack::exit_from_ack( 0 );
-        }
-        my @start;
-        if ( not defined $opt->{files_from} ) {
-            @start = @ARGV;
-        }
-        if ( !exists($opt->{show_filename}) ) {
-            unless(@start == 1 && !(-d $start[0])) {
-                $opt_show_filename = $opt->{show_filename} = 1;
-            }
-        }
-
-        if ( defined $opt->{files_from} ) {
-            $files = App::Ack::Files->from_file( $opt, $opt->{files_from} );
-            exit 1 unless $files;
-        }
-        else {
-            @start = ('.') unless @start;
-            foreach my $target (@start) {
-                if ( !-e $target && $App::Ack::report_bad_filenames) {
-                    App::Ack::warn( "$target: No such file or directory" );
-                }
-            }
-
-            $opt->{file_filter}    = _compile_file_filter($opt, \@start);
-            $opt->{descend_filter} = _compile_descend_filter($opt);
-
-            $files = App::Ack::Files->from_argv( $opt, \@start );
-        }
-    }
-    App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};
-
-    my $ors        = $opt_print0 ? "\0" : "\n";
-    my $only_first = $opt->{1};
-
-    my $nmatches    = 0;
-    my $total_count = 0;
-
-    set_up_line_context();
-
-FILES:
-    while ( my $file = $files->next ) {
-        if ($is_tracking_context) {
-            set_up_line_context_for_file();
-        }
-
-        if ( $opt_f ) {
-            if ( $opt->{show_types} ) {
-                App::Ack::show_types( $file, $ors );
-            }
-            else {
-                App::Ack::print( $file->name, $ors );
-            }
-            ++$nmatches;
-            last FILES if defined($opt_m) && $nmatches >= $opt_m;
-        }
-        elsif ( $opt_g ) {
-            if ( $opt->{show_types} ) {
-                App::Ack::show_types( $file, $ors );
-            }
-            else {
-                local $opt_show_filename = 0; # XXX Why is this local?
-
-                print_line_with_options( '', $file->name, 0, $ors );
-            }
-            ++$nmatches;
-            last FILES if defined($opt_m) && $nmatches >= $opt_m;
-        }
-        elsif ( $opt_lines ) {
-            my %line_numbers;
-            foreach my $line ( @{ $opt_lines } ) {
-                my @lines             = split /,/, $line;
-                @lines                = map {
-                    /^(\d+)-(\d+)$/
-                        ? ( $1 .. $2 )
-                        : $_
-                } @lines;
-                @line_numbers{@lines} = (1) x @lines;
-            }
-
-            my $filename = $file->name;
-
-            local $opt_color = 0;
-
-            iterate( $file, sub {
-                chomp;
-
-                if ( $line_numbers{$.} ) {
-                    print_line_with_context( $filename, $_, $. );
-                }
-                elsif ( $opt_passthru ) {
-                    print_line_with_options( $filename, $_, $., ':' );
-                }
-                elsif ( $is_tracking_context ) {
-                    print_line_if_context( $filename, $_, $., '-' );
-                }
-                return 1;
-            });
-        }
-        elsif ( $opt_count ) {
-            my $matches_for_this_file = count_matches_in_file( $file );
-
-            if ( not $opt_show_filename ) {
-                $total_count += $matches_for_this_file;
-                next FILES;
-            }
-
-            if ( !$opt_l || $matches_for_this_file > 0) {
-                if ( $opt_show_filename ) {
-                    App::Ack::print( $file->name, ':', $matches_for_this_file, $ors );
-                }
-                else {
-                    App::Ack::print( $matches_for_this_file, $ors );
-                }
-            }
-        }
-        elsif ( $opt_l || $opt_L ) {
-            my $is_match = file_has_match( $file );
-
-            if ( $opt_L ? !$is_match : $is_match ) {
-                App::Ack::print( $file->name, $ors );
-                ++$nmatches;
-
-                last FILES if $only_first;
-                last FILES if defined($opt_m) && $nmatches >= $opt_m;
-            }
-        }
-        else {
-            $nmatches += print_matches_in_file( $file, $opt );
-            if ( $nmatches && $only_first ) {
-                last FILES;
-            }
-        }
-    }
-
-    if ( $opt_count && !$opt_show_filename ) {
-        App::Ack::print( $total_count, "\n" );
-    }
-
-    close $App::Ack::fh;
 
     return $nmatches;
 }
