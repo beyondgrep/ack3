@@ -107,16 +107,6 @@ sub _my_program {
 }
 
 
-=head2 filetypes_supported()
-
-Returns a list of all the types that we can detect.
-
-=cut
-
-sub filetypes_supported {
-    return keys %mappings;
-}
-
 sub thpppt {
     my $y = q{_   /|,\\'!.x',=(www)=,   U   };
     $y =~ tr/,x!w/\nOo_/;
@@ -417,7 +407,7 @@ Note that some extensions may appear in multiple types.  For example,
 
 END_OF_HELP
 
-    my @types = filetypes_supported();
+    my @types = keys %App::Ack::mappings;
     my $maxlen = 0;
     for ( @types ) {
         $maxlen = length if $maxlen < length;
@@ -492,18 +482,6 @@ $copyright
 This program is free software.  You may modify or distribute it
 under the terms of the Artistic License v2.0.
 END_OF_VERSION
-}
-
-=head2 print_version_statement
-
-Prints the version information for ack.
-
-=cut
-
-sub print_version_statement {
-    App::Ack::print( get_version_statement() );
-
-    return;
 }
 
 

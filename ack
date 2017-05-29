@@ -84,7 +84,7 @@ MAIN: {
     Getopt::Long::Configure('pass_through', 'no_auto_abbrev');
     Getopt::Long::GetOptions(
         'help'       => sub { App::Ack::show_help(); exit; },
-        'version'    => sub { App::Ack::print_version_statement(); exit; },
+        'version'    => sub { App::Ack::print( App::Ack::get_version_statement() ); exit; },
         'man'        => sub { App::Ack::show_docs( 'Manual' ); }, # man/faq/cookbook all exit.
         'faq'        => sub { App::Ack::show_docs( 'FAQ' ); },
         'cookbook'   => sub { App::Ack::show_docs( 'Cookbook' ); },
