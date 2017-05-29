@@ -78,7 +78,17 @@ MAIN: {
         my @keys = ( 'ACKRC', grep { /^ACK_/ } keys %ENV );
         delete @ENV{@keys};
     }
-    App::Ack::load_colors();
+
+    # Load colors
+    my $modules_loaded_ok = eval 'use Term::ANSIColor 1.10 (); 1;';
+    if ( $modules_loaded_ok && $App::Ack::is_windows ) {
+        $modules_loaded_ok = eval 'use Win32::Console::ANSI; 1;';
+    }
+    if ( $modules_loaded_ok ) {
+        $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
+        $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
+        $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
+    }
 
     Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version');
     Getopt::Long::Configure('pass_through', 'no_auto_abbrev');
@@ -145,6 +155,7 @@ MAIN: {
         $opt_output = qq{"$output"};
     }
 
+    # Set up file filters.
     my $files;
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
         $files     = App::Ack::Files->from_stdin();
@@ -209,6 +220,7 @@ FILES:
             set_up_line_context_for_file();
         }
 
+        # ack -f
         if ( $opt_f ) {
             if ( $opt->{show_types} ) {
                 App::Ack::show_types( $file, $ors );
@@ -219,6 +231,7 @@ FILES:
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
         }
+        # ack -g
         elsif ( $opt_g ) {
             if ( $opt->{show_types} ) {
                 App::Ack::show_types( $file, $ors );
@@ -231,6 +244,7 @@ FILES:
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
         }
+        # ack --lines
         elsif ( $opt_lines ) {
             my %line_numbers;
             foreach my $line ( @{ $opt_lines } ) {
@@ -262,6 +276,7 @@ FILES:
                 return 1;
             });
         }
+        # ack -c
         elsif ( $opt_count ) {
             my $matches_for_this_file = count_matches_in_file( $file );
 
@@ -279,6 +294,7 @@ FILES:
                 }
             }
         }
+        # ack -l, ack -L
         elsif ( $opt_l || $opt_L ) {
             my $is_match = file_has_match( $file );
 
@@ -290,6 +306,7 @@ FILES:
                 last FILES if defined($opt_m) && $nmatches >= $opt_m;
             }
         }
+        # Normal match-showing ack
         else {
             $nmatches += print_matches_in_file( $file, $opt );
             if ( $nmatches && $only_first ) {
