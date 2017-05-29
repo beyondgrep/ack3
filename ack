@@ -132,7 +132,7 @@ MAIN: {
     $opt_u              = $opt->{u};
     $opt_v              = $opt->{v};
 
-    $App::Ack::report_bad_filenames = !$opt->{dont_report_bad_filenames};
+    $App::Ack::report_bad_filenames = !$opt->{s};
 
     if ( !defined($opt_color) && !$opt_g ) {
         my $windows_color = 1;
