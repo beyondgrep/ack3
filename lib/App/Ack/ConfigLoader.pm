@@ -314,17 +314,17 @@ sub get_arg_spec {
         'I'                 => sub { $opt->{i} = 0; $opt->{smart_case} = 0; },
         'ignore-directory|ignore-dir=s' => _generate_ignore_dir('--ignore-dir', $opt),
         'ignore-file=s'     => sub {
-                                    my ( undef, $file ) = @_;
+            my ( undef, $file ) = @_;
 
-                                    my ( $filter_type, $args ) = split /:/, $file, 2;
+            my ( $filter_type, $args ) = split /:/, $file, 2;
 
-                                    my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args));
+            my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args));
 
-                                    if ( !$opt->{ifiles} ) {
-                                        $opt->{ifiles} = App::Ack::Filter::Collection->new();
-                                    }
-                                    $opt->{ifiles}->add($filter);
-                               },
+            if ( !$opt->{ifiles} ) {
+                $opt->{ifiles} = App::Ack::Filter::Collection->new();
+            }
+            $opt->{ifiles}->add($filter);
+        },
         'lines=s'           => sub { shift; my $val = shift; push @{$opt->{lines}}, $val },
         'l|files-with-matches'
                             => \$opt->{l},
