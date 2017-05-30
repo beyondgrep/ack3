@@ -375,7 +375,8 @@ Filter specifications:
     If FILTER is "ext", ARGS is a list of extensions checked against the
         file's extension.
     If FILTER is "is", ARGS must match the file's name exactly.
-    If FILTER is "match", ARGS is matched as a regex against the filename.
+    If FILTER is "match", ARGS is matched as a case-insensitive regex
+        against the filename.
     If FILTER is "firstlinematch", ARGS is matched as a regex the first
         line of the file's contents.
 

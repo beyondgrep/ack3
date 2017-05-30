@@ -4,6 +4,10 @@ History file for ack.  https://beyondgrep.com/
 2.999_01
 ====================================
 [ENHANCEMENTS]
-Added --pod as a filetype.
+Added --pod as a filetype, recognizing .pod as its extension.  This is
+Perl's POD (Plain Old Documentation) format.
+
+Added --markdown as a filetype, recognizing .md and .markdown as
+extensions.
 
 ack 3's new features are listed in RELEASE-NOTES.md.
