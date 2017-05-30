@@ -11,6 +11,7 @@ use Util;
 prep_environment();
 
 my @filetypes = qw(
+actionscript
 ada
 asm
 batch

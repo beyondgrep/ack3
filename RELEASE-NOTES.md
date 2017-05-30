@@ -17,9 +17,6 @@ word matching.
 
 * Added `--pod` and `--markdown`.
 
-* Removed `--actionscript`.
-
-
 # Incompatibilities with ack 2
 
 ## ack 3 requires Perl 5.10.1
@@ -36,6 +33,5 @@ ack 2 would highlight your capture groups.  For example,
 would highlight the `set` or `get`, and the `name` or `id`, but not the
 full `set_user_id` that was matched.
 
-This feature was too confusing and has been removed.
-
-## Removed unused filetypes
+This feature was too confusing and has been removed.  Now, the entire
+matching string is highlighted.
