@@ -469,6 +469,8 @@ sub ack_lists_match {
         my @results = run_ack( @args );
         my $ok = lists_match( \@results, $expected, $message );
         $ok or diag( join( ' ', '$ ack', @args ) );
+
+        return $ok;
     };
 }
 
