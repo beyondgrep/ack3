@@ -284,9 +284,9 @@ specify B<--ignore-dir=foo> and then no files from any foo directory
 are taken into account by ack unless given explicitly on the command
 line.
 
-=item B<--ignore-file=I<FILTERTYPE:FILTERARGS>>
+=item B<--ignore-file=I<FILTER:ARGS>>
 
-Ignore files matching I<FILTERTYPE:FILTERARGS>.  The filters are specified
+Ignore files matching I<FILTER:ARGS>.  The filters are specified
 identically to file type filters as seen in L</"Defining your own types">.
 
 =item B<-k>, B<--known-types>
@@ -422,15 +422,15 @@ Type specifications can be repeated and are ORed together.
 
 See I<ack --help=types> for a list of valid types.
 
-=item B<--type-add I<TYPE>:I<FILTER>:I<FILTERARGS>>
+=item B<--type-add I<TYPE>:I<FILTER>:I<ARGS>>
 
-Files with the given FILTERARGS applied to the given FILTER
+Files with the given ARGS applied to the given FILTER
 are recognized as being of (the existing) type TYPE.
 See also L</"Defining your own types">.
 
-=item B<--type-set I<TYPE>:I<FILTER>:I<FILTERARGS>>
+=item B<--type-set I<TYPE>:I<FILTER>:I<ARGS>>
 
-Files with the given FILTERARGS applied to the given FILTER are recognized as
+Files with the given ARGS applied to the given FILTER are recognized as
 being of type TYPE. This replaces an existing definition for type TYPE.  See
 also L</"Defining your own types">.
 
@@ -573,7 +573,7 @@ I<ack --type-set backup:ext:bak --type-add perl:ext:perl --help-types>
 
 In addition to filtering based on extension, ack offers additional
 filter types.  The generic syntax is
-I<--type-set TYPE:FILTER:FILTERARGS>; I<FILTERARGS> depends on the value
+I<--type-set TYPE:FILTER:ARGS>; I<ARGS> depends on the value
 of I<FILTER>.
 
 =over 4
@@ -599,7 +599,7 @@ Example:
 =item match:I<PATTERN>
 
 I<match> filters match the target filename against a regular expression.
-The regular expression is made case insensitive for the search.
+The regular expression is made case-insensitive for the search.
 
 Example:
 
@@ -616,8 +616,6 @@ Example:
     --type-add perl:firstlinematch:/perl/
 
 =back
-
-More filter types may be made available in the future.
 
 =head1 ENVIRONMENT VARIABLES
 

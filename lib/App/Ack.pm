@@ -331,7 +331,7 @@ File finding:
 File inclusion/exclusion:
   --[no]ignore-dir=name         Add/remove directory from list of ignored dirs
   --[no]ignore-directory=name   Synonym for ignore-dir
-  --ignore-file=filter          Add filter for ignoring files
+  --ignore-file=FILTER:ARGS     Add filter for ignoring files.
   -r, -R, --recurse             Recurse into subdirectories (default: on)
   -n, --no-recurse              No descending into subdirectories
   --[no]follow                  Follow symlinks.  Default is off.
@@ -343,16 +343,12 @@ File inclusion/exclusion:
                                 See "ack --help-types" for supported filetypes.
 
 File type specification:
-  --type-set TYPE:FILTER:FILTERARGS
-                                Files with the given FILTERARGS applied to the
-                                given FILTER are recognized as being of type
-                                TYPE. This replaces an existing definition for
-                                type TYPE.
-  --type-add TYPE:FILTER:FILTERARGS
-                                Files with the given FILTERARGS applied to the
-                                given FILTER are recognized as being type TYPE.
-  --type-del TYPE               Removes all filters associated with TYPE.
-
+  --type-set=TYPE:FILTER:ARGS   Files with the given ARGS applied to the given
+                                FILTER are recognized as being of type TYPE.
+                                This replaces an existing definition for TYPE.
+  --type-add=TYPE:FILTER:ARGS   Files with the given ARGS applied to the given
+                                FILTER are recognized as being type TYPE.
+  --type-del=TYPE               Removes all filters associated with TYPE.
 
 Miscellaneous:
   --version                     Display version & copyright
@@ -374,6 +370,14 @@ Miscellaneous:
   --thpppt                      Bill the Cat
   --bar                         The warning admiral
   --cathy                       Chocolate! Chocolate! Chocolate!
+
+Filter specifications:
+    If FILTER is "ext", ARGS is a list of extensions checked against the
+        file's extension.
+    If FILTER is "is", ARGS must match the file's name exactly.
+    If FILTER is "match", ARGS is matched as a regex against the filename.
+    If FILTER is "firstlinematch", ARGS is matched as a regex the first
+        line of the file's contents.
 
 Exit status is 0 if match, 1 if no match.
 
