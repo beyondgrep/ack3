@@ -54,6 +54,9 @@ our @EXPORT = qw(
     caret_X
     get_rc
     getcwd_clean
+
+    msg
+    subtest_name
 );
 
 my $orig_wd;
@@ -436,7 +439,7 @@ sub lists_match {
         $path = File::Next::reslash( $path ); ## no critic (Variables::ProhibitPackageVars)
     }
 
-    return subtest "lists_match( $msg )" => sub {
+    return subtest subtest_name( $msg ) => sub {
         plan tests => 1;
 
         my $rc = eval 'use Test::Differences; 1;';
@@ -460,15 +463,14 @@ sub ack_lists_match {
 
     my $args     = shift;
     my $expected = shift;
-    my $message  = _check_message( shift );
+    my $msg      = _check_message( shift );
 
-    return subtest "ack_lists_match( $message )" => sub {
+    my @args = @{$args};
+    return subtest subtest_name( $msg, @args ) => sub {
         plan tests => 2;
 
-        my @args = @{$args};
         my @results = run_ack( @args );
-        my $ok = lists_match( \@results, $expected, $message );
-        $ok or diag( join( ' ', '$ ack', @args ) );
+        my $ok = lists_match( \@results, $expected, $msg );
 
         return $ok;
     };
@@ -482,7 +484,7 @@ sub sets_match {
     my @expected = @{+shift};
     my $msg      = _check_message( shift );
 
-    return subtest "sets_match( $msg )" => sub {
+    return subtest subtest_name( $msg ) => sub {
         plan tests => 1;
 
         return lists_match( [sort @actual], [sort @expected], $msg );
@@ -494,17 +496,16 @@ sub ack_sets_match {
 
     my $args     = shift;
     my $expected = shift;
-    my $message  = _check_message( shift );
-    my @args     = @{$args};
+    my $msg      = _check_message( shift );
 
-    return subtest "ack_sets_match( $message )" => sub {
+    my @args = @{$args};
+
+    return subtest subtest_name( $msg, @args ) => sub {
         plan tests => 2;
 
         my @results = run_ack( @args );
-        my $ok = sets_match( \@results, $expected, $message );
-        $ok or diag( join( ' ', '$ ack', @args ) );
 
-        return $ok;
+        return sets_match( \@results, $expected, $msg );
     };
 }
 
@@ -850,12 +851,92 @@ sub touch {
 sub _check_message {
     my $msg = shift;
 
-    if ( !$msg ) {
+    if ( !defined( $msg ) ) {
         my (undef,undef,undef,$sub) = caller(1);
         Carp::croak( "You must pass a message to $sub" );
     }
 
     return $msg;
+}
+
+=head2 msg( [@args] )
+
+Returns a basic diagnostic string based on the arguments passed in.
+It is not strictly accurate, like something from Data::Dumper, but is
+meant to balance accuracy of diagnostics with ease.
+
+    msg( 'User codes', [ 'ABC', '123' ], undef, { foo => bar } )
+
+will return
+
+    'User codes, [ABC, 123], undef, { foo => bar }'
+
+=cut
+
+sub msg {
+    my @args = @_;
+
+    my @disp;
+    for my $i ( @args ) {
+        if ( !defined($i) ) {
+            push( @disp, 'undef' );
+        }
+        elsif ( ref($i) eq 'HASH' ) {
+            push( @disp, '{' . TW::hash_str( $i ) . '}' );
+        }
+        elsif ( ref($i) eq 'ARRAY' ) {
+            push( @disp, '[' . join( ', ', map { $_ // 'undef' } @{$i} ) . ']' );
+        }
+        else {
+            push( @disp, "$i" );
+        }
+    }
+
+    return join( ', ', @disp );
+}
+
+
+=head2 subtest_name( [@args] )
+
+Returns a string for a name for a subtest, including the name of the
+subroutine and basic string representations of the arguments.
+
+This makes it easy for you to keep track of the important args passed into
+the test, and include the function name without repetitively typing it.
+
+    sub test_whatever {
+        my $user = shift;
+        my $foo  = shift;
+        my $bar  = shift;
+        my $msg  = shfit;
+
+        return subtest subtest_name( $foo, $bar, $msg ) => sub {
+            ....
+    }
+
+    test_whatever( 17, { this => 'that', other => undef }, 'Try it again without NYP' );
+
+This will then give you TAP output like this:
+
+    # Subtest: main::test_whatever( 17, {other=>undef, this=>that}, Try it again without NYP )
+
+Note that in the example, we didn't pass C<$user> because it wasn't
+interesting to debugging.
+
+=cut
+
+sub subtest_name {
+    my @args = @_;
+
+    my (undef, undef, undef, $sub) = caller(1);
+
+    ($sub ne '') or die 'subtest_name() can only be called inside a function';
+
+    return $sub unless @args;
+
+    my $disp = msg( @args );
+
+    return "$sub( $disp )";
 }
 
 1;
