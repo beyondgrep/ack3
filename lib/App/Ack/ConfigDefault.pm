@@ -183,9 +183,6 @@ sub _options_block {
 --type-add=cmake:is:CMakeLists.txt
 --type-add=cmake:ext:cmake
 
-# Actionscript
---type-add=actionscript:ext:as,mxml
-
 # Ada
 # http://www.adaic.org/
 --type-add=ada:ext:ada,adb,ads

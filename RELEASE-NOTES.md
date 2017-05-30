@@ -17,6 +17,8 @@ word matching.
 
 * Added `--pod` and `--markdown`.
 
+* Removed `--actionscript`.
+
 
 # Incompatibilities with ack 2
 
