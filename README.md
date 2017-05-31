@@ -1,5 +1,7 @@
-* Travis [![Build Status](https://travis-ci.org/petdance/ack3.png?branch=dev)](https://travis-ci.org/petdance/ack3)
-* AppVeyor [![Build Status](https://ci.appveyor.com/api/projects/status/github/petdance/ack3)](https://ci.appveyor.com/project/petdance/ack3)
+# Build status of dev branch
+
+* Linux [![Build Status](https://travis-ci.org/petdance/ack3.png?branch=dev)](https://travis-ci.org/petdance/ack3)
+* Windows [![Build Status](https://ci.appveyor.com/api/projects/status/github/petdance/ack3)](https://ci.appveyor.com/project/petdance/ack3)
 * [CPAN Testers](http://cpantesters.org/distro/A/ack.html)
 
 # ack 3
