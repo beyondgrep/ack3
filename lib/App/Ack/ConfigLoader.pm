@@ -424,7 +424,8 @@ sub process_other {
 
         if ( $source->{project} ) {
             my $illegal = sub {
-                App::Ack::die( 'Options --output, --pager and --match are forbidden in project .ackrc files.' );
+                my $name = shift;
+                App::Ack::die( "Option --$name is forbidden in project .ackrc files." );
             };
 
             $args_for_source = {

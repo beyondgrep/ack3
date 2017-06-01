@@ -109,7 +109,7 @@ PROJECT_ACKRC_OUTPUT_FORBIDDEN: {
     my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
 
     is_empty_array( $stdout );
-    first_line_like( $stderr, qr/\QOptions --output, --pager and --match are forbidden in project .ackrc files/ );
+    first_line_like( $stderr, qr/\QOption --output is forbidden in project .ackrc files/ );
 
     chdir $wd;
 }

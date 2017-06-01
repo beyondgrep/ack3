@@ -50,7 +50,7 @@ subtest 'Project .ackrc match forbidden' => sub {
     my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
 
     is_empty_array( $stdout );
-    first_line_like( $stderr, qr/\QOptions --output, --pager and --match are forbidden in project .ackrc files/ );
+    first_line_like( $stderr, qr/\QOption --match is forbidden in project .ackrc files/ );
 
     chdir $wd or die;
 };
