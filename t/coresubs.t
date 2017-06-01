@@ -12,7 +12,7 @@ use Util;
 
 prep_environment();
 
-my $ack_pm = reslash( 'blib/lib/App/Ack.pm' );
+my $ack_pm = quotemeta( reslash( 'blib/lib/App/Ack.pm' ) );
 
 for my $word ( qw( warn die ) ) {
     subtest "Finding $word" => sub {
