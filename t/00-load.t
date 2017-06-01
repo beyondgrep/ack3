@@ -32,11 +32,17 @@ for my $module ( @modules ) {
 my $iter = File::Next::files( { file_filter => sub { /\.pm$/ } }, 'blib' );
 
 while ( my $file = $iter->() ) {
-    my $module = $file;
-    $module =~ s{blib/lib/}{};
-    $module =~ s{\.pm$}{};
-    $module =~ s{/}{::}g;
+    $file =~ s/\.pm$// or die "There should be a .pm at the end of $file but there isn't";
+    my @dirs = File::Spec->splitdir( $file );
 
+    # Break apart the path, throw away blib/lib/, and reconstitute the module name.
+    my $junk = shift @dirs;
+    die unless $junk eq 'blib';
+
+    $junk = shift @dirs;
+    die unless $junk eq 'lib';
+
+    my $module = join( '::', @dirs );
     $module =~ /^([a-z::]+)$/i or die "Invalid module name $module";
     $module = $1;   # Untainted
     my $rc = eval "use $module; 1;";
