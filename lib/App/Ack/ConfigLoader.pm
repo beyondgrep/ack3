@@ -420,8 +420,20 @@ sub process_other {
     foreach my $source (@{$arg_sources}) {
         my ( $source_name, $args ) = @{$source}{qw/name contents/};
 
-        my $args_for_source = $arg_specs;
+        my $args_for_source = { %{$arg_specs} };
 
+        if ( $source->{is_ackrc} ) {
+            my $illegal = sub {
+                my $name = shift;
+                App::Ack::die( "Option --$name is forbidden in .ackrc files." );
+            };
+
+            $args_for_source = {
+                %{$args_for_source},
+                'output=s' => $illegal,
+                'match=s'  => $illegal,
+            };
+        }
         if ( $source->{project} ) {
             my $illegal = sub {
                 my $name = shift;
@@ -430,9 +442,7 @@ sub process_other {
 
             $args_for_source = {
                 %{$args_for_source},
-                'output=s' => $illegal,
-                'pager:s'  => $illegal,
-                'match=s'  => $illegal,
+                'pager:s' => $illegal,
             };
         }
 
@@ -785,6 +795,7 @@ sub retrieve_arg_sources {
                 name     => $file->{path},
                 contents => \@lines,
                 project  => $file->{project},
+                is_ackrc => 1,
             };
         }
     }

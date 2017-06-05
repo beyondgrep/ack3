@@ -15,7 +15,7 @@ if ( not has_io_pty() ) {
     exit(0);
 }
 
-plan tests => 15;
+plan tests => 9;
 
 prep_environment();
 
@@ -197,57 +197,6 @@ END_TEXT
     lists_match( \@got, \@expected, 'PAGER_NOENV' );
 }
 
-my $wd      = getcwd_clean();
-my $tempdir = File::Temp->newdir;
-my $pager   = File::Spec->rel2abs('test-pager');
-mkdir File::Spec->catdir($tempdir->dirname, 'subdir');
-
-PROJECT_ACKRC_PAGER_FORBIDDEN: {
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env question(\\S+) /;
-
-    chdir $tempdir->dirname;
-    write_file '.ackrc', "--pager=$pager\n";
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_empty_array( $stdout );
-    first_line_like( $stderr, qr/\QOption --pager is forbidden in project .ackrc files/ );
-
-    chdir $wd;
-}
-
-HOME_ACKRC_PAGER_PERMITTED: {
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env question(\\S+) /;
-
-    write_file(File::Spec->catfile($tempdir->dirname, '.ackrc'), "--pager=$pager\n");
-    chdir File::Spec->catdir($tempdir->dirname, 'subdir');
-    local $ENV{'HOME'} = $tempdir->dirname;
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_nonempty_array( $stdout );
-    is_empty_array( $stderr );
-
-    chdir $wd;
-}
-
-ACKRC_ACKRC_PAGER_PERMITTED: {
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env question(\\S+) /;
-
-    write_file(File::Spec->catfile($tempdir->dirname, '.ackrc'), "--pager=$pager\n");
-    chdir File::Spec->catdir($tempdir->dirname, 'subdir');
-    local $ENV{'ACKRC'} = File::Spec->catfile($tempdir->dirname, '.ackrc');
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_nonempty_array( $stdout );
-    is_empty_array( $stderr );
-
-    chdir $wd;
-}
 
 done_testing();
 exit 0;

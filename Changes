@@ -10,4 +10,7 @@ Perl's POD (Plain Old Documentation) format.
 Added --markdown as a filetype, recognizing .md and .markdown as
 extensions.
 
+--pager is no longer allowed in a project .ackrc file.  --match and
+--output are not allowed in any .ackrc file.
+
 ack 3's new features are listed in RELEASE-NOTES.md.

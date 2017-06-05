@@ -18,7 +18,7 @@ my @tests = (
     [ qw/gon -w/ ], # words            is handled correctly with --match
 );
 
-plan tests => @tests + 5;
+plan tests => @tests + 2;
 
 test_match( @{$_} ) for @tests;
 
@@ -34,64 +34,6 @@ subtest 'Not giving a regex when piping into ack should result in an error' => s
     is( scalar @{$stderr}, 1, 'ack should return one line of error message when piped into without a regex' ) or diag(explain($stderr));
 };
 
-my $wd      = getcwd_clean();
-my $tempdir = File::Temp->newdir;
-mkdir File::Spec->catdir($tempdir->dirname, 'subdir');
-
-subtest 'Project .ackrc match forbidden' => sub {
-    plan tests => 2;
-
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env /;
-
-    chdir $tempdir->dirname or die;
-    write_file '.ackrc', "--match=question\n";
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_empty_array( $stdout );
-    first_line_like( $stderr, qr/\QOption --match is forbidden in project .ackrc files/ );
-
-    chdir $wd or die;
-};
-
-
-subtest 'Home .ackrc match permitted' => sub {
-    plan tests => 2;
-
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env /;
-
-    write_file(File::Spec->catfile($tempdir->dirname, '.ackrc'), "--match=question\n");
-    chdir File::Spec->catdir($tempdir->dirname, 'subdir') or die;
-    local $ENV{'HOME'} = $tempdir->dirname;
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_nonempty_array( $stdout );
-    is_empty_array( $stderr );
-
-    chdir $wd or die;
-};
-
-
-subtest 'ACKRC .ackrc match permitted' => sub {
-    plan tests => 2;
-
-    my @files = untaint( File::Spec->rel2abs('t/text/') );
-    my @args = qw/ --env /;
-
-    write_file(File::Spec->catfile($tempdir->dirname, '.ackrc'), "--match=question\n");
-    chdir File::Spec->catdir($tempdir->dirname, 'subdir') or die;
-    local $ENV{'ACKRC'} = File::Spec->catfile($tempdir->dirname, '.ackrc');
-
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args, @files);
-
-    is_nonempty_array( $stdout );
-    is_empty_array( $stderr );
-
-    chdir $wd or die;
-};
 done_testing();
 
 exit 0;
