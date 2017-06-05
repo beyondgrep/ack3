@@ -5,9 +5,6 @@ use strict;
 
 use Test::More tests => 4;
 
-use File::Spec ();
-use File::Temp ();
-
 use lib 't';
 use Util;
 

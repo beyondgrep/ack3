@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-use File::Spec ();
-use File::Temp ();
 use Test::More;
 
 use lib 't';
