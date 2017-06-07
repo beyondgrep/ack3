@@ -29,8 +29,8 @@ for my $module ( @modules ) {
     diag( "Using $module $ver" );
 }
 
+# Find all the .pm files in blib/ and make sure they can be C<use>d.
 my $iter = File::Next::files( { file_filter => sub { /\.pm$/ } }, 'blib' );
-
 while ( my $file = $iter->() ) {
     $file =~ s/\.pm$// or die "There should be a .pm at the end of $file but there isn't";
     my @dirs = File::Spec->splitdir( $file );
