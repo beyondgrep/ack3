@@ -123,24 +123,23 @@ no_home( sub {
 } );
 
 touch_ackrc( '_ackrc' );
-expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
+with_home( sub { expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
 } );
 
 unlink $project_file;
 touch_ackrc( '.ackrc' );
-my $ok = eval { $finder->find_config_files };
-my $err = $@;
-ok( !$ok, '.ackrc + _ackrc is error' );
-like( $err, qr/contains both \.ackrc and _ackrc/, 'Got the expected error' );
 
-no_home( sub {
-    $ok = eval { $finder->find_config_files };
-    $err = $@;
+my $fn = sub {
+    my $ok = eval { $finder->find_config_files };
+    my $err = $@;
     ok( !$ok, '.ackrc + _ackrc is error' );
     like( $err, qr/contains both \.ackrc and _ackrc/, 'Got the expected error' );
-} );
+};
+with_home( $fn );
+no_home( $fn );
 
 unlink '.ackrc';
 $project_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
@@ -153,9 +152,10 @@ no_home( sub {
 unlink '_ackrc';
 
 do {
-    local $ENV{'HOME'} = File::Spec->catdir($tempdir->dirname, 'foo');
+    my $home = File::Spec->catdir( $tempdir->dirname, 'foo' );
+    local $ENV{'HOME'} = $home;
 
-    my $user_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
+    my $user_file = File::Spec->catfile( $home, '.ackrc');
     touch_ackrc( $user_file );
 
     expect_ackrcs( [ @global_files, { path => $user_file } ], q{Don't load the same ackrc file twice} );
@@ -192,6 +192,15 @@ exit 0;
 sub touch_ackrc {
     my $filename = shift or die;
     write_file( $filename, () );
+
+    return;
+}
+
+
+sub with_home {
+    my ( $fn ) = @_;
+
+    $fn->();
 
     return;
 }
