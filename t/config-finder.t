@@ -62,7 +62,9 @@ my $tempdir = File::Temp->newdir;
 chdir $tempdir->dirname;
 
 $finder = App::Ack::ConfigFinder->new;
-expect_ackrcs( \@std_files, 'having no project file should return only the top level files' );
+with_home( sub {
+    expect_ackrcs( \@std_files, 'having no project file should return only the top level files' );
+} );
 
 no_home( sub {
     expect_ackrcs( \@global_files, 'only system-wide ackrc is returned if HOME is not defined with no project files' );
@@ -75,7 +77,9 @@ mkdir File::Spec->catdir('foo', 'bar', 'baz');
 chdir File::Spec->catdir('foo', 'bar', 'baz');
 
 touch_ackrc( '.ackrc' );
-expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('.ackrc') }], 'a project file in the same directory should be detected' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('.ackrc') }], 'a project file in the same directory should be detected' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('.ackrc') } ], 'a project file in the same directory should be detected' );
 } );
@@ -84,7 +88,9 @@ unlink '.ackrc';
 
 my $project_file = File::Spec->catfile($tempdir->dirname, 'foo', 'bar', '.ackrc');
 touch_ackrc( $project_file );
-expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the parent directory should be detected' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the parent directory should be detected' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => $project_file } ], 'a project file in the parent directory should be detected' );
 } );
@@ -92,14 +98,18 @@ unlink $project_file;
 
 $project_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
 touch_ackrc( $project_file );
-expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
 } );
 
 touch_ackrc( '.ackrc' );
 
-expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('.ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('.ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('.ackrc') } ], 'a project file in the same directory should be detected, even with another one above it' );
 } );
@@ -108,7 +118,9 @@ unlink '.ackrc';
 unlink $project_file;
 
 touch_ackrc( '_ackrc' );
-expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a project file in the same directory should be detected' );
 } );
@@ -117,7 +129,9 @@ unlink '_ackrc';
 
 $project_file = File::Spec->catfile($tempdir->dirname, 'foo', '_ackrc');
 touch_ackrc( $project_file );
-expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => $project_file } ], 'a project file in the grandparent directory should be detected' );
 } );
