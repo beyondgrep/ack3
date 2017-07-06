@@ -245,7 +245,7 @@ sub expect_ackrcs {
     foreach my $element (@got, @expected) {
         $element->{'path'} = realpath($element->{'path'});
     }
-    is_deeply( \@got, \@expected, $name ) or diag(explain(\@got));
+    is_deeply( \@got, \@expected, $name ) or diag(explain(got=>\@got,expected=>\@expected));
 
     return;
 }
