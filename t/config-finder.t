@@ -242,10 +242,13 @@ sub expect_ackrcs {
     my @got      = $finder->find_config_files;
     my @expected = @{$expected};
 
+    my @raw_got      = @got;
+    my @raw_expected = @expected;
+
     foreach my $element (@got, @expected) {
         $element->{'path'} = realpath($element->{'path'});
     }
-    is_deeply( \@got, \@expected, $name ) or diag(explain(got=>\@got,expected=>\@expected));
+    is_deeply( \@got, \@expected, $name ) or diag(explain(got=>\@raw_got=>\@got,expected=>\@raw_expected=>\@expected));
 
     return;
 }
