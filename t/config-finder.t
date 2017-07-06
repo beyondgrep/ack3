@@ -73,7 +73,6 @@ no_home( sub {
 mkdir 'foo';
 mkdir File::Spec->catdir('foo', 'bar');
 mkdir File::Spec->catdir('foo', 'bar', 'baz');
-
 chdir File::Spec->catdir('foo', 'bar', 'baz');
 
 touch_ackrc( '.ackrc' );
@@ -158,7 +157,9 @@ no_home( $fn );
 unlink '.ackrc';
 $project_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
 touch_ackrc( $project_file );
-expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') }], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
+with_home( sub {
+    expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') }], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
+} );
 no_home( sub {
     expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
 } );
