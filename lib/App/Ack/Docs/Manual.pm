@@ -258,11 +258,11 @@ Print all known types.
 
 =item B<-i>, B<--ignore-case>
 
-Ignore case distinctions in PATTERN.  This option overrides B<--smart-case> and B<-I>.
+Ignore case distinctions in PATTERN.  Overrides B<--smart-case> and B<-I>.
 
 =item B<-I>
 
-Turns on case distinctions in PATTERN.  This option overrides B<--smart-case> and B<-i>.
+Turns on case distinctions in PATTERN.  Overrides B<--smart-case> and B<-i>.
 
 =item B<--ignore-ack-defaults>
 
