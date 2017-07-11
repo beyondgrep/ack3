@@ -35,32 +35,9 @@ local $ENV{HOME} = realpath('t/home');
 delete $ENV{'ACKRC'};
 
 my $finder;
-my @global_files;
+my @global_filenames = create_globals();
 
-if ( is_windows() ) {
-    require Win32;
-
-    my @paths = map {
-        File::Spec->catfile( Win32::GetFolderPath( $_ ), 'ackrc' )
-    } (
-        Win32::CSIDL_COMMON_APPDATA(),
-        Win32::CSIDL_APPDATA()
-    );
-
-    # Brute-force untaint the paths we built so they can be unlinked later.
-    my @untainted_paths = map { /(.+)/ ? $1 : die } @paths;
-    @global_files = map { +{ path => $_ } } @untainted_paths;
-}
-else {
-    @global_files = (
-        { path => '/etc/ackrc' },
-    );
-}
-
-if ( is_windows() || is_cygwin() ) {
-    set_up_globals( @global_files );
-}
-
+my @global_files = map { +{ path => $_ } } @global_filenames;
 my @std_files = (@global_files, { path => File::Spec->catfile($ENV{'HOME'}, '.ackrc') });
 
 my $wd      = getcwd_clean();
@@ -210,14 +187,6 @@ clean_up_globals();
 exit 0;
 
 
-sub touch_ackrc {
-    my $filename = shift or die;
-    write_file( $filename, () );
-
-    return;
-}
-
-
 sub with_home {
     my ( $fn ) = @_;
 
@@ -252,33 +221,6 @@ sub expect_ackrcs {
         $element->{'path'} = realpath($element->{'path'});
     }
     is_deeply( \@got, \@expected, $name ) or diag(explain(got=>\@got,expected=>\@expected));
-
-    return;
-}
-
-
-# The tests blow up on Windows if the global files don't exist,
-# so here we create them if they don't, keeping track of the ones
-# we make so we can delete them later.
-my @created_files;
-
-sub set_up_globals {
-    my @files = map { $_->{path} } @_;
-
-    for my $filename ( @files ) {
-        if ( not -e $filename ) {
-            touch_ackrc( $filename );
-            push @created_files, $filename;
-        }
-    }
-
-    return;
-}
-
-sub clean_up_globals {
-    foreach my $filename ( @created_files ) {
-        unlink $filename or warn "Couldn't unlink $filename: $!";
-    }
 
     return;
 }

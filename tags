@@ -4,8 +4,6 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ACKRC_ACKRC_OUTPUT_PERMITTED	t/ack-o.t	/^ACKRC_ACKRC_OUTPUT_PERMITTED: {$/;"	l
-ACKRC_ACKRC_PAGER_PERMITTED	t/ack-pager.t	/^ACKRC_ACKRC_PAGER_PERMITTED: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
 ARG	t/ack-output.t	/^ARG: {$/;"	l
 ARG_MULTIPLE_FILES	t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
@@ -90,8 +88,6 @@ G_NO_PRINT0	t/ack-print0.t	/^G_NO_PRINT0: {$/;"	l
 G_PRINT0	t/ack-print0.t	/^G_PRINT0: {$/;"	l
 HEADING_NO_BREAK	t/ack-group.t	/^HEADING_NO_BREAK: {$/;"	l
 HIGHLIGHTING	t/context.t	/^HIGHLIGHTING: {$/;"	l
-HOME_ACKRC_OUTPUT_PERMITTED	t/ack-o.t	/^HOME_ACKRC_OUTPUT_PERMITTED: {$/;"	l
-HOME_ACKRC_PAGER_PERMITTED	t/ack-pager.t	/^HOME_ACKRC_PAGER_PERMITTED: {$/;"	l
 IGNORE_DIR_DONT_IGNORE_TARGET	t/ack-ignore-dir.t	/^IGNORE_DIR_DONT_IGNORE_TARGET: {$/;"	l
 IGNORE_DIR_EXT	t/ack-ignore-dir.t	/^IGNORE_DIR_EXT: {$/;"	l
 IGNORE_DIR_FIRSTMATCH	t/ack-ignore-dir.t	/^IGNORE_DIR_FIRSTMATCH: {$/;"	l
@@ -157,8 +153,6 @@ POSTMATCH	t/ack-output.t	/^POSTMATCH: {$/;"	l
 POSTMATCH_MULTIPLE_FILES	t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
 PREMATCH	t/ack-output.t	/^PREMATCH: {$/;"	l
 PREMATCH_MULTIPLE_FILES	t/ack-output.t	/^PREMATCH_MULTIPLE_FILES: {$/;"	l
-PROJECT_ACKRC_OUTPUT_FORBIDDEN	t/ack-o.t	/^PROJECT_ACKRC_OUTPUT_FORBIDDEN: {$/;"	l
-PROJECT_ACKRC_PAGER_FORBIDDEN	t/ack-pager.t	/^PROJECT_ACKRC_PAGER_FORBIDDEN: {$/;"	l
 SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
@@ -194,15 +188,18 @@ WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
+_chdir	t/forbidden-options.t	/^sub _chdir {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
 _compile_descend_filter	ack	/^sub _compile_descend_filter {$/;"	s
 _compile_file_filter	ack	/^sub _compile_file_filter {$/;"	s
 _context_value	lib/App/Ack/ConfigLoader.pm	/^    sub _context_value {$/;"	s
+_create_ackrc	t/forbidden-options.t	/^sub _create_ackrc {$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
+_mkdir	t/forbidden-options.t	/^sub _mkdir {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
@@ -210,6 +207,8 @@ _populate_help_options	t/ack-help.t	/^    sub _populate_help_options {$/;"	s
 _populate_man_options	xt/man.t	/^    sub _populate_man_options {$/;"	s
 _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
+_test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
+_test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _write_file	t/Util.pm	/^sub _write_file {$/;"	s
 ack	t/command-line-files.t	/^ack: non-existent-file.txt: No such file or directory$/;"	l
 ack_lists_match	t/Util.pm	/^sub ack_lists_match {$/;"	s
@@ -232,7 +231,7 @@ cathy	lib/App/Ack.pm	/^sub cathy {$/;"	s
 check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub check_for_mutually_exclusive_options {$/;"	s
 check_for_option_in_man_output	xt/man.t	/^sub check_for_option_in_man_output {$/;"	s
 check_with	t/file-permission.t	/^sub check_with {$/;"	s
-clean_up_globals	t/config-finder.t	/^sub clean_up_globals {$/;"	s
+clean_up_globals	t/Util.pm	/^sub clean_up_globals {$/;"	s
 clone	lib/App/Ack/File.pm	/^sub clone {$/;"	s
 close	lib/App/Ack/File.pm	/^sub close {$/;"	s
 color	dev/timings.pl	/^sub color {$/;"	s
@@ -241,6 +240,7 @@ compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub compare_opts {$/;"	s
 count_matches_in_file	ack	/^sub count_matches_in_file {$/;"	s
 create_filter	lib/App/Ack/Filter.pm	/^sub create_filter {$/;"	s
 create_format	dev/timings.pl	/^sub create_format {$/;"	s
+create_globals	t/Util.pm	/^sub create_globals {$/;"	s
 create_group	lib/App/Ack/Filter/Extension.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
@@ -259,7 +259,6 @@ explode_sources	lib/App/Ack/ConfigLoader.pm	/^sub explode_sources {$/;"	s
 file_has_match	ack	/^sub file_has_match {$/;"	s
 filetypes	lib/App/Ack.pm	/^sub filetypes {$/;"	s
 filetypes	t/filetypes.t	/^sub filetypes {$/;"	s
-filetypes_supported	lib/App/Ack.pm	/^sub filetypes_supported {$/;"	s
 filter	lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Default.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Extension.pm	/^sub filter {$/;"	s
@@ -317,7 +316,7 @@ is_windows	t/Util.pm	/^sub is_windows {$/;"	s
 iterate	ack	/^sub iterate {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
-load_colors	lib/App/Ack.pm	/^sub load_colors {$/;"	s
+msg	t/Util.pm	/^sub msg {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
 needs_line_scan	lib/App/Ack/File.pm	/^sub needs_line_scan {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
@@ -337,7 +336,7 @@ new	lib/App/Ack/Filter/MatchGroup.pm	/^sub new {$/;"	s
 new	t/Barfly.pm	/^sub new {$/;"	s
 new	t/filter.t	/^sub new {$/;"	s
 next	lib/App/Ack/Files.pm	/^sub next {$/;"	s
-no_home	t/config-finder.t	/^sub no_home (&) { ## no critic (ProhibitSubroutinePrototypes)$/;"	s
+no_home	t/config-finder.t	/^sub no_home {$/;"	s
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
 option_in_usage	t/ack-help.t	/^sub option_in_usage {$/;"	s
@@ -355,7 +354,6 @@ print_line_if_context	ack	/^sub print_line_if_context {$/;"	s
 print_line_with_context	ack	/^sub print_line_with_context {$/;"	s
 print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
 print_matches_in_file	ack	/^sub print_matches_in_file {$/;"	s
-print_version_statement	lib/App/Ack.pm	/^sub print_version_statement {$/;"	s
 process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 process_filetypes	lib/App/Ack/ConfigLoader.pm	/^sub process_filetypes {$/;"	s
 process_filter_spec	lib/App/Ack/ConfigLoader.pm	/^sub process_filter_spec {$/;"	s
@@ -377,7 +375,6 @@ run_ack_with_stderr	t/Util.pm	/^sub run_ack_with_stderr {$/;"	s
 run_cmd	t/Util.pm	/^sub run_cmd {$/;"	s
 run_tests	t/Barfly.pm	/^sub run_tests {$/;"	s
 set_up_assertion_that_these_options_will_ignore_those_directories	t/ack-ignore-dir.t	/^sub set_up_assertion_that_these_options_will_ignore_those_directories {$/;"	s
-set_up_globals	t/config-finder.t	/^sub set_up_globals {$/;"	s
 set_up_line_context	ack	/^sub set_up_line_context {$/;"	s
 set_up_line_context_for_file	ack	/^sub set_up_line_context_for_file {$/;"	s
 set_up_pager	lib/App/Ack.pm	/^sub set_up_pager {$/;"	s
@@ -389,6 +386,7 @@ show_help_types	lib/App/Ack.pm	/^sub show_help_types {$/;"	s
 show_types	lib/App/Ack.pm	/^sub show_types {$/;"	s
 slurp	t/file-iterator.t	/^sub slurp {$/;"	s
 strip_special_chars	xt/man.t	/^sub strip_special_chars {$/;"	s
+subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
 swamp_files	t/FilterTest.pm	/^sub swamp_files {$/;"	s
 test_ack_with	t/illegal-regex.t	/^sub test_ack_with {$/;"	s
 test_loader	t/config-loader.t	/^sub test_loader {$/;"	s
@@ -406,10 +404,11 @@ to_string	lib/App/Ack/Filter/IsPath.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/IsPathGroup.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Match.pm	/^sub to_string {$/;"	s
 touch	t/Util.pm	/^sub touch {$/;"	s
-touch_ackrc	t/config-finder.t	/^sub touch_ackrc {$/;"	s
+touch_ackrc	t/Util.pm	/^sub touch_ackrc {$/;"	s
 uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub uninvert_filter {$/;"	s
 untaint	t/Util.pm	/^sub untaint {$/;"	s
 want	t/ack-man.t	/^sub want {$/;"	s
 warn	lib/App/Ack.pm	/^sub warn {$/;"	s
 windows_slashify	t/Util.pm	/^sub windows_slashify {$/;"	s
+with_home	t/config-finder.t	/^sub with_home {$/;"	s
 write_file	t/Util.pm	/^sub write_file {$/;"	s

@@ -13,6 +13,9 @@ use Test::More;
 
 our @EXPORT = qw(
     prep_environment
+    create_globals
+    clean_up_globals
+    touch_ackrc
 
     has_io_pty
     is_windows
@@ -939,5 +942,62 @@ sub subtest_name {
 
     return "$sub( $disp )";
 }
+
+
+# The tests blow up on Windows if the global files don't exist,
+# so here we create them if they don't, keeping track of the ones
+# we make so we can delete them later.
+
+my @created_global_files;
+
+sub create_globals {
+    my @files;
+
+    if ( is_windows() ) {
+        require Win32;
+
+        my @paths = map {
+            File::Spec->catfile( Win32::GetFolderPath( $_ ), 'ackrc' )
+        } (
+            Win32::CSIDL_COMMON_APPDATA(),
+            Win32::CSIDL_APPDATA()
+        );
+
+        # Brute-force untaint the paths we built so they can be unlinked later.
+        @files = map { /(.+)/ ? $1 : die } @paths;
+    }
+    else {
+        @files = ( '/etc/ackrc' );
+    }
+
+    if ( is_windows() || is_cygwin() ) {
+        for my $filename ( @files ) {
+            if ( not -e $filename ) {
+                touch_ackrc( $filename );
+                push @created_global_files, $filename;
+            }
+        }
+    }
+
+    return @files;
+}
+
+
+sub clean_up_globals {
+    foreach my $filename ( @created_global_files ) {
+        unlink $filename or warn "Couldn't unlink $filename: $!";
+    }
+
+    return;
+}
+
+
+sub touch_ackrc {
+    my $filename = shift or die;
+    write_file( $filename, () );
+
+    return;
+}
+
 
 1;
