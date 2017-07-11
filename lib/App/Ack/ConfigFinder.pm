@@ -69,16 +69,17 @@ sub _remove_redundancies {
     my @configs = @_;
 
     my %seen;
+    my @uniq;
     foreach my $config (@configs) {
-        my $key = $config->{path};
+        my $key = Cwd::realpath( $config->{path} );
         if ( not $App::Ack::is_windows ) {
             # On Unix, uniquify on inode.
             my ($dev, $inode) = (stat $key)[0, 1];
             $key = "$dev:$inode" if defined $dev;
         }
-        undef $config if $seen{$key}++;
+        push( @uniq, $config ) unless $seen{$key}++;
     }
-    return grep { defined } @configs;
+    return @uniq;
 }
 
 
