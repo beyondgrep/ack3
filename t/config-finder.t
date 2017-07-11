@@ -40,10 +40,16 @@ my @global_files;
 if ( is_windows() ) {
     require Win32;
 
-    @global_files = map { +{ path => File::Spec->catfile($_, 'ackrc') } } (
-        Win32::GetFolderPath(Win32::CSIDL_COMMON_APPDATA()),
-        Win32::GetFolderPath(Win32::CSIDL_APPDATA()),
+    my @paths = map {
+        File::Spec->catfile( Win32::GetFolderPath( $_ ), 'ackrc' )
+    } (
+        Win32::CSIDL_COMMON_APPDATA(),
+        Win32::CSIDL_APPDATA()
     );
+
+    # Brute-force untaint the paths we built so they can be unlinked later.
+    my @untainted_paths = map { /(.+)/ ? $1 : die } @paths;
+    @global_files = map { +{ path => $_ } } @untainted_paths;
 }
 else {
     @global_files = (
@@ -242,32 +248,27 @@ sub expect_ackrcs {
     my @got      = $finder->find_config_files;
     my @expected = @{$expected};
 
-    my @raw_got      = @got;
-    my @raw_expected = @expected;
-
     foreach my $element (@got, @expected) {
         $element->{'path'} = realpath($element->{'path'});
     }
-    is_deeply( \@got, \@expected, $name ) or diag(explain(raw_got=>\@raw_got=>got=>\@got,raw_expected=>\@raw_expected=>expected=>\@expected));
+    is_deeply( \@got, \@expected, $name ) or diag(explain(got=>\@got,expected=>\@expected));
 
     return;
 }
 
 
-{
 # The tests blow up on Windows if the global files don't exist,
 # so here we create them if they don't, keeping track of the ones
 # we make so we can delete them later.
-my @created_globals;
+my @created_files;
 
 sub set_up_globals {
-    my (@files) = @_;
+    my @files = map { $_->{path} } @_;
 
-    foreach my $path (@files) {
-        my $filename = $path->{path};
+    for my $filename ( @files ) {
         if ( not -e $filename ) {
             touch_ackrc( $filename );
-            push @created_globals, $path;
+            push @created_files, $filename;
         }
     }
 
@@ -275,11 +276,9 @@ sub set_up_globals {
 }
 
 sub clean_up_globals {
-    foreach my $path (@created_globals) {
-        unlink $path->{path} or warn "Couldn't unlink $path: $!";
+    foreach my $filename ( @created_files ) {
+        unlink $filename or warn "Couldn't unlink $filename: $!";
     }
 
     return;
-}
-
 }
