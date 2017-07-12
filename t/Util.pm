@@ -58,6 +58,9 @@ our @EXPORT = qw(
     get_rc
     getcwd_clean
 
+    safe_chdir
+    safe_mkdir
+
     msg
     subtest_name
 );
@@ -1000,4 +1003,20 @@ sub touch_ackrc {
 }
 
 
+sub safe_chdir {
+    my $dir = shift;
+
+    CORE::chdir( $dir ) or die "Can't chdir to $dir: $!";
+
+    return;
+}
+
+
+sub safe_mkdir {
+    my $dir = shift;
+
+    CORE::mkdir( $dir ) or die "Can't mkdir $dir: $!";
+
+    return;
+}
 1;

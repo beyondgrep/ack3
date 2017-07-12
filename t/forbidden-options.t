@@ -41,17 +41,17 @@ sub _test_project_ackrc {
 
         # /tmp/x/project
         my $projectdir = File::Spec->catdir( $base, 'project' );
-        _mkdir( $projectdir );
+        safe_mkdir( $projectdir );
 
         # /tmp/x/project/subdir
         my $projectsubdir = File::Spec->catdir( $projectdir, 'subdir' );
-        _mkdir( $projectsubdir );
+        safe_mkdir( $projectsubdir );
 
         # /tmp/x/project/subdir/foo.pl
         my $projectfile = File::Spec->catfile( $projectsubdir, 'foo.pl' );
         write_file( $projectfile, '#!/usr/bin/perl' );
 
-        _chdir( $projectdir );
+        safe_chdir( $projectdir );
 
         # All three of these options are illegal in a project .ackrc.
         for my $option ( qw( match output pager ) ) {
@@ -75,7 +75,7 @@ sub _test_project_ackrc {
         }
 
         # Go back to working directory so the temporary directories can get erased.
-        _chdir( $wd );
+        safe_chdir( $wd );
     };
 }
 
@@ -94,17 +94,17 @@ sub _test_home_ackrc {
 
         # /tmp/x/home
         my $homedir = File::Spec->catdir( $base, 'home' );
-        _mkdir( $homedir );
+        safe_mkdir( $homedir );
 
         # /tmp/x/project
         my $projectdir = File::Spec->catdir( $base, 'project' );
-        _mkdir( $projectdir );
+        safe_mkdir( $projectdir );
 
         # /tmp/x/project/foo.pl
         my $projectfile = File::Spec->catfile( $projectdir, 'foo.pl' );
         write_file( $projectfile, '#!/usr/bin/perl' );
 
-        _chdir( $projectdir );
+        safe_chdir( $projectdir );
 
         # --match and --output are illegal in a home .ackrc, but --pager is ok.
         for my $option ( qw( match output pager ) ) {
@@ -130,7 +130,7 @@ sub _test_home_ackrc {
         }
 
         # Go back to working directory so the temporary directories can get erased.
-        _chdir( $wd );
+        safe_chdir( $wd );
     };
 }
 
@@ -143,22 +143,4 @@ sub _create_ackrc {
     write_file( $ackrc, join( "\n", '--sort-files', $option, '--smart-case', '' ) );
 
     return $ackrc;
-}
-
-
-sub _chdir {
-    my $dir = shift;
-
-    chdir $dir or die "Can't chdir to $dir: $!";
-
-    return;
-}
-
-
-sub _mkdir {
-    my $dir = shift;
-
-    mkdir $dir or die "Can't create $dir: $!";
-
-    return;
 }

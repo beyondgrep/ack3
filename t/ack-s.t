@@ -33,11 +33,11 @@ WITH_RESTRICTED_DIR: {
     my $dir = File::Temp->newdir;
     my $wd  = getcwd_clean();
 
-    chdir $dir->dirname;
+    safe_chdir( $dir->dirname );
 
-    mkdir 'foo';
-    write_file 'foo/bar' => "hello\n";
-    write_file 'baz'     => "hello\n";
+    safe_mkdir( 'foo' );
+    write_file( 'foo/bar' => "hello\n" );
+    write_file( 'baz'     => "hello\n" );
 
     chmod 0000, 'foo';
     chmod 0000, 'baz';
@@ -46,5 +46,8 @@ WITH_RESTRICTED_DIR: {
 
     is_empty_array( $stderr );
 
-    chdir $wd;
+    safe_chdir( $wd );
 }
+
+done_testing();
+exit 0;

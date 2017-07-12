@@ -42,7 +42,7 @@ my @std_files = (@global_files, { path => File::Spec->catfile($ENV{'HOME'}, '.ac
 
 my $wd      = getcwd_clean();
 my $tempdir = File::Temp->newdir;
-chdir $tempdir->dirname;
+safe_chdir( $tempdir->dirname );
 
 $finder = App::Ack::ConfigFinder->new;
 with_home( sub {
@@ -53,10 +53,10 @@ no_home( sub {
     expect_ackrcs( \@global_files, 'only system-wide ackrc is returned if HOME is not defined with no project files' );
 } );
 
-mkdir 'foo';
-mkdir File::Spec->catdir('foo', 'bar');
-mkdir File::Spec->catdir('foo', 'bar', 'baz');
-chdir File::Spec->catdir('foo', 'bar', 'baz');
+safe_mkdir( 'foo' );
+safe_mkdir( File::Spec->catdir('foo', 'bar') );
+safe_mkdir( File::Spec->catdir('foo', 'bar', 'baz') );
+safe_chdir( File::Spec->catdir('foo', 'bar', 'baz') );
 
 touch_ackrc( '.ackrc' );
 with_home( sub {
@@ -161,7 +161,7 @@ do {
 };
 
 do {
-    chdir $tempdir->dirname;
+    safe_chdir( $tempdir->dirname );
     local $ENV{'HOME'} = File::Spec->catfile($tempdir->dirname, 'foo');
 
     my $user_file = File::Spec->catfile($ENV{'HOME'}, '.ackrc');
@@ -176,12 +176,12 @@ do {
     expect_ackrcs( [ @global_files, { path => $user_file } ], q{ACKRC doesn't override if it doesn't exist} );
 
     touch_ackrc( $ackrc->filename );
-    chdir 'foo';
+    safe_chdir( 'foo' );
     expect_ackrcs( [ @global_files, { path => $ackrc->filename}, { project => 1, path => $user_file } ], q{~/.ackrc should still be found as a project ackrc} );
     unlink $ackrc->filename;
 };
 
-chdir $wd;
+safe_chdir( $wd );
 clean_up_globals();
 
 exit 0;
