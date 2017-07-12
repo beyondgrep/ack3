@@ -2,10 +2,10 @@
 
 use strict;
 use warnings;
-use lib 't';
 
-use Cwd ();
 use Test::More tests => 16;
+
+use lib 't';
 use Util;
 
 prep_environment();
