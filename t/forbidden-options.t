@@ -2,8 +2,6 @@
 
 # XXX This test need to include not-forbidden-options, like --sort and --smart-case.
 
-use Carp::Always;
-
 use strict;
 use warnings;
 
