@@ -81,6 +81,7 @@ subtest 'Front anchor' => sub {
     my @expected = qw(
         t/file-iterator.t
         t/file-permission.t
+        t/filetype-detection.t
         t/filetypes.t
         t/filter.t
     );

@@ -96,6 +96,7 @@ t/exit-code.t
 t/ext-filter.t
 t/file-iterator.t
 t/file-permission.t
+t/filetype-detection.t
 t/filetypes.t
 t/filter.t
 t/firstlinematch-filter.t
@@ -113,14 +114,12 @@ t/issue522.t
 t/issue562.t
 t/issue571.t
 t/longopts.t
-t/lua-shebang.t
 t/match-filter.t
 t/mutex-options.t
 t/named-pipes.t
 t/noackrc.t
 t/noenv.t
 t/process-substitution.t
-t/r-lang-ext.t
 t/runtests.pl
 t/zero.t
 
