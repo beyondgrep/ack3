@@ -1,11 +1,12 @@
 #!perl -T
 
 # Checks that we are not using core C<die> or C<warn> except in very specific places.
+# Same with C<mkdir> and C<chdir>.
 
 use warnings;
 use strict;
 
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 use lib 't';
 use Util;
@@ -24,6 +25,20 @@ for my $word ( qw( warn die ) ) {
         like( $results[0], qr/^$ack_pm:\d+:=head2 $word/, 'POD' );
         like( $results[1], qr/^$ack_pm:\d+:sub $word/, 'sub' );
         is( scalar @results, 2, 'Exactly two hits' );
+    };
+}
+
+# Don't use C<chdir> or C<mkdir>.  Use C<safe_chdir> and C<safe_mkdir>.
+my $util_pm = quotemeta( reslash( 't/Util.pm' ) );
+for my $word ( qw( chdir mkdir ) ) {
+    subtest "Finding $word" => sub {
+        plan tests => 3;
+
+        my @args = ( '-w', '--ignore-file=is:coresubs.t', $word );
+        my @results = run_ack( @args );
+
+        is( scalar @results, 1, 'Exactly one hit...' );
+        like( $results[0], qr/^$util_pm.+CORE::$word/, '... and it is in the function in Util.pm that wraps the core call' );
     };
 }
 
