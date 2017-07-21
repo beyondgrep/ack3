@@ -71,7 +71,8 @@ sub _remove_redundancies {
     my %seen;
     my @uniq;
     foreach my $config (@configs) {
-        my $key = Cwd::realpath( $config->{path} );
+        my $path = $config->{path};
+        my $key = -e $path ? Cwd::realpath( $path ) : $path;
         if ( not $App::Ack::is_windows ) {
             # On Unix, uniquify on inode.
             my ($dev, $inode) = (stat $key)[0, 1];
