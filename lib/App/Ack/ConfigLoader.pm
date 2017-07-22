@@ -289,6 +289,7 @@ sub get_arg_spec {
         'color|colour!'     => \$opt->{color},
         'color-match=s'     => \$ENV{ACK_COLOR_MATCH},
         'color-filename=s'  => \$ENV{ACK_COLOR_FILENAME},
+        'color-colno=s'     => \$ENV{ACK_COLOR_COLNO},
         'color-lineno=s'    => \$ENV{ACK_COLOR_LINENO},
         'column!'           => \$opt->{column},
         count               => \$opt->{count},

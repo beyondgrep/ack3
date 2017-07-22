@@ -69,7 +69,7 @@ my $orig_wd;
 my @temp_files; # We store temp files here to make sure they're properly reclaimed at interpreter shutdown.
 
 sub prep_environment {
-    my @ack_args   = qw( ACK_OPTIONS ACKRC ACK_PAGER HOME ACK_COLOR_MATCH ACK_COLOR_FILENAME ACK_COLOR_LINE );
+    my @ack_args   = qw( ACK_OPTIONS ACKRC ACK_PAGER HOME ACK_COLOR_MATCH ACK_COLOR_FILENAME ACK_COLOR_LINENO ACK_COLOR_COLNO );
     my @taint_args = qw( PATH CDPATH IFS ENV );
     delete @ENV{ @ack_args, @taint_args };
 

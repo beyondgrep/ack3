@@ -17,6 +17,11 @@ word matching.
 
 * Added `--pod` and `--markdown`.
 
+# Bug fixes
+
+* Column numbers were not getting colorized in the output.  Added
+`--color-colno` option and `ACK_COLOR_COLNO` environment variable.
+
 # Incompatibilities with ack 2
 
 ## ack 3 requires Perl 5.10.1

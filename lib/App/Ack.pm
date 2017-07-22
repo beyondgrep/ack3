@@ -312,8 +312,9 @@ File presentation:
   --[no]colour                  Same as --[no]color
   --color-filename=COLOR
   --color-match=COLOR
-  --color-lineno=COLOR          Set the color for filenames, matches, and line
-                                numbers.
+  --color-colno=COLOR
+  --color-lineno=COLOR          Set the color for filenames, matches, line and
+                                column numbers.
   --flush                       Flush output immediately, even when ack is used
                                 non-interactively (when output goes to a pipe or
                                 file).

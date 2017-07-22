@@ -135,6 +135,10 @@ Sets the color to be used for filenames.
 
 Sets the color to be used for matches.
 
+=item B<--color-colno=I<color>>
+
+Sets the color to be used for column numbers.
+
 =item B<--color-lineno=I<color>>
 
 Sets the color to be used for line numbers.

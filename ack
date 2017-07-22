@@ -88,6 +88,7 @@ MAIN: {
         $ENV{ACK_COLOR_MATCH}    ||= 'black on_yellow';
         $ENV{ACK_COLOR_FILENAME} ||= 'bold green';
         $ENV{ACK_COLOR_LINENO}   ||= 'bold yellow';
+        $ENV{ACK_COLOR_COLNO}    ||= 'bold yellow';
     }
 
     Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version');
@@ -801,23 +802,27 @@ sub print_line_with_options {
             else {
                 $chars_used_by_coloring = $filename_uses + $lineno_uses;
             }
+            if ( $opt_column ) {
+                $chars_used_by_coloring += length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
+            }
         }
     }
 
     if ( $opt_show_filename ) {
+        my $colno;
+        $colno = get_match_colno() if $opt_column;
         if ( $opt_color ) {
             $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
             $lineno   = Term::ANSIColor::colored( $lineno,   $ENV{ACK_COLOR_LINENO} );
+            $colno    = Term::ANSIColor::colored( $colno,    $ENV{ACK_COLOR_COLNO} ) if $opt_column;
         }
         if ( $opt_heading ) {
             push @line_parts, $lineno;
+            push @line_parts, $colno if $opt_column;
         }
         else {
             push @line_parts, $filename, $lineno;
-        }
-
-        if ( $opt_column ) {
-            push @line_parts, get_match_colno();
+            push @line_parts, $colno if $opt_column;
         }
     }
 
