@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 10;
+use Test::More tests => 11;
 
 use lib 't';
 use Util;
@@ -47,6 +47,11 @@ ack_sets_match(
 );
 
 ack_sets_match(
+    [qw( -f t/swamp/groceries --ignore-file=is:subdir )],
+    [ @all ],
+    '--ignore-file only operatoes on filenames, not dirnames'
+);
+ack_sets_match(
     [qw( -f t/swamp/groceries --ignore-file=is:fruit --ignore-file=is:junk )],
     [ @meat ],
     'Multiple is arguments'
@@ -66,3 +71,7 @@ for my $u ( 'u', 'U' ) {
         );
     }
 }
+
+
+done_testing();
+exit 0;
