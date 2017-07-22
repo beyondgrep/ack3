@@ -56,7 +56,8 @@ sub create_filter {
     if ( my $package = $filter_types{$type} ) {
         return $package->new(@args);
     }
-    Carp::croak "Unknown filter type '$type'";
+    my $allowed_types = join( ', ', sort keys %filter_types );
+    App::Ack::die( "Unknown filter type '$type'.  Type must be one of: $allowed_types." );
 }
 
 =head2 App::Ack:Filter->register_filter($type, $package)

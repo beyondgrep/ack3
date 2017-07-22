@@ -2,7 +2,8 @@
 
 use strict;
 use warnings;
-use Test::More tests => 2;
+
+use Test::More tests => 3;
 
 use lib 't';
 use Util;
@@ -75,6 +76,29 @@ subtest 'match:xxx matching' => sub {
                 'Should only match files with do not have "u" in them: ' . join( ' ', map { $_ // 'undef' } @args )
             );
         }
+    }
+};
+
+
+subtest 'Invalid invocation' => sub {
+    plan tests => 4;
+
+    my @bad_args = (
+        '--ignore-file=foo',
+        '--ignore-file=foo:bar',
+    );
+
+    for my $bad_arg ( @bad_args ) {
+        my ( $man_output, $man_stderr ) = run_ack_with_stderr( $bad_arg );
+
+        is_empty_array( $man_output, 'No output' );
+        is_deeply( $man_stderr,
+            [
+                q{ack: Unknown filter type 'foo'.  Type must be one of: ext, firstlinematch, is, match.},
+                q{ack: Invalid option on command line},
+            ],
+            "Two error messages match for $bad_arg",
+        );
     }
 };
 

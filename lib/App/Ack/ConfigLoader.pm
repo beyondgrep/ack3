@@ -319,7 +319,7 @@ sub get_arg_spec {
 
             my ( $filter_type, $args ) = split /:/, $file, 2;
 
-            my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args));
+            my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args//''));
 
             if ( !$opt->{ifiles} ) {
                 $opt->{ifiles} = App::Ack::Filter::Collection->new();
