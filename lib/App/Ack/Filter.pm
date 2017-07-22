@@ -3,6 +3,7 @@ package App::Ack::Filter;
 use strict;
 use warnings;
 
+use App::Ack ();
 use App::Ack::Filter::Inverse ();
 use Carp 1.04 ();
 
