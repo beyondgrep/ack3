@@ -1,4 +1,4 @@
-# --ignore-dir and --ignore-file revamp
+# Create --ignore-path
 
 Users have been dissatisfied with `--ignore-dir` and `--ignore-file`.  Here are some common "bug reports"
 
@@ -14,25 +14,15 @@ project but still source the `--ignore-dir=./foo` rule from an ackrc a
 few directories above.  Are we preparing to teach ack about the notion
 of a project root?  Also, consider `--noignore-dir`
 
-# Future directions
+# Questions to consider
 
-## Scenario 1
+* `--ignore-path` will ignore paths as well as directories.  But then
+relative to what?  Current directory?  That means an --ignore-path`
+in an .ackrc isn't useful.
 
---ignore-dir can ignore paths as well as directories.  But then relative
-to what?  Current directory?  That means an --ignore-dir in an .ackrc
-isn't useful.
+* Do we make the relativeness based on where the directive is?  Is an
+`--ignore-path` in a project-level .ackrc relative to that file?  And an
+`--ignore-path` from the command-line is relative to Cwd?
 
-Do we make the relativeness based on where the directive is?  Is an
---ignore-dir in a project-level .ackrc relative to that file?  And an
---ignore-dir from the command-line is relative to Cwd?
-
-## Scenario 2
-
-`--ignore-dir` only ignores directories, but warns if you try to ignore a path
-
-What's the distinction between `--ignore-file` and
-`--type`/`--notype`?  Does it make sense to allow an "anonymous" type (ex.
-`--type=is:Something`), and make `--ignore-file` a synonym for `--notype`?
-Could `--ignore-dir` be implemented like this?
-
-If I have `--ignore-dir=test` in my .ackrc, and I do `ack $term test`, what happens?
+* If I have `--ignore-dir=test` in my .ackrc, and I do `ack $term test`,
+what happens?
