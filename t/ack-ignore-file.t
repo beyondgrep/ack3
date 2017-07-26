@@ -81,7 +81,7 @@ subtest 'match:xxx matching' => sub {
 
 
 subtest 'Invalid invocation' => sub {
-    plan tests => 4;
+    plan tests => 8;
 
     my @bad_args = (
         '--ignore-file=foo',
@@ -91,14 +91,10 @@ subtest 'Invalid invocation' => sub {
     for my $bad_arg ( @bad_args ) {
         my ( $man_output, $man_stderr ) = run_ack_with_stderr( $bad_arg );
 
-        is_empty_array( $man_output, 'No output' );
-        is_deeply( $man_stderr,
-            [
-                q{ack: Unknown filter type 'foo'.  Type must be one of: ext, firstlinematch, is, match.},
-                q{ack: Invalid option on command line},
-            ],
-            "Two error messages match for $bad_arg",
-        );
+        is_empty_array( $man_output, "No output for $bad_arg" );
+        is( scalar @{$man_stderr}, 2, "Exactly two errors for $bad_arg" );
+        like( $man_stderr->[0], qr/ack(?:-standalone)?: Unknown filter type 'foo'.  Type must be one of: ext, firstlinematch, is, match./ );
+        like( $man_stderr->[1], qr/ack(?:-standalone)?: Invalid option on command line/ );
     }
 };
 
