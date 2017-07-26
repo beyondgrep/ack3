@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 24;
+use Test::More tests => 32;
 
 use lib 't';
 use Util;
@@ -173,6 +173,69 @@ HERE
 
     lists_match( \@results, \@expected, 'Line number' );
 }
+
+LAST_PAREN_MATCH: {
+    my @expected = line_split( <<'HERE' );
+t/text/4th-of-july.txt:12:love
+t/text/boy-named-sue.txt:58:hate
+t/text/boy-named-sue.txt:70:hate
+t/text/shut-up-be-happy.txt:5:love
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = qw( (love)|(hate) --sort-files --output=$+ );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Last paren match' );
+}
+
+
+COMBOS_1: {
+    my @expected = line_split( <<'HERE' );
+t/text/4th-of-july.txt:12:love-12- me,
+t/text/boy-named-sue.txt:58:hate-58- me, and you got the right
+t/text/boy-named-sue.txt:70:hate-70- that name!
+t/text/shut-up-be-happy.txt:5:love-5-d ones, insurance agents or attorneys.
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = qw( (love)|(hate) --sort-files --output=$+-$.-$' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Combos 1' );
+}
+
+COMBOS_2: {
+    my @expected = line_split( <<'HERE' );
+t/text/4th-of-july.txt:13:happy-happy-happy
+t/text/shut-up-be-happy.txt:20:happy-happy-happy
+t/text/shut-up-be-happy.txt:23:happy-happy-happy
+t/text/shut-up-be-happy.txt:26:Happy-Happy-Happy
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = qw( (happy) --sort-files -i --output=$1-$&-$1 );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Combos 2' );
+}
+
+
+COMBOS_3: {
+    my @expected = line_split( <<'HERE' );
+t/text/4th-of-july.txt:13:And you're --- to be with me on the 4th of July
+t/text/shut-up-be-happy.txt:20:Shut up! Be ---.
+t/text/shut-up-be-happy.txt:23:Be ---.
+t/text/shut-up-be-happy.txt:26:    -- "Shut Up, Be ---", Jello Biafra
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = qw( (happy) --sort-files -i --output=$`---$' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Combos 2' );
+}
+
 
 done_testing();
 exit 0;

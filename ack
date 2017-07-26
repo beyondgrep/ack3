@@ -154,6 +154,13 @@ MAIN: {
         $output        =~ s{\\}{\\\\}g;
         $output        =~ s{"}{\\"}g;
         $opt_output = qq{"$output"};
+
+        # If the the $output contains $&, $` or $', those vars won't
+        # be captured until they're used at least once in the program.
+        # Otherwise, the first row that uses one of the vars will
+        # come up empty.  Do the eval to make this happen.
+        no warnings;
+        eval $opt_output;
     }
 
     # Set up file filters.
