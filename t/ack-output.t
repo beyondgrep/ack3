@@ -223,14 +223,14 @@ HERE
 
 COMBOS_3: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:13:And you're --- to be with me on the 4th of July
-t/text/shut-up-be-happy.txt:20:Shut up! Be ---.
-t/text/shut-up-be-happy.txt:23:Be ---.
-t/text/shut-up-be-happy.txt:26:    -- "Shut Up, Be ---", Jello Biafra
+t/text/4th-of-july.txt:13:And you're --- to be with me on the 4th of July--happy
+t/text/shut-up-be-happy.txt:20:Shut up! Be ---.--happy
+t/text/shut-up-be-happy.txt:23:Be ---.--happy
+t/text/shut-up-be-happy.txt:26:    -- "Shut Up, Be ---", Jello Biafra--Happy
 HERE
 
     my @files = qw( t/text/ );
-    my @args = qw( (happy) --sort-files -i --output=$`---$' );
+    my @args = qw( (happy) --sort-files -i --output=$`---$'--$+ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Combos 2' );
