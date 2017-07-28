@@ -52,6 +52,9 @@ our $opt_v;
 # Flag if we need any context tracking.
 our $is_tracking_context;
 
+our @special_vars_used_by_opt_output;
+our $special_vars_used_by_opt_output;
+
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
     $0 = join(' ', 'ack', $0);
@@ -151,16 +154,22 @@ MAIN: {
     }
 
     if ( my $output = $opt_output ) {
-        $output        =~ s{\\}{\\\\}g;
-        $output        =~ s{"}{\\"}g;
-        $opt_output = qq{"$output"};
+        $output     =~ s{\\}{\\\\}g;
+        $output     =~ s{"}{\\"}g;
 
-        # If the the $output contains $&, $` or $', those vars won't
-        # be captured until they're used at least once in the program.
-        # Otherwise, the first row that uses one of the vars will
-        # come up empty.  Do the eval to make this happen.
-        no warnings;
-        eval $opt_output;
+        my @supported_special_variables = ( 1..9, qw( _ . ` & ' + ) );
+        @special_vars_used_by_opt_output = grep { $opt_output =~ /\$$_/ } @supported_special_variables;
+        $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );
+
+        # If the $output contains $&, $` or $', those vars won't be
+        # captured until they're used at least once in the program.
+        # Do the eval to make this happen.
+        for my $i ( @special_vars_used_by_opt_output ) {
+            if ( $i eq q{&} || $i eq q{'} || $i eq q{`} ) {
+                no warnings;    # They will be undef, so don't warn.
+                eval qq{"\$$i"};
+            }
+        }
     }
 
     # Set up file filters.
@@ -835,7 +844,15 @@ sub print_line_with_options {
 
     if ( $opt_output ) {
         while ( $line =~ /$opt_regex/og ) {
-            my $output = eval $opt_output;
+            no strict;
+
+            my $output = $opt_output;
+
+            # Stash copies of the special variables because we can't rely
+            # on them not changing in the process of doing the s///.
+            my %keep = map { ($_ => ${$_} // '') } @special_vars_used_by_opt_output;
+            $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
+            $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/eg;
             App::Ack::print( join( $separator, @line_parts, $output ), $ors );
         }
     }

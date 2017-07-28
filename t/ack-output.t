@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 32;
+use Test::More tests => 34;
 
 use lib 't';
 use Util;
@@ -12,11 +12,11 @@ prep_environment();
 
 ARG: {
     my @expected = (
-      'Sink, swim, go down with the ship'
+      'Sink, swim, go down with the shipxSink, swim, go down with the ship'
     );
 
     my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$_ );
+    my @args = qw( swim --output=$_x$_ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Matching line' );
@@ -234,6 +234,20 @@ HERE
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Combos 2' );
+}
+
+
+NUMERIC_SUBSTITUTIONS: {
+    # Make sure that substitutions don't affect future substitutions.
+    my @expected = line_split( <<'HERE' );
+t/text/shut-up-be-happy.txt:9:Ninety-five is 95 and seventy-six is 76
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = ( '(\d+) PM', '--output=Ninety-five is $.5 and seventy-six is $16' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Numeric substitutions' );
 }
 
 

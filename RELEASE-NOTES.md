@@ -40,3 +40,21 @@ full `set_user_id` that was matched.
 
 This feature was too confusing and has been removed.  Now, the entire
 matching string is highlighted.
+
+## ack 3's --output allows fewer special variables
+
+In ack 2, you could put any kind of Perl code in the `--output`
+option and it would get `eval`uated at run time, which would let
+you do tricky stuff like this gem from Mark Fowler
+(http://www.perladvent.org/2014/2014-12-21.html):
+
+    ack --output='$&: @{[ eval "use LWP::Simple; 1" && length LWP::Simple::get($&) ]} bytes' \
+                    'https?://\S+' list.txt
+    http://google.com/: 19529 bytes
+    http://metacpan.org/: 7560 bytes
+    http://www.perladvent.org/: 5562 bytes
+
+This has been a security problem in the past, and so in ack 3 we
+no longer `eval` the contents of `--output`.  You're now restricted
+to the following variables: `$1` thru `$9`, `$_`, `$.`, `$&`, ``$` ``,
+`$'` and `$+`.

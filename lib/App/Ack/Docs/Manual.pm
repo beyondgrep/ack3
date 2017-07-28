@@ -339,14 +339,51 @@ No descending into subdirectories.
 =item B<-o>
 
 Show only the part of each line matching PATTERN (turns off text
-highlighting)
+highlighting).  This is exactly the same as C<--output=$&>.
 
 =item B<--output=I<expr>>
 
 Output the evaluation of I<expr> for each line (turns off text
-highlighting)
-If PATTERN matches more than once then a line is output for each non-overlapping match.
-For more information please see the section L</"Examples of F<--output>">.
+highlighting). If PATTERN matches more than once then a line is
+output for each non-overlapping match.
+
+I<expr> may contain the following Perl special variables:
+
+=over 4
+
+=item C<$1> through C<$9>
+
+The subpattern from the corresponding set of capturing parentheses.
+If your pattern is C<(.+) and (.+)>, and the string is "this and
+that', then C<$1> is "this" and C<$2> is "that".
+
+=item C<$_>
+
+The contents of the line in the file.
+
+=item C<$.>
+
+The number of the line in the file.
+
+=item C<$&>, C<$`> and C<$'>
+
+C<$&> is the the string matched by the pattern, C<$`> is what
+precedes the match, and C<$'> is what follows it.  If the pattern
+is C<gra(ph|nd)> and the string is "lexicographic", then C<$&> is
+"graph", C<$`> is "lexico" and C<$'> is "ic".
+
+Use of these variables in your output will slow down the pattern
+matching.
+
+=item C<$+>
+
+The match made by the last parentheses that matched in the pattern.
+For example, if your pattern is C<Version: (.+)|Revision: (.+)>,
+then C<$+> will contain whichever set of parentheses matched.
+
+=back
+
+For examples of using C<--output>, see the Cookbook section of the manual.
 
 =item B<--pager=I<program>>, B<--nopager>
 
