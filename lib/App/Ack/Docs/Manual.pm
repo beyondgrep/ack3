@@ -347,7 +347,11 @@ Output the evaluation of I<expr> for each line (turns off text
 highlighting). If PATTERN matches more than once then a line is
 output for each non-overlapping match.
 
-I<expr> may contain the following Perl special variables:
+I<expr> may contain the strings "\n", "\r" and "\t", which will be
+expanded to their corresponding characters line feed, carriage return
+and tab, respectively.
+
+I<expr> may also contain the following Perl special variables:
 
 =over 4
 

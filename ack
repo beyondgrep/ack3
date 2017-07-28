@@ -154,6 +154,11 @@ MAIN: {
     }
 
     if ( defined $opt_output ) {
+        # Expand out \t, \n and \r.
+        $opt_output =~ s/\\n/\n/g;
+        $opt_output =~ s/\\r/\r/g;
+        $opt_output =~ s/\\t/\t/g;
+
         my @supported_special_variables = ( 1..9, qw( _ . ` & ' + ) );
         @special_vars_used_by_opt_output = grep { $opt_output =~ /\$$_/ } @supported_special_variables;
         $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );

@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 34;
+use Test::More tests => 38;
 
 use lib 't';
 use Util;
@@ -249,6 +249,36 @@ HERE
 
     lists_match( \@results, \@expected, 'Numeric substitutions' );
 }
+
+
+NUMERIC_SUBSTITUTIONS: {
+    # Make sure that substitutions don't affect future substitutions.
+    my @expected = line_split( <<'HERE' );
+t/text/shut-up-be-happy.txt:9:Ninety-five is 95 and seventy-six is 76
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = ( '(\d+) PM', '--output=Ninety-five is $.5 and seventy-six is $16' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Numeric substitutions' );
+}
+
+
+CHARACTER_SUBSTITUTIONS: {
+    # Make sure that substitutions don't affect future substitutions.
+    my @expected = line_split( <<"HERE" );
+t/text/shut-up-be-happy.txt:11:Remain calm.
+Do not panic.\tDo not panic.
+HERE
+
+    my @files = qw( t/text/ );
+    my @args = ( '(Remain calm\.)\s+(.+)', '--output=$1\n$2\t$2' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Character substitutions' );
+}
+
 
 
 done_testing();
