@@ -389,8 +389,10 @@ then C<$+> will contain whichever set of parentheses matched.
 
 =item C<$f>
 
-C<$f> is available, in C<--output> only, as stand-in for C<$ARGV> in normal C<perl -nE> usage
-and for the discovered C<$filename> usage in old C<< ack2 --output >>.
+C<$f> is available, in C<--output> only, to insert the filename.
+This is a stand-in for the discovered C<$filename> usage in old C<< ack2 --output >>,
+which is disallowed with C<ack3> improved security.
+
 The intended usage is to provide the grep or compile-error syntax needed for editor/IDE go-to-line integration,
 e.g. C<--output=$f:$.:$_> or C<--output=$f\t$.\t$&>
 
