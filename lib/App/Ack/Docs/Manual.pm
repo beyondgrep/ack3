@@ -385,8 +385,6 @@ The match made by the last parentheses that matched in the pattern.
 For example, if your pattern is C<Version: (.+)|Revision: (.+)>,
 then C<$+> will contain whichever set of parentheses matched.
 
-=back
-
 =item C<$f>
 
 C<$f> is available, in C<--output> only, to insert the filename.
