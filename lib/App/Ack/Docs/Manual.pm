@@ -385,6 +385,15 @@ The match made by the last parentheses that matched in the pattern.
 For example, if your pattern is C<Version: (.+)|Revision: (.+)>,
 then C<$+> will contain whichever set of parentheses matched.
 
+=item C<$f>
+
+C<$f> is available, in C<--output> only, to insert the filename.
+This is a stand-in for the discovered C<$filename> usage in old C<< ack2 --output >>,
+which is disallowed with C<ack3> improved security.
+
+The intended usage is to provide the grep or compile-error syntax needed for editor/IDE go-to-line integration,
+e.g. C<--output=$f:$.:$_> or C<--output=$f\t$.\t$&>
+
 =back
 
 For examples of using C<--output>, see the Cookbook section of the manual.

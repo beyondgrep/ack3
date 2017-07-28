@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 38;
+use Test::More tests => 44;
 
 use lib 't';
 use Util;
@@ -277,6 +277,43 @@ HERE
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Character substitutions' );
+}
+
+# $f=$filenname, needed for grep,  emulating ack2 $filename:$lineno:$_
+FILENAME_SUBSTITUTION_1 : {
+    my @expected = (
+      't/text/freedom-of-choice.txt:3:Sink, swim, go down with the ship'
+    );
+
+    my @files = qw( t/text/freedom-of-choice.txt );
+    my @args = qw( swim --output=$f:$.:$_ );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Filename with matching line' );
+}
+
+FILENAME_SUBSTITUTION_2 : {
+    my @expected = (
+      't/text/freedom-of-choice.txt:3:swim'
+    );
+
+    my @files = qw( t/text/freedom-of-choice.txt );
+    my @args = qw( swim --output=$f:$.:$& );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Filename with match' );
+}
+
+FILENAME_SUBSTITUTION_3 : {
+    my @expected = (
+      't/text/freedom-of-choice.txt:3:swim'
+    );
+
+    my @files = qw( t/text/freedom-of-choice.txt );
+    my @args = qw( (sink|swim) --output=$f:$.:$+ );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Filename with last match' );
 }
 
 

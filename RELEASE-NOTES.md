@@ -57,4 +57,5 @@ you do tricky stuff like this gem from Mark Fowler
 This has been a security problem in the past, and so in ack 3 we
 no longer `eval` the contents of `--output`.  You're now restricted
 to the following variables: `$1` thru `$9`, `$_`, `$.`, `$&`, ``$` ``,
-`$'` and `$+`.  You can also embed `\t`, `\n` and `\r`.
+`$'` and `$+`.  You can also embed `\t`, `\n` and `\r` ,
+and `$f` as stand-in for `$filename` in `ack2 --output` .
