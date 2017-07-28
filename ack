@@ -159,7 +159,7 @@ MAIN: {
         $opt_output =~ s/\\r/\r/g;
         $opt_output =~ s/\\t/\t/g;
 
-        my @supported_special_variables = ( 1..9, qw( _ . ` & ' + ) );
+        my @supported_special_variables = ( 1..9, qw( _ . ` & ' +  f ) );
         @special_vars_used_by_opt_output = grep { $opt_output =~ /\$$_/ } @supported_special_variables;
         $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );
 
@@ -854,6 +854,7 @@ sub print_line_with_options {
             # on them not changing in the process of doing the s///.
             my %keep = map { ($_ => ${$_} // '') } @special_vars_used_by_opt_output;
             $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
+	    $keep{f} = $filename if exists $keep{f} ; # $f = $filename
             $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/eg;
             App::Ack::print( join( $separator, @line_parts, $output ), $ors );
         }
