@@ -153,15 +153,12 @@ MAIN: {
         $opt_show_filename = $opt->{show_filename} = $opt->{H} && !$opt->{h};
     }
 
-    if ( my $output = $opt_output ) {
-        $output     =~ s{\\}{\\\\}g;
-        $output     =~ s{"}{\\"}g;
-
+    if ( defined $opt_output ) {
         my @supported_special_variables = ( 1..9, qw( _ . ` & ' + ) );
         @special_vars_used_by_opt_output = grep { $opt_output =~ /\$$_/ } @supported_special_variables;
         $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );
 
-        # If the $output contains $&, $` or $', those vars won't be
+        # If the $opt_output contains $&, $` or $', those vars won't be
         # captured until they're used at least once in the program.
         # Do the eval to make this happen.
         for my $i ( @special_vars_used_by_opt_output ) {
