@@ -387,6 +387,15 @@ then C<$+> will contain whichever set of parentheses matched.
 
 =back
 
+=item C<$f>
+
+C<$f> is available, in C<--output> only, as stand-in for C<$ARGV> in normal C<perl -nE> usage
+and for the discovered C<$filename> usage in old C<< ack2 --output >>.
+The intended usage is to provide the grep or compile-error syntax needed for editor/IDE go-to-line integration,
+e.g. C<--output=$f:$.:$_> or C<--output=$f\t$.\t$&>
+
+=back
+
 For examples of using C<--output>, see the Cookbook section of the manual.
 
 =item B<--pager=I<program>>, B<--nopager>
