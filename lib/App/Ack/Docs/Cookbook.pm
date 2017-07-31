@@ -1,14 +1,10 @@
 package App::Ack::Docs::Cookbook;
 
-
-
 =head1 COOKBOOK
 
 Here are examples of how to effectively use ack.
 
 Note: on Windows CMD prompt, the quoting may need to switch C<"> for C<'> and/or vice-versa.
-
-
 
 
 =head1 COMPOUND QUERIES
@@ -34,7 +30,6 @@ Or you can use ack's C<-x> option to do the same thing without
 having to get F<xargs> involved.
 
     ack -l cows | ack -x goats
-
 
 =head2 Find goats in files that do not contain cows
 
@@ -86,7 +81,7 @@ so C<-I> on commandline, longform in scripts!)
 
 =head2 Find all goat(s) in files without cows
 
- Search all the files that don't have cow(s) and show their goat(s).
+Search all the files that don't have cow(s) and show their goat(s).
 
     ack -L 'cows?' | ack -x -w 'goats?'
 
@@ -97,9 +92,6 @@ so C<-I> on commandline, longform in scripts!)
 The C<\K> is called KEEP; aside from preventing backtracking, it resets the C<$` $&> boundary, the start of match.
 C<(?!.*cow)> is a negative lookahead.
 C<.*?> is non-greedy so the search is left to right.
-
-
-
 
 =head1 USING ACK EFFECTIVELY
 
@@ -178,14 +170,16 @@ SWIM as C<(?:^|\b|\s)#+\s+(.*)>
 which will find and capture a comment.
 (Try it plain, with C<-o>, and with C<--output='$1'>, which has its own section below)
 
-So don't look for C<ack -w '$identifier'>, it won't match C<+$identifier> or C<func($identifier)> and won't even find it in column 1; do instead
+So don't look for C<ack -w '$identifier'>, as it won't match
+C<+$identifier> or C<func($identifier)> and won't even find it in column
+1.  Instead, do:
 
    ack '(?:^|\s|\b)\$identifier\b'
 
    ack '(?x)(?: ^ | \b | (?<=  \W | \s  )) [#]  DEBUG (?= \b | \s | $) '
 
 SWYMingly finds C<< #DEBUG >> if at beginning of line, after a word break, a non-word char, or a space char,
-and followed by a word-break, or space, or end-of-line. 
+and followed by a word-break, or space, or end-of-line.
 This uses look-behind and look-ahead so that only B<#DEBUG> is highlighted (or saved to C<$&>),
 and also C<(?x)> the B<extended> syntax, in which whitespace is only match if explicitly C<\s> or C<\0x20> or C<[ ]>,
 the blanks are for readability.
@@ -298,7 +292,7 @@ This shows how to pick out particular parts of a match using ( ) within regular 
 
     ack '^use ([\w+:]+)' --output='$1' -h --nogroup | sort | uniq -c  | sort -n
 
-=head2 Find all the subroutines in Perl tests and then give a count of many of each there are
+=head2 Find all the subroutines in Perl tests and then give a count of how many of each there are
 
      ack '^sub (\w+)' --perltest --output='$1' -h --nogroup | sort | uniq -c  | sort -n
 
@@ -308,16 +302,14 @@ This shows how to pick out particular parts of a match using ( ) within regular 
     ack '^.{6}[ ].*?\Kpattern'
     ack '(?x) ^ .{6} [ ] .*? \K pattern'  # same but readable
 
-    
-Again using the C<\K> Keep to reset start of matching.
-    
-(Legacy COBOL put C<'*'> in Col 7 for comments, back in punch-card days. 
-FORTRAN in the day similarly used 'C' or '*' in Col 1. 
-Early FORTRAN wrapped lines with C<&> in Col 73 and in Col 6 of next line.) 
 
+Again using the C<\K> Keep to reset start of matching.
+
+(Legacy COBOL put C<'*'> in Col 7 for comments, back in punch-card days.
+FORTRAN in the day similarly used 'C' or '*' in Col 1.
+Early FORTRAN wrapped lines with C<&> in Col 73 and in Col 6 of next line.)
 
 (Hat-tip for Question to Pierre)
-   
 
 
 =head1 VERY ELEGANT ACK
@@ -443,21 +435,24 @@ But you can sill do this, it just requires a pipe --
 
 =head2 KWIC: KeyWord in Context index
 
-A KeyWord In Context (KWIC) index was more useful in the days of offline computing and line-printer reports but is still sometimes relevant to see the matches not (just) highlighted but lined up for easy scanning.
+A Keyword In Context (KWIC) index was more useful in the days of offline
+computing and line-printer reports but is still sometimes relevant to
+see the matches not (just) highlighted but lined up for easy scanning.
 
-The tradidional distinction between KWIC and KWOC is whether the Keyword is at start of line with it's left context wrapped (KWOC= Out of), 
-or tab separated in the middle. KWIC works best with two word-processor fixed tabsets, not with 8-char tabs, alas.
+The traditional distinction between KWIC and KWOC is whether the Keyword
+is at start of line with it's left context wrapped (KWOC= Out of), or
+tab-separated in the middle. KWIC works best with two word-processor
+fixed tabsets, not with 8-char tabs, alas.
 
-            ack  --output '$&^I$'"'"'^I|| $`' pattern files | sort     # KWOC
-            ack  --output '$&^I$\'^I|| $`'    pattern files | sort     # KWOC
+    ack  --output '$&^I$'"'"'^I|| $`' pattern files | sort     # KWOC
+    ack  --output '$&^I$\'^I|| $`'    pattern files | sort     # KWOC
 
-            ack  --output '$`^I$&^I$'"'" pattern files | sort -df -t^I -k F2,F2 # pseudo KWIC 
-            ack  --output '$`^I$&^I$\''  pattern files | sort -df -t^I -k F2,F2 # pseudo KWIC 
+    ack  --output '$`^I$&^I$'"'" pattern files | sort -df -t^I -k F2,F2 # pseudo KWIC
+    ack  --output '$`^I$&^I$\''  pattern files | sort -df -t^I -k F2,F2 # pseudo KWIC
 
 (On the KWOC, the C<||> shows where right and left margin are wrapped.)
 (To make the KWIC output look right, load into OpenOffice or Word to spread the tab stops !)
 
- 
 =head2 TBD lookahead and lookbehind
 
 =cut;
