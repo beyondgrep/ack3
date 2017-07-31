@@ -2,6 +2,7 @@
 
 # Checks that we are not using core C<die> or C<warn> except in very specific places.
 # Same with C<mkdir> and C<chdir>.
+# Ignore the App::Ack::Docs modules since they're nothing but text.
 
 use warnings;
 use strict;
@@ -19,7 +20,7 @@ for my $word ( qw( warn die ) ) {
     subtest "Finding $word" => sub {
         plan tests => 4;
 
-        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib' );
+        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib', '--ignore-dir=Docs', );
         my @results = run_ack( @args );
 
         like( $results[0], qr/^$ack_pm:\d+:=head2 $word/, 'POD' );
@@ -34,7 +35,7 @@ for my $word ( qw( chdir mkdir ) ) {
     subtest "Finding $word" => sub {
         plan tests => 3;
 
-        my @args = ( '-w', '--ignore-file=is:coresubs.t', $word );
+        my @args = ( '-w', '--ignore-file=is:coresubs.t', '--ignore-dir=Docs', $word );
         my @results = run_ack( @args );
 
         is( scalar @results, 1, 'Exactly one hit...' );
