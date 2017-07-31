@@ -116,11 +116,11 @@ or if you prefer:
 
     perl -p -i -e's/this/that/g' $(ack -f --perl)
 
-=head2 Use F<-Q> when in doubt about metacharacters
+=head2 Use C<-Q> when in doubt about metacharacters
 
 If you're searching for something with a regular expression
 metacharacter, most often a period in a filename or IP address, add
-the -Q to avoid false positives without all the backslashing.  See
+the C<-Q> to avoid false positives without all the backslashing.  See
 the following example for more...
 
 =head2 Use ack to watch log files
@@ -161,16 +161,15 @@ If your OS tells Perl that certain accented characters are alphabetic for you, t
 
 If your desired pattern begins with one word and ends with another, C<-w> is still safe.
 
-If your desired pattern starts or ends (or both) with punctuation, using C<-w> may be erroneous
-(and will likely warn so).
-In which case, SWYM: Say What You Mean.
+If your desired pattern starts or ends (or both) with punctuation, using C<-w> may be erroneous.  ack will warn you in this case.
+If you get a warning about C<-w>, Say What You Mean (SWYM).
 If you mean the start of your pattern with punctuation should be
 at the beginning of line B<OR> preceded by a word OR by a space (or tab etc), before the needed punctuation,
-SWIM as C<(?:^|\b|\s)#+\s+(.*)>
+SWYM as C<(?:^|\b|\s)#+\s+(.*)>
 which will find and capture a comment.
 (Try it plain, with C<-o>, and with C<--output='$1'>, which has its own section below)
 
-So don't look for C<ack -w '$identifier'>, as it won't match
+So, don't look for C<ack -w '$identifier'>, as it won't match
 C<+$identifier> or C<func($identifier)> and won't even find it in column
 1.  Instead, do:
 
@@ -184,14 +183,13 @@ This uses look-behind and look-ahead so that only B<#DEBUG> is highlighted (or s
 and also C<(?x)> the B<extended> syntax, in which whitespace is only match if explicitly C<\s> or C<\0x20> or C<[ ]>,
 the blanks are for readability.
 
-(This is over-specified, since C<G> followed by space would be C<\b>, and C<\s> is C<\W>, but if you're not sure, it's OK to over-specify ! )
-
+(This is over-specified, since C<G> followed by space would be C<\b>, and C<\s> is C<\W>, but if you're not sure, it's OK to over-specify!)
 
 =head2 See all the C<.vim> files in your hidden C<~/.vim> directory, except in the C<bundle/> directory.
 
     ack -f --vim ~/.vim --ignore-dir=bundle
 
-=head2 Finds all the ruby files that match /tax/.
+=head2 Find all the Ruby files that match /tax/.
 
    ack -g tax --ruby
 
@@ -202,7 +200,7 @@ Open all the files that have taxes in them.
 =head2 Find all the Perl test files and test them
 
 Use C<ack>'s file-type inference to find things of C<--type=perltest>
-and feed them to C<xargs> which runs them all against the C<prove> command.
+and feed them to C<xargs> so it will run the C<prove> command on them.
 
      ack -f --perltest | xargs prove
 
@@ -217,30 +215,37 @@ The C<< (\w+) >> needs neither left nor right side C<\b> because the C<+> modifi
 
 =head2 Find all the places in code there's a call like C<< sort { lc $a cmp lc $b } >>.
 
-This is heuristic; it gets false positive, but it's pretty useful.
+This is a rough heuristic.  It gets false positives, but it's pretty useful.
 
     ack '\bsort\b.+(\w+).+\bcmp\b.+\b(\1)\b'
 
-(The word and backreference are matching the canonicalizing use of C<lc> to lowercase both comparands.)
+The word and backreference are matching the canonicalizing use of C<lc> to lowercase both comparands.
 
 =head2 Show a range of lines in a file
 
      ack --lines=830-850 filename
 
-And use -H to show what line numbers are.
+And use C<-H> to show what line numbers are.
 
-=head2 Find modules that are importing but not actually using C<Test::Warn>
+=head2 Find files that match one string but do not match another.
+
+The module Test::Warn has a number of functions of the form
+C<warnings_xxx>.  Look in all the files that find Test::Warn but don't
+find the C<warnings_xxx> functions.
 
     ack -L 'warnings?_' $(ack -l Test::Warn)
-
 
 =head2 Search only recently changed or 'dirty' files
 
 Most version control systems provide a query to list files changed since checkout, often referred to as 'dirty' files. E.g.,
 
-   alias dirty="git diff --name-only"
+    alias dirty="git diff --name-only"
 
-   dirty | ack -x pattern
+    dirty | ack -x pattern
+
+or
+
+    ack pattern $(dirty)
 
 =head1 EXAMPLES OF C<< --output >>
 
@@ -252,17 +257,17 @@ Following variables are useful in the expansion string:
 
 The whole string matched by PATTERN.
 
-=item C<$1>, C<$2>, ...
+=item C<$1>, C<$2>, ... C<$9>
 
 The contents of the 1st, 2nd ... bracketed group in PATTERN.
 
 =item C<$`>
 
-The string before the match.
+The string before (to the left of) the match.
 
 =item C<$'>
 
-The string after the match.
+The string after (to the right of) the match.
 
 =back
 
@@ -283,25 +288,22 @@ This shows how to pick out particular parts of a match using ( ) within regular 
     input file contains "=head1 NAME"
     output  "1 : NAME"
 
-=head2 Find all the headers used in your C programs and dedupe them
+=head2 Find all the headers used in your C programs.
 
     ack '#include\s+<(.+)>' --cc --output='$1' | sort -u
 
 =head2 Find the most-used modules in your codebase.
 
-
-    ack '^use ([\w+:]+)' --output='$1' -h --nogroup | sort | uniq -c  | sort -n
+    ack '^use ([\w+:]+)' --output='$1' -h --nogroup | sort | uniq -c | sort -n
 
 =head2 Find all the subroutines in Perl tests and then give a count of how many of each there are
 
-     ack '^sub (\w+)' --perltest --output='$1' -h --nogroup | sort | uniq -c  | sort -n
-
+     ack '^sub (\w+)' --perltest --output='$1' -h --nogroup | sort | uniq -c | sort -n
 
 =head2 In COBOL source code, match only lines with blank in column 7, ignore
 
     ack '^.{6}[ ].*?\Kpattern'
     ack '(?x) ^ .{6} [ ] .*? \K pattern'  # same but readable
-
 
 Again using the C<\K> Keep to reset start of matching.
 
@@ -355,26 +357,24 @@ A user who really wants the working directory reported makes a C<bash function> 
         less $f
     }
 
-(I can't really recommend C<chmod 777> , you're better off with per-user temp sub-dirs for security safety,
+(We can't really recommend C<chmod 777>.  You're better off with per-user temp sub-dirs for security safety,
 whether under C<$HOME> or under C</tmp/$USER>.)
 
 =head2 Find log lines with 4 nulls and sort by IP address
 
-
-via L<@clmagic|https://twitter.com/clmagic> "Command Line Magic" twitter bot -
+Via the L<@clmagic|https://twitter.com/clmagic> "Command Line Magic" Twitter account:
 
     egrep -- "\t-\t-\t-\t-\t" entries.txt |sort -k3V
     # Get the entries with 4+ null fields and sort the entries by IPv4 (-V) in the 3rd column.
 
-(Well actually (tm) it's 4+ B<adjacent> null tab-separated fields, null represented as dashes.)
+(It's 4+ B<adjacent> null tab-separated fields, null represented as dashes.)
 
 C<ack> will happily do likewise, no changes:
-
 
     ack -- "\t-\t-\t-\t-\t" entries.txt |sort -k3V
 
 The difference with C<ack> being, you can use the larger C<perldoc perlre> pattern language,
-larger than even C<egrep>'s, to better SWYM DRY (Don't Repeat Yourself):
+larger than even C<egrep>'s, to better SWYM DRY (Say What You Mean, and Don't Repeat Yourself):
 
     ack -- "(?x: \t  (?: - \t ){4} )" entries.txt |sort -k3V
 
@@ -389,7 +389,6 @@ we'd use a character class of just space C<< [ ] >>:
 Is that one space or two there?)
 
 (L<regex cheatsheat comparing ack's perlRe with (e)grep, sed, ...|https://remram44.github.io/regex-cheatsheet/regex.html>
-
 
 =head2 Summarize the file-types in your project
 
@@ -409,12 +408,15 @@ Is that one space or two there?)
           'js' => 582
         };
 
-=head2 Fowler's Folly
+=head2 Fetching URLs with ack
 
-In old C<ack2>, Mark Fowler demonstrated the reason we banned C<--output>
-from the new Project scoped C<.ackrc> in the PerlAdvent calendar i
-L<http://www.perladvent.org/2014/2014-12-21.html>,
-to annotate the URLs found in a file with their download weights:
+In old C<ack2>, Mark Fowler demonstrated the reason that ack3 no longer allows C<--output>
+in project-scoped F<.ackrc> files.
+
+In the PerlAdvent calendar
+(L<http://www.perladvent.org/2014/2014-12-21.html>), Mark wrote an ack
+expression to annotate the URLs found in a file with their download
+weights:
 
     ack2 --output='$&: @{[ eval "use LWP::Simple; 1" && length LWP::Simple::get($&) ]} bytes' \
            'https?://\S+' list.txt
