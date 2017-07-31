@@ -90,7 +90,6 @@ t/config-backwards-compat.t
 t/config-finder.t
 t/config-loader.t
 t/context.t
-t/coresubs.t
 t/default-filter.t
 t/exit-code.t
 t/ext-filter.t
@@ -226,5 +225,7 @@ t/text/numbered-text.txt
 t/text/science-of-myth.txt
 t/text/shut-up-be-happy.txt
 
+xt/coding-standards.t
+xt/coresubs.t
 xt/man.t
 xt/pod.t
