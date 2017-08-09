@@ -16,11 +16,16 @@ prep_environment();
 
 my $ack_pm = quotemeta( reslash( 'blib/lib/App/Ack.pm' ) );
 
+my @exclusions = qw(
+    --ignore-dir=Docs
+    --ignore-file=is:ack-standalone
+);
+
 for my $word ( qw( warn die ) ) {
     subtest "Finding $word" => sub {
         plan tests => 4;
 
-        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib', '--ignore-dir=Docs', );
+        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib', @exclusions );
         my @results = run_ack( @args );
 
         like( $results[0], qr/^$ack_pm:\d+:=head2 $word/, 'POD' );
@@ -35,10 +40,10 @@ for my $word ( qw( chdir mkdir ) ) {
     subtest "Finding $word" => sub {
         plan tests => 3;
 
-        my @args = ( '-w', '--ignore-file=is:coresubs.t', '--ignore-dir=Docs', $word );
+        my @args = ( '-w', '--ignore-file=is:coresubs.t', @exclusions, $word );
         my @results = run_ack( @args );
 
-        is( scalar @results, 1, 'Exactly one hit...' );
+        is( scalar @results, 1, 'Exactly one hit...' ) or do { require Data::Dumper; warn Data::Dumper::Dumper( \@results ) };
         like( $results[0], qr/^$util_pm.+CORE::$word/, '... and it is in the function in Util.pm that wraps the core call' );
     };
 }
