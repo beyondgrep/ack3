@@ -17,6 +17,8 @@ word matching.
 
 * Added `--pod` and `--markdown`.
 
+* Added `GNUmakefile` to the list of makefile specs.
+
 # Bug fixes
 
 * Column numbers were not getting colorized in the output.  Added
