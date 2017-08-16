@@ -120,6 +120,7 @@ t/noackrc.t
 t/noenv.t
 t/process-substitution.t
 t/runtests.pl
+t/trailing-whitespace.t
 t/zero.t
 
 t/etc/buttonhook.xml.xxx

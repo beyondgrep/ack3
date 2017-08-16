@@ -24,6 +24,9 @@ word matching.
 * Column numbers were not getting colorized in the output.  Added
 `--color-colno` option and `ACK_COLOR_COLNO` environment variable.
 
+* A pattern that wanted whitespace at the end could match the
+linefeed at the end of a line.  This is no longer possible.
+
 # Incompatibilities with ack 2
 
 ## ack 3 requires Perl 5.10.1

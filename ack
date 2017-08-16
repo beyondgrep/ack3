@@ -665,6 +665,7 @@ sub print_matches_in_file {
     if ( $is_tracking_context ) {
         $after_context_pending = 0;
         while ( <$fh> ) {
+            chomp;
             if ( does_match( $_ ) && $max_count ) {
                 if ( !$has_printed_for_this_file ) {
                     if ( $opt_break && $has_printed_something ) {
@@ -680,7 +681,6 @@ sub print_matches_in_file {
                 $max_count--;
             }
             elsif ( $opt_passthru ) {
-                chomp; # XXX Proper newline handling?
                 # XXX Inline this call?
                 if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
                     App::Ack::print_blank_line();
@@ -689,7 +689,6 @@ sub print_matches_in_file {
                 $has_printed_for_this_file = 1;
             }
             else {
-                chomp; # XXX Proper newline handling?
                 print_line_if_context( $filename, $_, $., '-' );
             }
 
@@ -701,6 +700,7 @@ sub print_matches_in_file {
             local $_ = undef;
 
             while ( <$fh> ) {
+                chomp;
                 $match_colno = undef;
                 if ( $opt_v ? !/$opt_regex/o : /$opt_regex/o ) {
                     if ( !$opt_v ) {
@@ -720,7 +720,6 @@ sub print_matches_in_file {
                     $max_count--;
                 }
                 else {
-                    chomp; # XXX proper newline handling?
                     if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
                         App::Ack::print_blank_line();
                     }
@@ -735,6 +734,7 @@ sub print_matches_in_file {
 
             $match_colno = undef;
             while ( <$fh> ) {
+                chomp;
                 if ( !/$opt_regex/o ) {
                     if ( !$has_printed_for_this_file ) {
                         if ( $opt_break && $has_printed_something ) {
@@ -757,6 +757,7 @@ sub print_matches_in_file {
 
             my $last_match_lineno;
             while ( <$fh> ) {
+                chomp;
                 $match_colno = undef;
                 if ( /$opt_regex/o ) {
                     $match_colno = $-[0] + 1;
@@ -1070,6 +1071,7 @@ sub file_has_match {
     }
     else {
         while ( <$fh> ) {
+            chomp;
             if (/$opt_regex/o xor $opt_v) {
                 $has_match = 1;
                 last;
