@@ -530,6 +530,24 @@ fixed tabsets, not with 8-char tabs, alas.
 
 =head2 TBD Add Elegant nearly- and not-ugly-and- exact solutions that  require neither hypothetical, C<\n> as OR nor C<--fgrep-f> .
 
+Ack doesn't have C<--fgrep-f> nor does it accept newlines as OR otherwise, as newer Grep does.  But Grep has no C<--passthru>. 
+L<Requestor|> would like to view the whole files but highlight any of several words in each, which needs both.
+Workaround is ugly:
+
+  ack /etc --match "`/bin/ls /home/ | tr '\n' '|' | sed -e 's/|$//'`" 
+
+Longer but more readable, use C<< $() >> instead of C<``> and Perl instead of tr, sed, 
+which allows us to insert C<< | >> between as needed without an extra to be removed:
+
+  ack /etc --match $(/bin/ls /home/ | perl  -E '@u=<>; chomp for @u; say join q(|), @u' )
+
+or invert the C<ls>,
+
+  ack /etc --match $( perl -E '@u=`ls /home/`; chomp for @u; say join q(|), @u' )
+
+or keep it in one process, 
+
+  ack /etc --match $( perl -E 'chdir q(/home/); @u=<*>; chomp for @u; say join q(|), @u' )
 
 # TODO https://github.com/beyondgrep/ack2/pull/646
 
