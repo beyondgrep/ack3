@@ -93,6 +93,12 @@ The C<\K> is called KEEP; aside from preventing backtracking, it resets the C<$`
 C<(?!.*cow)> is a negative lookahead.
 C<.*?> is non-greedy so the search is left to right.
 
+=head2 Simulate a 'to within 5 lines' adverb
+
+     ack -w "$1" -C$n  $dirs | ack -C$n -w "$2" | ack -C$n "$1|$2" --pager='less -r'
+
+Add a C<-h> etc to taste.
+
 =head1 USING ACK EFFECTIVELY
 
 =head2 Use the F<.ackrc> file.
@@ -247,7 +253,42 @@ or
 
     ack pattern $(dirty)
 
+=head2 See just outline of POD in Perl files
+
+    perldoc -o markdown lib/App/Ack/Docs/Cookbook.pm | ack -h '^#+'
+
+Note, this requires L<Pod::Markdown|https://metacpan.org/pod/Pod::Markdown> plugin installed.
+
+=head2 TBD Do we need more C<-f> and C<-g> examples?
+
+#TODO
+
 =head1 EXAMPLES OF C<< --output >>
+
+The C<-o> and C<< --output expr >> options allow for specifying and formating the output.
+
+With look-behind and look-ahead, one "match without matching" for highlighting or C<-o>) purposes.
+The  regex C<< abc\K(def)(?=ghi) >>  will highlight ONLY C<def> in the text, \
+but only if that string is preceeded by C<abc> and C<ghi> follows.
+With C<-o>, it will output C<def> but only when found in context of C<abc>B<<C<def>>>C<ghi>.
+
+HT to L<HN|https://news.ycombinator.com/item?id=15433310>
+
+=head2 Inventory all PHP sqldo functions
+
+Simple C<-o> requests output only what is matched.
+
+    ack 'sqldo_\w+' --php -o -h | sort -u
+
+=head2 Look for a method you're not sure of the name of.
+
+I was looking for a method that I knew was called "something_follows",
+so I looked for method invocations like that:
+
+     ack -- '->.+_follows\b'
+
+
+=head2 Variables for C<< --output >>
 
 Following variables are useful in the expansion string:
 
@@ -313,6 +354,37 @@ Early FORTRAN wrapped lines with C<&> in Col 73 and in Col 6 of next line.)
 
 (Hat-tip for Question to Pierre)
 
+=head2 Extract part of a line from a logfile
+
+    ack '>>ip(\S+).+rq"/help' --output='$1' -h
+
+## Fake parsing long JSON
+
+Having a very long line of JSON consisting of bits like
+
+    {"city":"london","first name":"peter","last name":"hansen","age":"40"},
+    {"city":"new york","first name":"celine","last name":"parker","age":"36"]
+
+wanting output like
+
+     peter (40) celine (36)
+
+the right way would be to do this is the L<C<jq>|https://stedolan.github.io/jq/> utility - which is sed or ack for JSON. Or write a program. However ... this example, ack can do it.
+
+The sneaky and potentially unreliable way to do it is:
+
+     ack '"first name":"([^"]+)".+"age":"(\d+)"' input.txt --output='$1 $2'
+
+Why unreliable? JSON like Perl makes no guarantee hash keys are in any particular order.
+
+For only two fields, we can use 'alternation' to make it safe:
+
+     ack --output '$1$4($2$3)' '{.*?"first name":"([^"]*)".*?age":"(\d+)|{.*?"age":"(\d+)".*?first name":"([^"]*?)"'
+
+This won't scale well to 3! or greater possible field orders to extract.
+At which point, plain Perl with any real JSON module is required.
+
+HT L<SO|https://stackoverflow.com/questions/45538755/bash-text-extracting>
 
 =head1 VERY ELEGANT ACK
 
@@ -455,7 +527,54 @@ fixed tabsets, not with 8-char tabs, alas.
 (On the KWOC, the C<||> shows where right and left margin are wrapped.)
 (To make the KWIC output look right, load into OpenOffice or Word to spread the tab stops !)
 
-=head2 TBD lookahead and lookbehind
+
+=head2 TBD Add Elegant nearly- and not-ugly-and- exact solutions that  require neither hypothetical, C<\n> as OR nor C<--fgrep-f> .
+
+
+# TODO https://github.com/beyondgrep/ack2/pull/646
+
+=head2 TBD look-ahead and look-behind
+
+#TODO There are a couple examples above - do we need more ?
+
+=head1 WHEN TO DO SOMETHING ELSE
+
+Sometimes tools in the B<BeyondGrep> family aren't the right tool.
+
+=head2 Json Query C<jq>)
+
+For commandline access to JSON data, L<C<jq>|https://stedolan.github.io/jq/> is utility,
+it's like C<sed> or C<ack> for JSON.
+
+=head2 C<comm>: Lines (words) in file1 but not in file2
+
+(Commonly the lines are single words per line.)
+
+While grep can do this
+
+    grep -F -x -v -f file1 file2 > file3
+
+it's rather slow for large files!
+
+The standard Unix/Linux tool for this is C<comm>.
+In C<comm> terms, the request is the C<<comm -23 file1 file2>> option.
+Wit no args, Column 1 is words only in file1, Columnn 2 is words only in file2,
+and Column 3 is words in both files 1 and 2.
+
+The Mnemonic such as it is: C<-23> is C<minus 2,3>,
+i.e. omit columns 2 (file 2 words) and 3 (both files words).
+
+One requirement for C<comm> is that files must be sorted by natural sort order.
+If the files aren't in nor wanted in sorted order, the shell command or alias needed is
+
+     comm -23 <(sort $file1) <(sort $file2)
+
+with modern C<bash>'s C<< <() >> command substitution as file-pipes.
+
+(That C<< <(fileter $f1) <(filter $f2) >> idiom is also good for pre-filtering input to C<diff> etc.)
+
+Note for Windows users: MicroSoft and CygWin both provide Linux/GNU commandline utilities for Windows.
+They may have come with the Perl you're using for Ack.
 
 =cut;
 
