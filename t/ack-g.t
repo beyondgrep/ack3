@@ -256,7 +256,7 @@ subtest '--smart-case works on -g' => sub {
     @expected = qw(
         t/swamp/pipe-stress-freaks.F
     );
-    @args = ( '--smart-case', '-g', 'F$' );
+    @args = ( '-S', '-g', 'F$' );
 
     ack_sets_match( [ @args, @files ], \@expected, 'Looking for f$' );
 };

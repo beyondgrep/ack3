@@ -13,7 +13,7 @@ use Test::More;
 
 # --no-recurse is inconsistent w/--nogroup
 
-plan tests => 38;
+plan tests => 44;
 
 use lib 't';
 use Util;
@@ -59,23 +59,25 @@ for my $arg ( qw( -i --ignore-case ) ) {
 
 SMART_CASE: {
     my @files = 't/swamp/options.pl';
-    my $opt = '--smart-case';
-    like(
-        +run_ack( $opt, 'upper case', @files ),
-        qr{UPPER CASE},
-        qq{$opt turn on ignore-case when PATTERN has no upper}
-    );
-    unlike(
-        +run_ack( $opt, 'Upper case', @files ),
-        qr{UPPER CASE},
-        qq{$opt does nothing when PATTERN has upper}
-    );
 
-    like(
-        +run_ack( $opt, '-i', 'UpPer CaSe', @files ),
-        qr{UPPER CASE},
-        qq{-i overrides $opt, forcing ignore case, even when PATTERN has upper}
-    );
+    for my $opt ( '-S', '--smart-case' ) {
+        like(
+            +run_ack( $opt, 'upper case', @files ),
+            qr{UPPER CASE},
+            qq{$opt turn on ignore-case when PATTERN has no upper}
+        );
+        unlike(
+            +run_ack( $opt, 'Upper case', @files ),
+            qr{UPPER CASE},
+            qq{$opt does nothing when PATTERN has upper}
+        );
+
+        like(
+            +run_ack( $opt, '-i', 'UpPer CaSe', @files ),
+            qr{UPPER CASE},
+            qq{-i overrides $opt, forcing ignore case, even when PATTERN has upper}
+        );
+    }
 }
 
 # Invert match

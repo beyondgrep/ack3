@@ -252,7 +252,7 @@ Example: ack -i select
 
 Searching:
   -i, --ignore-case             Ignore case distinctions in PATTERN
-  --[no]smart-case              Ignore case distinctions in PATTERN,
+  -S, --[no]smart-case          Ignore case distinctions in PATTERN,
                                 only if PATTERN contains no upper case.
                                 Ignored if -i or -I are specified.
   -I                            Turns on case-sensitivity in PATTERN.

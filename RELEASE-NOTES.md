@@ -19,6 +19,8 @@ word matching.
 
 * Added `GNUmakefile` to the list of makefile specs.
 
+* Added `-S` as a synonym for `--smart-case`.
+
 # Bug fixes
 
 * Column numbers were not getting colorized in the output.  Added

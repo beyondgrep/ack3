@@ -759,6 +759,7 @@ sub get_expected_options {
         '-L',
         '-Q',
         '-R',
+        '-S',
         '-c',
         '-f',
         '-g',

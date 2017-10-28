@@ -39,6 +39,7 @@ BEGIN --smart-case invoked
 
 RUN
 ack --smart-case foo
+ack -S foo
 
 YES
 football
@@ -55,6 +56,7 @@ BEGIN --smart-case bypassed
 
 RUN
 ack --smart-case Foo
+ack -S Foo
 
 YES
 Football
@@ -71,6 +73,7 @@ BEGIN --smart-case overrides -i
 
 RUN
 ack -i --smart-case Foo
+ack -i -S Foo
 
 YES
 Football
@@ -88,6 +91,8 @@ BEGIN -i overrides --smart-case
 RUN
 ack --smart-case -i Foo
 ack --smart-case -i foo
+ack -S -i Foo
+ack -S -i foo
 
 YES
 Football
@@ -120,6 +125,7 @@ BEGIN -I overrides --smart-case
 
 RUN
 ack --smart-case -I Foo
+ack -S -I Foo
 
 YES
 Football

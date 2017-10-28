@@ -350,7 +350,7 @@ sub get_arg_spec {
         'r|R|recurse'       => sub { $opt->{n} = 0 },
         's'                 => \$opt->{s},
         'show-types'        => \$opt->{show_types},
-        'smart-case!'       => sub { my (undef,$value) = @_; $opt->{smart_case} = $value; $opt->{i} = 0 if $value; },
+        'S|smart-case!'     => sub { my (undef,$value) = @_; $opt->{smart_case} = $value; $opt->{i} = 0 if $value; },
         'sort-files'        => \$opt->{sort_files},
         'type=s'            => sub {
             my ( $getopt, $value ) = @_;

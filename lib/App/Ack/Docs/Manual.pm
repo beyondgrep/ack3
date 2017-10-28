@@ -442,11 +442,13 @@ compatibility with grep. You can also use it for turning B<--no-recurse> off.
 Suppress error messages about nonexistent or unreadable files.  This is taken
 from fgrep.
 
-=item B<--[no]smart-case>, B<--no-smart-case>
+=item B<-S>, B<--[no]smart-case>, B<--no-smart-case>
 
 Ignore case in the search strings if PATTERN contains no uppercase
 characters. This is similar to C<smartcase> in the vim text editor.
 The options overrides B<-i> and B<-I>.
+
+B<-S> is a synonym for B<--smart-case>.
 
 B<-i> always overrides this option.
 
