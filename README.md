@@ -1,7 +1,7 @@
 # Build status of dev branch
 
 * Linux [![Build Status](https://travis-ci.org/beyondgrep/ack3.png?branch=dev)](https://travis-ci.org/beyondgrep/ack3)
-* Windows [![Build Status](https://ci.appveyor.com/api/projects/status/github/petdance/ack3)](https://ci.appveyor.com/project/petdance/ack3)
+* Windows [![Build Status](https://ci.appveyor.com/api/projects/status/github/beyondgrep/ack3)](https://ci.appveyor.com/project/beyondgrep/ack3)
 <!-- * [CPAN Testers](http://cpantesters.org/distro/A/ack.html) -->
 
 # ack 3
@@ -10,11 +10,11 @@ ack is a code-searching tool, similar to grep but optimized for
 programmers searching large trees of source code.  It is highly
 portable and runs on any platform that runs Perl.
 
-ack is written and maintained by Andy Lester (andy@petdance.com).
+ack is written and maintained by Andy Lester (andy@beyondgrep.com).
 
 * [Project home page](https://beyondgrep.com/)
-* [Code home page](https://github.com/petdance/ack3)
-* [Issue tracker](https://github.com/petdance/ack3/issues)
+* [Code home page](https://github.com/beyondgrep/ack3)
+* [Issue tracker](https://github.com/beyondgrep/ack3/issues)
 * Mailing lists
     * [Announcements](https://groups.google.com/d/forum/ack-announcements)
     * [Users](https://groups.google.com/d/forum/ack-users)

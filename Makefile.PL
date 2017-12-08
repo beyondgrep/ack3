@@ -18,9 +18,9 @@ my %parms = (
     META_MERGE          => {
         resources => {
             homepage    => 'https://beyondgrep.com/',
-            bugtracker  => 'https://github.com/petdance/ack3',
+            bugtracker  => 'https://github.com/beyondgrep/ack3',
             license     => 'http://www.perlfoundation.org/artistic_license_2_0',
-            repository  => 'git://github.com/petdance/ack3.git',
+            repository  => 'git://github.com/beyondgrep/ack3.git',
             MailingList => 'https://groups.google.com/group/ack-users',
         },
     },

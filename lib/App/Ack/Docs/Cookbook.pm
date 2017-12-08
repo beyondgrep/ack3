@@ -504,8 +504,8 @@ But you can sill do this, it just requires a pipe --
     ack -o 'https?://\S+' DEVELOPERS.md  \
     |  perl -nl -MLWP::Simple \
                 -E 'say "$_ :  @{[ length LWP::Simple::get($_) ]}  bytes";'
-    https://github.com/petdance/beyondgrep :  50784  bytes
-    https://github.com/petdance/ack3/issues :  111627  bytes
+    https://github.com/beyondgrep/website :  50784  bytes
+    https://github.com/beyondgrep/ack3/issues :  111627  bytes
 
 =head2 KWIC: KeyWord in Context index
 

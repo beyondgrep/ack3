@@ -113,7 +113,7 @@ Do all of the above for a development release, plus:
 
 * Put a version of standalone into the garage.
 * Update beyondgrep.com
-    * https://github.com/petdance/beyondgrep
+    * https://github.com/beyondgrep/website
     * Front page version number
     * man page archive
 * Announce it
@@ -131,7 +131,7 @@ TODO
 
 Our issues are hosted on GitHub.
 
-https://github.com/petdance/ack3/issues
+https://github.com/beyondgrep/ack3/issues
 
 ### Tags
 

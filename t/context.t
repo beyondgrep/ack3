@@ -335,7 +335,7 @@ EOF
     ack_lists_match( [ @args, @files ], \@expected, "Looking for $regex in multiple files with grouping" );
 }
 
-# See https://github.com/petdance/ack2/issues/326 and links there for details.
+# See https://github.com/beyondgrep/ack2/issues/326 and links there for details.
 WITH_COLUMNS_AND_CONTEXT: {
     my @files = qw( t/text/freedom-of-choice.txt );
     my @expected = line_split( <<"EOF" );

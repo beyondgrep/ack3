@@ -896,17 +896,17 @@ Options are then loaded from the command line.
 
 =head1 BUGS & ENHANCEMENTS
 
-ack is based at GitHub at L<https://github.com/petdance/ack3>
+ack is based at GitHub at L<https://github.com/beyondgrep/ack3>
 
 Please report any bugs or feature requests to the issues list at
-Github: L<https://github.com/petdance/ack3/issues>.
+Github: L<https://github.com/beyondgrep/ack3/issues>.
 
 Please include the operating system that you're using; the output of
 the command C<ack --version>; and any customizations in your F<.ackrc>
 you may have.
 
 To suggest enhancements, please submit an issue at
-L<https://github.com/petdance/ack3/issues>.  Also read the
+L<https://github.com/beyondgrep/ack3/issues>.  Also read the
 F<DEVELOPERS.md> file in the ack code repository.
 
 Also, feel free to discuss your issues on the ack mailing
@@ -924,11 +924,11 @@ L<https://beyondgrep.com/>
 
 =item * Source repository
 
-L<https://github.com/petdance/ack3>
+L<https://github.com/beyondgrep/ack3>
 
 =item * The ack issues list at Github
 
-L<https://github.com/petdance/ack3/issues>
+L<https://github.com/beyondgrep/ack3/issues>
 
 =item * The ack announcements mailing list
 

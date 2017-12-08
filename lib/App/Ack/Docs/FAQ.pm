@@ -46,7 +46,7 @@ Yes!  Please see L</"Defining your own types"> in the ack manual.
 We might, depending on how widely-used the file format is.
 
 Submit an issue at in the GitHub issue queue at
-L<https://github.com/petdance/ack3/issues>.  Explain what the file format
+L<https://github.com/beyondgrep/ack3/issues>.  Explain what the file format
 is, where we can find out more about it, and what you have been using
 in your F<.ackrc> to support it.
 
