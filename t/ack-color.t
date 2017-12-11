@@ -64,7 +64,6 @@ ADJACENT_CAPTURE_COLORING: {
     my @args = qw( (Temp)(ter) --color );
     my @results = run_ack( @args, @files );
 
-    # The double end + start is kinda weird; this test could probably be more robust.
     is_deeply( \@results, [
         "Whether ${match_start}Tempter${match_end} sent, or whether tempest tossed thee here ashore,$line_end",
     ] );
