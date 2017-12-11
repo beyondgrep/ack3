@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 44;
+use Test::More tests => 42;
 
 use lib 't';
 use Util;
@@ -11,27 +11,29 @@ use Util;
 prep_environment();
 
 ARG: {
-    my @expected = (
-      'Sink, swim, go down with the shipxSink, swim, go down with the ship'
-    );
+    my @expected = line_split( <<'HERE' );
+shall have a new birth of freedom -- and that government of the people,xshall have a new birth of freedom -- and that government of the people,
+HERE
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$_x$_ );
+    my @files = qw( t/text/gettysburg.txt );
+    my @args = qw( free --output=$_x$_ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Matching line' );
 }
 
 ARG_MULTIPLE_FILES: {
+    # Note the first line is there twice because it matches twice.
     my @expected = line_split( <<'HERE' );
-And there you were
-He stood there lookin' at me and I saw him smile.
-And I knew I wouldn't be there to help ya along.
-In the case of Christianity and Judaism there exists the belief
+or prohibiting the free exercise thereof; or abridging the freedom of
+or prohibiting the free exercise thereof; or abridging the freedom of
+A well regulated Militia, being necessary to the security of a free State,
+Number of free Persons, including those bound to Service for a Term
+shall have a new birth of freedom -- and that government of the people,
 HERE
 
     my @files = qw( t/text );
-    my @args = qw( there --sort-files -h --output=$_ );
+    my @args = qw( free --sort-files -h --output=$_ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Matching line' );
@@ -39,11 +41,11 @@ HERE
 
 MATCH: {
     my @expected = (
-      'swim'
+        'free'
     );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$& );
+    my @files = qw( t/text/gettysburg.txt );
+    my @args = qw( free --output=$& );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line matching pattern' );
@@ -51,55 +53,54 @@ MATCH: {
 
 MATCH_MULTIPLE_FILES: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:22:there
-t/text/boy-named-sue.txt:48:there
-t/text/boy-named-sue.txt:52:there
-t/text/science-of-myth.txt:3:there
+t/text/bill-of-rights.txt:4:free
+t/text/bill-of-rights.txt:4:free
+t/text/bill-of-rights.txt:10:free
+t/text/constitution.txt:32:free
+t/text/gettysburg.txt:23:free
 HERE
 
     my @files = qw ( t/text );
-    my @args = qw( there --sort-files --output=$& );
+    my @args = qw( free --sort-files --output=$& );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line matching pattern' );
 }
 
 PREMATCH: {
+    # No HEREDOC here since we do not want our editor/IDE messing with trailing whitespace.
     my @expected = (
-      'Sink, '
+        'shall have a new birth of '
     );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$` );
+    my @files = qw( t/text/gettysburg.txt );
+    my @args = qw( freedom --output=$` );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line preceding match' );
 }
 
 PREMATCH_MULTIPLE_FILES: {
-
     # No HEREDOC here since we do not want our editor/IDE messing with trailing whitespace.
     my @expected = (
-        'And ',
-        'He stood ',
-        'And I knew I wouldn\'t be ',
-        'In the case of Christianity and Judaism ',
+        'or prohibiting the free exercise thereof; or abridging the ',
+        'shall have a new birth of '
     );
 
     my @files = qw( t/text/);
-    my @args = qw( there -h --sort-files --output=$` );
+    my @args = qw( freedom -h --sort-files --output=$` );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line preceding match' );
 }
 
 POSTMATCH: {
-    my @expected = (
-      ', go down with the ship'
-    );
+    my @expected = split( /\n/, <<'HERE' );
+ -- and that government of the people,
+HERE
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$' );
+    my @files = qw( t/text/gettysburg.txt );
+    my @args = qw( freedom --output=$' );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line that follows match' );
@@ -107,14 +108,12 @@ POSTMATCH: {
 
 POSTMATCH_MULTIPLE_FILES: {
     my @expected = line_split( <<'HERE' );
- you were
- lookin' at me and I saw him smile.
- to help ya along.
- exists the belief
+ of
+ -- and that government of the people,
 HERE
 
     my @files = qw( t/text/ );
-    my @args = qw( there -h --sort-files --output=$' );
+    my @args = qw( freedom -h --sort-files --output=$' );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Part of a line that follows match' );
@@ -122,11 +121,11 @@ HERE
 
 SUBPATTERN_MATCH: {
     my @expected = (
-      'Sink-swim-ship'
+        'love-God-Montresor'
     );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( ^(Sink).+(swim).+(ship)$ --output=$1-$2-$3 );
+    my @files = qw( t/text/amontillado.txt );
+    my @args = qw( (love).+(God).+(Montresor) --output=$1-$2-$3 );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Capturing parentheses match' );
@@ -134,14 +133,13 @@ SUBPATTERN_MATCH: {
 
 SUBPATTERN_MATCH_MULTIPLE_FILES: {
     my @expected = line_split( <<'HERE' );
-And-there-you
-stood-there-lookin
-be-there-to
-Judaism-there-exists
+the-free-exercise
+a-free-State
+of-free-Persons
 HERE
 
     my @files = qw( t/text/ );
-    my @args = qw( (\w+)\s(there)\s(\w+) -h --sort-files --output=$1-$2-$3 );
+    my @args = qw( (\w+)\s(free)\s(\w+) -h --sort-files --output=$1-$2-$3 );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Capturing parentheses match' );
@@ -149,11 +147,11 @@ HERE
 
 INPUT_LINE_NUMBER: {
     my @expected = (
-      'line:3'
+      'line:15'
     );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=line:$. );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = qw( quartered --output=line:$. );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Line number' );
@@ -161,14 +159,15 @@ INPUT_LINE_NUMBER: {
 
 INPUT_LINE_NUMBER_MULTIPLE_FILES: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:22:line:22
-t/text/boy-named-sue.txt:48:line:48
-t/text/boy-named-sue.txt:52:line:52
-t/text/science-of-myth.txt:3:line:3
+t/text/bill-of-rights.txt:4:line:4
+t/text/bill-of-rights.txt:4:line:4
+t/text/bill-of-rights.txt:10:line:10
+t/text/constitution.txt:32:line:32
+t/text/gettysburg.txt:23:line:23
 HERE
 
     my @files = qw( t/text/ );
-    my @args = qw( there --sort-files --output=line:$. );
+    my @args = qw( free --sort-files --output=line:$. );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Line number' );
@@ -176,10 +175,10 @@ HERE
 
 LAST_PAREN_MATCH: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:12:love
-t/text/boy-named-sue.txt:58:hate
-t/text/boy-named-sue.txt:70:hate
-t/text/shut-up-be-happy.txt:5:love
+t/text/amontillado.txt:124:love
+t/text/amontillado.txt:309:love
+t/text/amontillado.txt:311:love
+t/text/constitution.txt:267:hate
 HERE
 
     my @files = qw( t/text/ );
@@ -192,10 +191,10 @@ HERE
 
 COMBOS_1: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:12:love-12- me,
-t/text/boy-named-sue.txt:58:hate-58- me, and you got the right
-t/text/boy-named-sue.txt:70:hate-70- that name!
-t/text/shut-up-be-happy.txt:5:love-5-d ones, insurance agents or attorneys.
+t/text/amontillado.txt:124:love-124-d; you are happy,
+t/text/amontillado.txt:309:love-309- of God, Montresor!"
+t/text/amontillado.txt:311:love-311- of God!"
+t/text/constitution.txt:267:hate-267-ver, from any King, Prince, or foreign State.
 HERE
 
     my @files = qw( t/text/ );
@@ -205,12 +204,11 @@ HERE
     lists_match( \@results, \@expected, 'Combos 1' );
 }
 
+
 COMBOS_2: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:13:happy-happy-happy
-t/text/shut-up-be-happy.txt:20:happy-happy-happy
-t/text/shut-up-be-happy.txt:23:happy-happy-happy
-t/text/shut-up-be-happy.txt:26:Happy-Happy-Happy
+t/text/amontillado.txt:124:happy-happy-happy
+t/text/raven.txt:73:happy-happy-happy
 HERE
 
     my @files = qw( t/text/ );
@@ -223,10 +221,8 @@ HERE
 
 COMBOS_3: {
     my @expected = line_split( <<'HERE' );
-t/text/4th-of-july.txt:13:And you're --- to be with me on the 4th of July--happy
-t/text/shut-up-be-happy.txt:20:Shut up! Be ---.--happy
-t/text/shut-up-be-happy.txt:23:Be ---.--happy
-t/text/shut-up-be-happy.txt:26:    -- "Shut Up, Be ---", Jello Biafra--Happy
+t/text/amontillado.txt:124:precious. You are rich, respected, admired, beloved; you are ---,--happy
+t/text/raven.txt:73:Caught from some un--- master whom unmerciful Disaster--happy
 HERE
 
     my @files = qw( t/text/ );
@@ -240,25 +236,11 @@ HERE
 NUMERIC_SUBSTITUTIONS: {
     # Make sure that substitutions don't affect future substitutions.
     my @expected = line_split( <<'HERE' );
-t/text/shut-up-be-happy.txt:9:Ninety-five is 95 and seventy-six is 76
+t/text/constitution.txt:269:Section 10 on line 269
 HERE
 
-    my @files = qw( t/text/ );
-    my @args = ( '(\d+) PM', '--output=Ninety-five is $.5 and seventy-six is $16' );
-    my @results = run_ack( @args, @files );
-
-    lists_match( \@results, \@expected, 'Numeric substitutions' );
-}
-
-
-NUMERIC_SUBSTITUTIONS: {
-    # Make sure that substitutions don't affect future substitutions.
-    my @expected = line_split( <<'HERE' );
-t/text/shut-up-be-happy.txt:9:Ninety-five is 95 and seventy-six is 76
-HERE
-
-    my @files = qw( t/text/ );
-    my @args = ( '(\d+) PM', '--output=Ninety-five is $.5 and seventy-six is $16' );
+    my @files = qw( t/text/bill-of-rights.txt t/text/constitution.txt );
+    my @args = ( '(\d\d)', '--output=Section $1 on line $.' );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Numeric substitutions' );
@@ -268,49 +250,52 @@ HERE
 CHARACTER_SUBSTITUTIONS: {
     # Make sure that substitutions don't affect future substitutions.
     my @expected = line_split( <<"HERE" );
-t/text/shut-up-be-happy.txt:11:Remain calm.
-Do not panic.\tDo not panic.
+t/text/bill-of-rights.txt:15:No Soldier shall, in time of peace be
+in any house, without\tin any house, without
 HERE
 
     my @files = qw( t/text/ );
-    my @args = ( '(Remain calm\.)\s+(.+)', '--output=$1\n$2\t$2' );
+    my @args = ( '\s+quartered\s+(.+)', '--output=$`\n$1\t$1' );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Character substitutions' );
 }
 
+
 # $f=$filenname, needed for grep,  emulating ack2 $filename:$lineno:$_
 FILENAME_SUBSTITUTION_1 : {
-    my @expected = (
-      't/text/freedom-of-choice.txt:3:Sink, swim, go down with the ship'
-    );
+    my @expected = line_split( <<'HERE' );
+t/text/ozymandias.txt:4:Half sunk, a shattered visage lies, whose frown,
+HERE
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$f:$.:$_ );
+    my @files = qw( t/text/ozymandias.txt );
+    my @args = qw( visage --output=$f:$.:$_ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Filename with matching line' );
 }
 
-FILENAME_SUBSTITUTION_2 : {
-    my @expected = (
-      't/text/freedom-of-choice.txt:3:swim'
-    );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( swim --output=$f:$.:$& );
+FILENAME_SUBSTITUTION_2 : {
+    my @expected = line_split( <<'HERE' );
+t/text/ozymandias.txt:4:visage
+HERE
+
+    my @files = qw( t/text/ozymandias.txt );
+    my @args = qw( visage --output=$f:$.:$& );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Filename with match' );
 }
 
-FILENAME_SUBSTITUTION_3 : {
-    my @expected = (
-      't/text/freedom-of-choice.txt:3:swim'
-    );
 
-    my @files = qw( t/text/freedom-of-choice.txt );
-    my @args = qw( (sink|swim) --output=$f:$.:$+ );
+FILENAME_SUBSTITUTION_3 : {
+    my @expected = line_split( <<'HERE' );
+t/text/ozymandias.txt:4:visage
+HERE
+
+    my @files = qw( t/text/ozymandias.txt );
+    my @args = qw( (visage) --output=$f:$.:$+ );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Filename with last match' );

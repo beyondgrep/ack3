@@ -10,28 +10,36 @@ use Util;
 
 prep_environment();
 
+my $const = reslash( 't/text/constitution.txt' );
+my $bill  = reslash( 't/text/bill-of-rights.txt' );
+
 subtest 'Grouped proximate' => sub {
     plan tests => 1;
 
-    my $myth = reslash( 't/text/science-of-myth.txt' );
-    my $sue  = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-$sue
-11:Some gal would giggle and I'd turn red
-12:And some guy'd laugh and I'd bust his head,
+    my @expected = line_split( <<"HERE" );
+$bill
+53:fact tried by a jury, shall be otherwise re-examined in any Court of
 
-$myth
-10:Somehow no matter what the world keeps turning
-11:Somehow we get by without ever learning
+$const
+199:To constitute Tribunals inferior to the supreme Court;
 
-21:'cause some things are better left without a doubt
+372:Judges of the supreme Court, and all other Officers of the United States,
 
-23:Somehow no matter what the world keeps turning
-24:Somehow we get by without ever learning
-EOF
+376:in the Courts of Law, or in the Heads of Departments.
+
+404:Court, and in such inferior Courts as the Congress may from time to
+
+406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+425:and those in which a State shall be Party, the supreme Court shall
+
+427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate -i --group --sort some );
+    my @args = qw( --proximate -i --group --sort court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate' );
 };
@@ -40,23 +48,28 @@ EOF
 subtest 'Ungrouped proximate' => sub {
     plan tests => 1;
 
-    my $myth = reslash( 't/text/science-of-myth.txt' );
-    my $sue  = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-$sue:11:Some gal would giggle and I'd turn red
-$sue:12:And some guy'd laugh and I'd bust his head,
+    my @expected = line_split( <<"HERE" );
+$bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
 
-$myth:10:Somehow no matter what the world keeps turning
-$myth:11:Somehow we get by without ever learning
+$const:199:To constitute Tribunals inferior to the supreme Court;
 
-$myth:21:'cause some things are better left without a doubt
+$const:372:Judges of the supreme Court, and all other Officers of the United States,
 
-$myth:23:Somehow no matter what the world keeps turning
-$myth:24:Somehow we get by without ever learning
-EOF
+$const:376:in the Courts of Law, or in the Heads of Departments.
+
+$const:404:Court, and in such inferior Courts as the Congress may from time to
+
+$const:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+$const:425:and those in which a State shall be Party, the supreme Court shall
+
+$const:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+$const:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate -i --nogroup --sort some );
+    my @args = qw( --proximate -i --nogroup --sort court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate' );
 };
@@ -65,25 +78,28 @@ EOF
 subtest 'Grouped proximate=2' => sub {
     plan tests => 1;
 
-    my $sue = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-$sue
-4:Now, I don't blame him 'cause he run and hid
+    my @expected = line_split( <<"HERE" );
+$bill
+53:fact tried by a jury, shall be otherwise re-examined in any Court of
 
-33:And I looked at him and my blood ran cold
+$const
+199:To constitute Tribunals inferior to the supreme Court;
 
-36:Well, I hit him hard right between the eyes
+372:Judges of the supreme Court, and all other Officers of the United States,
 
-46:I heard him laugh and then I heard him cuss,
-48:He stood there lookin' at me and I saw him smile.
+376:in the Courts of Law, or in the Heads of Departments.
 
-65:I called him my pa, and he called me his son,
-67:And I think about him, now and then,
-69:And if I ever have a son, I think I'm gonna name him
-EOF
+404:Court, and in such inferior Courts as the Congress may from time to
+406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+425:and those in which a State shall be Party, the supreme Court shall
+427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=2 --group -w him );
+    my @args = qw( --proximate=2 --group -i court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate=2' );
 };
@@ -93,53 +109,54 @@ EOF
 subtest 'Ungrouped proximate=2' => sub {
     plan tests => 1;
 
-    my $sue = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-$sue:4:Now, I don't blame him 'cause he run and hid
+    my @expected = line_split( <<"HERE" );
+$bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
 
-$sue:33:And I looked at him and my blood ran cold
+$const:199:To constitute Tribunals inferior to the supreme Court;
 
-$sue:36:Well, I hit him hard right between the eyes
+$const:372:Judges of the supreme Court, and all other Officers of the United States,
 
-$sue:46:I heard him laugh and then I heard him cuss,
-$sue:48:He stood there lookin' at me and I saw him smile.
+$const:376:in the Courts of Law, or in the Heads of Departments.
 
-$sue:65:I called him my pa, and he called me his son,
-$sue:67:And I think about him, now and then,
-$sue:69:And if I ever have a son, I think I'm gonna name him
-EOF
+$const:404:Court, and in such inferior Courts as the Congress may from time to
+$const:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+$const:425:and those in which a State shall be Party, the supreme Court shall
+$const:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+$const:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=2 --nogroup -w him );
+    my @args = qw( --proximate=2 --nogroup -i court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=2' );
 };
 
 
 
-# --proximate=3 is almost the same as --proximate=2.
-subtest 'Ungrouped proximate=3' => sub {
+subtest 'Ungrouped proximate=20' => sub {
     plan tests => 1;
 
-    my $sue = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-$sue:4:Now, I don't blame him 'cause he run and hid
+    my @expected = line_split( <<"HERE" );
+$bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
 
-$sue:33:And I looked at him and my blood ran cold
-$sue:36:Well, I hit him hard right between the eyes
+$const:199:To constitute Tribunals inferior to the supreme Court;
 
-$sue:46:I heard him laugh and then I heard him cuss,
-$sue:48:He stood there lookin' at me and I saw him smile.
+$const:372:Judges of the supreme Court, and all other Officers of the United States,
+$const:376:in the Courts of Law, or in the Heads of Departments.
 
-$sue:65:I called him my pa, and he called me his son,
-$sue:67:And I think about him, now and then,
-$sue:69:And if I ever have a son, I think I'm gonna name him
-EOF
+$const:404:Court, and in such inferior Courts as the Congress may from time to
+$const:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+$const:425:and those in which a State shall be Party, the supreme Court shall
+$const:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+$const:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=3 --nogroup -w him );
+    my @args = qw( --proximate=20 --nogroup -i court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=3' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=20' );
 };
 
 

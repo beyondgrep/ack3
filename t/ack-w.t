@@ -16,30 +16,30 @@ Barfly->run_tests( 't/ack-w.barfly' );
 subtest '-w with trailing metachar \w' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<'EOF' );
-At an old saloon on a street of mud,
-Kicking and a-gouging in the mud and the blood and the beer.
-EOF
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text );
-    my @args = qw( mu\w -w -h --sort-files );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = ( 'Milit\w\w', qw( -w -h --sort-files ) );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for mu\\w' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for militia with metacharacters' );
 };
 
 
 subtest '-w with trailing dot' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<'EOF' );
-At an old saloon on a street of mud,
-Kicking and a-gouging in the mud and the blood and the beer.
-EOF
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text );
-    my @args = ( 'mu.', qw( -w -h --sort-files ) );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = ( 'Milit..', qw( -w -h --sort-files ) );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for mu.' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Milit..' );
 };
 
 
@@ -47,15 +47,15 @@ subtest 'Begins and ends with word char' => sub {
     plan tests => 1;
 
     # Normal case of whole word match.
-    my @expected = line_split( <<'EOF' );
-And I said: "My name is Sue! How do you do! Now you gonna die!"
-To kill me now, and I wouldn't blame you if you do.
-EOF
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text );
-    my @args = ( 'do', qw( -w -h --sort-files ) );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = qw( Militia -w -h --sort-files );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for do as whole word' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia as whole word' );
 };
 
 
@@ -63,48 +63,45 @@ subtest 'Ends with grouping parens' => sub {
     plan tests => 1;
 
     # The last character of the regexp is not a word, disabling the word boundary check at the end of the match.
-    my @expected = (
-        'Took us all the way to New Orleans',
-    );
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text );
-    my @args = ( 'us()', qw( -w -h --sort-files ) );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = ( 'Militia()', qw( -w -h --sort-files ) );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for us with word flag, but regexp does not end with word char' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not end with word char' );
 };
 
 
 subtest 'Begins with grouping parens' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<'EOF' );
-If you ain't got no one
-He said: "Now you just fought one hell of a fight
-He picked at one
-He picked at one
-But I'd trade all of my tomorrows for one single yesterday
-The number one enemy of progress is questions.
-EOF
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text );
-    my @args = ( '()one', qw( -w -h --sort-files ) );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = ( '()Militia', qw( -w -h --sort-files ) );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for one with word flag, but regexp does not begin with word char' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not begin with word char' );
 };
 
 
 subtest 'Wrapped in grouping parens' => sub {
     plan tests => 1;
 
-    my @expected = (
-        'Consider the case of the woman whose faith helped her make it through',
-        'When she was raped and cut up, left for dead in her trunk, her beliefs held true'
-    );
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+cases arising in the land or naval forces, or in the Militia, when in
+HERE
 
-    my @files = qw( t/text/science-of-myth.txt );
-    my @args = ( '(her)', qw( -w -h --sort-files ) );
+    my @files = qw( t/text/bill-of-rights.txt );
+    my @args = ( '(Militia)', qw( -w -h --sort-files ) );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for her with word flag, but regexp does not begin or end with word char' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not begin or end with word char' );
 };
 
 
@@ -128,7 +125,7 @@ subtest '-w warnings' => sub {
 
     plan tests => @{$good} + @{$bad};
 
-    my $happy = reslash( 't/text/shut-up-be-happy.txt' );
+    my $happy = reslash( 't/text/ozymandias.txt' );
     for my $pattern ( @{$good} ) {
         subtest "Good example: $pattern" => sub {
             plan tests => 1;

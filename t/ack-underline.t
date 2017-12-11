@@ -13,97 +13,95 @@ prep_environment();
 # We need to do this tediously here rather than with Barfly because
 # Barfly relies on --underline working correctly.
 
-my $july_ = reslash( 't/text/4th-of-july.txt' );
-my $happy = reslash( 't/text/shut-up-be-happy.txt' );
+my $bill_ = reslash( 't/text/bill-of-rights.txt' );
+my $getty = reslash( 't/text/gettysburg.txt' );
 
 # Spacing that the filenames take up.
-my $spc_j = ' ' x length( $july_ );
-my $spc_h = ' ' x length( $happy );
+my $spc_b = ' ' x length( $bill_ );
+my $spc_g = ' ' x length( $getty );
 
 subtest 'Grouped --underline' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<"EOF" );
-$july_
-12:Looking at me, telling me you love me,
-                                 ^^^^
+    my @expected = line_split( <<"HERE" );
+$bill_
+4:or prohibiting the free exercise thereof; or abridging the freedom of
+                                                             ^^^^^^^
 
-$happy
-5:Do not attempt to contact loved ones, insurance agents or attorneys.
-                            ^^^^
-EOF
+$getty
+23:shall have a new birth of freedom -- and that government of the people,
+                             ^^^^^^^
+HERE
 
-    my @args = qw( --underline --sort-files --group love t/text );
+    my @args = qw( --underline --sort-files --group freedom t/text );
 
-    ack_lists_match( [ @args ], \@expected, 'Looking for love, grouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for freedom, grouped' );
 };
 
 
 subtest 'Ungrouped --underline' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<"EOF" );
-$july_:12:Looking at me, telling me you love me,
-$spc_j                                  ^^^^
-$happy:5:Do not attempt to contact loved ones, insurance agents or attorneys.
-$spc_h                             ^^^^
-EOF
+    my @expected = line_split( <<"HERE" );
+$bill_:4:or prohibiting the free exercise thereof; or abridging the freedom of
+$spc_b                                                              ^^^^^^^
+$getty:23:shall have a new birth of freedom -- and that government of the people,
+$spc_g                              ^^^^^^^
+HERE
 
-    my @args = qw( --underline --sort-files --nogroup love t/text );
+    my @args = qw( --underline --sort-files --nogroup freedom t/text );
 
-    ack_lists_match( [ @args ], \@expected, 'Looking for love, ungrouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for freedom, ungrouped' );
 };
 
 
 subtest 'Grouped --underline with context' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<"EOF" );
-$july_
-10-Chorus:
-11-You were pretty as can be, sitting in the front seat
-12:Looking at me, telling me you love me,
-                                 ^^^^
-13-And you're happy to be with me on the 4th of July
-14-We sang "Stranglehold" to the stereo
+    my @expected = line_split( <<"HERE" );
+$bill_
+2-
+3-Congress shall make no law respecting an establishment of religion,
+4:or prohibiting the free exercise thereof; or abridging the freedom of
+                                                             ^^^^^^^
+5-speech, or of the press; or the right of the people peaceably to assemble,
+6-and to petition the Government for a redress of grievances.
 
-t/text/shut-up-be-happy.txt
-3-All Constitutional rights have been suspended.
-4-Stay in your homes.
-5:Do not attempt to contact loved ones, insurance agents or attorneys.
-                            ^^^^
-6-Shut up.
-7-Do not attempt to think or depression may occur.
-EOF
+$getty
+21-the last full measure of devotion -- that we here highly resolve that
+22-these dead shall not have died in vain -- that this nation, under God,
+23:shall have a new birth of freedom -- and that government of the people,
+                             ^^^^^^^
+24-by the people, for the people, shall not perish from the earth.
+HERE
 
-    my @args = qw( --underline --sort-files --group -C love t/text );
+    my @args = qw( --underline --sort-files --group -C free\w+ t/text );
 
-    ack_lists_match( [ @args ], \@expected, 'Looking for love, grouped with context' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for freedom, grouped with context' );
 };
 
 
 subtest 'Ungrouped --underline with --context' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<"EOF" );
-$july_-10-Chorus:
-$july_-11-You were pretty as can be, sitting in the front seat
-$july_:12:Looking at me, telling me you love me,
-$spc_j                                  ^^^^
-$july_-13-And you're happy to be with me on the 4th of July
-$july_-14-We sang "Stranglehold" to the stereo
+    my @expected = line_split( <<"HERE" );
+$bill_-2-
+$bill_-3-Congress shall make no law respecting an establishment of religion,
+$bill_:4:or prohibiting the free exercise thereof; or abridging the freedom of
+$spc_b                                                              ^^^^^^^
+$bill_-5-speech, or of the press; or the right of the people peaceably to assemble,
+$bill_-6-and to petition the Government for a redress of grievances.
 --
-$happy-3-All Constitutional rights have been suspended.
-$happy-4-Stay in your homes.
-$happy:5:Do not attempt to contact loved ones, insurance agents or attorneys.
-$spc_h                             ^^^^
-$happy-6-Shut up.
-$happy-7-Do not attempt to think or depression may occur.
-EOF
+$getty-21-the last full measure of devotion -- that we here highly resolve that
+$getty-22-these dead shall not have died in vain -- that this nation, under God,
+$getty:23:shall have a new birth of freedom -- and that government of the people,
+$spc_g                              ^^^^^^^
+$getty-24-by the people, for the people, shall not perish from the earth.
+HERE
 
-    my @args = qw( --underline --sort-files --nogroup -C love t/text );
+    my @args = qw( --underline --sort-files --nogroup -C free\w+ t/text );
 
-    ack_lists_match( [ @args ], \@expected, 'Looking for love, ungrouped' );
+    ack_lists_match( [ @args ], \@expected, 'Looking for freedom, ungrouped' );
 };
 
 exit 0;

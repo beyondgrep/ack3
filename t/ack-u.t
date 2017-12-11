@@ -13,19 +13,21 @@ prep_environment();
 
 Barfly->run_tests( 't/ack-u.barfly' );
 
+my $bill_ = reslash( 't/text/bill-of-rights.txt' );
+my $space = ' ' x length($bill_);
+
 subtest 'Single file' => sub {
     plan tests => 1;
 
-    my $target_file = reslash( 't/text/boy-named-sue.txt' );
-    my @expected = line_split( <<"EOF" );
-But the meanest thing that he ever did
-                ^^^^^
-Bill or George! Anything but Sue! I still hate that name!
-                   ^^^^^
+    my @expected = line_split( <<'EOF' );
+A well regulated Militia, being necessary to the security of a free State,
+                 ^^^^^^^
+cases arising in the land or naval forces, or in the Militia, when in
+                                                     ^^^^^^^
 EOF
 
-    my @files = $target_file;
-    my @args  = ( qw( -u ), 'thing' );
+    my @files = $bill_;
+    my @args  = ( qw( -u ), 'Militia' );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Single file' );
 };
@@ -34,33 +36,31 @@ EOF
 subtest 'Grouped' => sub {
     plan tests => 1;
 
-    my $target_file = reslash( 't/text/boy-named-sue.txt' );
     my @expected = line_split( <<"EOF" );
-$target_file
-70:Bill or George! Anything but Sue! I still hate that name!
-                   ^^^^^^^^
+$bill_
+10:A well regulated Militia, being necessary to the security of a free State,
+                    ^^^^^^^
+31:cases arising in the land or naval forces, or in the Militia, when in
+                                                        ^^^^^^^
 EOF
 
-    my @files = 't/text/';
-    my @args  = ( qw( -u --group ), 'Anything' );
+    my @files = qw( t/text/bill-of-rights.txt t/text/ozymandias.txt ); # Don't want Constitution in here.
+    my @args  = ( qw( -u --group ), 'Militia' );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Grouped' );
 };
 
 
 subtest 'Not grouped, with leading filename' => sub {
-    my $target_file = reslash( 't/text/boy-named-sue.txt' );
-    my $spacing____ = ' ' x length($target_file);
-
     my @expected = line_split( <<"EOF" );
-$target_file:5:But the meanest thing that he ever did
-$spacing____                   ^^^^^
-$target_file:70:Bill or George! Anything but Sue! I still hate that name!
-$spacing____                       ^^^^^
+$bill_:10:A well regulated Militia, being necessary to the security of a free State,
+$space                     ^^^^^^^
+$bill_:31:cases arising in the land or naval forces, or in the Militia, when in
+$space                                                         ^^^^^^^
 EOF
 
-    my $regex = 'thing';
-    my @files = $target_file;
+    my $regex = 'Militia';
+    my @files = $bill_;
     my @args  = ( qw( -u --nogroup -H ), $regex );
 
     ack_lists_match( [ @args, @files ], \@expected, "Looking for $regex - before with line numbers" );

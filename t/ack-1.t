@@ -12,24 +12,24 @@ prep_environment();
 
 SINGLE_TEXT_MATCH: {
     my @expected = (
-        'Was before he left, he went and named me Sue.'
+        'the catacombs of the Montresors.'
     );
 
     my @files = qw( t/text );
-    my @args = qw( Sue -1 -h --sort-files );
+    my @args = qw( Montresor -1 -h --sort-files );
     my @results = run_ack( @args, @files );
 
-    lists_match( \@results, \@expected, 'Looking for first instance of Sue!' );
+    lists_match( \@results, \@expected, 'Looking for first instance of Montresor!' );
 }
 
 
 DASH_V: {
     my @expected = (
-        'Well, my daddy left home when I was three',
+        '    Only this and nothing more."'
     );
 
-    my @files = qw( t/text/boy-named-sue.txt );
-    my @args = qw( Sue -1 -h -v );
+    my @files = qw( t/text/raven.txt );
+    my @args = qw( c -1 -h -v );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Looking for first non-match' );
@@ -61,7 +61,7 @@ DASH_L: {
     my @files    = reslash( 't/text' );
     my @args     = qw( -1 -l --sort-files the );   # --sort-files to make sure we get the same first file each time.
     my @results  = run_ack( @args, @files );
-    my $expected = reslash( 't/text/4th-of-july.txt' );
+    my $expected = reslash( 't/text/amontillado.txt' );
 
     is_deeply( \@results, [$expected], 'Should only get one matching file back' );
 }

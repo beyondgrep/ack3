@@ -43,14 +43,14 @@ subtest 'whitespace+dollar with -L' => sub {
     plan tests => 1;
 
     my @expected = line_split( <<'EOF' );
-t/text/4th-of-july.txt
-t/text/boy-named-sue.txt
-t/text/freedom-of-choice.txt
-t/text/me-and-bobbie-mcgee.txt
+t/text/amontillado.txt
+t/text/bill-of-rights.txt
+t/text/constitution.txt
+t/text/gettysburg.txt
 t/text/number.txt
 t/text/numbered-text.txt
-t/text/science-of-myth.txt
-t/text/shut-up-be-happy.txt
+t/text/ozymandias.txt
+t/text/raven.txt
 EOF
 
     my @files = qw( t/text/ );
@@ -63,35 +63,23 @@ subtest 'whitespace+dollar with -v' => sub {
     plan tests => 4;
 
     my @expected = line_split( <<'EOF' );
-If you've ever questioned beliefs that you've hold, you're not alone
-But you oughta realize that every myth is a metaphor
-In the case of Christianity and Judaism there exists the belief
-That spiritual matters are enslaved to history
-
-The Buddhists believe that the functional aspects override the myth
-While other religions use the literal core to build foundations with
-See, half the world sees the myth as fact, and it's seen as a lie by the other half
-And the simple truth is that it's none of that 'cause
-Somehow no matter what the world keeps turning
-Somehow we get by without ever learning
-
-Science and religion are not mutually exclusive
-In fact, for better understanding we take the facts of science and apply them
-And if both factors keep evolving then we continue getting information
-But closing off the possibilities makes it hard to see the bigger picture
-
-Consider the case of the woman whose faith helped her make it through
-When she was raped and cut up, left for dead in her trunk, her beliefs held true
-It doesn't matter if it's real or not
-'cause some things are better left without a doubt
-And if it works, then it gets the job done
-Somehow no matter what the world keeps turning
-Somehow we get by without ever learning
-
-    -- "The Science Of Myth", Screeching Weasel
+I met a traveller from an antique land
+Who said: Two vast and trunkless legs of stone
+Stand in the desert... Near them, on the sand,
+Half sunk, a shattered visage lies, whose frown,
+And wrinkled lip, and sneer of cold command,
+Tell that its sculptor well those passions read
+Which yet survive, stamped on these lifeless things,
+The hand that mocked them, and the heart that fed:
+And on the pedestal these words appear:
+'My name is Ozymandias, king of kings:
+Look on my works, ye Mighty, and despair!'
+Nothing beside remains. Round the decay
+Of that colossal wreck, boundless and bare
+The lone and level sands stretch far away.
 EOF
 
-    my @files = qw( t/text/science-of-myth.txt );
+    my @files = qw( t/text/ozymandias.txt );
 
     for my $context ( undef, '-A', '-B', '-C' ) {
         my @args = qw( \s$ -v );
