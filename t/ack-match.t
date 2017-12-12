@@ -24,13 +24,14 @@ test_match( @{$_} ) for @tests;
 run_ack( '--match', 'Sue' );
 
 subtest 'Not giving a regex when piping into ack should result in an error' => sub {
-    plan tests => 3;
+    plan tests => 4;
 
     # Not giving a regex when piping into ack should result in an error.
     my ($stdout, $stderr) = pipe_into_ack_with_stderr( 't/text/amontillado.txt', '--perl' );
     isnt( get_rc(), 0, 'ack should return an error when piped into without a regex' );
     is_empty_array( $stdout, 'ack should return no STDOUT when piped into without a regex' );
-    is( scalar @{$stderr}, 1, 'ack should return one line of error message when piped into without a regex' ) or diag(explain($stderr));
+    cmp_ok( scalar @{$stderr}, '>', 0, 'Has to have at least one line of error message, but could have more under Appveyor' );
+    is( $stderr->[0], 'ack: No regular expression found.', 'Error message matches' );
 };
 
 done_testing();
@@ -47,7 +48,7 @@ sub test_match {
     my @args  = @_;
     push @args, '--sort-files';
 
-    return subtest "test_match( @args )" => sub {
+    return subtest subtest_name( @args ) => sub {
         my @files = ( 't/text' );
         my @results_normal = run_ack( @args, $regex, @files );
         my @results_match  = run_ack( @args, @files, '--match', $regex );
