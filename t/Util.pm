@@ -521,7 +521,7 @@ sub _record_option_coverage {
     my ( @command_line ) = @_;
 
     return unless $ENV{ACK_OPTION_COVERAGE};
-    return if $ENV{ACK_STANDALONE}; # We don't need to record the second time around.
+    return if $ENV{ACK_TEST_STANDALONE}; # We don't need to record the second time around.
 
     my $record_options = File::Spec->catfile($orig_wd, 'record-options');
 
