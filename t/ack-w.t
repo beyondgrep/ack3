@@ -153,7 +153,7 @@ subtest '-w warnings' => sub {
 sub _get_good_and_bad {
     # BAD = should throw a warning with -w
     # OK  = should not throw a warning with -w
-    my @examples = line_split( <<'EOF' );
+    my @examples = line_split( <<'HERE' );
 # Anchors
 BAD $foo
 BAD foo^
@@ -212,7 +212,7 @@ BAD ::Class::Whatever
 BAD Class::Whatever::
 OK  Class::Whatever
 
-EOF
+HERE
 
     my $good = [];
     my $bad  = [];

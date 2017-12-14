@@ -20,7 +20,7 @@ prep_environment();
 NO_PAGER: {
     my @args = qw(--nocolor --sort-files -i nevermore t/text);
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -33,7 +33,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -43,7 +43,7 @@ END_TEXT
 PAGER: {
     my @args = qw(--nocolor --pager=./test-pager --sort-files -i nevermore t/text);
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -56,7 +56,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -66,14 +66,14 @@ END_TEXT
 PAGER_WITH_OPTS: {
     my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 62:    With such name as "Nevermore."
 76:    Of 'Never -- nevermore.'
 90:    She shall press, ah, nevermore!
 104:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -84,7 +84,7 @@ FORCE_NO_PAGER: {
     my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--nopager', '--sort-files',
         '-i', 'nevermore', 't/text');
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -97,7 +97,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -110,14 +110,14 @@ PAGER_ENV: {
 
     my @args = ('--nocolor', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 62:    With such name as "Nevermore."
 76:    Of 'Never -- nevermore.'
 90:    She shall press, ah, nevermore!
 104:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -129,7 +129,7 @@ PAGER_ENV_OVERRIDE: {
 
     my @args = ('--nocolor', '--nopager', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -142,7 +142,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 
@@ -153,18 +153,18 @@ END_TEXT
 PAGER_ACKRC: {
     my @args = ('--nocolor', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my $ackrc = <<'END_ACKRC';
+    my $ackrc = <<'HERE';
 --pager=./test-pager --skip=2
-END_ACKRC
+HERE
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 62:    With such name as "Nevermore."
 76:    Of 'Never -- nevermore.'
 90:    She shall press, ah, nevermore!
 104:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args, {
         ackrc => \$ackrc,
@@ -177,11 +177,11 @@ END_TEXT
 PAGER_ACKRC_OVERRIDE: {
     my @args = ('--nocolor', '--nopager', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my $ackrc = <<'END_ACKRC';
+    my $ackrc = <<'HERE';
 --pager=./test-pager --skip=2
-END_ACKRC
+HERE
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -194,7 +194,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args, {
         ackrc => \$ackrc,
@@ -208,7 +208,7 @@ PAGER_NOENV: {
 
     my @args = ('--nocolor', '--noenv', '--sort-files', '-i', 'nevermore', 't/text');
 
-    my @expected = line_split( <<'END_TEXT' );
+    my @expected = line_split( <<'HERE' );
 t/text/raven.txt
 55:    Quoth the Raven, "Nevermore."
 62:    With such name as "Nevermore."
@@ -221,7 +221,7 @@ t/text/raven.txt
 111:    Quoth the Raven, "Nevermore."
 118:    Quoth the Raven, "Nevermore."
 125:    Shall be lifted--nevermore!
-END_TEXT
+HERE
 
     my @got = run_ack_interactive(@args);
 

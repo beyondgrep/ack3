@@ -42,7 +42,7 @@ subtest 'whitespace+dollar with -l' => sub {
 subtest 'whitespace+dollar with -L' => sub {
     plan tests => 1;
 
-    my @expected = line_split( <<'EOF' );
+    my @expected = line_split( <<'HERE' );
 t/text/amontillado.txt
 t/text/bill-of-rights.txt
 t/text/constitution.txt
@@ -51,7 +51,7 @@ t/text/number.txt
 t/text/numbered-text.txt
 t/text/ozymandias.txt
 t/text/raven.txt
-EOF
+HERE
 
     my @files = qw( t/text/ );
     my @args = qw( \s$ -L --sort );
@@ -62,7 +62,7 @@ EOF
 subtest 'whitespace+dollar with -v' => sub {
     plan tests => 4;
 
-    my @expected = line_split( <<'EOF' );
+    my @expected = line_split( <<'HERE' );
 I met a traveller from an antique land
 Who said: Two vast and trunkless legs of stone
 Stand in the desert... Near them, on the sand,
@@ -77,7 +77,7 @@ Look on my works, ye Mighty, and despair!'
 Nothing beside remains. Round the decay
 Of that colossal wreck, boundless and bare
 The lone and level sands stretch far away.
-EOF
+HERE
 
     my @files = qw( t/text/ozymandias.txt );
 

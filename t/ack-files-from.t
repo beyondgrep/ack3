@@ -15,9 +15,9 @@ subtest 'Basic reading from files, no switches' => sub {
     plan tests => 1;
 
     my $target_file = reslash( 't/swamp/options.pl' );
-    my @expected = line_split( <<"EOF" );
+    my @expected = line_split( <<"HERE" );
 $target_file:2:use strict;
-EOF
+HERE
 
     my $tempfile = create_tempfile( qw( t/swamp/options.pl t/swamp/pipe-stress-freaks.F ) );
 

@@ -9,7 +9,7 @@ use Test::More tests => 3;
 
 prep_environment();
 
-my $temp_config = create_tempfile( <<'END_CONFIG' );
+my $temp_config = create_tempfile( <<'HERE' );
 # Always sort
 --sort-files
 
@@ -34,7 +34,7 @@ my $temp_config = create_tempfile( <<'END_CONFIG' );
 --smart-case
 
 --ignore-dir=nytprof
-END_CONFIG
+HERE
 
 my @args = ( '--ackrc=' . $temp_config->filename, '--md', 'One', 't/swamp/' );
 

@@ -277,7 +277,7 @@ subtest 'test -g with --color' => sub {
     plan tests => 2;
 
     my $file_regex = 'text';
-    my $expected_original = <<'END_COLOR';
+    my $expected_original = <<'HERE';
 t/con(text).t
 t/(text)/amontillado.txt
 t/(text)/bill-of-rights.txt
@@ -287,7 +287,7 @@ t/(text)/number.txt
 t/(text)/numbered-(text).txt
 t/(text)/ozymandias.txt
 t/(text)/raven.txt
-END_COLOR
+HERE
 
     $expected_original = windows_slashify( $expected_original ) if is_windows;
 
@@ -310,7 +310,7 @@ subtest q{test -g without --color; make sure colors don't show} => sub {
     plan tests => 1;
 
     my $file_regex = 'text';
-    my $expected   = <<'END_OUTPUT';
+    my $expected   = <<'HERE';
 t/context.t
 t/text/amontillado.txt
 t/text/bill-of-rights.txt
@@ -320,7 +320,7 @@ t/text/number.txt
 t/text/numbered-text.txt
 t/text/ozymandias.txt
 t/text/raven.txt
-END_OUTPUT
+HERE
 
     my @args = ( '--sort-files', '-g', $file_regex );
 
