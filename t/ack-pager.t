@@ -64,7 +64,14 @@ HERE
 }
 
 PAGER_WITH_OPTS: {
-    my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = (
+        '--nocolor',
+        '--pager=./test-pager --skip=2',    # --skip is an argument passed to test-pager
+        '--sort-files',
+        '-i',
+        'nevermore',
+        't/text'
+    );
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
@@ -81,8 +88,15 @@ HERE
 }
 
 FORCE_NO_PAGER: {
-    my @args = ('--nocolor', '--pager=./test-pager --skip=2', '--nopager', '--sort-files',
-        '-i', 'nevermore', 't/text');
+    my @args = (
+        '--nocolor',
+        '--pager=./test-pager --skip=2',    # --skip is an argument passed to test-pager
+        '--nopager',
+        '--sort-files',
+        '-i',
+        'nevermore',
+        't/text'
+    );
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
@@ -127,7 +141,7 @@ HERE
 PAGER_ENV_OVERRIDE: {
     local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
 
-    my @args = ('--nocolor', '--nopager', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = qw( --nocolor --nopager --sort-files -i nevermore t/text );
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
@@ -151,7 +165,7 @@ HERE
 
 
 PAGER_ACKRC: {
-    my @args = ('--nocolor', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = qw( --nocolor --sort-files -i nevermore t/text );
 
     my $ackrc = <<'HERE';
 --pager=./test-pager --skip=2
@@ -175,7 +189,7 @@ HERE
 
 
 PAGER_ACKRC_OVERRIDE: {
-    my @args = ('--nocolor', '--nopager', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = qw( --nocolor --nopager --sort-files -i nevermore t/text );
 
     my $ackrc = <<'HERE';
 --pager=./test-pager --skip=2
@@ -206,7 +220,7 @@ HERE
 PAGER_NOENV: {
     local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
 
-    my @args = ('--nocolor', '--noenv', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = qw( --nocolor --noenv --sort-files -i nevermore t/text );
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
