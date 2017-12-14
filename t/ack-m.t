@@ -10,8 +10,6 @@ use Util;
 
 prep_environment();
 
-my @text  = sort map { untaint($_) } glob( 't/text/s*.txt' );
-
 subtest 'Basic -m' => sub {
     plan tests => 2;
 
