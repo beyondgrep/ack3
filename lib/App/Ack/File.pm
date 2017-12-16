@@ -207,19 +207,27 @@ sub firstliney {
 
     if ( !exists $self->{firstliney} ) {
         my $fh = $self->open();
-        my $buffer;
-        my $rc = sysread( $fh, $buffer, 250 );
-        if ( $rc ) {
-            $buffer =~ s/[\r\n].*//s;
-        }
-        else {
-            if ( !defined($rc) ) {
+        if ( !$fh ) {
+            if ( $App::Ack::report_bad_filenames ) {
                 App::Ack::warn( $self->name . ': ' . $! );
             }
-            $buffer = '';
+            $self->{firstliney} = '';
         }
-        $self->{firstliney} = $buffer;
-        $self->reset;
+        else {
+            my $buffer;
+            my $rc = sysread( $fh, $buffer, 250 );
+            if ( $rc ) {
+                $buffer =~ s/[\r\n].*//s;
+            }
+            else {
+                if ( !defined($rc) ) {
+                    App::Ack::warn( $self->name . ': ' . $! );
+                }
+                $buffer = '';
+            }
+            $self->{firstliney} = $buffer;
+            $self->reset;
+        }
     }
 
     return $self->{firstliney};
