@@ -890,7 +890,7 @@ sub msg {
             push( @disp, 'undef' );
         }
         elsif ( ref($i) eq 'HASH' ) {
-            push( @disp, '{' . TW::hash_str( $i ) . '}' );
+            push( @disp, '{' . "$i" . '}' );
         }
         elsif ( ref($i) eq 'ARRAY' ) {
             push( @disp, '[' . join( ', ', map { $_ // 'undef' } @{$i} ) . ']' );
