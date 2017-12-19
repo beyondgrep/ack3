@@ -1,5 +1,7 @@
 package Util;
 
+use 5.010001;
+
 use parent 'Exporter';
 
 use Carp ();
@@ -890,7 +892,7 @@ sub msg {
             push( @disp, 'undef' );
         }
         elsif ( ref($i) eq 'HASH' ) {
-            push( @disp, '{' . "$i" . '}' );
+            push( @disp, join( ', ', map { "$_=>" . ($i->{$_} // 'undef') } sort keys %{$i} ) );
         }
         elsif ( ref($i) eq 'ARRAY' ) {
             push( @disp, '[' . join( ', ', map { $_ // 'undef' } @{$i} ) . ']' );

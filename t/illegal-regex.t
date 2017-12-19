@@ -31,7 +31,9 @@ sub test_ack_with {
     my $testcase = shift;
     my @args     = @_;
 
-    return subtest "test_ack_with( $testcase: @args )" => sub {
+    return subtest subtest_name( $testcase, @args ) => sub {
+        plan tests => 4;
+
         my ( $stdout, $stderr ) = run_ack_with_stderr( @args );
 
         is_empty_array( $stdout, "No STDOUT for $testcase" );

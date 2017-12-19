@@ -324,7 +324,7 @@ sub are_mutually_exclusive {
 
     my ( $stdout, $stderr ) = run_ack_with_stderr(@args);
 
-    return subtest "are_mutually_exclusive( $opt1, $opt2, @args )" => sub {
+    return subtest subtest_name( $opt1, $opt2, $args ) => sub {
         plan tests => 4;
 
         isnt( get_rc(), 0, 'The ack command should fail' );

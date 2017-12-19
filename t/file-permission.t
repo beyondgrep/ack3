@@ -68,7 +68,7 @@ sub check_with {
 
     my @args = @_;
 
-    return subtest "check_with( $args[0] )" => sub {
+    return subtest subtest_name( @args ) => sub {
         plan tests => 4;
 
         my $opts = {};

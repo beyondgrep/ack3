@@ -260,7 +260,7 @@ sub test_loader {
     my $msg  = pop;
     my %opts = @_;
 
-    return subtest "test_loader( $msg )" => sub {
+    return subtest subtest_name( $msg, \%opts ) => sub {
         plan tests => 3;
 
         my $env           = delete $opts{env}  // '';
