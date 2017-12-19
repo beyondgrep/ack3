@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 3;
 
 use lib 't';
 use Util;
@@ -48,6 +48,8 @@ write_file( '.ackrc', <<'ACKRC' );
 ACKRC
 
 subtest 'without --noenv' => sub {
+    plan tests => 1;
+
     local @ARGV = ('-f', 'lib/');
     local $ENV{'ACK_OPTIONS'} = '--perl';
 
@@ -73,6 +75,8 @@ subtest 'without --noenv' => sub {
 };
 
 subtest 'with --noenv' => sub {
+    plan tests => 1;
+
     local @ARGV = ('--noenv', '-f', 'lib/');
     local $ENV{'ACK_OPTIONS'} = '--perl';
 
@@ -87,7 +91,9 @@ subtest 'with --noenv' => sub {
     ], 'Short list comes back because of --noenv' );
 };
 
-NOENV_IN_CONFIG: {
+subtest '--noenv in config' => sub {
+    plan tests => 3;
+
     append_file( '.ackrc', "--noenv\n" );
 
     local $ENV{'ACK_OPTIONS'} = '--perl';
@@ -96,6 +102,6 @@ NOENV_IN_CONFIG: {
     is_empty_array( $stdout );
     is( @{$stderr}, 1 );
     like( $stderr->[0], qr/--noenv found in (?:.*)[.]ackrc/ ) or diag(explain($stderr));
-}
+};
 
 safe_chdir( $wd ); # Go back to the original directory to avoid warnings

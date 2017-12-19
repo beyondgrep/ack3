@@ -68,8 +68,7 @@ sub dont {
     my $sections = shift;
 
     for my $verboten ( @{$sections} ) {
-        my $found = scalar grep { /\Q$verboten/ } @{$stdout};
-        is( $found, 0, "Find zero $verboten sections" );
+        is_empty_array( [grep { /\Q$verboten/ } @{$stdout}], "Find zero $verboten sections" );
     }
 
     return;
