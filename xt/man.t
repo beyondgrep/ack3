@@ -1,5 +1,7 @@
 #!perl
 
+## no critic ( Bangs::ProhibitDebuggingModules )
+
 use strict;
 use warnings;
 use lib 't';

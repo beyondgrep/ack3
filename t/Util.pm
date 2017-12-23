@@ -87,6 +87,8 @@ sub prep_environment {
     }
 
     $orig_wd = getcwd_clean();
+
+    return;
 }
 
 sub is_windows {
@@ -237,7 +239,7 @@ sub run_ack {
     my @args = @_;
 
     my ($stdout, $stderr) = run_ack_with_stderr( @args );
-    @args = grep { ref($_) ne 'HASH' } @args;
+    @args = grep { ref ne 'HASH' } @args;
 
     if ( $TODO ) {
         fail( q{Automatically fail stderr check for TODO tests.} );
@@ -273,7 +275,7 @@ sub run_cmd {
             $options = $arg;
         }
     }
-    @cmd = grep { ref($_) ne 'HASH' } @cmd;
+    @cmd = grep { ref ne 'HASH' } @cmd;
 
     _record_option_coverage(@cmd);
 
@@ -282,6 +284,8 @@ sub run_cmd {
     my ( @stdout, @stderr );
 
     if ( is_windows() ) {
+        ## no critic ( InputOutput::ProhibitTwoArgOpen )
+        ## no critic ( InputOutput::ProhibitBarewordFileHandles )
         require Win32::ShellQuote;
         # Capture stderr & stdout output into these files (only on Win32).
         my $tempdir = File::Temp->newdir;
@@ -434,7 +438,7 @@ sub pipe_into_ack_with_stderr {
 # Pipe into ack and return STDOUT as array, for arguments see pipe_into_ack_with_stderr.
 sub pipe_into_ack {
     my ($stdout, $stderr) = pipe_into_ack_with_stderr( @_ );
-    return @$stdout;
+    return @{$stdout};
 }
 
 

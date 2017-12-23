@@ -70,7 +70,7 @@ PAGER_WITH_OPTS: {
         '--sort-files',
         '-i',
         'nevermore',
-        't/text'
+        't/text',
     );
 
     my @expected = line_split( <<'HERE' );
@@ -95,7 +95,7 @@ FORCE_NO_PAGER: {
         '--sort-files',
         '-i',
         'nevermore',
-        't/text'
+        't/text',
     );
 
     my @expected = line_split( <<'HERE' );

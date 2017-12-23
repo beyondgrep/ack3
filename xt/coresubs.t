@@ -4,6 +4,8 @@
 # Same with C<mkdir> and C<chdir>.
 # Ignore the App::Ack::Docs modules since they're nothing but text.
 
+## no critic ( Bangs::ProhibitDebuggingModules )
+
 use warnings;
 use strict;
 

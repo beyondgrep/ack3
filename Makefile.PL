@@ -109,7 +109,7 @@ tags:
 
 # Don't run critic on docs.
 critic:
-	perlcritic -1 -q --statistics -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_UTILS) $(TEST_FILES) $(TEST_XT_FILES)
+	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_UTILS) $(TEST_FILES) $(TEST_XT_FILES)
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone

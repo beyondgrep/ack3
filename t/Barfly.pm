@@ -148,7 +148,7 @@ sub run {
                     main::lists_match( \@results, \@all_lines, $command_line );
                 };
             }
-        }
+        };
     };
 }
 

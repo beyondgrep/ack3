@@ -9,8 +9,6 @@ use Util;
 
 prep_environment();
 
-## no critic ( ValuesAndExpressions::RequireInterpolationOfMetachars ) Way too many metacharacters in this file
-
 my $file = 't/text/raven.txt';
 my $word = 'nevermore';
 
