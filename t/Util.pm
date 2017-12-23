@@ -4,6 +4,9 @@ use 5.010001;
 
 use parent 'Exporter';
 
+use warnings;
+use strict;
+
 use Carp ();
 use Cwd ();
 use File::Next ();
@@ -451,6 +454,7 @@ sub lists_match {
     return subtest subtest_name( $msg ) => sub {
         plan tests => 1;
 
+        my $ok;
         my $rc = eval 'use Test::Differences; 1;';
         if ( $rc ) {
             $ok = eq_or_diff( [@actual], [@expected], $msg );
@@ -786,7 +790,7 @@ sub _check_command_for_taintedness {
 
     my $bad = 0;
 
-    my @tainted = grep { tainted( $arg ) } @tained;
+    my @tainted = grep { tainted( $_ ) } @args;
 
     if ( @tainted ) {
         die "Can't execute this command because of taintedness:\nAll args: @args\nTainted:  @tainted\n";
