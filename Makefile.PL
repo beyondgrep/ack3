@@ -92,6 +92,7 @@ DOCS_PM = \
     lib/App/Ack/Docs/Cookbook.pm \
 
 TEST_VERBOSE=0
+TEST_UTILS=t/*.pm
 TEST_FILES=t/*.t
 TEST_XT_FILES=xt/*.t
 
@@ -108,7 +109,7 @@ tags:
 
 # Don't run critic on docs.
 critic:
-	perlcritic -1 -q --statistics -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_FILES) $(TEST_XT_FILES)
+	perlcritic -1 -q --statistics -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_UTILS) $(TEST_FILES) $(TEST_XT_FILES)
 
 ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
 	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
