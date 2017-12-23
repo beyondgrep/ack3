@@ -604,7 +604,7 @@ BEGIN {
             my ( @args) = @_;
 
             my @cmd = build_ack_invocation(@args);
-            @cmd    = grep { ref($_) ne 'HASH' } @cmd;
+            @cmd    = grep { ref ne 'HASH' } @cmd;
 
             _record_option_coverage(@cmd);
 
@@ -827,7 +827,7 @@ sub caret_X {
 sub getcwd_clean {
     # XXX How is it that this guy is tainted?
     my $wd = Cwd::getcwd();
-    $wd =~ /(.+)/;
+    $wd =~ /(.+)/ or die 'cwd should not be empty';
     return $1;
 }
 
