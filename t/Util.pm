@@ -288,8 +288,8 @@ sub run_cmd {
         my $catchout_file = File::Spec->catfile( $tempdir->dirname, 'stdout.log' );
         my $catcherr_file = File::Spec->catfile( $tempdir->dirname, 'stderr.log' );
 
-        open(SAVEOUT, ">&STDOUT") or die "Can't dup STDOUT: $!";
-        open(SAVEERR, ">&STDERR") or die "Can't dup STDERR: $!";
+        open(SAVEOUT, '>&STDOUT') or die "Can't dup STDOUT: $!";
+        open(SAVEERR, '>&STDERR') or die "Can't dup STDERR: $!";
         open(STDOUT, '>', $catchout_file) or die "Can't open $catchout_file: $!";
         open(STDERR, '>', $catcherr_file) or die "Can't open $catcherr_file: $!";
         my $cmd = Win32::ShellQuote::quote_system_string(@cmd);
@@ -300,8 +300,8 @@ sub run_cmd {
         system( $cmd );
         close STDOUT;
         close STDERR;
-        open(STDOUT, ">&SAVEOUT") or die "Can't restore STDOUT: $!";
-        open(STDERR, ">&SAVEERR") or die "Can't restore STDERR: $!";
+        open(STDOUT, '>&SAVEOUT') or die "Can't restore STDOUT: $!";
+        open(STDERR, '>&SAVEERR') or die "Can't restore STDERR: $!";
         close SAVEOUT;
         close SAVEERR;
         @stdout = read_file($catchout_file);
@@ -377,7 +377,7 @@ sub run_cmd {
         }
     } # end else not Win32
 
-    my ($sig,$core,$rc) = (($? & 127),  ($? & 128) , ($? >> 8));
+    my ($sig,$core,$rc) = (($? & 127), ($? & 128), ($? >> 8));  ## no critic ( Bangs::ProhibitBitwiseOperators )
     $ack_return_code = $rc;
     ## XXX what to do with $core or $sig?
 
