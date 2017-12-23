@@ -122,7 +122,7 @@ PAGER_ENV: {
     local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
     local $TODO             = q{Setting ACK_PAGER in tests won't work for the time being};
 
-    my @args = ('--nocolor', '--sort-files', '-i', 'nevermore', 't/text');
+    my @args = qw( --nocolor --sort-files -i nevermore t/text );
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
