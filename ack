@@ -961,13 +961,12 @@ sub iterate {
 sub print_line_with_context {
     my ( $filename, $matching_line, $lineno ) = @_;
 
-    my $ors                 = $opt_print0 ? "\0" : "\n";
-    my $is_tracking_context = $opt_after_context || $opt_before_context;
+    my $ors = $opt_print0 ? "\0" : "\n";
 
     $matching_line =~ s/[\r\n]+$//g;
 
     # Check if we need to print context lines first.
-    if ( $is_tracking_context ) {
+    if ( $opt_after_context || $opt_before_context ) {
         my $before_unprinted = $lineno - $printed_lineno - 1;
         if ( !$is_first_match && ( !$printed_lineno || $before_unprinted > $n_before_ctx_lines ) ) {
             App::Ack::print('--', $ors);
