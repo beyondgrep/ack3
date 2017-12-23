@@ -903,7 +903,7 @@ sub print_line_with_options {
                 }
             }
             # Reset formatting and delete everything to the end of the line.
-            $line .= "\033[0m\033[K" if $highlighted;   ## no critic ( ValuesAndExpressions::ProhibitEscapedCharacters )
+            $line .= "\e[0m\e[K" if $highlighted;
         }
 
         push @line_parts, $line;

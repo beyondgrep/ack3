@@ -440,7 +440,7 @@ sub pipe_into_ack {
 
 # Use this one if order is important.
 sub lists_match {
-    local $Test::Builder::Level = $Test::Builder::Level + 1; ## no critic
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my @actual   = @{+shift};
     my @expected = @{+shift};
@@ -448,7 +448,7 @@ sub lists_match {
 
     # Normalize all the paths
     for my $path ( @expected, @actual ) {
-        $path = File::Next::reslash( $path ); ## no critic (Variables::ProhibitPackageVars)
+        $path = File::Next::reslash( $path );
     }
 
     return subtest subtest_name( $msg ) => sub {
@@ -472,7 +472,7 @@ sub lists_match {
 }
 
 sub ack_lists_match {
-    local $Test::Builder::Level = $Test::Builder::Level + 1; ## no critic
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my $args     = shift;
     my $expected = shift;
@@ -491,7 +491,7 @@ sub ack_lists_match {
 
 # Use this one if you don't care about order of the lines.
 sub sets_match {
-    local $Test::Builder::Level = $Test::Builder::Level + 1; ## no critic
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my @actual   = @{+shift};
     my @expected = @{+shift};
@@ -505,7 +505,7 @@ sub sets_match {
 }
 
 sub ack_sets_match {
-    local $Test::Builder::Level = $Test::Builder::Level + 1; ## no critic
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my $args     = shift;
     my $expected = shift;
@@ -581,7 +581,7 @@ sub colorize {
         my $n;
         $n += $line =~ s/\((.+?)\)/Term::ANSIColor::colored($1, 'black on_yellow')/eg;
 
-        $line .= "\033[0m\033[K" if $n;
+        $line .= "\e[0m\e[K" if $n;
     }
 
     return @lines;
