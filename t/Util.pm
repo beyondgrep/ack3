@@ -81,7 +81,7 @@ sub prep_environment {
     if ( is_windows() ) {
         # To pipe, perl must be able to find cmd.exe, so add %SystemRoot%\system32 to the path.
         # See http://kstruct.com/2006/09/13/perl-taint-mode-and-cmdexe/
-        $ENV{'SystemRoot'} =~ /([A-Z]:(\\[A-Z0-9_]+)+)/i;
+        $ENV{SystemRoot} =~ /([A-Z]:(\\[A-Z0-9_]+)+)/i or die 'Unrecognizable SystemRoot';
         my $system32_dir = File::Spec->catdir($1,'system32');
         $ENV{'PATH'} = $system32_dir;
     }
@@ -264,9 +264,6 @@ our $ack_return_code;
 # Returns chomped STDOUT and STDERR as two array refs.
 sub run_cmd {
     my ( @cmd ) = @_;
-
-    # my $cmd = join( ' ', @cmd );
-    # diag( "Running command: $cmd" );
 
     my $options = {};
 
@@ -814,7 +811,7 @@ sub is_tainted {
 sub untaint {
     my ( $s ) = @_;
 
-    $s =~ /\A(.*)\z/;
+    $s =~ /\A(.*)\z/ or die 'Somehow unable to untaint';
     return $1;
 }
 

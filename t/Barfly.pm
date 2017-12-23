@@ -29,7 +29,9 @@ sub run_tests {
 
         $line =~ s/\s+$//;
         if ( $line =~ /^BEGIN\s+(.*)/ ) {
-            !defined($block) or die 'We are already in the middle of a block';
+            if ( defined($block) ) {
+                die 'We are already in the middle of a block';
+            }
 
             my $blockname = $1;
             $blocknames_seen{ $blockname }++ and die qq{Block "$blockname" is duplicated in $filename at $lineno};
@@ -112,8 +114,7 @@ sub run {
                 subtest $command_line => sub {
                     plan tests => 2;
 
-                    $command_line =~ /(.*)/;
-                    $command_line = $1;
+                    $command_line = _untaint( $command_line );
 
                     my @args = split( / /, $command_line );
                     @args > 1 or die "Invalid command line: $command_line";
@@ -138,8 +139,7 @@ sub run {
                 subtest $command_line => sub {
                     plan tests => 2;
 
-                    $command_line =~ /(.*)/;
-                    $command_line = $1;
+                    $command_line = _untaint( $command_line );
 
                     my @args = split( / /, $command_line );
                     @args > 1 or die "Invalid command line: $command_line";
@@ -153,6 +153,10 @@ sub run {
             }
         };
     };
+}
+
+sub _untaint {
+    return $_[0] =~ /(.*)/ ? $1 : undef;
 }
 
 1;

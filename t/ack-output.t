@@ -262,7 +262,7 @@ HERE
 }
 
 
-# $f=$filenname, needed for grep,  emulating ack2 $filename:$lineno:$_
+# $f is the filenname, needed for grep, emulating ack2 $filename:$lineno:$_
 FILENAME_SUBSTITUTION_1 : {
     my @expected = line_split( <<'HERE' );
 t/text/ozymandias.txt:4:Half sunk, a shattered visage lies, whose frown,
