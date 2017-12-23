@@ -1,5 +1,8 @@
 package Barfly;
 
+use warnings;
+use strict;
+
 use Test::More;
 
 sub run_tests {
