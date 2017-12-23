@@ -77,6 +77,8 @@ functions = open opendir read readline readdir
 # Some of our subroutines are necessarily complex.
 [-Subroutines::ProhibitExplicitReturnUndef]
 [-Subroutines::RequireArgUnpacking]
+[Subroutines::RequireFinalReturn]
+terminal_funcs = die App::Ack::die
 
 [-TestingAndDebugging::ProhibitNoStrict]
 [-TestingAndDebugging::ProhibitNoWarnings]
