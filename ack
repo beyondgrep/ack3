@@ -169,7 +169,7 @@ MAIN: {
         for my $i ( @special_vars_used_by_opt_output ) {
             if ( $i eq q{&} || $i eq q{'} || $i eq q{`} ) {
                 no warnings;    # They will be undef, so don't warn.
-                eval qq{"\$$i"};
+                eval qq{"\$$i"};    ## no critic ( ErrorHandling::RequireCheckingReturnValueOfEval )
             }
         }
     }
