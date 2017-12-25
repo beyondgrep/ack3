@@ -817,19 +817,14 @@ sub untaint {
 
 
 sub caret_X {
-    # XXX How is it $^X can be tainted?  We should not have to untaint it.
-    $^X =~ /(.+)/;
-    my $perl = $1;
-
-    return $perl;
+    return untaint( $^X ); # XXX How is it $^X can be tainted?  We should not have to untaint it.
 }
 
 
 sub getcwd_clean {
-    # XXX How is it that this guy is tainted?
-    my $wd = Cwd::getcwd();
-    $wd =~ /(.+)/ or die 'cwd should not be empty';
-    return $1;
+    my $cwd = Cwd::getcwd();
+    $cwd =~ /./ or die 'cwd is empty';
+    return untaint( $cwd ); # XXX How is it that Cwd is tainted?
 }
 
 
