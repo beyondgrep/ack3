@@ -128,32 +128,34 @@ no_home( sub {
 unlink $project_file;
 touch_ackrc( '.ackrc' );
 
-my $fn = sub {
-    my $ok = eval { $finder->find_config_files };
-    my $err = $@;
-    ok( !$ok, '.ackrc + _ackrc is error' );
-    like( $err, qr/contains both \.ackrc and _ackrc/, 'Got the expected error' );
+do {
+    my $finder_fn = sub {
+        my $ok = eval { $finder->find_config_files };
+        my $err = $@;
+        ok( !$ok, '.ackrc + _ackrc is error' );
+        like( $err, qr/contains both \.ackrc and _ackrc/, 'Got the expected error' );
+    };
+    with_home( $finder_fn );
+    no_home( $finder_fn );
+
+    unlink '.ackrc';
+    $project_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
+    touch_ackrc( $project_file );
+    with_home( sub {
+        expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') }], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
+    } );
+    no_home( sub {
+        expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
+    } );
+
+    unlink '_ackrc';
 };
-with_home( $fn );
-no_home( $fn );
-
-unlink '.ackrc';
-$project_file = File::Spec->catfile($tempdir->dirname, 'foo', '.ackrc');
-touch_ackrc( $project_file );
-with_home( sub {
-    expect_ackrcs( [ @std_files, { project => 1, path => File::Spec->rel2abs('_ackrc') }], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
-} );
-no_home( sub {
-    expect_ackrcs( [ @global_files, { project => 1, path => File::Spec->rel2abs('_ackrc') } ], 'a lower-level _ackrc should be preferred to a higher-level .ackrc' );
-} );
-
-unlink '_ackrc';
 
 do {
-    my $home = File::Spec->catdir( $tempdir->dirname, 'foo' );
-    local $ENV{'HOME'} = $home;
+    my $test_home = File::Spec->catdir( $tempdir->dirname, 'foo' );
+    local $ENV{'HOME'} = $test_home;
 
-    my $user_file = File::Spec->catfile( $home, '.ackrc');
+    my $user_file = File::Spec->catfile( $test_home, '.ackrc');
     touch_ackrc( $user_file );
 
     expect_ackrcs( [ @global_files, { path => $user_file } ], q{Don't load the same ackrc file twice} );
