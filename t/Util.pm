@@ -801,13 +801,6 @@ sub _check_command_for_taintedness {
 }
 
 
-sub is_tainted {
-    no warnings qw(void uninitialized);
-
-    return !eval { local $SIG{__DIE__} = 'DEFAULT'; join('', shift), kill 0; 1 };
-}
-
-
 sub untaint {
     my ( $s ) = @_;
 
