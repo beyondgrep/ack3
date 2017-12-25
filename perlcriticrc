@@ -1,7 +1,6 @@
 verbose = %f:%l:%c %m (%p)\n    %r\n\n
 
-[Bangs::ProhibitFlagComments]
-severity = 4
+[-Bangs::ProhibitFlagComments]
 [-Bangs::ProhibitNumberedNames]
 
 [-BuiltinFunctions::ProhibitBooleanGrep]
@@ -55,6 +54,7 @@ functions = open opendir read readline readdir
 # If https://github.com/Perl-Critic/Perl-Critic-StricterSubs/issues/9 ever gets implemented, add this back in.
 
 [-Modules::ProhibitAutomaticExportation]
+[-Modules::ProhibitExcessMainComplexity]
 [-Modules::ProhibitMultiplePackages]
 [-Modules::RequirePerlVersion]
 [-Modules::RequireVersionVar]
