@@ -272,13 +272,6 @@ sub get_arg_spec {
 
 =cut
 
-    sub _context_value {
-        my $val = shift;
-
-        # Contexts default to 2.
-        return (!defined($val) || ($val < 0)) ? 2 : $val;
-    }
-
     return {
         1                   => sub { $opt->{1} = $opt->{m} = 1 },
         'A|after-context:-1'  => sub { shift; $opt->{after_context}  = _context_value(shift) },
@@ -378,6 +371,13 @@ sub get_arg_spec {
         'help-types'        => sub { App::Ack::show_help_types(); exit; },
         $extra_specs ? %{$extra_specs} : (),
     }; # arg_specs
+}
+
+sub _context_value {
+    my $val = shift;
+
+    # Contexts default to 2.
+    return (!defined($val) || ($val < 0)) ? 2 : $val;
 }
 
 
