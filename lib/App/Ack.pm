@@ -260,9 +260,11 @@ Searching:
   -v, --invert-match            Invert match: select non-matching lines
   -w, --word-regexp             Force PATTERN to match only whole words
   -Q, --literal                 Quote all metacharacters; PATTERN is literal
+  --lines=NUM                   Only print line(s) NUM of each file.  No
+                                pattern is matched.
+  --match PATTERN               Specify PATTERN explicitly. Typically omitted.
 
 Search output:
-  --lines=NUM                   Only print line(s) NUM of each file
   -l, --files-with-matches      Only print filenames containing matches
   -L, --files-without-matches   Only print filenames with no matches
   --output=expr                 Output the evaluation of expr for each line
@@ -270,7 +272,6 @@ Search output:
   -o                            Show only the part of a line matching PATTERN
                                 Same as --output='\$&'
   --passthru                    Print all lines, whether matching or not
-  --match PATTERN               Specify PATTERN explicitly.
   -m, --max-count=NUM           Stop searching in each file after NUM matches
   -1                            Stop searching after one match of any kind
   -H, --with-filename           Print the filename for each match (default:
@@ -337,12 +338,13 @@ File inclusion/exclusion:
   -r, -R, --recurse             Recurse into subdirectories (default: on)
   -n, --no-recurse              No descending into subdirectories
   --[no]follow                  Follow symlinks.  Default is off.
-  -k, --known-types             Include only files of types that ack recognizes.
 
+File type inclusion/exclusion:
   --type=X                      Include only X files, where X is a recognized
-                                filetype.
-  --type=noX                    Exclude X files.
-                                See "ack --help-types" for supported filetypes.
+                                filetype, e.g. --php, --ruby
+  --type=noX                    Exclude X files, e.g. --nophp, --no-ruby.
+  -k, --known-types             Include only files of types that ack recognizes.
+  --help-types                  Display all known types, and how they're defined.
 
 File type specification:
   --type-set=TYPE:FILTER:ARGS   Files with the given ARGS applied to the given
@@ -361,11 +363,10 @@ Miscellaneous:
   --create-ackrc                Outputs a default ackrc for your customization
                                 to standard output.
   --dump                        Dump information on which options are loaded
+                                and where they're defined.
   --[no]filter                  Force ack to treat standard input as a pipe
                                 (--filter) or tty (--nofilter)
   --help, -?                    This help
-  --help-types                  Display all known types
-                                from which RC files
   --man                         Print the manual
   --faq                         Print the frequently asked questions
   --cookbook                    Print a list of tips and tricks for using ack
