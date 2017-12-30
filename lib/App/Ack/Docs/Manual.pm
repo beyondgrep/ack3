@@ -428,6 +428,38 @@ with filenames that contain whitespace, e.g.
     # Remove all files of type HTML.
     ack -f --html --print0 | xargs -0 rm -f
 
+=item B<--proximate[=N]>
+
+Groups together match lines that are within N lines of each other.
+This is useful for visually picking out matches that appear close
+to other matches.
+
+For example, if you got these results without the C<--proximate> option,
+
+    15: First match
+    18: Second match
+    19: Third match
+    37: Fourth match
+
+they would look like this with C<--proximate=1>
+
+    15: First match
+
+    18: Second match
+    19: Third match
+
+    37: Fourth match
+
+and this with C<--proximate=3>.
+
+    15: First match
+    18: Second match
+    19: Third match
+
+    37: Fourth match
+
+If N is omitted, N is set to 1.
+
 =item B<-Q>, B<--literal>
 
 Quote all metacharacters in PATTERN, it is treated as a literal.
