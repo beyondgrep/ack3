@@ -14,3 +14,7 @@ extensions.
 --output are not allowed in any .ackrc file.
 
 ack 3's new features are listed in RELEASE-NOTES.md.
+
+[FIXES]
+--lines had some mutex options that were not getting checked.  Now,
+--lines is mutex with --passthru, --match and all context options.

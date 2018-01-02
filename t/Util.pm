@@ -53,6 +53,7 @@ our @EXPORT = qw(
     sets_match
     ack_lists_match
     ack_sets_match
+    ack_error_matches
 
     untaint
 
@@ -520,6 +521,25 @@ sub ack_sets_match {
         my @results = run_ack( @args );
 
         return sets_match( \@results, $expected, $msg );
+    };
+}
+
+
+sub ack_error_matches {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $args     = shift;
+    my $expected = shift;
+    my $msg      = shift;
+
+    return subtest subtest_name( $msg, $args, $expected ) => sub {
+        plan tests => 4;
+
+        my ( $stdout, $stderr ) = run_ack_with_stderr( @{$args} );
+        isnt( get_rc(), 0, 'Nonzero error' );
+        is_empty_array( $stdout, 'No normal output' );
+        is( scalar @{$stderr}, 1, 'Just one error' );
+        like( $stderr->[0], $expected, 'Error matches' );
     };
 }
 

@@ -13,7 +13,7 @@ if ( not has_io_pty() ) {
     exit(0);
 }
 
-plan tests => 13;
+plan tests => 12;
 
 prep_environment();
 
@@ -55,23 +55,6 @@ HERE
     ack_sets_match( [ @args, @files ], \@expected, 'Looking for lines 3 to 6' );
 }
 
-LINES_WITH_CONTEXT: {
-    my @expected = line_split( <<'HERE' );
-of that House shall agree to pass the Bill, it shall be sent, together
-with the Objections, to the other House, by which it shall likewise be
-reconsidered, and if approved by two thirds of that House, it shall become
-a Law. But in all such Cases the Votes of both Houses shall be determined
-by Yeas and Nays, and the Names of the Persons voting for and against
-the Bill shall be entered on the Journal of each House respectively. If
-any Bill shall not be returned by the President within ten Days (Sundays
-HERE
-
-    my @files = qw( t/text/constitution.txt );
-    my @args = qw( --lines=156 -C3 );
-
-    ack_lists_match( [ @files, @args ], \@expected, 'Looking for line 3 with two lines of context' );
-}
-
 LINES_THAT_MAY_BE_NON_EXISTENT: {
     my @expected = line_split( <<'HERE' );
 "For the love of God, Montresor!"
@@ -83,20 +66,6 @@ HERE
 
     ack_sets_match( [ @args, @files ], \@expected, 'Looking for non existent line' );
 }
-
-LINE_AND_PASSTHRU: {
-    my @expected = line_split( <<'HERE' );
-=head1 Dummy document
-
-=head2 There's important stuff in here!
-HERE
-
-    my @files = qw( t/swamp/perl.pod );
-    my @args = qw( --lines=2 --passthru );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Checking --passthru behaviour with --line' );
-}
-
 
 LINE_1_MULTIPLE_FILES: {
     my @target_file = map { reslash( $_ ) } qw(
@@ -151,15 +120,27 @@ LINENO_WARNINGS: {
 }
 
 LINE_WITH_REGEX: {
-    # Specifying both --line and a regex should result in an error.
-    my @files = qw( t/text/boy-named-sue.txt );
+    # Specifying both --lines and a regex should result in an error.
     my @args = qw( --lines=1 --match Sue );
+    my @files = qw( t/text/boy-named-sue.txt );
 
-    my ($stdout, $stderr) = run_ack_with_stderr( @args, @files );
-    isnt( get_rc(), 0, 'Specifying both --line and --match must lead to an error RC' );
-    is_empty_array( $stdout, 'No normal output' );
-    is( scalar @{$stderr}, 1, 'One line of stderr output' );
-    like( $stderr->[0], qr/\Q(Sue)/, 'Error message must contain "(Sue)"' );
+    ack_error_matches( [@args,@files], qr/Options '--lines' and '--match' are mutually exclusive/ );
+}
+
+LINES_WITH_CONTEXT: {
+    for my $arg ( qw( -A -B -C ) ) {
+        my @args = ( '--lines=156', "${arg}3" );
+        my @files = qw( t/text/constitution.txt );
+
+        ack_error_matches( [@args,@files], qr/Options '--lines' and '$arg' are mutually exclusive/ );
+    }
+}
+
+LINE_AND_PASSTHRU: {
+    my @args = qw( --lines=2 --passthru );
+    my @files = qw( t/swamp/perl.pod );
+
+    ack_error_matches( [@args,@files], qr/Options '--lines' and '--passthru' are mutually exclusive/ );
 }
 
 done_testing();

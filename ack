@@ -183,10 +183,7 @@ MAIN: {
     }
     else {
         if ( $opt_f || $opt_lines ) {
-            if ( $opt_regex ) {
-                App::Ack::warn( "regex ($opt_regex) specified with -f or --lines" );
-                App::Ack::exit_from_ack( 0 );
-            }
+            # No need to check for regex, since mutex options are handled elsewhere.
         }
         else {
             $opt_regex = shift @ARGV if not defined $opt_regex;

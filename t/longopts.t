@@ -152,7 +152,7 @@ for my $arg ( qw( -L --files-without-matches ) ) {
 
 LINE: {
     my @files = 't/swamp/options.pl';
-    my $opt   = '--line=1';
+    my $opt   = '--lines=1';
     my @lines = run_ack( $opt, @files );
 
     is_deeply( \@lines, ['#!/usr/bin/env perl'], 'Only one matching line should be a shebang' );
