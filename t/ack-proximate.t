@@ -154,7 +154,7 @@ $const:441:of two Witnesses to the same overt Act, or on Confession in open Cour
 HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=20 --nogroup -i court );
+    my @args = qw( --proximate=20 --nogroup -i --sort court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=20' );
 };
