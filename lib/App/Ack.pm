@@ -21,7 +21,7 @@ our $VERSION;
 our $COPYRIGHT;
 BEGIN {
     $VERSION = '2.999_01';
-    $COPYRIGHT = 'Copyright 2005-2017 Andy Lester.';
+    $COPYRIGHT = 'Copyright 2005-2018 Andy Lester.';
 }
 our $STANDALONE = 0;
 our $ORIGINAL_PROGRAM_NAME;
