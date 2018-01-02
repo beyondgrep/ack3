@@ -99,7 +99,7 @@ $const
 HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=2 --group -i court );
+    my @args = qw( --proximate=2 --group -i --sort court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate=2' );
 };
@@ -128,7 +128,7 @@ $const:441:of two Witnesses to the same overt Act, or on Confession in open Cour
 HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate=2 --nogroup -i court );
+    my @args = qw( --proximate=2 --nogroup -i --sort court );
 
     ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=2' );
 };
