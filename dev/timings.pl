@@ -34,7 +34,8 @@ sub grab_versions {
             my $output = `$^X $ack --noenv --version 2>&1`;
             if($output =~ /ack\s+(?<version>\d+[.]\d+(_\d+)?)/) {
                 $version = $+{'version'};
-            } else {
+            }
+            else {
                 # XXX uh-oh
             }
         }
@@ -82,7 +83,12 @@ my $num_iterations = 1;
 sub time_ack {
     my ( $ack, $invocation, $perl ) = @_;
 
-    my @args = ( $perl, $ack->{'path'}, '--noenv', @$invocation );
+    my @args = ( $ack->{'path'}, @$invocation );
+
+    # Only ack has --noenv and is run under Perl.
+    if ( $ack->{'path'} =~ /ack/ ) {
+        @args = ( $perl, @args, '--noenv' );
+    }
 
     if ( $ack->{'path'} =~ /ack-1/ ) {
         @args = grep { !/--known/ } @args;
@@ -104,7 +110,8 @@ sub time_ack {
             }
             waitpid $pid, 0;
             return if $has_error_lines;
-        } else {
+        }
+        else {
             close $read;
             open STDOUT, '>', File::Spec->devnull;
             open STDERR, '>&', $write;
@@ -197,6 +204,14 @@ push @acks, 'ack-standalone';
 @acks = grep { !/_/ } @acks;  # Skip dev versions
 
 @acks = grab_versions(@acks);
+
+# Test ag and ripgrep if we have them.
+if ( -x '/usr/bin/rg' ) {
+    push( @acks, { path => '/usr/bin/rg', version => 'rg' } );
+}
+if ( -x '/usr/local/bin/ag' ) {
+    push( @acks, { path => '/usr/local/bin/ag', version => 'ag' } );
+}
 if(@use_acks) {
     foreach my $ack (@acks) {
         next if $ack->{'version'} eq 'HEAD';
@@ -208,9 +223,8 @@ if(@use_acks) {
     @acks = grep { defined() } @acks;
 }
 @acks = sort {
-    return 1  if $a->{'version'} eq 'HEAD';
-    return -1 if $b->{'version'} eq 'HEAD';
-    return eval($a->{'version'}) + 0 <=> eval($b->{'version'}) + 0;
+    my ($na,$nb) = map { $_ eq 'HEAD' ? 99 : $_ } ( $a->{'version'}, $b->{'version'} );
+    return $na cmp $nb;
 } @acks;
 
 if($previous_timings) {
@@ -236,7 +250,8 @@ foreach my $invocation (@invocations) {
 
         if($ack->{'path'}) {
             $elapsed = time_ack($ack, $invocation, $perl);
-        } else {
+        }
+        else {
             $elapsed = $previous_timings->{join(' ', 'ack', @$invocation)};
         }
 
