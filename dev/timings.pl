@@ -206,11 +206,13 @@ push @acks, 'ack-standalone';
 @acks = grab_versions(@acks);
 
 # Test ag and ripgrep if we have them.
-if ( -x '/usr/bin/rg' ) {
-    push( @acks, { path => '/usr/bin/rg', version => 'rg' } );
-}
-if ( -x '/usr/local/bin/ag' ) {
-    push( @acks, { path => '/usr/local/bin/ag', version => 'ag' } );
+for my $ackalike ( qw( ag rg ) ) {
+    for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
+        my $path = "$dir/$ackalike";
+        if ( -x $path ) {
+            push( @acks, { path => $path, version => $ackalike } );
+        }
+    }
 }
 if(@use_acks) {
     foreach my $ack (@acks) {
