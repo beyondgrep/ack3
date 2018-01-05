@@ -45,6 +45,8 @@ our $dir_sep_chars;
 our $is_cygwin;
 our $is_windows;
 
+our $debug_nopens = 0;
+
 use File::Spec 1.00015 ();
 
 BEGIN {
