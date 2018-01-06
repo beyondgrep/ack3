@@ -107,7 +107,7 @@ sub _generate_ignore_dir {
     };
 }
 
-sub process_filter_spec {
+sub _process_filter_spec {
     my ( $spec ) = @_;
 
     if ( $spec =~ /^(\w+):(\w+):(.*)/ ) {
@@ -132,7 +132,7 @@ sub process_filter_spec {
 }
 
 
-sub uninvert_filter {
+sub _uninvert_filter {
     my ( $opt, @filters ) = @_;
 
     return unless defined $opt->{filters} && @filters;
@@ -154,7 +154,7 @@ sub uninvert_filter {
 }
 
 
-sub process_filetypes {
+sub _process_filetypes {
     my ( $opt, $arg_sources ) = @_;
 
     Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version'); # start with default options, minus some annoying ones
@@ -168,7 +168,7 @@ sub process_filetypes {
     my $add_spec = sub {
         my ( undef, $spec ) = @_;
 
-        my ( $name, $filter ) = process_filter_spec($spec);
+        my ( $name, $filter ) = _process_filter_spec($spec);
 
         push @{ $App::Ack::mappings{$name} }, $filter;
 
@@ -180,7 +180,7 @@ sub process_filetypes {
                 @filters = map { $_->invert() } @filters;
             }
             else {
-                uninvert_filter( $opt, @filters );
+                _uninvert_filter( $opt, @filters );
             }
 
             push @{ $opt->{'filters'} }, @filters;
@@ -190,7 +190,7 @@ sub process_filetypes {
     my $set_spec = sub {
         my ( undef, $spec ) = @_;
 
-        my ( $name, $filter ) = process_filter_spec($spec);
+        my ( $name, $filter ) = _process_filter_spec($spec);
 
         $App::Ack::mappings{$name} = [ $filter ];
 
@@ -381,7 +381,7 @@ sub _context_value {
 }
 
 
-sub process_other {
+sub _process_other {
     my ( $opt, $extra_specs, $arg_sources ) = @_;
 
     # Start with default options, minus some annoying ones.
@@ -474,7 +474,7 @@ sub process_other {
 }
 
 
-sub should_dump_options {
+sub _should_dump_options {
     my ( $sources ) = @_;
 
     foreach my $source (@{$sources}) {
@@ -495,7 +495,7 @@ sub should_dump_options {
 }
 
 
-sub explode_sources {
+sub _explode_sources {
     my ( $sources ) = @_;
 
     my @new_sources;
@@ -556,7 +556,7 @@ sub explode_sources {
 }
 
 
-sub compare_opts {
+sub _compare_opts {
     my ( $a, $b ) = @_;
 
     my $first_a = $a->[0];
@@ -569,10 +569,10 @@ sub compare_opts {
 }
 
 
-sub dump_options {
+sub _dump_options {
     my ( $sources ) = @_;
 
-    $sources = explode_sources($sources);
+    $sources = _explode_sources($sources);
 
     my %opts_by_source;
     my @source_names;
@@ -591,14 +591,14 @@ sub dump_options {
 
         say $name;
         say '=' x length($name);
-        say '  ', join(' ', @{$_}) for sort { compare_opts($a, $b) } @{$contents};
+        say '  ', join(' ', @{$_}) for sort { _compare_opts($a, $b) } @{$contents};
     }
 
     return;
 }
 
 
-sub remove_default_options_if_needed {
+sub _remove_default_options_if_needed {
     my ( $sources ) = @_;
 
     my $default_index;
@@ -650,7 +650,7 @@ sub remove_default_options_if_needed {
 }
 
 
-sub check_for_mutually_exclusive_options {
+sub _check_for_mutually_exclusive_options {
     my ( $arg_sources ) = @_;
 
     my %mutually_exclusive_with;
@@ -710,17 +710,17 @@ sub process_args {
         pager => $ENV{ACK_PAGER_COLOR} || $ENV{ACK_PAGER},
     );
 
-    check_for_mutually_exclusive_options($arg_sources);
+    _check_for_mutually_exclusive_options($arg_sources);
 
-    $arg_sources = remove_default_options_if_needed($arg_sources);
+    $arg_sources = _remove_default_options_if_needed($arg_sources);
 
-    if ( should_dump_options($arg_sources) ) {
-        dump_options($arg_sources);
+    if ( _should_dump_options($arg_sources) ) {
+        _dump_options($arg_sources);
         exit(0);
     }
 
-    my $type_specs = process_filetypes(\%opt, $arg_sources);
-    process_other(\%opt, $type_specs, $arg_sources);
+    my $type_specs = _process_filetypes(\%opt, $arg_sources);
+    _process_other(\%opt, $type_specs, $arg_sources);
     while ( @{$arg_sources} ) {
         my $source = shift @{$arg_sources};
         my ( $source_name, $args ) = @{$source}{qw/name contents/};
