@@ -287,7 +287,6 @@ sub get_arg_spec {
         'column!'           => \$opt->{column},
         count               => \$opt->{count},
         'create-ackrc'      => sub { say for ( '--ignore-ack-defaults', App::Ack::ConfigDefault::options() ); exit; },
-        'debug'             => \$opt->{debug},
         'env!'              => sub {
             my ( undef, $value ) = @_;
 

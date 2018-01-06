@@ -335,11 +335,6 @@ FILES:
         App::Ack::print( $total_count, "\n" );
     }
 
-    if ( $opt->{debug} ) {
-        App::Ack::print( "$_\n" ) for @{$App::Ack::debug_files_opened};
-        App::Ack::print( scalar @{$App::Ack::debug_files_opened}, " files opened\n" );
-    }
-
     close $App::Ack::fh;
 
     App::Ack::exit_from_ack( $nmatches );

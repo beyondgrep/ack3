@@ -85,7 +85,6 @@ sub open {
     my ( $self ) = @_;
 
     if ( !$self->{opened} ) {
-        push( @{$App::Ack::debug_files_opened}, $self->{filename} );
         if ( open $self->{fh}, '<', $self->{filename} ) {
             $self->{opened} = 1;
         }
