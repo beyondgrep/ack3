@@ -135,7 +135,7 @@ sub needs_line_scan {
     }
     return 0 unless $rc && ( $rc == $size );
 
-    return $buffer =~ /$opt->{regex}/m;
+    return $buffer =~ /$opt->{regex}/mo;
 }
 
 
