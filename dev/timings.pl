@@ -105,10 +105,11 @@ if ($previous_timings) {
     };
 }
 
+say "Testing under Perl $], $^X";
 my $format = create_format(\@invocations, \@acks, $show_colors);
 my $header = sprintf $format, '', map { color($_->{'version'})  } @acks;
 print $header;
-print '-' x (length($header) - 1), "\n"; # -1 for the newline
+say '-' x (length($header) - 1); # -1 for the newline
 
 my %stored_timings;
 
