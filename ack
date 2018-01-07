@@ -324,17 +324,14 @@ FILES:
         }
         # Normal match-showing ack
         else {
-            my $needs_line_scan;
+            my $needs_line_scan = 1;
             if ( $opt->{regex} && !$opt->{passthru} ) {
-                if ( $file->open ) {
+                if ( $file->open() ) {
                     $needs_line_scan = $file->needs_line_scan( $opt );
                     if ( $needs_line_scan ) {
                         $file->reset();
                     }
                 }
-            }
-            else {
-                $needs_line_scan = 1;
             }
             if ( $needs_line_scan ) {
                 $nmatches += print_matches_in_file( $file, $opt );
