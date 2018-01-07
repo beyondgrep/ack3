@@ -117,6 +117,8 @@ sub needs_line_scan {
 
     return 1 if $opt->{v};
 
+    return 1 unless -f $self->{fh};
+
     my $size = -s $self->{fh};
     if ( $size == 0 ) {
         return 0;
@@ -149,6 +151,8 @@ sub reset {
     my $self = shift;
 
     if ( defined($self->{fh}) ) {
+        return unless -f $self->{fh};
+
         if ( !seek( $self->{fh}, 0, 0 ) && $App::Ack::report_bad_filenames ) {
             App::Ack::warn( "$self->{filename}: $!" );
         }

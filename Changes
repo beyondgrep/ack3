@@ -1,6 +1,14 @@
 History file for ack.  https://beyondgrep.com/
 
 
+NEXT
+=====================================
+[ENHANCEMENTS]
+Added an optimization to make ack only do a line-by-line search of a
+file if there's a match somewhere in the file.  This gives ack a 20-30%
+in timings of common cases.
+
+
 2.999_01 Mon Jan  1 22:11:17 CST 2018
 =====================================
 [ENHANCEMENTS]

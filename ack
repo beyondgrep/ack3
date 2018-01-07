@@ -324,7 +324,21 @@ FILES:
         }
         # Normal match-showing ack
         else {
-            $nmatches += print_matches_in_file( $file, $opt );
+            my $needs_line_scan;
+            if ( $opt->{regex} && !$opt->{passthru} ) {
+                if ( $file->open ) {
+                    $needs_line_scan = $file->needs_line_scan( $opt );
+                    if ( $needs_line_scan ) {
+                        $file->reset();
+                    }
+                }
+            }
+            else {
+                $needs_line_scan = 1;
+            }
+            if ( $needs_line_scan ) {
+                $nmatches += print_matches_in_file( $file, $opt );
+            }
             if ( $nmatches && $only_first ) {
                 last FILES;
             }

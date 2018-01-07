@@ -37,6 +37,7 @@ UNFILTERED: {
             t/swamp/blib/ignore.pir
             t/swamp/blib/ignore.pm
             t/swamp/blib/ignore.pod
+            t/swamp/constitution-100k.pl
             t/swamp/c-header.h
             t/swamp/c-source.c
             t/swamp/crystallography-weenies.f
