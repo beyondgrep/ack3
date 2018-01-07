@@ -13,11 +13,137 @@ use List::MoreUtils qw(any);
 use Term::ANSIColor qw(colored);
 use Time::HiRes qw(gettimeofday tv_interval);
 
-my $SOURCE_DIR = File::Spec->catdir($ENV{HOME}, 'parrot');
+my $show_colors;
+my $perform_store;
+my $perfom_clear;
+my $num_iterations = 1;
 
-unless ( -d $SOURCE_DIR ) {
-    die "Expecting to find parrot in $SOURCE_DIR - get it from github.com/parrot/parrot";
+my @use_acks;
+my $perl = $^X;
+
+GetOptions(
+    'clear'   => \$perfom_clear,
+    'store'   => \$perform_store,
+    'color'   => \$show_colors,
+    'times=i' => \$num_iterations,
+    'ack=s@'  => \@use_acks,
+    'perl=s'  => \$perl,
+);
+
+my $SOURCE_DIR = shift or die "Must specify a path";
+
+my @invocations = (
+    # normal mode
+    [ 'foo', $SOURCE_DIR ],
+
+    # -w
+    [ 'foo', '-w', $SOURCE_DIR ],
+
+    # -w with a metacharacter
+    [ 'foo.', '-w', $SOURCE_DIR ],
+
+    # -f
+    [ '-f', $SOURCE_DIR ],
+
+    # -l
+    [ 'foo', '-l', $SOURCE_DIR ],
+
+    # -A
+    [ 'foo', '-A10', $SOURCE_DIR ],
+
+    # -B
+    [ 'foo', '-B10', $SOURCE_DIR ],
+
+    # -C
+    [ 'foo', '-C10', $SOURCE_DIR ],
+);
+
+
+
+if ($perfom_clear) {
+    unlink('.timings.json');
 }
+
+my $json = JSON->new->utf8->pretty;
+my $previous_timings;
+if ( -e '.timings.json' ) {
+    $previous_timings = $json->decode(scalar(read_file('.timings.json')));
+}
+
+my @acks = map { File::Spec->catfile('garage', $_) } read_dir('garage');
+push @acks, 'ack-standalone';
+
+@acks = grab_versions(@acks);
+
+# Test ag and ripgrep if we have them.
+for my $ackalike ( qw( ag rg ) ) {
+    for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
+        my $path = "$dir/$ackalike";
+        if ( -x $path ) {
+            push( @acks, { path => $path, version => $ackalike } );
+        }
+    }
+}
+if ( @use_acks ) {
+    foreach my $ack (@acks) {
+        next if $ack->{'version'} eq 'HEAD';
+        next if $ack->{'version'} eq 'previous';
+        unless(any { $_ eq $ack->{'version'} } @use_acks) {
+            undef $ack;
+        }
+    }
+    @acks = grep { defined } @acks;
+}
+@acks = sort {
+    my ($na,$nb) = map { $_ eq 'HEAD' ? 99 : $_ } ( $a->{'version'}, $b->{'version'} );
+    return $na cmp $nb;
+} @acks;
+
+if ($previous_timings) {
+    splice @acks, -1, 0, {
+        version => 'previous',
+    };
+}
+
+my $format = create_format(\@invocations, \@acks, $show_colors);
+my $header = sprintf $format, '', map { color($_->{'version'})  } @acks;
+print $header;
+print '-' x (length($header) - 1), "\n"; # -1 for the newline
+
+my %stored_timings;
+
+foreach my $invocation (@invocations) {
+    my @timings;
+
+    my $previous_timing;
+
+    foreach my $ack (@acks) {
+        my $elapsed;
+
+        if ($ack->{'path'}) {
+            $elapsed = time_ack($ack, $invocation, $perl);
+        }
+        else {
+            $elapsed = $previous_timings->{join(' ', 'ack', @$invocation)};
+        }
+        if (defined $elapsed) {
+            $elapsed = sprintf('%.2f', $elapsed);
+        }
+        push @timings, color($previous_timing, $elapsed);
+        $previous_timing = $elapsed if defined $elapsed;
+
+        if ($perform_store && $ack->{'store_timings'}) {
+            $stored_timings{join(' ', 'ack', @$invocation)} = $elapsed;
+        }
+    }
+    printf $format, join(' ', 'ack', @$invocation), map { defined() ? $_ : color('x_x') } @timings;
+}
+
+if ($perform_store) {
+    write_file('.timings.json', $json->encode(\%stored_timings));
+}
+
+exit 0;
 
 sub grab_versions {
     my @acks = @_;
@@ -78,8 +204,6 @@ sub create_format {
     } @max_version_lengths) . "\n";
 }
 
-my $num_iterations = 1;
-
 sub time_ack {
     my ( $ack, $invocation, $perl ) = @_;
 
@@ -124,8 +248,6 @@ sub time_ack {
     return tv_interval($start, $end) / $num_iterations;
 }
 
-my $show_colors;
-
 sub color {
     my ( $previous_value, $value );
 
@@ -149,134 +271,10 @@ sub color {
     }
 }
 
-my @invocations = (
-    # normal mode
-    [ 'foo', $SOURCE_DIR ],
-
-    # -w
-    [ 'foo', '-w', $SOURCE_DIR ],
-
-    # -w with a metacharacter
-    [ 'foo.', '-w', $SOURCE_DIR ],
-
-    # -f
-    [ '-f', $SOURCE_DIR ],
-
-    # -l
-    [ 'foo', '-l', $SOURCE_DIR ],
-
-    # -A
-    [ 'foo', '-A10', $SOURCE_DIR ],
-
-    # -B
-    [ 'foo', '-B10', $SOURCE_DIR ],
-
-    # -C
-    [ 'foo', '-C10', $SOURCE_DIR ],
-);
-
-my $perform_store;
-my $perfom_clear;
-my @use_acks;
-my $perl = $^X;
-
-GetOptions(
-    'clear'   => \$perfom_clear,
-    'store'   => \$perform_store,
-    'color'   => \$show_colors,
-    'times=i' => \$num_iterations,
-    'ack=s@'  => \@use_acks,
-    'perl=s'  => \$perl,
-);
-
-if($perfom_clear) {
-    unlink('.timings.json');
-}
-
-my $json = JSON->new->utf8->pretty;
-my $previous_timings;
-if(-e '.timings.json') {
-    $previous_timings = $json->decode(scalar(read_file('.timings.json')));
-}
-
-my @acks = map { File::Spec->catfile('garage', $_) } read_dir('garage');
-push @acks, 'ack-standalone';
-
-@acks = grab_versions(@acks);
-
-# Test ag and ripgrep if we have them.
-for my $ackalike ( qw( ag rg ) ) {
-    for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
-        my $path = "$dir/$ackalike";
-        if ( -x $path ) {
-            push( @acks, { path => $path, version => $ackalike } );
-        }
-    }
-}
-if(@use_acks) {
-    foreach my $ack (@acks) {
-        next if $ack->{'version'} eq 'HEAD';
-        next if $ack->{'version'} eq 'previous';
-        unless(any { $_ eq $ack->{'version'} } @use_acks) {
-            undef $ack;
-        }
-    }
-    @acks = grep { defined() } @acks;
-}
-@acks = sort {
-    my ($na,$nb) = map { $_ eq 'HEAD' ? 99 : $_ } ( $a->{'version'}, $b->{'version'} );
-    return $na cmp $nb;
-} @acks;
-
-if($previous_timings) {
-    splice @acks, -1, 0, {
-        version => 'previous',
-    };
-}
-
-my $format = create_format(\@invocations, \@acks, $show_colors);
-my $header = sprintf $format, '', map { color($_->{'version'})  } @acks;
-print $header;
-print '-' x (length($header) - 1), "\n"; # -1 for the newline
-
-my %stored_timings;
-
-foreach my $invocation (@invocations) {
-    my @timings;
-
-    my $previous_timing;
-
-    foreach my $ack (@acks) {
-        my $elapsed;
-
-        if($ack->{'path'}) {
-            $elapsed = time_ack($ack, $invocation, $perl);
-        }
-        else {
-            $elapsed = $previous_timings->{join(' ', 'ack', @$invocation)};
-        }
-
-        if(defined $elapsed) {
-            $elapsed = sprintf('%.2f', $elapsed);
-        }
-        push @timings, color($previous_timing, $elapsed);
-        $previous_timing = $elapsed if defined $elapsed;
-
-        if($perform_store && $ack->{'store_timings'}) {
-            $stored_timings{join(' ', 'ack', @$invocation)} = $elapsed;
-        }
-    }
-    printf $format, join(' ', 'ack', @$invocation), map { defined() ? $_ : color('x_x') } @timings;
-}
-
-if($perform_store) {
-    write_file('.timings.json', $json->encode(\%stored_timings));
-}
-
 __DATA__
 
 TODO:
 
   * Percentage slowdown per invocation
   * Overall stats dump at the end.
-  * Stop passing bad options to 1.x (--rust, --known)
+  * Stop passing bad options to 1.x (--known)

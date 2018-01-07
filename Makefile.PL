@@ -148,7 +148,7 @@ time-head: ack-standalone
 	time $(PERL) ./ack-standalone --noenv $(TIMER_ARGS)
 
 timings: ack-standalone
-	./dev/timings.pl
+	./dev/timings.pl ~/parrot
 
 completion.bash: pm_to_blib
 	./dev/generate-completion-scripts.pl completion.bash
