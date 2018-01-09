@@ -528,26 +528,26 @@ fixed tabsets, not with 8-char tabs, alas.
 (To make the KWIC output look right, load into OpenOffice or Word to spread the tab stops !)
 
 
-=head2 TBD Add Elegant nearly- and not-ugly-and- exact solutions that  require neither hypothetical, C<\n> as OR nor C<--fgrep-f> .
+=head2 TBD Add Elegant nearly- and not-ugly-and- exact solutions that require neither hypothetical, C<\n> as OR nor C<--fgrep-f>
 
-Ack doesn't have C<--fgrep-f> nor does it accept newlines as OR otherwise, as newer Grep does.  But Grep has no C<--passthru>. 
-L<Requestor|> would like to view the whole files but highlight any of several words in each, which needs both.
-Workaround is ugly:
+Ack doesn't have C<--fgrep-f> nor does it accept newlines as OR otherwise, as newer grep does.  But grep has
+no C<--passthru>.  L<Requestor|> would like to view the whole files but highlight any of several words in each,
+which needs both.  Workaround is ugly:
 
-  ack /etc --match "`/bin/ls /home/ | tr '\n' '|' | sed -e 's/|$//'`" 
+    ack /etc --match "`/bin/ls /home/ | tr '\n' '|' | sed -e 's/|$//'`"
 
-Longer but more readable, use C<< $() >> instead of C<``> and Perl instead of tr, sed, 
-which allows us to insert C<< | >> between as needed without an extra to be removed:
+Longer but more readable, use C<< $() >> instead of C<``> and Perl instead of tr, sed, which allows us to insert
+C<< | >> between as needed without an extra to be removed:
 
-  ack /etc --match $(/bin/ls /home/ | perl  -E '@u=<>; chomp for @u; say join q(|), @u' )
+    ack /etc --match $(/bin/ls /home/ | perl  -E '@u=<>; chomp for @u; say join q(|), @u' )
 
 or invert the C<ls>,
 
-  ack /etc --match $( perl -E '@u=`ls /home/`; chomp for @u; say join q(|), @u' )
+    ack /etc --match $( perl -E '@u=`ls /home/`; chomp for @u; say join q(|), @u' )
 
-or keep it in one process, 
+or keep it in one process,
 
-  ack /etc --match $( perl -E 'chdir q(/home/); @u=<*>; chomp for @u; say join q(|), @u' )
+    ack /etc --match $( perl -E 'chdir q(/home/); @u=<*>; chomp for @u; say join q(|), @u' )
 
 # TODO https://github.com/beyondgrep/ack2/pull/646
 
@@ -574,13 +574,11 @@ While grep can do this
 
 it's rather slow for large files!
 
-The standard Unix/Linux tool for this is C<comm>.
-In C<comm> terms, the request is the C<<comm -23 file1 file2>> option.
-Wit no args, Column 1 is words only in file1, Columnn 2 is words only in file2,
-and Column 3 is words in both files 1 and 2.
+The standard Unix/Linux tool for this is C<comm>.  In C<comm> terms, the request is the C<comm -23 file1 file2>
+option.  With no args, Column 1 is words only in file1, Columnn 2 is words only in file2, and Column 3 is words
+in both files 1 and 2.
 
-The Mnemonic such as it is: C<-23> is C<minus 2,3>,
-i.e. omit columns 2 (file 2 words) and 3 (both files words).
+The mnemonic is: C<-23> is C<minus 2,3>, i.e. omit columns 2 (file 2 words) and 3 (both files words).
 
 One requirement for C<comm> is that files must be sorted by natural sort order.
 If the files aren't in nor wanted in sorted order, the shell command or alias needed is
@@ -591,7 +589,7 @@ with modern C<bash>'s C<< <() >> command substitution as file-pipes.
 
 (That C<< <(fileter $f1) <(filter $f2) >> idiom is also good for pre-filtering input to C<diff> etc.)
 
-Note for Windows users: MicroSoft and CygWin both provide Linux/GNU commandline utilities for Windows.
+Note for Windows users: Microsoft and Cygwin both provide Linux/GNU commandline utilities for Windows.
 They may have come with the Perl you're using for Ack.
 
 =cut;
