@@ -27,7 +27,7 @@ for my $word ( qw( warn die ) ) {
     subtest "Finding $word" => sub {
         plan tests => 4;
 
-        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib', @exclusions );
+        my @args = ( '(?<!:)\b' . $word . '\b', '-I', 'blib/lib', @exclusions, '--ignore-dir', 'garage' );
         my @results = run_ack( @args );
 
         like( $results[0], qr/^$ack_pm:\d+:=head2 $word/, 'POD' );
@@ -42,7 +42,7 @@ for my $word ( qw( chdir mkdir ) ) {
     subtest "Finding $word" => sub {
         plan tests => 3;
 
-        my @args = ( '-w', '--ignore-file=is:coresubs.t', @exclusions, $word );
+        my @args = ( '-w', '--ignore-file=is:coresubs.t', '--ignore-dir=garage', @exclusions, $word );
         my @results = run_ack( @args );
 
         is( scalar @results, 1, 'Exactly one hit...' ) or do { require Data::Dumper; warn Data::Dumper::Dumper( \@results ) };
