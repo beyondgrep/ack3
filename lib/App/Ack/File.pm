@@ -116,24 +116,20 @@ sub needs_line_scan {
     my $opt   = shift;
 
     return 1 if $opt->{v};
-
     return 1 unless -f $self->{fh};
 
-    my $size = -s $self->{fh};
-    if ( $size == 0 ) {
+    my $buffer;
+    my $size = 10_000_000;
+    my $rc = sysread( $self->{fh}, $buffer, $size );
+    if ( !defined($rc) ) {
+        if ( $App::Ack::report_bad_filenames ) {
+            App::Ack::warn( "$self->{filename}: $!" );
+        }
         return 0;
     }
-    elsif ( $size > 100_000 ) {
-        return 1;
-    }
 
-    my $buffer;
-    my $rc = sysread( $self->{fh}, $buffer, $size );
-    if ( !defined($rc) && $App::Ack::report_bad_filenames ) {
-        App::Ack::warn( "$self->{filename}: $!" );
-        return 1;
-    }
-    return 0 unless $rc && ( $rc == $size );
+    # If we read all 100K, then we need to scan the rest.
+    return 1 if $rc == $size;
 
     return $buffer =~ /$opt->{regex}/mo;
 }

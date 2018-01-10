@@ -1,6 +1,13 @@
 History file for ack.  https://beyondgrep.com/
 
 
+NEXT
+=====================================
+[ENHANCEMENTS]
+The check for whether we need to scan the entire file line-by-line now
+reads 10M of file instead of just 100K.
+
+
 2.999_02 Mon Jan  8 23:03:42 CST 2018
 =====================================
 [ENHANCEMENTS]
