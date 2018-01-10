@@ -110,13 +110,16 @@ if ($previous_timings) {
 }
 
 say "Testing under Perl $], $^X";
+say '';
 my $format = create_format(\@invocations, \@acks, $show_colors);
 my $header = sprintf $format, '', map { color($_->{'version'})  } @acks;
 print $header;
-say '-' x (length($header) - 1); # -1 for the newline
+my $dashes = '-' x (length($header) - 1); # -1 for the newline
+say $dashes;
 
 my %stored_timings;
 
+my @total_timings;
 foreach my $invocation (@invocations) {
     my @timings;
 
@@ -141,8 +144,13 @@ foreach my $invocation (@invocations) {
             $stored_timings{join(' ', 'ack', @$invocation)} = $elapsed;
         }
     }
-    printf $format, join(' ', 'ack', @$invocation), map { defined() ? $_ : color('x_x') } @timings;
+    printf $format, join(' ', 'ack', @$invocation), map { $_ // color('x_x') } @timings;
+
+    my $i = 0;
+    $total_timings[$i++] += ($_+0) for @timings;
 }
+say $dashes;
+printf $format, 'Total', map { sprintf( '%.2f', $_ ) } @total_timings;
 
 if ($perform_store) {
     write_file('.timings.json', $json->encode(\%stored_timings));
