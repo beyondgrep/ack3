@@ -17,9 +17,30 @@ my $show_colors;
 my $perform_store;
 my $perfom_clear;
 my $num_iterations = 1;
+my $set = 'all';
 
 my @use_acks;
 my $perl = $^X;
+
+my %sets = (
+    'all' => [
+        [ 'foo' ],
+        [ 'foo', '-w' ],
+        [ 'foo.', '-w' ],
+        [ '-f' ],
+        [ 'foo', '-l' ],
+        [ 'foo', '-A10' ],
+        [ 'foo', '-B10' ],
+        [ 'foo', '-C10' ],
+    ],
+    'speed' => [
+        [ 'foo' ],
+        [ 'foo', '-w' ],
+        [ 'foo.', '-w' ],
+        [ 'foo\w+' ],
+    ],
+);
+
 
 GetOptions(
     'clear'   => \$perfom_clear,
@@ -28,37 +49,14 @@ GetOptions(
     'times=i' => \$num_iterations,
     'ack=s@'  => \@use_acks,
     'perl=s'  => \$perl,
+    'set=s'   => \$set,
 );
 
 my $SOURCE_DIR = shift or die "Must specify a path";
 
-my @invocations = (
-    # normal mode
-    [ 'foo', $SOURCE_DIR ],
-
-    # -w
-    [ 'foo', '-w', $SOURCE_DIR ],
-
-    # -w with a metacharacter
-    [ 'foo.', '-w', $SOURCE_DIR ],
-
-    # -f
-    [ '-f', $SOURCE_DIR ],
-
-    # -l
-    [ 'foo', '-l', $SOURCE_DIR ],
-
-    # -A
-    [ 'foo', '-A10', $SOURCE_DIR ],
-
-    # -B
-    [ 'foo', '-B10', $SOURCE_DIR ],
-
-    # -C
-    [ 'foo', '-C10', $SOURCE_DIR ],
-);
-
-
+my $invocations = $sets{$set} or die "Unknown set $set: Must be one of: ", join( ', ', sort keys %sets ), "\n";
+my @invocations = @{$invocations};
+push( @{$_}, $SOURCE_DIR ) for @invocations;
 
 if ($perfom_clear) {
     unlink('.timings.json');
