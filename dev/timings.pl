@@ -147,7 +147,7 @@ foreach my $invocation (@invocations) {
     printf $format, join(' ', 'ack', @$invocation), map { $_ // color('x_x') } @timings;
 
     my $i = 0;
-    $total_timings[$i++] += ($_+0) for @timings;
+    $total_timings[$i++] += ($_//0) for @timings;
 }
 say $dashes;
 printf $format, 'Total', map { sprintf( '%.2f', $_ ) } @total_timings;
