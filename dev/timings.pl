@@ -23,7 +23,7 @@ my @use_acks;
 my $perl = $^X;
 
 my %sets = (
-    'all' => [
+    all => [
         [ 'foo' ],
         [ 'foo', '-w' ],
         [ 'foo.', '-w' ],
@@ -33,7 +33,13 @@ my %sets = (
         [ 'foo', '-B10' ],
         [ 'foo', '-C10' ],
     ],
-    'speed' => [
+    context => [
+        [ 'foo' ],
+        [ 'foo', '-A10' ],
+        [ 'foo', '-B10' ],
+        [ 'foo', '-C10' ],
+    ],
+    speed => [
         [ 'foo' ],
         [ 'foo', '-w' ],
         [ 'foo.', '-w' ],
