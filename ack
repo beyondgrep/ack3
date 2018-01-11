@@ -79,7 +79,7 @@ MAIN: {
 
     if ( $env_is_usable ) {
         if ( $ENV{ACK_OPTIONS} ) {
-            App::Ack::warn( 'NOTE: ack no longer uses the ACK_OPTIONS environment variable.  Use an ackrc file instead.' );
+            App::Ack::warn( 'WARNING: ack no longer uses the ACK_OPTIONS environment variable.  Use an ackrc file instead.' );
         }
     }
     else {
