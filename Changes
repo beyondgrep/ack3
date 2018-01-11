@@ -7,6 +7,9 @@ NEXT
 The check for whether we need to scan the entire file line-by-line now
 reads 10M of file instead of just 100K.
 
+Removed support for the ACK_OPTIONS environment variable.  Use an ackrc
+file instead.  If you have ACK_OPTIONS set, ack will give a warning.
+
 
 2.999_02 Mon Jan  8 23:03:42 CST 2018
 =====================================

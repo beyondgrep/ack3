@@ -718,11 +718,6 @@ on the command line.
 Specifies the location of the user's F<.ackrc> file.  If this file doesn't
 exist, F<ack> looks in the default location.
 
-=item ACK_OPTIONS
-
-This variable specifies default options to be placed in front of
-any explicit options on the command line.
-
 =item ACK_COLOR_FILENAME
 
 Specifies the color of the filename when it's printed in B<--group>
@@ -914,11 +909,6 @@ directory, etc.  This can be omitted using C<--noenv>.
 The C<--ackrc> option may be included on the command line to specify an
 ackrc file that can override all others.  It is consulted even if C<--noenv>
 is present.
-
-=item * ACK_OPTIONS
-
-Options are then loaded from the environment variable C<ACK_OPTIONS>.  This can
-be omitted using C<--noenv>.
 
 =item * Command line
 

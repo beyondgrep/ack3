@@ -51,7 +51,6 @@ subtest 'without --noenv' => sub {
     plan tests => 1;
 
     local @ARGV = ('-f', 'lib/');
-    local $ENV{'ACK_OPTIONS'} = '--perl';
 
     my @sources = App::Ack::ConfigLoader::retrieve_arg_sources();
     @sources    = remove_defaults_and_globals(@sources);
@@ -64,10 +63,6 @@ subtest 'without --noenv' => sub {
             is_ackrc => 1,
         },
         {
-            name     => 'ACK_OPTIONS',
-            contents => '--perl',
-        },
-        {
             name     => 'ARGV',
             contents => ['-f', 'lib/'],
         },
@@ -78,7 +73,6 @@ subtest 'with --noenv' => sub {
     plan tests => 1;
 
     local @ARGV = ('--noenv', '-f', 'lib/');
-    local $ENV{'ACK_OPTIONS'} = '--perl';
 
     my @sources = App::Ack::ConfigLoader::retrieve_arg_sources();
     @sources    = remove_defaults_and_globals(@sources);
@@ -95,8 +89,6 @@ subtest '--noenv in config' => sub {
     plan tests => 3;
 
     append_file( '.ackrc', "--noenv\n" );
-
-    local $ENV{'ACK_OPTIONS'} = '--perl';
 
     my ( $stdout, $stderr ) = run_ack_with_stderr('--env', 'perl');
     is_empty_array( $stdout );

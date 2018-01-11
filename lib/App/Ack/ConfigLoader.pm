@@ -801,13 +801,6 @@ sub retrieve_arg_sources {
         }
     }
 
-    if ( $ENV{ACK_OPTIONS} && !$noenv ) {
-        push @arg_sources, {
-            name     => 'ACK_OPTIONS',
-            contents => $ENV{ACK_OPTIONS},
-        };
-    }
-
     push @arg_sources, {
         name     => 'ARGV',
         contents => [ @ARGV ],

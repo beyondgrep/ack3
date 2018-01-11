@@ -66,3 +66,8 @@ no longer `eval` the contents of `--output`.  You're now restricted
 to the following variables: `$1` thru `$9`, `$_`, `$.`, `$&`, ``$` ``,
 `$'` and `$+`.  You can also embed `\t`, `\n` and `\r` ,
 and `$f` as stand-in for `$filename` in `ack2 --output` .
+
+## ack 3 no longer uses the `ACK_OPTIONS` environment variable
+
+The `ACK_OPTIONS` variable was used to supply command line arguments to
+ack invocations.  This has been removed.  Use an ackrc file instead.

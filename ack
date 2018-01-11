@@ -77,7 +77,12 @@ MAIN: {
         $arg eq '--noenv'       and $env_is_usable = 0;
     }
 
-    if ( !$env_is_usable ) {
+    if ( $env_is_usable ) {
+        if ( $ENV{ACK_OPTIONS} ) {
+            App::Ack::warn( 'NOTE: ack no longer uses the ACK_OPTIONS environment variable.  Use an ackrc file instead.' );
+        }
+    }
+    else {
         my @keys = ( 'ACKRC', grep { /^ACK_/ } keys %ENV );
         delete @ENV{@keys};
     }

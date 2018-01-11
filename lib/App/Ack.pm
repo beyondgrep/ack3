@@ -246,9 +246,8 @@ only those files and directories are checked.  ack may also search
 STDIN, but only if no file or directory arguments are specified,
 or if one of them is "-".
 
-Default switches may be specified in ACK_OPTIONS environment variable or
-an .ackrc file. If you want no dependency on the environment, turn it
-off with --noenv.
+Default switches may be specified in an .ackrc file. If you want no dependency
+on the environment, turn it off with --noenv.
 
 Example: ack -i select
 

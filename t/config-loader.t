@@ -10,7 +10,7 @@ use Test::More tests => 28;
 use App::Ack::Filter::Default;
 use App::Ack::ConfigLoader;
 
-delete @ENV{qw( PAGER ACK_PAGER ACK_PAGER_COLOR ACK_OPTIONS )};
+delete @ENV{qw( PAGER ACK_PAGER ACK_PAGER_COLOR )};
 
 my %defaults = (
     'break'    => undef,
@@ -272,7 +272,6 @@ sub test_loader {
         my $got_opts;
         my $got_targets;
         do {
-            local $ENV{ACK_OPTIONS} = $env;
             local @ARGV = ();
 
             my @arg_sources = (
