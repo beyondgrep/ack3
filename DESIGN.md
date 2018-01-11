@@ -20,7 +20,7 @@ files in them.
 
 * ack must run purely as Perl 5.10.1 using only core modules and File::Next.
 
-No other modules may be used.  That includes Moose.
+No other modules may be used.  That includes Moose or any Moose variants.
 
 * We don't use the Perl smartmatch operator.
 
