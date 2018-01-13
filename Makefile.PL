@@ -48,7 +48,7 @@ my %parms = (
     },
     MAN3PODS            => {}, # no need for man pages for any of the .pm files
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'ack-2* nytprof* stderr.log stdout.log completion.*' },
+    clean               => { FILES => 'ack-3* nytprof* stderr.log stdout.log completion.*' },
 );
 
 WriteMakefile( %parms );
