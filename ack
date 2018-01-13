@@ -17,14 +17,14 @@ use App::Ack::File ();
 use App::Ack::Files ();
 
 use App::Ack::Filter ();
-use App::Ack::Filter::Default;
-use App::Ack::Filter::Extension;
-use App::Ack::Filter::FirstLineMatch;
-use App::Ack::Filter::Inverse;
-use App::Ack::Filter::Is;
-use App::Ack::Filter::IsPath;
-use App::Ack::Filter::Match;
-use App::Ack::Filter::Collection;
+use App::Ack::Filter::Default ();
+use App::Ack::Filter::Extension ();
+use App::Ack::Filter::FirstLineMatch ();
+use App::Ack::Filter::Inverse ();
+use App::Ack::Filter::Is ();
+use App::Ack::Filter::IsPath ();
+use App::Ack::Filter::Match ();
+use App::Ack::Filter::Collection ();
 
 # Global command-line options
 our $opt_after_context;

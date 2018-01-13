@@ -44,9 +44,9 @@ use strict;
 use warnings;
 
 use App::Ack ();
-use App::Ack::ConfigDefault;
+use App::Ack::ConfigDefault ();
 use Cwd 3.00 ();
-use File::Spec 3.00;
+use File::Spec 3.00 ();
 
 use if ($^O eq 'MSWin32'), 'Win32';
 

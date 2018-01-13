@@ -1,6 +1,6 @@
 package App::Ack::File;
 
-use App::Ack;
+use App::Ack ();
 
 use warnings;
 use strict;

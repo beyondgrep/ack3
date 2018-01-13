@@ -1,9 +1,9 @@
 package App::Ack::Files;
 
-use App::Ack;
-use App::Ack::File;
+use App::Ack ();
+use App::Ack::File ();
 
-use File::Next 1.16;
+use File::Next 1.16 ();
 use Errno qw(EACCES);
 
 use warnings;
