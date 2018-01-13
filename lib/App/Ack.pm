@@ -67,8 +67,6 @@ No user-serviceable parts inside.  F<ack> is all that should use this.
 
 =head1 FUNCTIONS
 
-=cut
-
 =head2 remove_dir_sep( $path )
 
 This functions removes a trailing path separator, if there is one, from its argument
