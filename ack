@@ -657,22 +657,6 @@ sub set_up_line_context_for_file {
     return;
 }
 
-=begin Developers
-
-This subroutine jumps through a number of optimization hoops to
-try to be fast in the more common use cases of ack.  For one thing,
-in non-context tracking searches (not using -A, -B, or -C),
-conditions that normally would be checked inside the loop happen
-outside, resulting in three nearly identical loops for -v, --passthru,
-and normal searching.  Any changes that happen to one should propagate
-to the others if they make sense.  The non-context branches also inline
-does_match for performance reasons; any relevant changes that happen here
-must also happen there.
-
-=end Developers
-
-=cut
-
 sub print_matches_in_file {
     my $file = shift;
 
@@ -703,7 +687,24 @@ sub print_matches_in_file {
         $after_context_pending = 0;
         while ( <$fh> ) {
             chomp;
-            if ( does_match( $_ ) && $max_count ) {
+            my $does_match;
+            $match_colno = undef;
+
+            if ( $opt_v ) {
+                $does_match = ( $_ !~ /$opt_regex/o );
+            }
+            else {
+                if ( $_ =~ /$opt_regex/o ) {
+                    # @- = @LAST_MATCH_START
+                    # @+ = @LAST_MATCH_END
+                    $match_colno = $-[0] + 1;
+                    $does_match = 1;
+                }
+                else {
+                    $does_match = 0;
+                }
+            }
+            if ( $does_match && $max_count ) {
                 if ( !$has_printed_for_this_file ) {
                     if ( $opt_break && $has_printed_something ) {
                         App::Ack::print_blank_line();
@@ -1056,39 +1057,6 @@ sub print_line_if_context {
     return;
 }
 
-}
-
-# does_match() MUST have an $opt_regex set.
-
-=begin Developers
-
-This subroutine is inlined a few places in C<print_matches_in_file>
-for performance reasons, so any changes here must be copied there as
-well.
-
-=end Developers
-
-=cut
-
-sub does_match {
-    my ( $line ) = @_;
-
-    $match_colno = undef;
-
-    if ( $opt_v ) {
-        return ( $line !~ /$opt_regex/o );
-    }
-    else {
-        if ( $line =~ /$opt_regex/o ) {
-            # @- = @LAST_MATCH_START
-            # @+ = @LAST_MATCH_END
-            $match_colno = $-[0] + 1;
-            return 1;
-        }
-        else {
-            return;
-        }
-    }
 }
 
 sub get_match_colno {

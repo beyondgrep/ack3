@@ -272,7 +272,6 @@ die	lib/App/Ack.pm	/^sub die {$/;"	s
 dir_cleanup	t/named-pipes.t	/^sub dir_cleanup {$/;"	s
 do_parent	t/ack-x.t	/^sub do_parent {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
-does_match	ack	/^sub does_match {$/;"	s
 dont	t/ack-man.t	/^sub dont {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
