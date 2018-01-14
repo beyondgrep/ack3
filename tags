@@ -337,7 +337,6 @@ line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 msg	t/Util.pm	/^sub msg {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
-needs_line_scan	lib/App/Ack/File.pm	/^sub needs_line_scan {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
 new	lib/App/Ack/File.pm	/^sub new {$/;"	s
 new	lib/App/Ack/Filter/Collection.pm	/^sub new {$/;"	s

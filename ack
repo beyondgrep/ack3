@@ -363,7 +363,7 @@ FILES:
                 }
             }
             if ( $needs_line_scan ) {
-                $nmatches += print_matches_in_file( $file, $opt );
+                $nmatches += print_matches_in_file( $file );
             }
             if ( $nmatches && $only_first ) {
                 last FILES;
@@ -674,7 +674,7 @@ must also happen there.
 =cut
 
 sub print_matches_in_file {
-    my ( $file ) = @_;
+    my $file = shift;
 
     my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
     my $nmatches  = 0;
