@@ -343,7 +343,7 @@ FILES:
                     my $rc = sysread( $file->{fh}, $buffer, $size );
                     if ( !defined($rc) ) {
                         if ( $App::Ack::report_bad_filenames ) {
-                            App::Ack::warn( "$file->{filename}: $!" );
+                            App::Ack::warn( $file->name . ": $!" );
                         }
                         $needs_line_scan = 0;
                     }
