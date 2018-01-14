@@ -329,12 +329,36 @@ FILES:
         }
         # Normal match-showing ack
         else {
+            # Tells if the file needs a line-by-line scan.  This is a big
+            # optimization because if you can tell from the outset that the pattern
+            # is not found in the file at all, then there's no need to do the
+            # line-by-line iteration.
+            # Slurp up an entire file up to 100K, see if there are any matches
+            # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
-            if ( $opt->{regex} && !$opt->{passthru} ) {
-                if ( $file->open() ) {
-                    $needs_line_scan = $file->needs_line_scan( $opt );
-                    if ( $needs_line_scan ) {
-                        $file->reset();
+            if ( $opt_regex && !$opt_passthru && !$opt_v ) {
+                if ( $file->open() && -f $file->{fh} ) {
+                    my $buffer;
+                    my $size = 10_000_000;
+                    my $rc = sysread( $file->{fh}, $buffer, $size );
+                    if ( !defined($rc) ) {
+                        if ( $App::Ack::report_bad_filenames ) {
+                            App::Ack::warn( "$file->{filename}: $!" );
+                        }
+                        $needs_line_scan = 0;
+                    }
+                    else {
+                        # If we read all 100K, then we need to scan the rest.
+                        if ( $rc == $size ) {
+                            $needs_line_scan = 1;
+                        }
+                        else {
+                            # Check for the pattern in what we got.
+                            $needs_line_scan = ($buffer =~ /$opt_regex/mo);
+                        }
+                        if ( $needs_line_scan ) {
+                            $file->reset();
+                        }
                     }
                 }
             }
