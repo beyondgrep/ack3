@@ -373,7 +373,7 @@ print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
 print_matches_in_file	ack	/^sub print_matches_in_file {$/;"	s
 process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 read_file	t/Util.pm	/^sub read_file {$/;"	s
-read_rcfile	lib/App/Ack/ConfigFinder.pm	/^sub read_rcfile {$/;"	s
+read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
 remove_dir_sep	lib/App/Ack.pm	/^sub remove_dir_sep {$/;"	s
