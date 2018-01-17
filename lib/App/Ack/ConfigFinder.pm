@@ -44,7 +44,6 @@ use strict;
 use warnings;
 
 use App::Ack ();
-use App::Ack::ConfigDefault ();
 use Cwd 3.00 ();
 use File::Spec 3.00 ();
 
