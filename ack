@@ -691,17 +691,13 @@ sub print_matches_in_file {
             $match_colno = undef;
 
             if ( $opt_v ) {
-                $does_match = ( $_ !~ /$opt_regex/o );
+                $does_match = !/$opt_regex/o;
             }
             else {
-                if ( $_ =~ /$opt_regex/o ) {
+                if ( $does_match = /$opt_regex/o ) {
                     # @- = @LAST_MATCH_START
                     # @+ = @LAST_MATCH_END
                     $match_colno = $-[0] + 1;
-                    $does_match = 1;
-                }
-                else {
-                    $does_match = 0;
                 }
             }
             if ( $does_match && $max_count ) {
