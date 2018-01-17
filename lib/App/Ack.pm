@@ -47,7 +47,7 @@ our $is_windows;
 
 our $debug_nopens = 0;
 
-use File::Spec 1.00015 ();
+use File::Spec 3.00 ();
 
 BEGIN {
     # These have to be checked before any filehandle diddling.

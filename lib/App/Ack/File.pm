@@ -1,9 +1,10 @@
 package App::Ack::File;
 
-use App::Ack ();
-
 use warnings;
 use strict;
+
+use App::Ack ();
+use File::Spec ();
 
 =head1 NAME
 

@@ -29,8 +29,6 @@ use strict;
 use warnings;
 use parent 'App::Ack::Filter';
 
-use File::Spec 3.00 ();
-
 sub new {
     my ( $class ) = @_;
 
