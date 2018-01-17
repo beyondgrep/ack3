@@ -5,7 +5,6 @@ use warnings;
 
 use App::Ack ();
 use App::Ack::Filter::Inverse ();
-use Carp 1.04 ();
 
 my %filter_types;
 
