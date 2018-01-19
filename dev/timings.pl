@@ -17,19 +17,18 @@ my $show_colors;
 my $perform_store;
 my $perfom_clear;
 my $num_iterations = 1;
-my $set = 'all';
+my $set = 'searching';
 
 my @use_acks;
 my $perl = $^X;
 
 my %sets = (
-    all => [
+    searching => [
         [ 'foo' ],
         [ 'foo', '-w' ],
-        [ 'foo.', '-w' ],
-        [ '-f' ],
-        [ 'foo', '-l' ],
-        [ 'foo', '-C10' ],
+        [ 'foo\w+', '-w' ],
+        [ 'foo\w+', '-C10' ],
+        [ '(set|get)_\w+' ],
     ],
     context => [
         [ 'foo' ],
@@ -37,11 +36,10 @@ my %sets = (
         [ 'foo', '-B10' ],
         [ 'foo', '-C10' ],
     ],
-    speed => [
-        [ 'foo' ],
-        [ 'foo', '-w' ],
-        [ 'foo.', '-w' ],
-        [ 'foo\w+' ],
+    files => [
+        [ '-f' ],
+        [ 'foo', '-l' ],
+        [ 'foo', '-L' ],
     ],
 );
 
