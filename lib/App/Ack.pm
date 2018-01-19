@@ -474,7 +474,6 @@ END_OF_VERSION
 
 sub print                   { print {$fh} @_; return; }
 sub print_blank_line        { App::Ack::print( "\n" ); return; }
-sub print_filename          { App::Ack::print( $_[0], $_[1] ); return; }
 
 sub set_up_pager {
     my $command = shift;

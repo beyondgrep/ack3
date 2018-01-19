@@ -705,7 +705,7 @@ sub print_matches_in_file {
                         App::Ack::print_blank_line();
                     }
                     if ( $opt_show_filename && $opt_heading ) {
-                        App::Ack::print_filename( $display_filename, $ors );
+                        App::Ack::print( $display_filename, $ors );
                     }
                 }
                 print_line_with_context( $filename, $_, $. );
@@ -744,7 +744,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -774,7 +774,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -799,7 +799,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     if ( $opt_proximate ) {
