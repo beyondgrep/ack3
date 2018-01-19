@@ -16,6 +16,7 @@ use Time::HiRes qw(gettimeofday tv_interval);
 my $show_colors;
 my $perform_store;
 my $perfom_clear;
+my $test_others;
 my $num_iterations = 1;
 my $set = 'searching';
 
@@ -48,6 +49,7 @@ GetOptions(
     'clear'   => \$perfom_clear,
     'store'   => \$perform_store,
     'color'   => \$show_colors,
+    'others'  => \$test_others,
     'times=i' => \$num_iterations,
     'ack=s@'  => \@use_acks,
     'perl=s'  => \$perl,
@@ -76,11 +78,13 @@ push @acks, 'ack-standalone';
 @acks = grab_versions(@acks);
 
 # Test ag and ripgrep if we have them.
-for my $ackalike ( qw( ag rg ) ) {
-    for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
-        my $path = "$dir/$ackalike";
-        if ( -x $path ) {
-            push( @acks, { path => $path, version => $ackalike } );
+if ( $test_others ) {
+    for my $ackalike ( qw( ag rg ) ) {
+        for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
+            my $path = "$dir/$ackalike";
+            if ( -x $path ) {
+                push( @acks, { path => $path, version => $ackalike } );
+            }
         }
     }
 }
