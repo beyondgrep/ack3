@@ -41,7 +41,6 @@ our %ignore_dirs;
 our $is_filter_mode;
 our $output_to_pipe;
 
-our $is_cygwin;
 our $is_windows;
 
 our $debug_nopens = 0;
@@ -51,7 +50,6 @@ BEGIN {
     $output_to_pipe  = not -t *STDOUT;
     $is_filter_mode = -p STDIN;
 
-    $is_cygwin       = ($^O eq 'cygwin' || $^O eq 'msys');
     $is_windows      = ($^O eq 'MSWin32');
 }
 
