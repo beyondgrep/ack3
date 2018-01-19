@@ -41,13 +41,10 @@ our %ignore_dirs;
 our $is_filter_mode;
 our $output_to_pipe;
 
-our $dir_sep_chars;
 our $is_cygwin;
 our $is_windows;
 
 our $debug_nopens = 0;
-
-use File::Spec 3.00 ();
 
 BEGIN {
     # These have to be checked before any filehandle diddling.
@@ -56,7 +53,6 @@ BEGIN {
 
     $is_cygwin       = ($^O eq 'cygwin' || $^O eq 'msys');
     $is_windows      = ($^O eq 'MSWin32');
-    $dir_sep_chars   = $is_windows ? quotemeta( '\\/' ) : quotemeta( File::Spec->catfile( '', '' ) );
 }
 
 =head1 SYNOPSIS
@@ -66,20 +62,6 @@ If you want to know about the F<ack> program, see the F<ack> file itself.
 No user-serviceable parts inside.  F<ack> is all that should use this.
 
 =head1 FUNCTIONS
-
-=head2 remove_dir_sep( $path )
-
-This functions removes a trailing path separator, if there is one, from its argument
-
-=cut
-
-sub remove_dir_sep {
-    my $path = shift;
-    $path =~ s/[$dir_sep_chars]$//;
-
-    return $path;
-}
-
 
 =head2 warn( @_ )
 

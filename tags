@@ -226,6 +226,7 @@ _process_filter_spec	lib/App/Ack/ConfigLoader.pm	/^sub _process_filter_spec {$/;
 _process_other	lib/App/Ack/ConfigLoader.pm	/^sub _process_other {$/;"	s
 _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
+_remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
 _should_dump_options	lib/App/Ack/ConfigLoader.pm	/^sub _should_dump_options {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
@@ -376,7 +377,6 @@ read_file	t/Util.pm	/^sub read_file {$/;"	s
 read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
-remove_dir_sep	lib/App/Ack.pm	/^sub remove_dir_sep {$/;"	s
 reset	lib/App/Ack/File.pm	/^sub reset {$/;"	s
 reslash	t/Util.pm	/^sub reslash {$/;"	s
 reslash_all	t/Util.pm	/^sub reslash_all {$/;"	s

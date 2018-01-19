@@ -2,7 +2,7 @@ package App::Ack::ConfigLoader;
 
 use strict;
 use warnings;
-use feature 'say';
+use 5.010;
 
 use App::Ack ();
 use App::Ack::ConfigDefault ();
@@ -12,6 +12,7 @@ use App::Ack::Filter::Collection ();
 use App::Ack::Filter::Default ();
 use App::Ack::Filter::IsPath ();
 use Carp 1.04 ();
+use File::Spec 3.00 ();
 use Getopt::Long 2.38 ();
 use Text::ParseWords 3.1 ();
 
@@ -65,7 +66,7 @@ sub _generate_ignore_dir {
     return sub {
         my ( undef, $dir ) = @_;
 
-        $dir = App::Ack::remove_dir_sep( $dir );
+        $dir = _remove_directory_separator( $dir );
         if ( $dir !~ /:/ ) {
             $dir = 'is:' . $dir;
         }
@@ -107,6 +108,18 @@ sub _generate_ignore_dir {
         }
     };
 }
+
+
+sub _remove_directory_separator {
+    my $path = shift;
+
+    state $dir_sep_chars = $App::Ack::is_windows ? quotemeta( '\\/' ) : quotemeta( File::Spec->catfile( '', '' ) );
+
+    $path =~ s/[$dir_sep_chars]$//;
+
+    return $path;
+}
+
 
 sub _process_filter_spec {
     my ( $spec ) = @_;
