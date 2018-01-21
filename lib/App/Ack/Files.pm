@@ -8,6 +8,7 @@ use Errno qw(EACCES);
 
 use warnings;
 use strict;
+use 5.010;
 
 =head1 NAME
 
@@ -93,9 +94,9 @@ sub from_stdin {
 
     my $self  = bless {}, $class;
 
-    my $has_been_called = 0;
-
     $self->{iter} = sub {
+        state $has_been_called = 0;
+
         if ( !$has_been_called ) {
             $has_been_called = 1;
             return '-';
