@@ -526,7 +526,6 @@ sub show_types {
     my $ors  = shift;
 
     my @types = filetypes( $file );
-    my $types = join( ',', @types );
     my $arrow = @types ? ' => ' : ' =>';
     App::Ack::print( $file->name, $arrow, join( ',', @types ), $ors );
 

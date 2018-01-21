@@ -399,9 +399,6 @@ sub get_rc {
 sub run_ack_with_stderr {
     my @args = @_;
 
-    my @stdout;
-    my @stderr;
-
     my $perl = caret_X();
 
     @args = build_ack_invocation( @args );
@@ -435,7 +432,7 @@ sub pipe_into_ack_with_stderr {
 
 # Pipe into ack and return STDOUT as array, for arguments see pipe_into_ack_with_stderr.
 sub pipe_into_ack {
-    my ($stdout, $stderr) = pipe_into_ack_with_stderr( @_ );
+    my ($stdout, undef) = pipe_into_ack_with_stderr( @_ );
     return @{$stdout};
 }
 

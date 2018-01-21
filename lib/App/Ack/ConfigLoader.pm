@@ -234,7 +234,7 @@ sub _process_filetypes {
     );
 
     foreach my $source (@{$arg_sources}) {
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
+        my $args = $source->{contents};
 
         if ( ref($args) ) {
             # $args are modified in place, so no need to munge $arg_sources
@@ -249,8 +249,6 @@ sub _process_filetypes {
     }
 
     $additional_specs{'k|known-types'} = sub {
-        my ( undef, $value ) = @_;
-
         my @filters = map { @{$_} } values(%App::Ack::mappings);
 
         push @{ $opt->{'filters'} }, @filters;
@@ -637,7 +635,7 @@ sub _remove_default_options_if_needed {
     );
 
     foreach my $index ( $default_index + 1 .. $#{$sources} ) {
-        my ( $name, $args ) = @{$sources->[$index]}{qw/name contents/};
+        my $args = $sources->[$index]->{contents};
 
         if (ref($args)) {
             local @ARGV = @{$args};
@@ -685,7 +683,7 @@ sub _check_for_mutually_exclusive_options {
         my %set_opts;
 
         my $source = shift @copy;
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
+        my $args = $source->{contents};
         $args = ref($args) ? [ @{$args} ] : [ Text::ParseWords::shellwords($args) ];
 
         foreach my $opt ( @{$args} ) {

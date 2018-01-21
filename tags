@@ -118,7 +118,6 @@ JUST_THE_DIR	t/command-line-files.t	/^JUST_THE_DIR: {$/;"	l
 LAST_ONE_LISTED_WINS	t/ack-ignore-dir.t	/^LAST_ONE_LISTED_WINS: {$/;"	l
 LAST_PAREN_MATCH	t/ack-output.t	/^LAST_PAREN_MATCH: {$/;"	l
 LINE	t/longopts.t	/^LINE: {$/;"	l
-LINENO_WARNINGS	t/ack-line.t	/^LINENO_WARNINGS: {$/;"	l
 LINES_THAT_MAY_BE_NON_EXISTENT	t/ack-line.t	/^LINES_THAT_MAY_BE_NON_EXISTENT: {$/;"	l
 LINES_WITH_A_COMMA	t/ack-line.t	/^LINES_WITH_A_COMMA: {$/;"	l
 LINES_WITH_A_RANGE	t/ack-line.t	/^LINES_WITH_A_RANGE: {$/;"	l
