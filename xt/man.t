@@ -76,8 +76,6 @@ sub strip_special_chars {
 
                 next unless $indent == $min_indent;
 
-                my @options;
-
                 while ( $line =~ /(-[^\s=,]+)/g ) {
                     my $option = $1;
                     chop $option if $option =~ /\[$/;

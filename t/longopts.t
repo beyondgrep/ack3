@@ -20,9 +20,6 @@ use Util;
 
 prep_environment();
 
-my $swamp = 't/swamp';
-my $ack   = './ack';
-
 # Help
 for my $arg ( qw( --help ) ) {
     my @args = ($arg);

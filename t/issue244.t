@@ -9,9 +9,10 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 1;
+plan tests => 2;
 
 prep_environment();
 
 my ( $stdout, $stderr ) = run_ack_with_stderr('--color', '(foo)|(bar)', 't/swamp');
+is_nonempty_array( $stdout );
 is_empty_array( $stderr );

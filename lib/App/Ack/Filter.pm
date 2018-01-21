@@ -111,8 +111,6 @@ called implicitly by stringification.
 =cut
 
 sub to_string {
-    my ( $self ) = @_;
-
     return '(unimplemented to_string)';
 }
 

@@ -809,8 +809,6 @@ sub get_expected_options {
 sub _check_command_for_taintedness {
     my @args = @_;
 
-    my $bad = 0;
-
     my @tainted = grep { tainted( $_ ) } @args;
 
     if ( @tainted ) {
