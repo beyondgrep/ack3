@@ -45,7 +45,7 @@ sub from_argv {
         File::Next::files( {
             file_filter     => $opt->{file_filter},
             descend_filter  => $descend_filter,
-            error_handler   => _generate_error_handler($opt),
+            error_handler   => _generate_error_handler(),
             warning_handler => sub {},
             sort_files      => $opt->{sort_files},
             follow_symlinks => $opt->{follow},
@@ -66,10 +66,11 @@ sub from_file {
     my $opt   = shift;
     my $file  = shift;
 
+    my $error_handler = _generate_error_handler();
     my $iter =
         File::Next::from_file( {
-            error_handler   => _generate_error_handler($opt),
-            warning_handler => _generate_error_handler($opt),
+            error_handler   => $error_handler,
+            warning_handler => $error_handler,
             sort_files      => $opt->{sort_files},
         }, $file ) or return undef;
 
@@ -116,8 +117,6 @@ sub next {
 
 
 sub _generate_error_handler {
-    my $opt = shift;
-
     if ( $App::Ack::report_bad_filenames ) {
         return sub {
             my $msg = shift;
