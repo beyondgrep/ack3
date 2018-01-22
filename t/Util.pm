@@ -379,7 +379,7 @@ sub run_cmd {
         }
     } # end else not Win32
 
-    my ($sig,$core,$rc) = (($? & 127), ($? & 128), ($? >> 8));  ## no critic ( Bangs::ProhibitBitwiseOperators )
+    my ($sig,$core,$rc) = (($? & 127), ($? & 128), ($? >> 8));  ## no critic ( Bangs::ProhibitBitwiseOperators Variables::ProhibitUnusedVarsStricter )
     $ack_return_code = $rc;
     ## XXX what to do with $core or $sig?
 
