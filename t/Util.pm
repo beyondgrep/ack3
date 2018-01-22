@@ -150,7 +150,7 @@ sub build_ack_invocation {
     foreach my $arg ( @args ) {
         if ( ref($arg) eq 'HASH' ) {
             if ( $options ) {
-                Carp::croak('You may not specify more than one options hash');
+                die 'You may not specify more than one options hash';
             }
             else {
                 $options = $arg;
@@ -314,14 +314,14 @@ sub run_cmd {
         my ( $stderr_read, $stderr_write );
 
         pipe $stdout_read, $stdout_write
-            or Carp::croak( "Unable to create pipe: $!" );
+            or die "Unable to create pipe: $!";
 
         pipe $stderr_read, $stderr_write
-            or Carp::croak( "Unable to create pipe: $!" );
+            or die "Unable to create pipe: $!";
 
         my $pid = fork();
         if ( $pid == -1 ) {
-            Carp::croak( "Unable to fork: $!" );
+            die "Unable to fork: $!";
         }
 
         if ( $pid ) {
@@ -871,7 +871,7 @@ sub _check_message {
 
     if ( !defined( $msg ) ) {
         my (undef,undef,undef,$sub) = caller(1);
-        Carp::croak( "You must pass a message to $sub" );
+        die "You must pass a message to $sub";
     }
 
     return $msg;

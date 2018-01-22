@@ -11,7 +11,6 @@ use App::Ack::Filter ();
 use App::Ack::Filter::Collection ();
 use App::Ack::Filter::Default ();
 use App::Ack::Filter::IsPath ();
-use Carp 1.04 ();
 use File::Spec 3.00 ();
 use Getopt::Long 2.38 ();
 use Text::ParseWords 3.1 ();
@@ -74,7 +73,7 @@ sub _generate_ignore_dir {
         my ( $filter_type, $args ) = split /:/, $dir, 2;
 
         if ( $filter_type eq 'firstlinematch' ) {
-            Carp::croak( qq{Invalid filter specification "$filter_type" for option '$option_name'} );
+            App::Ack::die( qq{Invalid filter specification "$filter_type" for option '$option_name'} );
         }
 
         my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args));
@@ -141,7 +140,7 @@ sub _process_filter_spec {
         return ( $type_name, App::Ack::Filter->create_filter('ext', @extensions) );
     }
     else {
-        Carp::croak "invalid filter specification '$spec'";
+        App::Ack::die( "Invalid filter specification '$spec'" );
     }
 }
 
@@ -371,7 +370,7 @@ sub get_arg_spec {
                 $callback->( $getopt, $cb_value );
             }
             else {
-                Carp::croak( "Unknown type '$value'" );
+                App::Ack::die( "Unknown type '$value'" );
             }
         },
         'u|underline!'      => \$opt->{u},
@@ -743,11 +742,11 @@ sub process_args {
                 @ARGV = @{$args};
             }
             elsif (@{$args}) {
-                Carp::croak "source '$source_name' has extra arguments!";
+                App::Ack::die( "Source '$source_name' has extra arguments!" );
             }
         }
         else {
-            Carp::croak 'The impossible has occurred!';
+            App::Ack::die( 'The impossible has occurred!' );
         }
     }
     my $filters = ($opt{filters} ||= []);
