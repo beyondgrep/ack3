@@ -118,7 +118,6 @@ JUST_THE_DIR	t/command-line-files.t	/^JUST_THE_DIR: {$/;"	l
 LAST_ONE_LISTED_WINS	t/ack-ignore-dir.t	/^LAST_ONE_LISTED_WINS: {$/;"	l
 LAST_PAREN_MATCH	t/ack-output.t	/^LAST_PAREN_MATCH: {$/;"	l
 LINE	t/longopts.t	/^LINE: {$/;"	l
-LINENO_WARNINGS	t/ack-line.t	/^LINENO_WARNINGS: {$/;"	l
 LINES_THAT_MAY_BE_NON_EXISTENT	t/ack-line.t	/^LINES_THAT_MAY_BE_NON_EXISTENT: {$/;"	l
 LINES_WITH_A_COMMA	t/ack-line.t	/^LINES_WITH_A_COMMA: {$/;"	l
 LINES_WITH_A_RANGE	t/ack-line.t	/^LINES_WITH_A_RANGE: {$/;"	l
@@ -226,6 +225,7 @@ _process_filter_spec	lib/App/Ack/ConfigLoader.pm	/^sub _process_filter_spec {$/;
 _process_other	lib/App/Ack/ConfigLoader.pm	/^sub _process_other {$/;"	s
 _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
+_remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
 _should_dump_options	lib/App/Ack/ConfigLoader.pm	/^sub _should_dump_options {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
@@ -272,7 +272,6 @@ die	lib/App/Ack.pm	/^sub die {$/;"	s
 dir_cleanup	t/named-pipes.t	/^sub dir_cleanup {$/;"	s
 do_parent	t/ack-x.t	/^sub do_parent {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
-does_match	ack	/^sub does_match {$/;"	s
 dont	t/ack-man.t	/^sub dont {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
@@ -337,7 +336,6 @@ line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 msg	t/Util.pm	/^sub msg {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
-needs_line_scan	lib/App/Ack/File.pm	/^sub needs_line_scan {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
 new	lib/App/Ack/File.pm	/^sub new {$/;"	s
 new	lib/App/Ack/Filter/Collection.pm	/^sub new {$/;"	s
@@ -368,17 +366,15 @@ populate_filetypes	t/filetypes.t	/^sub populate_filetypes {$/;"	s
 prep_environment	t/Util.pm	/^sub prep_environment {$/;"	s
 print	lib/App/Ack.pm	/^sub print                   { print {$fh} @_; return; }$/;"	s
 print_blank_line	lib/App/Ack.pm	/^sub print_blank_line        { App::Ack::print( "\\n" ); return; }$/;"	s
-print_filename	lib/App/Ack.pm	/^sub print_filename          { App::Ack::print( $_[0], $_[1] ); return; }$/;"	s
 print_line_if_context	ack	/^sub print_line_if_context {$/;"	s
 print_line_with_context	ack	/^sub print_line_with_context {$/;"	s
 print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
 print_matches_in_file	ack	/^sub print_matches_in_file {$/;"	s
 process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 read_file	t/Util.pm	/^sub read_file {$/;"	s
-read_rcfile	lib/App/Ack/ConfigFinder.pm	/^sub read_rcfile {$/;"	s
+read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
-remove_dir_sep	lib/App/Ack.pm	/^sub remove_dir_sep {$/;"	s
 reset	lib/App/Ack/File.pm	/^sub reset {$/;"	s
 reslash	t/Util.pm	/^sub reslash {$/;"	s
 reslash_all	t/Util.pm	/^sub reslash_all {$/;"	s

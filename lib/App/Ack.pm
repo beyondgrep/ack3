@@ -13,14 +13,14 @@ A container for functions for the ack program.
 
 =head1 VERSION
 
-Version 2.999_02
+Version 2.999_03
 
 =cut
 
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    $VERSION = '2.999_02';
+    $VERSION = '2.999_03';
     $COPYRIGHT = 'Copyright 2005-2018 Andy Lester.';
 }
 our $STANDALONE = 0;
@@ -41,22 +41,16 @@ our %ignore_dirs;
 our $is_filter_mode;
 our $output_to_pipe;
 
-our $dir_sep_chars;
-our $is_cygwin;
 our $is_windows;
 
 our $debug_nopens = 0;
-
-use File::Spec 1.00015 ();
 
 BEGIN {
     # These have to be checked before any filehandle diddling.
     $output_to_pipe  = not -t *STDOUT;
     $is_filter_mode = -p STDIN;
 
-    $is_cygwin       = ($^O eq 'cygwin' || $^O eq 'msys');
     $is_windows      = ($^O eq 'MSWin32');
-    $dir_sep_chars   = $is_windows ? quotemeta( '\\/' ) : quotemeta( File::Spec->catfile( '', '' ) );
 }
 
 =head1 SYNOPSIS
@@ -66,22 +60,6 @@ If you want to know about the F<ack> program, see the F<ack> file itself.
 No user-serviceable parts inside.  F<ack> is all that should use this.
 
 =head1 FUNCTIONS
-
-=cut
-
-=head2 remove_dir_sep( $path )
-
-This functions removes a trailing path separator, if there is one, from its argument
-
-=cut
-
-sub remove_dir_sep {
-    my $path = shift;
-    $path =~ s/[$dir_sep_chars]$//;
-
-    return $path;
-}
-
 
 =head2 warn( @_ )
 
@@ -496,7 +474,6 @@ END_OF_VERSION
 
 sub print                   { print {$fh} @_; return; }
 sub print_blank_line        { App::Ack::print( "\n" ); return; }
-sub print_filename          { App::Ack::print( $_[0], $_[1] ); return; }
 
 sub set_up_pager {
     my $command = shift;
@@ -549,7 +526,6 @@ sub show_types {
     my $ors  = shift;
 
     my @types = filetypes( $file );
-    my $types = join( ',', @types );
     my $arrow = @types ? ' => ' : ' =>';
     App::Ack::print( $file->name, $arrow, join( ',', @types ), $ors );
 

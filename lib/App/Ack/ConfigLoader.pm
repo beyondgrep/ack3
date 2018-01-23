@@ -2,15 +2,16 @@ package App::Ack::ConfigLoader;
 
 use strict;
 use warnings;
-use feature 'say';
+use 5.010;
 
 use App::Ack ();
 use App::Ack::ConfigDefault ();
 use App::Ack::ConfigFinder ();
-use App::Ack::Filter;
-use App::Ack::Filter::Collection;
-use App::Ack::Filter::Default;
-use Carp 1.04 ();
+use App::Ack::Filter ();
+use App::Ack::Filter::Collection ();
+use App::Ack::Filter::Default ();
+use App::Ack::Filter::IsPath ();
+use File::Spec 3.00 ();
 use Getopt::Long 2.38 ();
 use Text::ParseWords 3.1 ();
 
@@ -64,7 +65,7 @@ sub _generate_ignore_dir {
     return sub {
         my ( undef, $dir ) = @_;
 
-        $dir = App::Ack::remove_dir_sep( $dir );
+        $dir = _remove_directory_separator( $dir );
         if ( $dir !~ /:/ ) {
             $dir = 'is:' . $dir;
         }
@@ -72,7 +73,7 @@ sub _generate_ignore_dir {
         my ( $filter_type, $args ) = split /:/, $dir, 2;
 
         if ( $filter_type eq 'firstlinematch' ) {
-            Carp::croak( qq{Invalid filter specification "$filter_type" for option '$option_name'} );
+            App::Ack::die( qq{Invalid filter specification "$filter_type" for option '$option_name'} );
         }
 
         my $filter = App::Ack::Filter->create_filter($filter_type, split(/,/, $args));
@@ -107,6 +108,18 @@ sub _generate_ignore_dir {
     };
 }
 
+
+sub _remove_directory_separator {
+    my $path = shift;
+
+    state $dir_sep_chars = $App::Ack::is_windows ? quotemeta( '\\/' ) : quotemeta( File::Spec->catfile( '', '' ) );
+
+    $path =~ s/[$dir_sep_chars]$//;
+
+    return $path;
+}
+
+
 sub _process_filter_spec {
     my ( $spec ) = @_;
 
@@ -127,7 +140,7 @@ sub _process_filter_spec {
         return ( $type_name, App::Ack::Filter->create_filter('ext', @extensions) );
     }
     else {
-        Carp::croak "invalid filter specification '$spec'";
+        App::Ack::die( "Invalid filter specification '$spec'" );
     }
 }
 
@@ -220,7 +233,7 @@ sub _process_filetypes {
     );
 
     foreach my $source (@{$arg_sources}) {
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
+        my $args = $source->{contents};
 
         if ( ref($args) ) {
             # $args are modified in place, so no need to munge $arg_sources
@@ -235,8 +248,6 @@ sub _process_filetypes {
     }
 
     $additional_specs{'k|known-types'} = sub {
-        my ( undef, $value ) = @_;
-
         my @filters = map { @{$_} } values(%App::Ack::mappings);
 
         push @{ $opt->{'filters'} }, @filters;
@@ -359,7 +370,7 @@ sub get_arg_spec {
                 $callback->( $getopt, $cb_value );
             }
             else {
-                Carp::croak( "Unknown type '$value'" );
+                App::Ack::die( "Unknown type '$value'" );
             }
         },
         'u|underline!'      => \$opt->{u},
@@ -623,7 +634,7 @@ sub _remove_default_options_if_needed {
     );
 
     foreach my $index ( $default_index + 1 .. $#{$sources} ) {
-        my ( $name, $args ) = @{$sources->[$index]}{qw/name contents/};
+        my $args = $sources->[$index]->{contents};
 
         if (ref($args)) {
             local @ARGV = @{$args};
@@ -671,7 +682,7 @@ sub _check_for_mutually_exclusive_options {
         my %set_opts;
 
         my $source = shift @copy;
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
+        my $args = $source->{contents};
         $args = ref($args) ? [ @{$args} ] : [ Text::ParseWords::shellwords($args) ];
 
         foreach my $opt ( @{$args} ) {
@@ -731,11 +742,11 @@ sub process_args {
                 @ARGV = @{$args};
             }
             elsif (@{$args}) {
-                Carp::croak "source '$source_name' has extra arguments!";
+                App::Ack::die( "Source '$source_name' has extra arguments!" );
             }
         }
         else {
-            Carp::croak 'The impossible has occurred!';
+            App::Ack::die( 'The impossible has occurred!' );
         }
     }
     my $filters = ($opt{filters} ||= []);
@@ -789,8 +800,7 @@ sub retrieve_arg_sources {
     };
 
     foreach my $file ( @files) {
-        my @lines = App::Ack::ConfigFinder::read_rcfile($file->{path});
-
+        my @lines = read_rcfile($file->{path});
         if ( @lines ) {
             push @arg_sources, {
                 name     => $file->{path},
@@ -807,6 +817,36 @@ sub retrieve_arg_sources {
     };
 
     return @arg_sources;
+}
+
+
+=head2 read_rcfile( $filename )
+
+Reads the contents of the .ackrc file and returns the arguments.
+
+=cut
+
+sub read_rcfile {
+    my $file = shift;
+
+    return unless defined $file && -e $file;
+
+    my @lines;
+
+    open( my $fh, '<', $file ) or App::Ack::die( "Unable to read $file: $!" );
+    while ( my $line = <$fh> ) {
+        chomp $line;
+        $line =~ s/^\s+//;
+        $line =~ s/\s+$//;
+
+        next if $line eq '';
+        next if $line =~ /^\s*#/;
+
+        push( @lines, $line );
+    }
+    close $fh or App::Ack::die( "Unable to close $file: $!" );
+
+    return @lines;
 }
 
 1; # End of App::Ack::ConfigLoader

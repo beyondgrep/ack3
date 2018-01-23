@@ -1,9 +1,10 @@
 package App::Ack::File;
 
-use App::Ack;
-
 use warnings;
 use strict;
+
+use App::Ack ();
+use File::Spec ();
 
 =head1 NAME
 
@@ -94,44 +95,6 @@ sub open {
     }
 
     return $self->{fh};
-}
-
-
-=head2 $file->needs_line_scan( \%opts )
-
-Tells if the file needs a line-by-line scan.  This is a big
-optimization because if you can tell from the outset that the pattern
-is not found in the file at all, then there's no need to do the
-line-by-line iteration.
-
-Slurp up an entire file up to 100K, see if there are any matches
-in it, and if so, let us know so we can iterate over it directly.
-If it's bigger than 100K or the match is inverted, we have to do
-the line-by-line, too.
-
-=cut
-
-sub needs_line_scan {
-    my $self  = shift;
-    my $opt   = shift;
-
-    return 1 if $opt->{v};
-    return 1 unless -f $self->{fh};
-
-    my $buffer;
-    my $size = 10_000_000;
-    my $rc = sysread( $self->{fh}, $buffer, $size );
-    if ( !defined($rc) ) {
-        if ( $App::Ack::report_bad_filenames ) {
-            App::Ack::warn( "$self->{filename}: $!" );
-        }
-        return 0;
-    }
-
-    # If we read all 100K, then we need to scan the rest.
-    return 1 if $rc == $size;
-
-    return $buffer =~ /$opt->{regex}/mo;
 }
 
 

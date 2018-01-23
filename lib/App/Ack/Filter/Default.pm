@@ -22,7 +22,7 @@ sub new {
 }
 
 sub filter {
-    my ( $self, $file ) = @_;
+    my ( undef, $file ) = @_;
 
     return -T $file->name;
 }

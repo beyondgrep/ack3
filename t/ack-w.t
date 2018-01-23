@@ -130,7 +130,7 @@ subtest '-w warnings' => sub {
         subtest "Good example: $pattern" => sub {
             plan tests => 1;
 
-            my ( $stdout, $stderr ) = run_ack_with_stderr( $pattern, '-w', $happy );
+            my ( undef, $stderr ) = run_ack_with_stderr( $pattern, '-w', $happy );
             # Don't care what stdout is.
             is_empty_array( $stderr, 'Should not trigger any warnings' );
         }

@@ -5,7 +5,6 @@ use warnings;
 
 use App::Ack ();
 use App::Ack::Filter::Inverse ();
-use Carp 1.04 ();
 
 my %filter_types;
 
@@ -112,8 +111,6 @@ called implicitly by stringification.
 =cut
 
 sub to_string {
-    my ( $self ) = @_;
-
     return '(unimplemented to_string)';
 }
 

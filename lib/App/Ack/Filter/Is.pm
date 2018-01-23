@@ -15,7 +15,7 @@ use warnings;
 use parent 'App::Ack::Filter';
 
 use File::Spec 3.00 ();
-use App::Ack::Filter::IsGroup;
+use App::Ack::Filter::IsGroup ();
 
 sub new {
     my ( $class, $filename ) = @_;

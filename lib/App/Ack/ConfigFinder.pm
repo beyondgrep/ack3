@@ -44,9 +44,8 @@ use strict;
 use warnings;
 
 use App::Ack ();
-use App::Ack::ConfigDefault;
 use Cwd 3.00 ();
-use File::Spec 3.00;
+use File::Spec 3.00 ();
 
 use if ($^O eq 'MSWin32'), 'Win32';
 
@@ -143,36 +142,6 @@ sub find_config_files {
 
     # We only test for existence here, so if the file is deleted out from under us, this will fail later.
     return _remove_redundancies( @config_files );
-}
-
-
-=head2 read_rcfile
-
-Reads the contents of the .ackrc file and returns the arguments.
-
-=cut
-
-sub read_rcfile {
-    my $file = shift;
-
-    return unless defined $file && -e $file;
-
-    my @lines;
-
-    open( my $fh, '<', $file ) or App::Ack::die( "Unable to read $file: $!" );
-    while ( my $line = <$fh> ) {
-        chomp $line;
-        $line =~ s/^\s+//;
-        $line =~ s/\s+$//;
-
-        next if $line eq '';
-        next if $line =~ /^\s*#/;
-
-        push( @lines, $line );
-    }
-    close $fh or App::Ack::die( "Unable to close $file: $!" );
-
-    return @lines;
 }
 
 1;

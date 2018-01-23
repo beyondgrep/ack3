@@ -150,7 +150,7 @@ sub build_ack_invocation {
     foreach my $arg ( @args ) {
         if ( ref($arg) eq 'HASH' ) {
             if ( $options ) {
-                Carp::croak('You may not specify more than one options hash');
+                die 'You may not specify more than one options hash';
             }
             else {
                 $options = $arg;
@@ -314,14 +314,14 @@ sub run_cmd {
         my ( $stderr_read, $stderr_write );
 
         pipe $stdout_read, $stdout_write
-            or Carp::croak( "Unable to create pipe: $!" );
+            or die "Unable to create pipe: $!";
 
         pipe $stderr_read, $stderr_write
-            or Carp::croak( "Unable to create pipe: $!" );
+            or die "Unable to create pipe: $!";
 
         my $pid = fork();
         if ( $pid == -1 ) {
-            Carp::croak( "Unable to fork: $!" );
+            die "Unable to fork: $!";
         }
 
         if ( $pid ) {
@@ -379,7 +379,7 @@ sub run_cmd {
         }
     } # end else not Win32
 
-    my ($sig,$core,$rc) = (($? & 127), ($? & 128), ($? >> 8));  ## no critic ( Bangs::ProhibitBitwiseOperators )
+    my ($sig,$core,$rc) = (($? & 127), ($? & 128), ($? >> 8));  ## no critic ( Bangs::ProhibitBitwiseOperators Variables::ProhibitUnusedVarsStricter )
     $ack_return_code = $rc;
     ## XXX what to do with $core or $sig?
 
@@ -398,9 +398,6 @@ sub get_rc {
 
 sub run_ack_with_stderr {
     my @args = @_;
-
-    my @stdout;
-    my @stderr;
 
     my $perl = caret_X();
 
@@ -435,7 +432,7 @@ sub pipe_into_ack_with_stderr {
 
 # Pipe into ack and return STDOUT as array, for arguments see pipe_into_ack_with_stderr.
 sub pipe_into_ack {
-    my ($stdout, $stderr) = pipe_into_ack_with_stderr( @_ );
+    my ($stdout, undef) = pipe_into_ack_with_stderr( @_ );
     return @{$stdout};
 }
 
@@ -809,8 +806,6 @@ sub get_expected_options {
 sub _check_command_for_taintedness {
     my @args = @_;
 
-    my $bad = 0;
-
     my @tainted = grep { tainted( $_ ) } @args;
 
     if ( @tainted ) {
@@ -876,7 +871,7 @@ sub _check_message {
 
     if ( !defined( $msg ) ) {
         my (undef,undef,undef,$sub) = caller(1);
-        Carp::croak( "You must pass a message to $sub" );
+        die "You must pass a message to $sub";
     }
 
     return $msg;

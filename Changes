@@ -1,7 +1,7 @@
 History file for ack.  https://beyondgrep.com/
 
 
-NEXT
+2.999_03 Fri Jan 19 11:02:46 CST 2018
 =====================================
 [ENHANCEMENTS]
 The check for whether we need to scan the entire file line-by-line now
@@ -9,6 +9,8 @@ reads 10M of file instead of just 100K.
 
 Removed support for the ACK_OPTIONS environment variable.  Use an ackrc
 file instead.  If you have ACK_OPTIONS set, ack will give a warning.
+
+Lots of internal speedups.
 
 
 2.999_02 Mon Jan  8 23:03:42 CST 2018

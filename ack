@@ -2,11 +2,10 @@
 
 use strict;
 use warnings;
-our $VERSION = '2.999_02'; # Check https://beyondgrep.com/ for updates
+our $VERSION = '2.999_03'; # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
 use Getopt::Long 2.38 ();
-use Carp 1.04 ();
 
 use File::Spec ();
 use File::Next ();
@@ -17,14 +16,14 @@ use App::Ack::File ();
 use App::Ack::Files ();
 
 use App::Ack::Filter ();
-use App::Ack::Filter::Default;
-use App::Ack::Filter::Extension;
-use App::Ack::Filter::FirstLineMatch;
-use App::Ack::Filter::Inverse;
-use App::Ack::Filter::Is;
-use App::Ack::Filter::IsPath;
-use App::Ack::Filter::Match;
-use App::Ack::Filter::Collection;
+use App::Ack::Filter::Default ();
+use App::Ack::Filter::Extension ();
+use App::Ack::Filter::FirstLineMatch ();
+use App::Ack::Filter::Inverse ();
+use App::Ack::Filter::Is ();
+use App::Ack::Filter::IsPath ();
+use App::Ack::Filter::Match ();
+use App::Ack::Filter::Collection ();
 
 # Global command-line options
 our $opt_after_context;
@@ -329,17 +328,41 @@ FILES:
         }
         # Normal match-showing ack
         else {
+            # Tells if the file needs a line-by-line scan.  This is a big
+            # optimization because if you can tell from the outset that the pattern
+            # is not found in the file at all, then there's no need to do the
+            # line-by-line iteration.
+            # Slurp up an entire file up to 100K, see if there are any matches
+            # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
-            if ( $opt->{regex} && !$opt->{passthru} ) {
-                if ( $file->open() ) {
-                    $needs_line_scan = $file->needs_line_scan( $opt );
-                    if ( $needs_line_scan ) {
-                        $file->reset();
+            if ( $opt_regex && !$opt_passthru && !$opt_v ) {
+                if ( $file->open() && -f $file->{fh} ) {
+                    my $buffer;
+                    my $size = 10_000_000;
+                    my $rc = sysread( $file->{fh}, $buffer, $size );
+                    if ( !defined($rc) ) {
+                        if ( $App::Ack::report_bad_filenames ) {
+                            App::Ack::warn( $file->name . ": $!" );
+                        }
+                        $needs_line_scan = 0;
+                    }
+                    else {
+                        # If we read all 100K, then we need to scan the rest.
+                        if ( $rc == $size ) {
+                            $needs_line_scan = 1;
+                        }
+                        else {
+                            # Check for the pattern in what we got.
+                            $needs_line_scan = ($buffer =~ /$opt_regex/mo);
+                        }
+                        if ( $needs_line_scan ) {
+                            $file->reset();
+                        }
                     }
                 }
             }
             if ( $needs_line_scan ) {
-                $nmatches += print_matches_in_file( $file, $opt );
+                $nmatches += print_matches_in_file( $file );
             }
             if ( $nmatches && $only_first ) {
                 last FILES;
@@ -633,24 +656,8 @@ sub set_up_line_context_for_file {
     return;
 }
 
-=begin Developers
-
-This subroutine jumps through a number of optimization hoops to
-try to be fast in the more common use cases of ack.  For one thing,
-in non-context tracking searches (not using -A, -B, or -C),
-conditions that normally would be checked inside the loop happen
-outside, resulting in three nearly identical loops for -v, --passthru,
-and normal searching.  Any changes that happen to one should propagate
-to the others if they make sense.  The non-context branches also inline
-does_match for performance reasons; any relevant changes that happen here
-must also happen there.
-
-=end Developers
-
-=cut
-
 sub print_matches_in_file {
-    my ( $file ) = @_;
+    my $file = shift;
 
     my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
     my $nmatches  = 0;
@@ -679,13 +686,26 @@ sub print_matches_in_file {
         $after_context_pending = 0;
         while ( <$fh> ) {
             chomp;
-            if ( does_match( $_ ) && $max_count ) {
+            my $does_match;
+            $match_colno = undef;
+
+            if ( $opt_v ) {
+                $does_match = !/$opt_regex/o;
+            }
+            else {
+                if ( $does_match = /$opt_regex/o ) {
+                    # @- = @LAST_MATCH_START
+                    # @+ = @LAST_MATCH_END
+                    $match_colno = $-[0] + 1;
+                }
+            }
+            if ( $does_match && $max_count ) {
                 if ( !$has_printed_for_this_file ) {
                     if ( $opt_break && $has_printed_something ) {
                         App::Ack::print_blank_line();
                     }
                     if ( $opt_show_filename && $opt_heading ) {
-                        App::Ack::print_filename( $display_filename, $ors );
+                        App::Ack::print( $display_filename, $ors );
                     }
                 }
                 print_line_with_context( $filename, $_, $. );
@@ -724,7 +744,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -754,7 +774,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -779,7 +799,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print_filename( $display_filename, $ors );
+                            App::Ack::print( $display_filename, $ors );
                         }
                     }
                     if ( $opt_proximate ) {
@@ -1032,39 +1052,6 @@ sub print_line_if_context {
     return;
 }
 
-}
-
-# does_match() MUST have an $opt_regex set.
-
-=begin Developers
-
-This subroutine is inlined a few places in C<print_matches_in_file>
-for performance reasons, so any changes here must be copied there as
-well.
-
-=end Developers
-
-=cut
-
-sub does_match {
-    my ( $line ) = @_;
-
-    $match_colno = undef;
-
-    if ( $opt_v ) {
-        return ( $line !~ /$opt_regex/o );
-    }
-    else {
-        if ( $line =~ /$opt_regex/o ) {
-            # @- = @LAST_MATCH_START
-            # @+ = @LAST_MATCH_END
-            $match_colno = $-[0] + 1;
-            return 1;
-        }
-        else {
-            return;
-        }
-    }
 }
 
 sub get_match_colno {

@@ -1,13 +1,14 @@
 package App::Ack::Files;
 
-use App::Ack;
-use App::Ack::File;
+use App::Ack ();
+use App::Ack::File ();
 
-use File::Next 1.16;
+use File::Next 1.16 ();
 use Errno qw(EACCES);
 
 use warnings;
 use strict;
+use 5.010;
 
 =head1 NAME
 
@@ -32,7 +33,6 @@ sub from_argv {
 
     my $self = bless {}, $class;
 
-    my $file_filter    = undef;
     my $descend_filter = $opt->{descend_filter};
 
     if ( $opt->{n} ) {
@@ -45,7 +45,7 @@ sub from_argv {
         File::Next::files( {
             file_filter     => $opt->{file_filter},
             descend_filter  => $descend_filter,
-            error_handler   => _generate_error_handler($opt),
+            error_handler   => _generate_error_handler(),
             warning_handler => sub {},
             sort_files      => $opt->{sort_files},
             follow_symlinks => $opt->{follow},
@@ -66,10 +66,11 @@ sub from_file {
     my $opt   = shift;
     my $file  = shift;
 
+    my $error_handler = _generate_error_handler();
     my $iter =
         File::Next::from_file( {
-            error_handler   => _generate_error_handler($opt),
-            warning_handler => _generate_error_handler($opt),
+            error_handler   => $error_handler,
+            warning_handler => $error_handler,
             sort_files      => $opt->{sort_files},
         }, $file ) or return undef;
 
@@ -92,9 +93,9 @@ sub from_stdin {
 
     my $self  = bless {}, $class;
 
-    my $has_been_called = 0;
-
     $self->{iter} = sub {
+        state $has_been_called = 0;
+
         if ( !$has_been_called ) {
             $has_been_called = 1;
             return '-';
@@ -116,8 +117,6 @@ sub next {
 
 
 sub _generate_error_handler {
-    my $opt = shift;
-
     if ( $App::Ack::report_bad_filenames ) {
         return sub {
             my $msg = shift;

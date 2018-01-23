@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use parent 'App::Ack::Filter';
 
-use File::Spec 3.00;
 use App::Ack::Filter::MatchGroup ();
 
 =head1 NAME

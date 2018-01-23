@@ -57,7 +57,7 @@ sub _test_project_ackrc {
                 plan tests => 2;
 
                 # /tmp/x/project/.ackrc
-                my $ackrc = _create_ackrc( $projectdir, "--$option=$option" );
+                _create_ackrc( $projectdir, "--$option=$option" );
 
                 # Explicitly pass --env or else the test will ignore .ackrc.
                 my ( $stdout, $stderr ) = run_ack_with_stderr( '-f', '--env' );
@@ -110,7 +110,7 @@ sub _test_home_ackrc {
                 plan tests => 2;
 
                 # /tmp/x/home/.ackrc
-                my $ackrc = _create_ackrc( $homedir, "--$option=$option" );
+                _create_ackrc( $homedir, "--$option=$option" );
                 local $ENV{HOME} = $homedir;
 
                 # Explicitly pass --env or else the test will ignore .ackrc.

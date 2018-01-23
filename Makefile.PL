@@ -28,7 +28,6 @@ my %parms = (
     EXE_FILES               => [ 'ack' ],
 
     PREREQ_PM => {
-        'Carp'              => '1.04',
         'Cwd'               => '3.00',
         'Errno'             => 0,
         'File::Basename'    => '1.00015',
@@ -48,7 +47,7 @@ my %parms = (
     },
     MAN3PODS            => {}, # no need for man pages for any of the .pm files
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'ack-2* nytprof* stderr.log stdout.log completion.*' },
+    clean               => { FILES => 'ack-3* nytprof* stderr.log stdout.log completion.*' },
 );
 
 WriteMakefile( %parms );

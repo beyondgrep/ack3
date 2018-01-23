@@ -14,7 +14,7 @@ use strict;
 use warnings;
 use parent 'App::Ack::Filter';
 
-use App::Ack::Filter::IsPathGroup;
+use App::Ack::Filter::IsPathGroup ();
 
 sub new {
     my ( $class, $filename ) = @_;

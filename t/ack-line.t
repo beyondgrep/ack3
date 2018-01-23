@@ -13,7 +13,7 @@ if ( not has_io_pty() ) {
     exit(0);
 }
 
-plan tests => 12;
+plan tests => 11;
 
 prep_environment();
 
@@ -107,22 +107,10 @@ HERE
     ack_lists_match( [ @args, @files ], \@expected, 'Looking for first line in multiple files' );
 }
 
-LINENO_WARNINGS: {
-    my @expected = (
-        'Well, my daddy left home when I was three',
-    );
-
-    my @files = qw( t/text/boy-named-sue.txt );
-    my @args = qw( --lines=1 );
-
-    my @output = run_ack_interactive( @args, @files );
-    is scalar(@output), 1, 'There must be exactly one line of output (with no warnings)';
-}
-
 LINE_WITH_REGEX: {
     # Specifying both --lines and a regex should result in an error.
-    my @args = qw( --lines=1 --match Sue );
-    my @files = qw( t/text/boy-named-sue.txt );
+    my @args = qw( --lines=1 --match bongo );
+    my @files = qw( t/text/ozymandias.txt );
 
     ack_error_matches( [@args,@files], qr/Options '--lines' and '--match' are mutually exclusive/ );
 }
