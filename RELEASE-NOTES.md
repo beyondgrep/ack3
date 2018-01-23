@@ -6,7 +6,7 @@ ack 3 is a greplike tool optimized for searching large code trees.
 
 Improvements over ack 2 include:
 
-* Improved `-w` option.
+* Improved `-w` means more accurate searching for words.
 
 * `-w` option will warn if your pattern does not lend itself to
 word matching.
@@ -35,6 +35,11 @@ linefeed at the end of a line.  This is no longer possible.
 
 ack 2 only needed Perl 5.8.8.  This shouldn't be a problem since 5.10.1
 has been out since 2009.
+
+## -w is fussier
+
+ack 3 will not allow you to use `-w` with a pattern that doesn't begin or
+end with a word character.
 
 ## ack 3 no longer highlights capture groups.
 
