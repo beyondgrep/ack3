@@ -54,7 +54,7 @@ GetOptions(
     'ack=s@'  => \@use_acks,
     'perl=s'  => \$perl,
     'set=s'   => \$set,
-);
+) or die;
 
 my $SOURCE_DIR = shift or die "Must specify a path";
 
@@ -79,11 +79,15 @@ push @acks, 'ack-standalone';
 
 # Test ag and ripgrep if we have them.
 if ( $test_others ) {
-    for my $ackalike ( qw( ag rg ) ) {
+    for my $ackalike ( qw( grep ag rg ) ) {
         for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
             my $path = "$dir/$ackalike";
             if ( -x $path ) {
-                push( @acks, { path => $path, version => $ackalike } );
+                my $parms = { path => $path, version => $ackalike };
+                if ( $ackalike eq 'grep' ) {
+                    $parms->{extra_args} = [ '-R' ];
+                }
+                push( @acks, $parms );
             }
         }
     }
@@ -220,7 +224,8 @@ sub create_format {
 sub time_ack {
     my ( $ack, $invocation, $perl ) = @_;
 
-    my @args = ( $ack->{'path'}, @$invocation );
+    my @args = ( $ack->{'path'}, @{$invocation} );
+    push( @args, @{$ack->{extra_args}} ) if $ack->{extra_args};
 
     # Only ack has --noenv and is run under Perl.
     if ( $ack->{'path'} =~ /ack/ ) {
