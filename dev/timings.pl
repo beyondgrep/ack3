@@ -54,6 +54,7 @@ GetOptions(
     'ack=s@'  => \@use_acks,
     'perl=s'  => \$perl,
     'set=s'   => \$set,
+    'head'    => sub { @use_acks = ('HEAD') },
 ) or die;
 
 my $SOURCE_DIR = shift or die "Must specify a path";
@@ -77,21 +78,6 @@ push @acks, 'ack-standalone';
 
 @acks = grab_versions(@acks);
 
-# Test ag and ripgrep if we have them.
-if ( $test_others ) {
-    for my $ackalike ( qw( grep ag rg ) ) {
-        for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
-            my $path = "$dir/$ackalike";
-            if ( -x $path ) {
-                my $parms = { path => $path, version => $ackalike };
-                if ( $ackalike eq 'grep' ) {
-                    $parms->{extra_args} = [ '-R' ];
-                }
-                push( @acks, $parms );
-            }
-        }
-    }
-}
 if ( @use_acks ) {
     foreach my $ack (@acks) {
         next if $ack->{'version'} eq 'HEAD';
@@ -106,6 +92,22 @@ if ( @use_acks ) {
     my ($na,$nb) = map { $_ eq 'HEAD' ? 99 : $_ } ( $a->{'version'}, $b->{'version'} );
     return $na cmp $nb;
 } @acks;
+
+# Test grep, ag and ripgrep if we have them.
+if ( $test_others ) {
+    for my $ackalike ( qw( grep ag rg ) ) {
+        for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
+            my $path = "$dir/$ackalike";
+            if ( -x $path ) {
+                my $parms = { path => $path, version => $ackalike };
+                if ( $ackalike eq 'grep' ) {
+                    $parms->{extra_args} = [ '-R', '-E' ];
+                }
+                push( @acks, $parms );
+            }
+        }
+    }
+}
 
 if ($previous_timings) {
     splice @acks, -1, 0, {
