@@ -30,6 +30,7 @@ my %sets = (
         [ 'foo\w+', '-w' ],
         [ 'foo\w+', '-C10' ],
         [ '(set|get)_\w+' ],
+        [ '(?:set|get)_\w+' ],
     ],
     context => [
         [ 'foo' ],
