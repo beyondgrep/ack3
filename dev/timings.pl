@@ -27,6 +27,7 @@ my %sets = (
     searching => [
         [ 'foo' ],
         [ 'foo', '-w' ],
+        [ 'foo', '--barf' ],
         [ 'foo\w+', '-w' ],
         [ 'foo\w+', '-C10' ],
         [ '(set|get)_\w+' ],
@@ -132,11 +133,13 @@ foreach my $invocation (@invocations) {
 
     my $previous_timing;
 
+    my @line_counts;
     foreach my $ack (@acks) {
         my $elapsed;
+        my $nlines;
 
         if ($ack->{'path'}) {
-            $elapsed = time_ack($ack, $invocation, $perl);
+            ($elapsed,$nlines) = time_ack($ack, $invocation, $perl);
         }
         else {
             $elapsed = $previous_timings->{join(' ', 'ack', @$invocation)};
@@ -146,12 +149,16 @@ foreach my $invocation (@invocations) {
         }
         push @timings, color($previous_timing, $elapsed);
         $previous_timing = $elapsed if defined $elapsed;
+        push( @line_counts, $nlines );
 
         if ($perform_store && $ack->{'store_timings'}) {
             $stored_timings{join(' ', 'ack', @$invocation)} = $elapsed;
         }
     }
     printf $format, join(' ', 'ack', @$invocation), map { $_ // color('x_x') } @timings;
+    if ( 0 && !counts_valid( @line_counts ) ) {
+        say 'Line counts not valid: ' . join( ', ', map { $_ // 'undef' } @line_counts );
+    }
 
     my $i = 0;
     $total_timings[$i++] += ($_//0) for @timings;
@@ -241,24 +248,39 @@ sub time_ack {
 
     my $end;
     my $start = [gettimeofday()];
+
+    # We use the last invocations
+    my $n_errlines;
+    my $n_stdoutlines;
+
     for ( 1 .. $num_iterations ) {
         my ( $read, $write );
         pipe $read, $write;
-        my $pid   = fork;
 
-        my $has_error_lines;
+        my ( $r_stdout, $w_stdout );
+        pipe $r_stdout, $w_stdout;
+
+        $n_stdoutlines = 0;
+        $n_errlines = 0;
+
+        my $pid   = fork;
 
         if($pid) {
             close $write;
+            close $w_stdout;
+            while (<$r_stdout>) {
+                ++$n_stdoutlines;
+            }
             while(<$read>) {
-                $has_error_lines = 1;
+                ++$n_errlines;
             }
             waitpid $pid, 0;
-            return if $has_error_lines;
+            return if $n_errlines;
         }
         else {
             close $read;
-            open STDOUT, '>', File::Spec->devnull;
+            close $r_stdout;
+            open STDOUT, '>&', $w_stdout;
             open STDERR, '>&', $write;
             exec @args;
             exit 255;
@@ -266,7 +288,9 @@ sub time_ack {
     }
     $end = [gettimeofday()];
 
-    return tv_interval($start, $end) / $num_iterations;
+    my $time = tv_interval($start, $end) / $num_iterations;
+
+    return ( $time, $n_stdoutlines, $n_errlines );
 }
 
 sub color {
@@ -290,6 +314,15 @@ sub color {
     else {
         return colored(['green'], $value);
     }
+}
+
+sub counts_valid {
+    my @counts;
+    my %counts;
+
+    ++$counts{$_//'undef'} for @_;
+
+    return (@counts>0) && ($counts[0]>0) && (keys %counts == 1);
 }
 
 __DATA__
