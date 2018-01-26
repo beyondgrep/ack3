@@ -138,6 +138,7 @@ sub close {
     if ( !close($self->{fh}) && $App::Ack::report_bad_filenames ) {
         App::Ack::warn( $self->name() . ": $!" );
     }
+    $self->{fh} = undef;
 
     $self->{opened} = 0;
 
