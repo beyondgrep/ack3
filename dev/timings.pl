@@ -25,12 +25,13 @@ my $perl = $^X;
 
 my %sets = (
     searching => [
+        [ 'zqj' ],
+        [ 'zqj-not-there' ],
         [ 'foo' ],
         [ 'foo', '-w' ],
         [ 'foo\w+', '-w' ],
         [ 'foo\w+', '-C10' ],
         [ '(set|get)_\w+' ],
-        [ 'foo', '-v' ],
     ],
     context => [
         [ 'foo' ],
@@ -96,13 +97,13 @@ if ( @use_acks ) {
 
 # Test grep, ag and ripgrep if we have them.
 if ( $test_others ) {
-    for my $ackalike ( qw( grep ag rg ) ) {
+    for my $ackalike ( qw( grep egrep ag rg ) ) {
         for my $dir ( qw( /usr/bin /usr/local/bin ) ) {
             my $path = "$dir/$ackalike";
             if ( -x $path ) {
                 my $parms = { path => $path, version => $ackalike };
-                if ( $ackalike eq 'grep' ) {
-                    $parms->{extra_args} = [ '-R', '-E' ];
+                if ( $ackalike =~ /grep/ ) {
+                    $parms->{extra_args} = [ '-R' ];
                 }
                 push( @acks, $parms );
             }
