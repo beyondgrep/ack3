@@ -41,7 +41,6 @@ our $opt_lines;
 our $opt_m;
 our $opt_output;
 our $opt_passthru;
-our $opt_print0;
 our $opt_proximate;
 our $opt_regex;
 our $opt_show_filename;
@@ -57,6 +56,7 @@ our $special_vars_used_by_opt_output;
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
     $0 = join(' ', 'ack', $0);
+    $App::Ack::ors = "\n";
     if ( $App::Ack::VERSION ne $main::VERSION ) {
         App::Ack::die( "Program/library version mismatch\n\t$0 is $main::VERSION\n\t$INC{'App/Ack.pm'} is $App::Ack::VERSION" );
     }
@@ -134,13 +134,13 @@ MAIN: {
     $opt_m              = $opt->{m};
     $opt_output         = $opt->{output};
     $opt_passthru       = $opt->{passthru};
-    $opt_print0         = $opt->{print0};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
     $opt_u              = $opt->{u};
     $opt_v              = $opt->{v};
 
     $App::Ack::report_bad_filenames = !$opt->{s};
+    $App::Ack::ors = $opt->{print0} ? "\0" : "\n";
 
     if ( !defined($opt_color) && !$opt_g ) {
         my $windows_color = 1;
@@ -226,7 +226,6 @@ MAIN: {
     }
     App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};
 
-    my $ors        = $opt_print0 ? "\0" : "\n";
     my $only_first = $opt->{1};
 
     my $nmatches    = 0;
@@ -243,10 +242,10 @@ FILES:
         # ack -f
         if ( $opt_f ) {
             if ( $opt->{show_types} ) {
-                App::Ack::show_types( $file, $ors );
+                App::Ack::show_types( $file );
             }
             else {
-                App::Ack::print( $file->name, $ors );
+                App::Ack::say( $file->name );
             }
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
@@ -254,12 +253,12 @@ FILES:
         # ack -g
         elsif ( $opt_g ) {
             if ( $opt->{show_types} ) {
-                App::Ack::show_types( $file, $ors );
+                App::Ack::show_types( $file );
             }
             else {
                 local $opt_show_filename = 0; # XXX Why is this local?
 
-                print_line_with_options( '', $file->name, 0, $ors );
+                print_line_with_options( '', $file->name, 0, $App::Ack::ors );
             }
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
@@ -307,10 +306,10 @@ FILES:
 
             if ( !$opt_l || $matches_for_this_file > 0) {
                 if ( $opt_show_filename ) {
-                    App::Ack::print( $file->name, ':', $matches_for_this_file, $ors );
+                    App::Ack::say( $file->name, ':', $matches_for_this_file );
                 }
                 else {
-                    App::Ack::print( $matches_for_this_file, $ors );
+                    App::Ack::say( $matches_for_this_file );
                 }
             }
         }
@@ -319,7 +318,7 @@ FILES:
             my $is_match = file_has_match( $file );
 
             if ( $opt_L ? !$is_match : $is_match ) {
-                App::Ack::print( $file->name, $ors );
+                App::Ack::say( $file->name );
                 ++$nmatches;
 
                 last FILES if $only_first;
@@ -662,7 +661,6 @@ sub print_matches_in_file {
     my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
     my $nmatches  = 0;
     my $filename  = $file->name;
-    my $ors       = $opt_print0 ? "\0" : "\n";
 
     my $has_printed_for_this_file = 0;
 
@@ -705,7 +703,7 @@ sub print_matches_in_file {
                         App::Ack::print_blank_line();
                     }
                     if ( $opt_show_filename && $opt_heading ) {
-                        App::Ack::print( $display_filename, $ors );
+                        App::Ack::say( $display_filename );
                     }
                 }
                 print_line_with_context( $filename, $_, $. );
@@ -744,7 +742,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print( $display_filename, $ors );
+                            App::Ack::say( $display_filename );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -774,7 +772,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print( $display_filename, $ors );
+                            App::Ack::say( $display_filename );
                         }
                     }
                     print_line_with_context( $filename, $_, $. );
@@ -799,7 +797,7 @@ sub print_matches_in_file {
                             App::Ack::print_blank_line();
                         }
                         if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::print( $display_filename, $ors );
+                            App::Ack::say( $display_filename );
                         }
                     }
                     if ( $opt_proximate ) {
@@ -836,8 +834,6 @@ sub print_line_with_options {
 
     $has_printed_something = 1;
     $printed_lineno = $lineno;
-
-    my $ors = $opt_print0 ? "\0" : "\n";
 
     my @line_parts;
 
@@ -890,7 +886,7 @@ sub print_line_with_options {
             $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
             $keep{f} = $filename if exists $keep{f};
             $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/ego;
-            App::Ack::print( join( $separator, @line_parts, $output ), $ors );
+            App::Ack::say( join( $separator, @line_parts, $output ) );
         }
     }
     else {
@@ -940,7 +936,7 @@ sub print_line_with_options {
         }
 
         push @line_parts, $line;
-        App::Ack::print( join( $separator, @line_parts ), $ors );
+        App::Ack::say( join( $separator, @line_parts ) );
 
         if ( $underline ne '' ) {
             pop @line_parts; # Leave only the stuff on the left.
@@ -950,7 +946,7 @@ sub print_line_with_options {
 
                 App::Ack::print( ' ' x $spaces_needed );
             }
-            App::Ack::print( $underline, $ors );
+            App::Ack::say( $underline );
         }
     }
 
@@ -994,15 +990,13 @@ sub iterate {
 sub print_line_with_context {
     my ( $filename, $matching_line, $lineno ) = @_;
 
-    my $ors = $opt_print0 ? "\0" : "\n";
-
     $matching_line =~ s/[\r\n]+$//g;
 
     # Check if we need to print context lines first.
     if ( $opt_after_context || $opt_before_context ) {
         my $before_unprinted = $lineno - $printed_lineno - 1;
         if ( !$is_first_match && ( !$printed_lineno || $before_unprinted > $n_before_ctx_lines ) ) {
-            App::Ack::print('--', $ors);
+            App::Ack::say( '--' );
         }
 
         # We want at most $n_before_ctx_lines of context.

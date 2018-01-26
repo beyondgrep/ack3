@@ -45,6 +45,9 @@ our $is_windows;
 
 our $debug_nopens = 0;
 
+# Line ending, changes to "\0" if --print0.
+our $ors = "\n";
+
 BEGIN {
     # These have to be checked before any filehandle diddling.
     $output_to_pipe  = not -t *STDOUT;
@@ -473,6 +476,7 @@ END_OF_VERSION
 
 
 sub print            { print {$fh} @_; return; }
+sub say              { print {$fh} @_, $ors; return; }
 sub print_blank_line { print {$fh} "\n"; return; }
 
 sub set_up_pager {
@@ -515,7 +519,7 @@ sub exit_from_ack {
     exit $rc;
 }
 
-=head2 show_types( $file, $ors )
+=head2 show_types( $file )
 
 Shows the filetypes associated with a given file.
 
@@ -523,11 +527,10 @@ Shows the filetypes associated with a given file.
 
 sub show_types {
     my $file = shift;
-    my $ors  = shift;
 
     my @types = filetypes( $file );
     my $arrow = @types ? ' => ' : ' =>';
-    App::Ack::print( $file->name, $arrow, join( ',', @types ), $ors );
+    App::Ack::say( $file->name, $arrow, join( ',', @types ) );
 
     return;
 }
