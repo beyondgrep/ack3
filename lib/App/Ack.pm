@@ -472,8 +472,8 @@ END_OF_VERSION
 }
 
 
-sub print                   { print {$fh} @_; return; }
-sub print_blank_line        { App::Ack::print( "\n" ); return; }
+sub print            { print {$fh} @_; return; }
+sub print_blank_line { print {$fh} "\n"; return; }
 
 sub set_up_pager {
     my $command = shift;
