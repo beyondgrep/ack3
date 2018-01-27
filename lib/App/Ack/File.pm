@@ -32,12 +32,10 @@ sub new {
     my $self = bless {
         filename => $filename,
         fh       => undef,
-        opened   => 0,
     }, $class;
 
     if ( $self->{filename} eq '-' ) {
         $self->{fh}     = *STDIN;
-        $self->{opened} = 1;
     }
 
     return $self;
@@ -85,9 +83,9 @@ C<close $fh>, C<$file-E<gt>close> should be called.
 sub open {
     my ( $self ) = @_;
 
-    if ( !$self->{opened} ) {
+    if ( !$self->{fh} ) {
         if ( open $self->{fh}, '<', $self->{filename} ) {
-            $self->{opened} = 1;
+            # Do nothing.
         }
         else {
             $self->{fh} = undef;
@@ -130,17 +128,12 @@ Close the file.
 sub close {
     my $self = shift;
 
-    # Return if we haven't opened the file yet.
-    if ( !defined($self->{fh}) ) {
-        return;
+    if ( $self->{fh} ) {
+        if ( !close($self->{fh}) && $App::Ack::report_bad_filenames ) {
+            App::Ack::warn( $self->name() . ": $!" );
+        }
+        $self->{fh} = undef;
     }
-
-    if ( !close($self->{fh}) && $App::Ack::report_bad_filenames ) {
-        App::Ack::warn( $self->name() . ": $!" );
-    }
-    $self->{fh} = undef;
-
-    $self->{opened} = 0;
 
     return;
 }
