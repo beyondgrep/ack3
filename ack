@@ -726,101 +726,98 @@ sub print_matches_in_file {
             last if ($max_count == 0) && ($after_context_pending == 0);
         }
     }
-    else {  # Not tracking context
-        if ( $opt_passthru ) {
-            local $_ = undef;
+    elsif ( $opt_passthru ) {
+        local $_ = undef;
 
-            while ( <$fh> ) {
-                chomp;
-                $match_colno = undef;
-                if ( $opt_v ? !/$opt_regex/o : /$opt_regex/o ) {
-                    if ( !$opt_v ) {
-                        $match_colno = $-[0] + 1;
-                    }
-                    if ( !$has_printed_for_this_file ) {
-                        if ( $opt_break && $has_printed_something ) {
-                            App::Ack::print_blank_line();
-                        }
-                        if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::say( $display_filename );
-                        }
-                    }
-                    print_line_with_context( $filename, $_, $. );
-                    $has_printed_for_this_file = 1;
-                    $nmatches++;
-                    $max_count--;
+        while ( <$fh> ) {
+            chomp;
+            $match_colno = undef;
+            if ( $opt_v ? !/$opt_regex/o : /$opt_regex/o ) {
+                if ( !$opt_v ) {
+                    $match_colno = $-[0] + 1;
                 }
-                else {
-                    if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
+                if ( !$has_printed_for_this_file ) {
+                    if ( $opt_break && $has_printed_something ) {
                         App::Ack::print_blank_line();
                     }
-                    print_line_with_options( $filename, $_, $., ':' );
-                    $has_printed_for_this_file = 1;
+                    if ( $opt_show_filename && $opt_heading ) {
+                        App::Ack::say( $display_filename );
+                    }
                 }
-                last if $max_count == 0;
+                print_line_with_context( $filename, $_, $. );
+                $has_printed_for_this_file = 1;
+                $nmatches++;
+                $max_count--;
             }
+            else {
+                if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
+                    App::Ack::print_blank_line();
+                }
+                print_line_with_options( $filename, $_, $., ':' );
+                $has_printed_for_this_file = 1;
+            }
+            last if $max_count == 0;
         }
-        elsif ( $opt_v ) {
-            local $_ = undef;
+    }
+    elsif ( $opt_v ) {
+        local $_ = undef;
 
+        $match_colno = undef;
+        while ( <$fh> ) {
+            chomp;
+            if ( !/$opt_regex/o ) {
+                if ( !$has_printed_for_this_file ) {
+                    if ( $opt_break && $has_printed_something ) {
+                        App::Ack::print_blank_line();
+                    }
+                    if ( $opt_show_filename && $opt_heading ) {
+                        App::Ack::say( $display_filename );
+                    }
+                }
+                print_line_with_context( $filename, $_, $. );
+                $has_printed_for_this_file = 1;
+                $nmatches++;
+                $max_count--;
+            }
+            last if $max_count == 0;
+        }
+    }
+    else {
+        local $_ = undef;
+
+        my $last_match_lineno;
+        while ( <$fh> ) {
+            chomp;
             $match_colno = undef;
-            while ( <$fh> ) {
-                chomp;
-                if ( !/$opt_regex/o ) {
-                    if ( !$has_printed_for_this_file ) {
-                        if ( $opt_break && $has_printed_something ) {
-                            App::Ack::print_blank_line();
-                        }
-                        if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::say( $display_filename );
-                        }
+            if ( /$opt_regex/o ) {
+                $match_colno = $-[0] + 1;
+                if ( !$has_printed_for_this_file ) {
+                    if ( $opt_break && $has_printed_something ) {
+                        App::Ack::print_blank_line();
                     }
-                    print_line_with_context( $filename, $_, $. );
-                    $has_printed_for_this_file = 1;
-                    $nmatches++;
-                    $max_count--;
+                    if ( $opt_show_filename && $opt_heading ) {
+                        App::Ack::say( $display_filename );
+                    }
                 }
-                last if $max_count == 0;
-            }
-        }
-        else {
-            local $_ = undef;
-
-            my $last_match_lineno;
-            while ( <$fh> ) {
-                chomp;
-                $match_colno = undef;
-                if ( /$opt_regex/o ) {
-                    $match_colno = $-[0] + 1;
-                    if ( !$has_printed_for_this_file ) {
-                        if ( $opt_break && $has_printed_something ) {
-                            App::Ack::print_blank_line();
-                        }
-                        if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::say( $display_filename );
-                        }
-                    }
-                    if ( $opt_proximate ) {
-                        if ( $last_match_lineno ) {
-                            if ( $. > $last_match_lineno + $opt_proximate ) {
-                                App::Ack::print_blank_line();
-                            }
-                        }
-                        elsif ( !$opt_break && $has_printed_something ) {
+                if ( $opt_proximate ) {
+                    if ( $last_match_lineno ) {
+                        if ( $. > $last_match_lineno + $opt_proximate ) {
                             App::Ack::print_blank_line();
                         }
                     }
-                    s/[\r\n]+$//g;
-                    print_line_with_options( $filename, $_, $., ':' );
-                    $has_printed_for_this_file = 1;
-                    $nmatches++;
-                    $max_count--;
-                    $last_match_lineno = $.;
+                    elsif ( !$opt_break && $has_printed_something ) {
+                        App::Ack::print_blank_line();
+                    }
                 }
-                last if $max_count == 0;
+                s/[\r\n]+$//g;
+                print_line_with_options( $filename, $_, $., ':' );
+                $has_printed_for_this_file = 1;
+                $nmatches++;
+                $max_count--;
+                $last_match_lineno = $.;
             }
+            last if $max_count == 0;
         }
-
     }
 
     $is_iterating = 0;
