@@ -260,6 +260,7 @@ close	lib/App/Ack/File.pm	/^sub close {$/;"	s
 color	dev/timings.pl	/^sub color {$/;"	s
 colorize	t/Util.pm	/^sub colorize {$/;"	s
 count_matches_in_file	ack	/^sub count_matches_in_file {$/;"	s
+counts_valid	dev/timings.pl	/^sub counts_valid {$/;"	s
 create_filter	lib/App/Ack/Filter.pm	/^sub create_filter {$/;"	s
 create_format	dev/timings.pl	/^sub create_format {$/;"	s
 create_globals	t/Util.pm	/^sub create_globals {$/;"	s
@@ -364,8 +365,8 @@ pipe_into_ack	t/Util.pm	/^sub pipe_into_ack {$/;"	s
 pipe_into_ack_with_stderr	t/Util.pm	/^sub pipe_into_ack_with_stderr {$/;"	s
 populate_filetypes	t/filetypes.t	/^sub populate_filetypes {$/;"	s
 prep_environment	t/Util.pm	/^sub prep_environment {$/;"	s
-print	lib/App/Ack.pm	/^sub print                   { print {$fh} @_; return; }$/;"	s
-print_blank_line	lib/App/Ack.pm	/^sub print_blank_line        { App::Ack::print( "\\n" ); return; }$/;"	s
+print	lib/App/Ack.pm	/^sub print            { print {$fh} @_; return; }$/;"	s
+print_blank_line	lib/App/Ack.pm	/^sub print_blank_line { print {$fh} "\\n"; return; }$/;"	s
 print_line_if_context	ack	/^sub print_line_if_context {$/;"	s
 print_line_with_context	ack	/^sub print_line_with_context {$/;"	s
 print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
@@ -387,6 +388,7 @@ run_cmd	t/Util.pm	/^sub run_cmd {$/;"	s
 run_tests	t/Barfly.pm	/^sub run_tests {$/;"	s
 safe_chdir	t/Util.pm	/^sub safe_chdir {$/;"	s
 safe_mkdir	t/Util.pm	/^sub safe_mkdir {$/;"	s
+say	lib/App/Ack.pm	/^sub say              { print {$fh} @_, $ors; return; }$/;"	s
 set_up_assertion_that_these_options_will_ignore_those_directories	t/ack-ignore-dir.t	/^sub set_up_assertion_that_these_options_will_ignore_those_directories {$/;"	s
 set_up_line_context	ack	/^sub set_up_line_context {$/;"	s
 set_up_line_context_for_file	ack	/^sub set_up_line_context_for_file {$/;"	s

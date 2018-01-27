@@ -624,8 +624,6 @@ my $after_context_pending;
 # Number of latest line that got printed
 my $printed_lineno;
 
-my $is_iterating;
-
 my $is_first_match;
 state $has_printed_something = 0;
 
@@ -663,8 +661,6 @@ sub print_matches_in_file {
     my $filename  = $file->name;
 
     my $has_printed_for_this_file = 0;
-
-    $is_iterating = 1;
 
     my $fh = $file->open;
     if ( !$fh ) {
@@ -820,8 +816,6 @@ sub print_matches_in_file {
         }
     }
 
-    $is_iterating = 0;
-
     return $nmatches;
 }
 
@@ -953,8 +947,6 @@ sub print_line_with_options {
 sub iterate {
     my ( $file, $cb ) = @_;
 
-    $is_iterating = 1;
-
     my $fh = $file->open;
     if ( !$fh ) {
         if ( $App::Ack::report_bad_filenames ) {
@@ -978,8 +970,6 @@ sub iterate {
             last unless $cb->();
         }
     }
-
-    $is_iterating = 0;
 
     return;
 }
