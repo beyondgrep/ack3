@@ -805,7 +805,7 @@ sub print_matches_in_file {
                         App::Ack::print_blank_line();
                     }
                 }
-                s/[\r\n]+$//g;
+                s/[\r\n]+$//;
                 print_line_with_options( $filename, $_, $., ':' );
                 $has_printed_for_this_file = 1;
                 $nmatches++;
