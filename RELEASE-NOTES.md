@@ -15,6 +15,8 @@ word matching.
 
 * `--proximate=N` option
 
+* `--underline` option for showing matches without color coding.
+
 * Added `--pod` and `--markdown`.
 
 * Added `GNUmakefile` to the list of makefile specs.
