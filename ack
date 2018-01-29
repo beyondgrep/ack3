@@ -1031,6 +1031,7 @@ sub get_match_colno {
     return $match_colno;
 }
 
+# Same as C<count_matches_in_file>, but exits as soon as there is a match.
 sub file_has_match {
     my ( $file ) = @_;
 
@@ -1049,7 +1050,7 @@ sub file_has_match {
                 last;
             }
         }
-        close $fh;
+        $file->close;
     }
 
     return $has_match;
@@ -1069,7 +1070,7 @@ sub count_matches_in_file {
         while ( <$fh> ) {
             ++$nmatches if (/$opt_regex/o xor $opt_v);
         }
-        close $fh;
+        $file->close;
     }
 
     return $nmatches;
