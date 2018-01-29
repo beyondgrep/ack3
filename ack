@@ -707,14 +707,6 @@ sub print_matches_in_file {
                 $nmatches++;
                 $max_count--;
             }
-            elsif ( $opt_passthru ) {
-                # XXX Inline this call?
-                if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
-                    App::Ack::print_blank_line();
-                }
-                print_line_with_options( $filename, $_, $., ':' );
-                $has_printed_for_this_file = 1;
-            }
             else {
                 print_line_if_context( $filename, $_, $., '-' );
             }
