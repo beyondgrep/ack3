@@ -937,7 +937,8 @@ sub print_line_with_options {
 }
 
 sub iterate {
-    my ( $file, $cb ) = @_;
+    my $file = shift;
+    my $callback = shift;
 
     my $fh = $file->open;
     if ( !$fh ) {
@@ -952,14 +953,14 @@ sub iterate {
         $after_context_pending = 0;
 
         while ( <$fh> ) {
-            last unless $cb->();
+            last unless $callback->();
         }
     }
     else {
         local $_ = undef;
 
         while ( <$fh> ) {
-            last unless $cb->();
+            last unless $callback->();
         }
     }
 
