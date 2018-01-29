@@ -977,7 +977,7 @@ sub iterate {
 sub print_line_with_context {
     my ( $filename, $matching_line, $lineno ) = @_;
 
-    $matching_line =~ s/[\r\n]+$//g;
+    $matching_line =~ s/[\r\n]+$//;
 
     # Check if we need to print context lines first.
     if ( $opt_after_context || $opt_before_context ) {
