@@ -29,15 +29,13 @@ Logic for loading configuration files.
 
 =cut
 
-my @INVALID_COMBINATIONS;
-
-BEGIN {
+sub _invalid_combinations {
     my @context    = qw( -A -B -C --after-context --before-context --context );
     my @pretty     = qw( --heading --group --break );
     my @filename   = qw( -h -H --with-filename --no-filename );
     my @file_lists = qw( -f -g -l -L );
 
-    @INVALID_COMBINATIONS = (
+    return (
         [qw(-l)]                 => [@context, @pretty, @filename, qw(-L -o --passthru --output --max-count --column -f -g --show-types)],
         [qw(-L)]                 => [@context, @pretty, @filename, qw(-l -o --passthru --output --max-count --column -f -g --show-types -c --count)],
         [qw(--lines)]            => [@context, @pretty, @filename, qw(-l --files-with-matches --files-without-matches -L -o --passthru --match -m --max-count -1 -c --count --column --print0 -f -g --show-types)],
@@ -667,8 +665,9 @@ sub _check_for_mutually_exclusive_options {
     my %mutually_exclusive_with;
     my @copy = @{$arg_sources};
 
-    for ( my $i = 0; $i < @INVALID_COMBINATIONS; $i += 2 ) {
-        my ( $lhs, $rhs ) = @INVALID_COMBINATIONS[ $i, $i + 1 ];
+    my @combos = _invalid_combinations();
+    for ( my $i = 0; $i < @combos; $i += 2 ) {
+        my ( $lhs, $rhs ) = @combos[ $i, $i + 1 ];
 
         foreach my $l_opt ( @{$lhs} ) {
             foreach my $r_opt ( @{$rhs} ) {
