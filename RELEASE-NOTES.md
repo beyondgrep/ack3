@@ -23,6 +23,8 @@ word matching.
 
 * Added `-S` as a synonym for `--smart-case`.
 
+* Added many more checks for mutually exclusive command-line options.
+
 # Bug fixes
 
 * Column numbers were not getting colorized in the output.  Added

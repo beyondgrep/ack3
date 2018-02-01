@@ -37,7 +37,7 @@ sub _invalid_combinations {
 
     return (
         [qw(-l)]                 => [@context, @pretty, @filename, qw(-L -o --passthru --output --max-count --column -f -g --show-types)],
-        [qw(-L)]                 => [@context, @pretty, @filename, qw(-l -o --passthru --output --max-count --column -f -g --show-types -c --count)],
+        [qw(-L)]                 => [@context, @pretty, @filename, qw(-l -o --passthru --output --max-count --column -f -g --show-types -c --count -v)],
         [qw(--lines)]            => [@context, @pretty, @filename, qw(-l --files-with-matches --files-without-matches -L -o --passthru --match -m --max-count -1 -c --count --column --print0 -f -g --show-types)],
         [qw(-o)]                 => [@context, qw(--output -c --count --column --column -f --show-types)],
         [qw(--passthru)]         => [@context, qw(--output --column -m --max-count -1 -c --count -f -g)],
