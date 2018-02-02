@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use blib;
 use App::Ack::ConfigLoader ();
 use Getopt::Long;
 

@@ -29,7 +29,6 @@ lib/App/Ack/Docs/Manual.pm
 lib/App/Ack/Docs/FAQ.pm
 lib/App/Ack/Docs/Cookbook.pm
 
-record-options
 squash
 test-pager
 

@@ -547,7 +547,7 @@ sub _record_option_coverage {
     return unless $ENV{ACK_OPTION_COVERAGE};
     return if $ENV{ACK_TEST_STANDALONE}; # We don't need to record the second time around.
 
-    my $record_options = File::Spec->catfile($orig_wd, 'record-options');
+    my $record_options = File::Spec->catfile( $orig_wd, 'dev', 'record-options' );
 
     my $perl = caret_X();
     if ( @command_line == 1 ) {
