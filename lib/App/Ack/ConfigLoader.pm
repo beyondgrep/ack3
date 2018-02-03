@@ -25,8 +25,6 @@ Logic for loading configuration files.
 
 =head1 FUNCTIONS
 
-=head2 process_args( @sources )
-
 =cut
 
 sub _invalid_combinations {
@@ -712,6 +710,10 @@ sub _check_for_mutually_exclusive_options {
     return;
 }
 
+
+=head2 process_args( @sources )
+
+=cut
 
 sub process_args {
     my $arg_sources = \@_;
