@@ -234,7 +234,7 @@ MAIN: {
     set_up_line_context();
 
 FILES:
-    while ( my $file = $files->next ) {
+    while ( defined(my $file = $files->next) ) {
         if ($is_tracking_context) {
             set_up_line_context_for_file();
         }
