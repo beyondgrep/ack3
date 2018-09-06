@@ -4,6 +4,8 @@ History file for ack.  https://beyondgrep.com/
 NEXT
 =====================================
 [ENHANCEMENTS]
+Added -P as a negation of --proximate.  It is the same as --proximate=0.
+If you have --proximate in an .ackrc, -P can be used to cancel it.
 
 Added --ts for Typescript.
 

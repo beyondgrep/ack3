@@ -290,6 +290,7 @@ File presentation:
   --nogroup                     Same as --noheading --nobreak
   --[no]proximate               Separate match output with blank lines unless
                                 they are on adjacent lines.
+  -P                            Negates --proximate.
   --[no]underline               Print a line of carets under the matched text.
   --[no]color, --[no]colour     Highlight the matching text (default: on unless
                                 output is redirected, or on Windows)

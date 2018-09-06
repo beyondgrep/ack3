@@ -460,6 +460,10 @@ and this with C<--proximate=3>.
 
 If N is omitted, N is set to 1.
 
+=item B<-P>
+
+Negates the effect of the B<--proximate> option.  Shortcut for B<--proximate=0>.
+
 =item B<-Q>, B<--literal>
 
 Quote all metacharacters in PATTERN, it is treated as a literal.

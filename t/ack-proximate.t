@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use lib 't';
 use Util;
@@ -160,6 +160,26 @@ HERE
 };
 
 
+subtest '-P overrides --prox' => sub {
+    plan tests => 1;
+
+    my @expected = line_split( <<"HERE" );
+$bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
+$const:199:To constitute Tribunals inferior to the supreme Court;
+$const:372:Judges of the supreme Court, and all other Officers of the United States,
+$const:376:in the Courts of Law, or in the Heads of Departments.
+$const:404:Court, and in such inferior Courts as the Congress may from time to
+$const:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+$const:425:and those in which a State shall be Party, the supreme Court shall
+$const:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+$const:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+HERE
+
+    my @files = qw( t/text );
+    my @args = qw( --proximate=20 --nogroup -i --sort -P court );
+
+    ack_lists_match( [ @args, @files ], \@expected, '-P overrides --prox' );
+};
 
 done_testing();
 
