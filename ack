@@ -41,7 +41,7 @@ our $opt_lines;
 our $opt_m;
 our $opt_output;
 our $opt_passthru;
-our $opt_proximate;
+our $opt_p;
 our $opt_regex;
 our $opt_show_filename;
 our $opt_u;
@@ -121,7 +121,6 @@ MAIN: {
     $opt_after_context  = $opt->{after_context};
     $opt_before_context = $opt->{before_context};
     $opt_break          = $opt->{break};
-    $opt_proximate      = $opt->{proximate};
     $opt_color          = $opt->{color};
     $opt_column         = $opt->{column};
     $opt_count          = $opt->{count};
@@ -133,6 +132,7 @@ MAIN: {
     $opt_lines          = $opt->{lines};
     $opt_m              = $opt->{m};
     $opt_output         = $opt->{output};
+    $opt_p              = $opt->{p};
     $opt_passthru       = $opt->{passthru};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
@@ -787,9 +787,9 @@ sub print_matches_in_file {
                         App::Ack::say( $display_filename );
                     }
                 }
-                if ( $opt_proximate ) {
+                if ( $opt_p ) {
                     if ( $last_match_lineno ) {
-                        if ( $. > $last_match_lineno + $opt_proximate ) {
+                        if ( $. > $last_match_lineno + $opt_p ) {
                             App::Ack::print_blank_line();
                         }
                     }

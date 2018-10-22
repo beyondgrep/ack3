@@ -428,7 +428,7 @@ with filenames that contain whitespace, e.g.
     # Remove all files of type HTML.
     ack -f --html --print0 | xargs -0 rm -f
 
-=item B<--proximate[=N]>
+=item B<-p[N]>, B<--proximate[=N]>
 
 Groups together match lines that are within N lines of each other.
 This is useful for visually picking out matches that appear close

@@ -49,7 +49,7 @@ sub _invalid_combinations {
         [@context]               => [@file_lists],
         [qw(-f)]                 => [qw(-g), @pretty],
         [qw(-g)]                 => [qw(-f), @pretty],
-        [qw(--proximate)]        => [@context, @file_lists, qw( --passthru --lines -c )],
+        [qw(-p)]                 => [@context, @file_lists, qw( --passthru --lines -c )],
     );
 }
 
@@ -345,8 +345,8 @@ sub get_arg_spec {
         'nopager'           => sub { $opt->{pager} = undef },
         'passthru'          => \$opt->{passthru},
         'print0'            => \$opt->{print0},
-        'proximate:1'       => \$opt->{proximate},
-        'P'                 => sub { $opt->{proximate} = 0 },
+        'p|proximate:1'     => \$opt->{p},
+        'P'                 => sub { $opt->{p} = 0 },
         'Q|literal'         => \$opt->{Q},
         'r|R|recurse'       => sub { $opt->{n} = 0 },
         's'                 => \$opt->{s},

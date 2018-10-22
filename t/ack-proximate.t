@@ -14,7 +14,7 @@ my $const = reslash( 't/text/constitution.txt' );
 my $bill  = reslash( 't/text/bill-of-rights.txt' );
 
 subtest 'Grouped proximate' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
     my @expected = line_split( <<"HERE" );
 $bill
@@ -39,14 +39,17 @@ $const
 HERE
 
     my @files = qw( t/text );
-    my @args = qw( --proximate -i --group --sort court );
+    my @args = qw( -p -i --group --sort court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate' );
+    for my $arg ( qw( --proximate -p ) ) {
+        $args[0] = $arg;
+        ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate' );
+    }
 };
 
 
 subtest 'Ungrouped proximate' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
     my @expected = line_split( <<"HERE" );
 $bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
@@ -71,12 +74,15 @@ HERE
     my @files = qw( t/text );
     my @args = qw( --proximate -i --nogroup --sort court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate' );
+    for my $arg ( qw( --proximate -p ) ) {
+        $args[0] = $arg;
+        ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate' );
+    }
 };
 
 
 subtest 'Grouped proximate=2' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
     my @expected = line_split( <<"HERE" );
 $bill
@@ -101,13 +107,16 @@ HERE
     my @files = qw( t/text );
     my @args = qw( --proximate=2 --group -i --sort court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate=2' );
+    for my $arg ( qw( --proximate=2 -p2 ) ) {
+        $args[0] = $arg;
+        ack_lists_match( [ @args, @files ], \@expected, 'Grouped proximate=2' );
+    }
 };
 
 
 
 subtest 'Ungrouped proximate=2' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
     my @expected = line_split( <<"HERE" );
 $bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
@@ -130,13 +139,16 @@ HERE
     my @files = qw( t/text );
     my @args = qw( --proximate=2 --nogroup -i --sort court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=2' );
+    for my $arg ( qw( --proximate=2 -p2 ) ) {
+        $args[0] = $arg;
+        ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=2' );
+    }
 };
 
 
 
 subtest 'Ungrouped proximate=20' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
     my @expected = line_split( <<"HERE" );
 $bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
@@ -156,7 +168,10 @@ HERE
     my @files = qw( t/text );
     my @args = qw( --proximate=20 --nogroup -i --sort court );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=20' );
+    for my $arg ( qw( --proximate=20 -p20 ) ) {
+        $args[0] = $arg;
+        ack_lists_match( [ @args, @files ], \@expected, 'Ungrouped proximate=20' );
+    }
 };
 
 

@@ -215,6 +215,7 @@ _explode_sources	lib/App/Ack/ConfigLoader.pm	/^sub _explode_sources {$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
+_invalid_combinations	lib/App/Ack/ConfigLoader.pm	/^sub _invalid_combinations {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
