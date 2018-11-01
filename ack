@@ -178,21 +178,20 @@ MAIN: {
         }
     }
 
-    # Set up file filters.
-    my $files;
-    if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
-        $files     = App::Ack::Files->from_stdin();
+    if ( $opt_f || $opt_lines ) {
+        # No need to check for regex, since mutex options are handled elsewhere.
+    }
+    else {
         $opt_regex = shift @ARGV if not defined $opt_regex;
         $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
     }
+
+    # Set up file filters.
+    my $files;
+    if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
+        $files = App::Ack::Files->from_stdin();
+    }
     else {
-        if ( $opt_f || $opt_lines ) {
-            # No need to check for regex, since mutex options are handled elsewhere.
-        }
-        else {
-            $opt_regex = shift @ARGV if not defined $opt_regex;
-            $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
-        }
         if ( $opt_regex && $opt_regex =~ /\n/ ) {
             App::Ack::exit_from_ack( 0 );
         }

@@ -8,12 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-if ( not has_io_pty() ) {
-    plan skip_all => q{You need to install IO::Pty to run this test};
-    exit(0);
-}
-
-plan tests => 11;
+plan tests => 12;
 
 prep_environment();
 
@@ -129,6 +124,20 @@ LINE_AND_PASSTHRU: {
     my @files = qw( t/swamp/perl.pod );
 
     ack_error_matches( [@args,@files], qr/Options '--lines' and '--passthru' are mutually exclusive/ );
+}
+
+LINES_FROM_STDIN: {
+    my @expected = line_split( <<'HERE' );
+Congress shall make no law respecting an establishment of religion,
+and to petition the Government for a redress of grievances.
+HERE
+
+    my $file = 't/text/bill-of-rights.txt';
+    my @args = ( '--lines=3,6' );
+
+    my @stdout = pipe_into_ack($file, @args);
+
+    sets_match( \@stdout, \@expected, 'Looking for lines from STDIN' );
 }
 
 done_testing();
