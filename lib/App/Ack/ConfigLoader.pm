@@ -415,13 +415,13 @@ sub _process_other {
         my @copy = @{$argv_source};
         local @ARGV = @copy;
 
-        Getopt::Long::Configure('pass_through');
+        my $old_options = Getopt::Long::Configure('pass_through');
 
         Getopt::Long::GetOptions(
             'help-types' => \$is_help_types_active,
         );
 
-        Getopt::Long::Configure('no_pass_through');
+        Getopt::Long::Configure( $old_options );
     }
 
     my $arg_specs = get_arg_spec($opt, $extra_specs);
