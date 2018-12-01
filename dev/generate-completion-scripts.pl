@@ -45,7 +45,6 @@ my %ZSH_DESCRIPTIONS = (
     '--ignore-directory'      => 'ignore directories (at any level) named DIRNAME',
     '--ignore-file'           => 'ignore files matching FILTERTYPE:FILTERARGS',
     '--invert-match'          => 'select non-matching lines',
-    '--lines'                 => 'print only line NUM of each file',
     '--literal'               => 'quote all metacharacters in PATTERN',
     '--man'                   => 'displays the ack man page',
     '--match'                 => 'specify PATTERN explicitly',

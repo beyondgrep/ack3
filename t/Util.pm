@@ -738,7 +738,6 @@ sub get_expected_options {
         '--ignore-directory',
         '--ignore-file',
         '--invert-match',
-        '--lines',
         '--literal',
         '--man',
         '--match',

@@ -227,12 +227,6 @@ This is a rough heuristic.  It gets false positives, but it's pretty useful.
 
 The word and backreference are matching the canonicalizing use of C<lc> to lowercase both comparands.
 
-=head2 Show a range of lines in a file
-
-     ack --lines=830-850 filename
-
-And use C<-H> to show what line numbers are.
-
 =head2 Find files that match one string but do not match another.
 
 The module Test::Warn has a number of functions of the form

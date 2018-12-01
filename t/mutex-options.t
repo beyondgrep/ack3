@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 250;
+use Test::More tests => 187;
 use lib 't';
 use Util;
 
@@ -11,71 +11,6 @@ prep_environment();
 
 my $file = 't/text/raven.txt';
 my $word = 'nevermore';
-
-# --lines
-are_mutually_exclusive('--lines', '-l', ['--lines=1', '-l', $file]);
-are_mutually_exclusive('--lines', '-l', ['--lines', 1, '-l', $file]);
-are_mutually_exclusive('--lines', '--files-with-matches', ['--lines=1', '--files-with-matches', $file]);
-are_mutually_exclusive('--lines', '--files-with-matches', ['--lines', 1, '--files-with-matches', $file]);
-are_mutually_exclusive('--lines', '-L', ['--lines=1', '-L', $file]);
-are_mutually_exclusive('--lines', '-L', ['--lines', 1, '-L', $file]);
-are_mutually_exclusive('--lines', '--files-without-matches', ['--lines=1', '--files-without-matches', $file]);
-are_mutually_exclusive('--lines', '--files-without-matches', ['--lines', 1, '--files-without-matches', $file]);
-are_mutually_exclusive('--lines', '-o', ['--lines=1', '-o', $file]);
-are_mutually_exclusive('--lines', '-o', ['--lines', 1, '-o', $file]);
-are_mutually_exclusive('--lines', '--passthru', ['--lines=1', '--passthru', $file]);
-are_mutually_exclusive('--lines', '--passthru', ['--lines', 1, '--passthru', $file]);
-are_mutually_exclusive('--lines', '--match', ['--lines=1', '--match', $file]);
-are_mutually_exclusive('--lines', '--match', ['--lines', 1, '--match', $file]);
-are_mutually_exclusive('--lines', '-m', ['--lines=1', '-m', 1, $file]);
-are_mutually_exclusive('--lines', '-m', ['--lines', 1, '-m', 1, $file]);
-are_mutually_exclusive('--lines', '-m', ['--lines', 1, '-m1', $file]);
-are_mutually_exclusive('--lines', '--max-count', ['--lines=1', '--max-count', 1, $file]);
-are_mutually_exclusive('--lines', '--max-count', ['--lines', 1, '--max-count', 1, $file]);
-are_mutually_exclusive('--lines', '--max-count', ['--lines=1', '--max-count=1', $file]);
-are_mutually_exclusive('--lines', '--max-count', ['--lines', 1, '--max-count=1', $file]);
-are_mutually_exclusive('--lines', '-1', ['--lines=1', '-1', $file]);
-are_mutually_exclusive('--lines', '-1', ['--lines', 1, '-1', $file]);
-are_mutually_exclusive('--lines', '-H', ['--lines=1', '-H', $file]);
-are_mutually_exclusive('--lines', '-H', ['--lines', 1, '-H', $file]);
-are_mutually_exclusive('--lines', '--with-filename', ['--lines=1', '--with-filename', $file]);
-are_mutually_exclusive('--lines', '--with-filename', ['--lines', 1, '--with-filename', $file]);
-are_mutually_exclusive('--lines', '-h', ['--lines=1', '-h', $file]);
-are_mutually_exclusive('--lines', '-h', ['--lines', 1, '-h', $file]);
-are_mutually_exclusive('--lines', '--no-filename', ['--lines=1', '--no-filename', $file]);
-are_mutually_exclusive('--lines', '--no-filename', ['--lines', 1, '--no-filename', $file]);
-are_mutually_exclusive('--lines', '-c', ['--lines=1', '-c', $file]);
-are_mutually_exclusive('--lines', '-c', ['--lines', 1, '-c', $file]);
-are_mutually_exclusive('--lines', '--count', ['--lines=1', '--count', $file]);
-are_mutually_exclusive('--lines', '--count', ['--lines', 1, '--count', $file]);
-are_mutually_exclusive('--lines', '--column', ['--lines=1', '--column', $file]);
-are_mutually_exclusive('--lines', '--column', ['--lines', 1, '--column', $file]);
-are_mutually_exclusive('--lines', '-A', ['--lines=1', '-A', 1, $file]);
-are_mutually_exclusive('--lines', '-A', ['--lines', 1, '-A', 1, $file]);
-are_mutually_exclusive('--lines', '--after-context', ['--lines=1', '--after-context', 1, $file]);
-are_mutually_exclusive('--lines', '--after-context', ['--lines', 1, '--after-context', 1, $file]);
-are_mutually_exclusive('--lines', '--after-context', ['--lines=1', '--after-context=1', $file]);
-are_mutually_exclusive('--lines', '--after-context', ['--lines', 1, '--after-context=1', $file]);
-are_mutually_exclusive('--lines', '-B', ['--lines=1', '-B', 1, $file]);
-are_mutually_exclusive('--lines', '-B', ['--lines', 1, '-B', 1, $file]);
-are_mutually_exclusive('--lines', '--before-context', ['--lines=1', '--before-context', 1, $file]);
-are_mutually_exclusive('--lines', '--before-context', ['--lines', 1, '--before-context', 1, $file]);
-are_mutually_exclusive('--lines', '--before-context', ['--lines=1', '--before-context=1', $file]);
-are_mutually_exclusive('--lines', '--before-context', ['--lines', 1, '--before-context=1', $file]);
-are_mutually_exclusive('--lines', '-C', ['--lines=1', '-C', 1, $file]);
-are_mutually_exclusive('--lines', '-C', ['--lines', 1, '-C', 1, $file]);
-are_mutually_exclusive('--lines', '--context', ['--lines=1', '--context', 1, $file]);
-are_mutually_exclusive('--lines', '--context', ['--lines', 1, '--context', 1, $file]);
-are_mutually_exclusive('--lines', '--context', ['--lines=1', '--context=1', $file]);
-are_mutually_exclusive('--lines', '--context', ['--lines', 1, '--context=1', $file]);
-are_mutually_exclusive('--lines', '--print0', ['--lines=1', '--print0', $file]);
-are_mutually_exclusive('--lines', '--print0', ['--lines', 1, '--print0', $file]);
-are_mutually_exclusive('--lines', '-f', ['--lines=1', '-f', $file]);
-are_mutually_exclusive('--lines', '-f', ['--lines', 1, '-f', $file]);
-are_mutually_exclusive('--lines', '-g', ['--lines=1', '-g', $file]);
-are_mutually_exclusive('--lines', '-g', ['--lines', 1, '-g', $file]);
-are_mutually_exclusive('--lines', '--show-types', ['--lines=1', '--show-types', $file]);
-are_mutually_exclusive('--lines', '--show-types', ['--lines', 1, '--show-types', $file]);
 
 # -l/--files-with-matches
 are_mutually_exclusive('-l', '-L', ['-l', '-L', $word, $file]);

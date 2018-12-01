@@ -57,7 +57,6 @@ t/ack-i.t
 t/ack-i.barfly
 t/ack-known-types.t
 t/ack-k.t
-t/ack-line.t
 t/ack-match.t
 t/ack-m.t
 t/ack-man.t

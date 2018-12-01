@@ -37,7 +37,6 @@ our $opt_g;
 our $opt_heading;
 our $opt_L;
 our $opt_l;
-our $opt_lines;
 our $opt_m;
 our $opt_output;
 our $opt_passthru;
@@ -129,7 +128,6 @@ MAIN: {
     $opt_heading        = $opt->{heading};
     $opt_L              = $opt->{L};
     $opt_l              = $opt->{l};
-    $opt_lines          = $opt->{lines};
     $opt_m              = $opt->{m};
     $opt_output         = $opt->{output};
     $opt_p              = $opt->{p};
@@ -186,7 +184,7 @@ MAIN: {
         $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
     }
     else {
-        if ( $opt_f || $opt_lines ) {
+        if ( $opt_f ) {
             # No need to check for regex, since mutex options are handled elsewhere.
         }
         else {
@@ -262,38 +260,6 @@ FILES:
             }
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
-        }
-        # ack --lines
-        elsif ( $opt_lines ) {
-            my %line_numbers;
-            foreach my $line ( @{ $opt_lines } ) {
-                my @lines             = split /,/, $line;
-                @lines                = map {
-                    /^(\d+)-(\d+)$/
-                        ? ( $1 .. $2 )
-                        : $_
-                } @lines;
-                @line_numbers{@lines} = (1) x @lines;
-            }
-
-            my $filename = $file->name;
-
-            local $opt_color = 0;
-
-            iterate( $file, sub {
-                chomp;
-
-                if ( $line_numbers{$.} ) {
-                    print_line_with_context( $filename, $_, $. );
-                }
-                elsif ( $opt_passthru ) {
-                    print_line_with_options( $filename, $_, $., ':' );
-                }
-                elsif ( $is_tracking_context ) {
-                    print_line_if_context( $filename, $_, $., '-' );
-                }
-                return 1;
-            });
         }
         # ack -c
         elsif ( $opt_count ) {
@@ -646,7 +612,7 @@ sub set_up_line_context {
 sub set_up_line_context_for_file {
     $printed_lineno = 0;
     $after_context_pending = 0;
-    if ( $opt_heading && !$opt_lines ) {
+    if ( $opt_heading ) {
         $is_first_match = 1;
     }
 

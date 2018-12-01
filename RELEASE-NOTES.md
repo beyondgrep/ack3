@@ -80,3 +80,8 @@ and `$f` as stand-in for `$filename` in `ack2 --output` .
 
 The `ACK_OPTIONS` variable was used to supply command line arguments to
 ack invocations.  This has been removed.  Use an ackrc file instead.
+
+## ack 3 no longer has the `--lines` option
+
+The `--lines` option let you select a specific range of lines to print, and
+not match.  There are other better ways to do this (`sed`, for example).

@@ -297,14 +297,6 @@ identically to file type filters as seen in L</"Defining your own types">.
 
 Limit selected files to those with types that ack knows about.
 
-=item B<--lines=I<NUM>>
-
-Only print line I<NUM> of each file. Multiple lines can be given
-with multiple B<--lines> options or as a comma separated list
-(B<--lines=3,5,7>). Using a range such as B<--lines=4-7> also works. The
-lines are always output in the order found in the file, no matter the
-order given on the command line.
-
 =item B<-l>, B<--files-with-matches>
 
 Only print the filenames of matching files, instead of the matching text.

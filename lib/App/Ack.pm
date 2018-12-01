@@ -242,8 +242,6 @@ Searching:
   -v, --invert-match            Invert match: select non-matching lines
   -w, --word-regexp             Force PATTERN to match only whole words
   -Q, --literal                 Quote all metacharacters; PATTERN is literal
-  --lines=NUM                   Only print line(s) NUM of each file.  No
-                                pattern is matched.
   --match PATTERN               Specify PATTERN explicitly. Typically omitted.
 
 Search output:

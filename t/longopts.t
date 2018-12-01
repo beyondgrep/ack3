@@ -13,7 +13,7 @@ use Test::More;
 
 # --no-recurse is inconsistent w/--nogroup
 
-plan tests => 44;
+plan tests => 42;
 
 use lib 't';
 use Util;
@@ -145,12 +145,4 @@ for my $arg ( qw( -L --files-without-matches ) ) {
         qr{\Q$expected},
         qq{$arg prints matching files}
     );
-}
-
-LINE: {
-    my @files = 't/swamp/options.pl';
-    my $opt   = '--lines=1';
-    my @lines = run_ack( $opt, @files );
-
-    is_deeply( \@lines, ['#!/usr/bin/env perl'], 'Only one matching line should be a shebang' );
 }
