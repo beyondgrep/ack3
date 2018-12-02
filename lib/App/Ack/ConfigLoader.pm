@@ -97,13 +97,7 @@ sub _generate_ignore_dir {
         }
         else {
             $collection = App::Ack::Filter::Collection->new();
-
-            if ( $is_inverted ) {
-                push @{ $opt->{idirs} }, $collection->invert();
-            }
-            else {
-                push @{ $opt->{idirs} }, $collection;
-            }
+            push @{ $opt->{idirs} }, $is_inverted ? $collection->invert() : $collection;
         }
 
         $collection->add($filter);
