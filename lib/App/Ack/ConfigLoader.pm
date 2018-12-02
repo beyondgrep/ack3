@@ -751,14 +751,11 @@ sub retrieve_arg_sources {
     my $noenv;
     my $ackrc;
 
-    my $old_args = Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
-
-    Getopt::Long::GetOptions(
+    my $p = Getopt::Long::Parser->new( config => [ @STD, 'no_auto_abbrev', 'pass_through' ] );
+    $p->getoptions(
         'noenv'   => \$noenv,
         'ackrc=s' => \$ackrc,
     );
-
-    Getopt::Long::Configure( $old_args );
 
     my @files;
 
