@@ -478,15 +478,11 @@ sub _should_dump_options {
 
     foreach my $source (@{$sources}) {
         if ( $source->{name} eq 'ARGV' ) {
-            my $options = $source->{contents};
-
             my $dump;
-            local @ARGV = @{$options};
-            Getopt::Long::Configure( @STD, 'pass_through' );
-            Getopt::Long::GetOptions(
+            my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
+            $p->getoptionsfromarray( $source->{contents},
                 'dump' => \$dump,
             );
-            @{$options} = @ARGV;
             return $dump;
         }
     }
