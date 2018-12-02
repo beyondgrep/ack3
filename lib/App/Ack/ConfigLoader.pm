@@ -473,23 +473,6 @@ sub _process_other {
 }
 
 
-sub _should_dump_options {
-    my ( $sources ) = @_;
-
-    foreach my $source (@{$sources}) {
-        if ( $source->{name} eq 'ARGV' ) {
-            my $dump;
-            my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
-            $p->getoptionsfromarray( $source->{contents},
-                'dump' => \$dump,
-            );
-            return $dump;
-        }
-    }
-    return;
-}
-
-
 sub _explode_sources {
     my ( $sources ) = @_;
 
@@ -703,7 +686,16 @@ sub process_args {
 
     $arg_sources = _remove_default_options_if_needed($arg_sources);
 
-    if ( _should_dump_options($arg_sources) ) {
+    my $dump;
+    foreach my $source (@{$arg_sources}) {
+        if ( $source->{name} eq 'ARGV' ) {
+            my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
+            $p->getoptionsfromarray( $source->{contents},
+                'dump' => \$dump,
+            );
+        }
+    }
+    if ( $dump ) {
         _dump_options($arg_sources);
         exit(0);
     }
