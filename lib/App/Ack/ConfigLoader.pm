@@ -686,18 +686,19 @@ sub process_args {
 
     $arg_sources = _remove_default_options_if_needed($arg_sources);
 
-    my $dump;
+    # Check for --dump early.
     foreach my $source (@{$arg_sources}) {
         if ( $source->{name} eq 'ARGV' ) {
+            my $dump;
             my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
             $p->getoptionsfromarray( $source->{contents},
                 'dump' => \$dump,
             );
+            if ( $dump ) {
+                _dump_options($arg_sources);
+                exit(0);
+            }
         }
-    }
-    if ( $dump ) {
-        _dump_options($arg_sources);
-        exit(0);
     }
 
     my $type_specs = _process_filetypes(\%opt, $arg_sources);
