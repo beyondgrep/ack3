@@ -477,9 +477,9 @@ sub _should_dump_options {
     my ( $sources ) = @_;
 
     foreach my $source (@{$sources}) {
-        my ( $name, $options ) = @{$source}{qw/name contents/};
+        if ( $source->{name} eq 'ARGV' ) {
+            my $options = $source->{contents};
 
-        if ( $name eq 'ARGV' ) {
             my $dump;
             local @ARGV = @{$options};
             Getopt::Long::Configure( @STD, 'pass_through' );
