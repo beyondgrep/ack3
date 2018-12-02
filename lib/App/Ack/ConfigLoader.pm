@@ -613,17 +613,15 @@ sub _remove_default_options_if_needed {
 
     my $should_remove = 0;
 
-    my $old_args = Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
+    my $p = Getopt::Long::Parser->new( config => [ @STD, 'no_auto_abbrev', 'pass_through' ] );
 
     foreach my $index ( $default_index + 1 .. $#{$sources} ) {
         my $args = $sources->[$index]->{contents};
 
         if (ref($args)) {
-            local @ARGV = @{$args};
-            Getopt::Long::GetOptions(
+            $p->getoptionsfromarray( $args,
                 'ignore-ack-defaults' => \$should_remove,
             );
-            @{$args} = @ARGV;
         }
         else {
             ( undef, $sources->[$index]{contents} ) = Getopt::Long::GetOptionsFromString($args,
@@ -631,8 +629,6 @@ sub _remove_default_options_if_needed {
             );
         }
     }
-
-    Getopt::Long::Configure( $old_args );
 
     return $sources unless $should_remove;
 
