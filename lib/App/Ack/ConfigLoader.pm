@@ -27,6 +27,17 @@ Logic for loading configuration files.
 
 =cut
 
+my @STD;
+BEGIN {
+    @STD = qw(
+        default
+        bundling
+        no_auto_help
+        no_auto_version
+        no_ignore_case
+    );
+}
+
 sub _invalid_combinations {
     my @context    = qw( -A -B -C --after-context --before-context --context );
     my @pretty     = qw( --heading --group --break );
@@ -165,14 +176,8 @@ sub _uninvert_filter {
 sub _process_filetypes {
     my ( $opt, $arg_sources ) = @_;
 
-    Getopt::Long::Configure(qw(
-        default
-        no_auto_abbrev
-        no_auto_help
-        no_auto_version
-        no_ignore_case
-        pass_through
-    ));
+    Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
+
     my %additional_specs;
 
     my $add_spec = sub {
@@ -392,14 +397,7 @@ sub _context_value {
 sub _process_other {
     my ( $opt, $extra_specs, $arg_sources ) = @_;
 
-    # Start with default options, minus some annoying ones.
-    Getopt::Long::Configure(qw(
-        default
-        bundling
-        no_auto_help
-        no_auto_version
-        no_ignore_case
-    ));
+    Getopt::Long::Configure( @STD );
 
     my $argv_source;
     my $is_help_types_active;
@@ -417,9 +415,7 @@ sub _process_other {
         my @copy = @{$argv_source};
         local @ARGV = @copy;
 
-        my $old_options = Getopt::Long::Configure(qw(
-            pass_through
-        ));
+        my $old_options = Getopt::Long::Configure( @STD, 'pass_through' );
 
         Getopt::Long::GetOptions(
             'help-types' => \$is_help_types_active,
@@ -495,12 +491,7 @@ sub _should_dump_options {
         if ( $name eq 'ARGV' ) {
             my $dump;
             local @ARGV = @{$options};
-            Getopt::Long::Configure(qw(
-                default
-                no_auto_help
-                no_auto_version
-                pass_through
-            ));
+            Getopt::Long::Configure( @STD, 'pass_through' );
             Getopt::Long::GetOptions(
                 'dump' => \$dump,
             );
@@ -517,12 +508,7 @@ sub _explode_sources {
 
     my @new_sources;
 
-    Getopt::Long::Configure(qw(
-        default
-        pass_through
-        no_auto_help
-        no_auto_version
-    ));
+    Getopt::Long::Configure( @STD, 'pass_through' );
 
     my %opt;
     my $arg_spec = get_arg_spec(\%opt);
@@ -636,15 +622,7 @@ sub _remove_default_options_if_needed {
 
     my $should_remove = 0;
 
-    # Start with default options, minus some annoying ones.
-    Getopt::Long::Configure(qw(
-        default
-        no_auto_abbrev
-        no_auto_help
-        no_auto_version
-        no_ignore_case
-        pass_through
-    ));
+    my $old_args = Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
 
     foreach my $index ( $default_index + 1 .. $#{$sources} ) {
         my $args = $sources->[$index]->{contents};
@@ -663,11 +641,7 @@ sub _remove_default_options_if_needed {
         }
     }
 
-    Getopt::Long::Configure(qw(
-        default
-        no_auto_help
-        no_auto_version
-    ));
+    Getopt::Long::Configure( $old_args );
 
     return $sources unless $should_remove;
 
@@ -786,13 +760,7 @@ sub retrieve_arg_sources {
     my $noenv;
     my $ackrc;
 
-    my $old_args = Getopt::Long::Configure(qw(
-        default
-        no_auto_abbrev
-        no_auto_help
-        no_auto_version
-        pass_through
-    ));
+    my $old_args = Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
 
     Getopt::Long::GetOptions(
         'noenv'   => \$noenv,
