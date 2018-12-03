@@ -27,15 +27,17 @@ Logic for loading configuration files.
 
 =cut
 
-my @STD;
-BEGIN {
-    @STD = qw(
+sub opt_parser {
+    my @opts = @_;
+
+    my @standard = qw(
         default
         bundling
         no_auto_help
         no_auto_version
         no_ignore_case
     );
+    return Getopt::Long::Parser->new( config => [ @standard, @opts ] );
 }
 
 sub _invalid_combinations {
@@ -170,8 +172,6 @@ sub _uninvert_filter {
 sub _process_filetypes {
     my ( $opt, $arg_sources ) = @_;
 
-    Getopt::Long::Configure( @STD, 'no_auto_abbrev', 'pass_through' );
-
     my %additional_specs;
 
     my $add_spec = sub {
@@ -228,18 +228,17 @@ sub _process_filetypes {
         'type-del=s' => $delete_spec,
     );
 
+    my $p = opt_parser( 'no_auto_abbrev', 'pass_through' );
     foreach my $source (@{$arg_sources}) {
         my $args = $source->{contents};
 
         if ( ref($args) ) {
             # $args are modified in place, so no need to munge $arg_sources
-            local @ARGV = @{$args};
-            Getopt::Long::GetOptions(%type_arg_specs);
-            @{$args} = @ARGV;
+            $p->getoptionsfromarray( $args, %type_arg_specs );
         }
         else {
             ( undef, $source->{contents} ) =
-                Getopt::Long::GetOptionsFromString($args, %type_arg_specs);
+                $p->getoptionsfromstring( $args, %type_arg_specs );
         }
     }
 
@@ -391,32 +390,26 @@ sub _context_value {
 sub _process_other {
     my ( $opt, $extra_specs, $arg_sources ) = @_;
 
-    Getopt::Long::Configure( @STD );
-
     my $argv_source;
     my $is_help_types_active;
 
     foreach my $source (@{$arg_sources}) {
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
-
-        if ( $source_name eq 'ARGV' ) {
-            $argv_source = $args;
+        if ( $source->{name} eq 'ARGV' ) {
+            $argv_source = $source->{contents};
             last;
         }
     }
 
     if ( $argv_source ) { # This *should* always be true, but you never know...
-        my @copy = @{$argv_source};
-        local @ARGV = @copy;
-
-        my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
-        $p->getoptions(
+        my $p = opt_parser( 'pass_through' );
+        $p->getoptionsfromarray( [ @{$argv_source} ],
             'help-types' => \$is_help_types_active,
         );
     }
 
     my $arg_specs = get_arg_spec($opt, $extra_specs);
 
+    my $p = opt_parser();
     foreach my $source (@{$arg_sources}) {
         my ( $source_name, $args ) = @{$source}{qw/name contents/};
 
@@ -448,13 +441,11 @@ sub _process_other {
 
         my $ret;
         if ( ref($args) ) {
-            local @ARGV = @{$args};
-            $ret = Getopt::Long::GetOptions( %{$args_for_source} );
-            @{$args} = @ARGV;
+            $ret = $p->getoptionsfromarray( $args, %{$args_for_source} );
         }
         else {
             ( $ret, $source->{contents} ) =
-                Getopt::Long::GetOptionsFromString( $args, %{$args_for_source} );
+                $p->getoptionsfromstring( $args, %{$args_for_source} );
         }
         if ( !$ret ) {
             if ( !$is_help_types_active ) {
@@ -478,8 +469,6 @@ sub _explode_sources {
 
     my @new_sources;
 
-    Getopt::Long::Configure( @STD, 'pass_through' );
-
     my %opt;
     my $arg_spec = get_arg_spec(\%opt);
 
@@ -501,6 +490,7 @@ sub _explode_sources {
         delete $arg_spec->{$arg};
     };
 
+    my $p = opt_parser( 'pass_through' );
     foreach my $source (@{$sources}) {
         my ( $name, $options ) = @{$source}{qw/name contents/};
         if ( ref($options) ne 'ARRAY' ) {
@@ -515,13 +505,12 @@ sub _explode_sources {
             $j--;
 
             my @copy = @chunk;
-            local @ARGV = @chunk;
-            Getopt::Long::GetOptions(
+            $p->getoptionsfromarray( [@chunk],
                 'type-add=s' => $add_type,
                 'type-set=s' => $add_type,
                 'type-del=s' => $del_type,
+                %{$arg_spec}
             );
-            Getopt::Long::GetOptions( %{$arg_spec} );
 
             push @new_sources, {
                 name     => $name,
@@ -556,12 +545,12 @@ sub _dump_options {
     my @source_names;
 
     foreach my $source (@{$sources}) {
-        my ( $name, $contents ) = @{$source}{qw/name contents/};
+        my $name = $source->{name};
         if ( not $opts_by_source{$name} ) {
             $opts_by_source{$name} = [];
             push @source_names, $name;
         }
-        push @{$opts_by_source{$name}}, $contents;
+        push @{$opts_by_source{$name}}, $source->{contents};
     }
 
     foreach my $name (@source_names) {
@@ -592,7 +581,7 @@ sub _remove_default_options_if_needed {
 
     my $should_remove = 0;
 
-    my $p = Getopt::Long::Parser->new( config => [ @STD, 'no_auto_abbrev', 'pass_through' ] );
+    my $p = opt_parser( 'no_auto_abbrev', 'pass_through' );
 
     foreach my $index ( $default_index + 1 .. $#{$sources} ) {
         my $args = $sources->[$index]->{contents};
@@ -603,7 +592,7 @@ sub _remove_default_options_if_needed {
             );
         }
         else {
-            ( undef, $sources->[$index]{contents} ) = Getopt::Long::GetOptionsFromString($args,
+            ( undef, $sources->[$index]{contents} ) = $p->getoptionsfromstring( $args,
                 'ignore-ack-defaults' => \$should_remove,
             );
         }
@@ -690,7 +679,7 @@ sub process_args {
     foreach my $source (@{$arg_sources}) {
         if ( $source->{name} eq 'ARGV' ) {
             my $dump;
-            my $p = Getopt::Long::Parser->new( config => [ @STD, 'pass_through' ] );
+            my $p = opt_parser( 'pass_through' );
             $p->getoptionsfromarray( $source->{contents},
                 'dump' => \$dump,
             );
@@ -702,13 +691,15 @@ sub process_args {
     }
 
     my $type_specs = _process_filetypes(\%opt, $arg_sources);
+
     _process_other(\%opt, $type_specs, $arg_sources);
     while ( @{$arg_sources} ) {
         my $source = shift @{$arg_sources};
-        my ( $source_name, $args ) = @{$source}{qw/name contents/};
+        my $args = $source->{contents};
 
         # All of our sources should be transformed into an array ref
         if ( ref($args) ) {
+            my $source_name = $source->{name};
             if ( $source_name eq 'ARGV' ) {
                 @ARGV = @{$args};
             }
@@ -736,7 +727,7 @@ sub retrieve_arg_sources {
     my $noenv;
     my $ackrc;
 
-    my $p = Getopt::Long::Parser->new( config => [ @STD, 'no_auto_abbrev', 'pass_through' ] );
+    my $p = opt_parser( 'no_auto_abbrev', 'pass_through' );
     $p->getoptions(
         'noenv'   => \$noenv,
         'ackrc=s' => \$ackrc,

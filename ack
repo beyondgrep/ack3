@@ -5,7 +5,6 @@ use warnings;
 our $VERSION = '2.999_05'; # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
-use Getopt::Long 2.38 ();
 
 use File::Spec ();
 use File::Next ();
@@ -97,16 +96,14 @@ MAIN: {
         $ENV{ACK_COLOR_COLNO}    ||= 'bold yellow';
     }
 
-    Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version');
-    Getopt::Long::Configure('pass_through', 'no_auto_abbrev');
-    Getopt::Long::GetOptions(
-        'help'       => sub { App::Ack::show_help(); exit; },
-        'version'    => sub { App::Ack::print( App::Ack::get_version_statement() ); exit; },
-        'man'        => sub { App::Ack::show_docs( 'Manual' ); }, # man/faq/cookbook all exit.
-        'faq'        => sub { App::Ack::show_docs( 'FAQ' ); },
-        'cookbook'   => sub { App::Ack::show_docs( 'Cookbook' ); },
+    my $p = App::Ack::ConfigLoader::opt_parser( 'no_auto_abbrev', 'pass_through' );
+    $p->getoptions(
+        help     => sub { App::Ack::show_help(); exit; },
+        version  => sub { App::Ack::print( App::Ack::get_version_statement() ); exit; },
+        man      => sub { App::Ack::show_docs( 'Manual' ); }, # man/faq/cookbook all exit.
+        faq      => sub { App::Ack::show_docs( 'FAQ' ); },
+        cookbook => sub { App::Ack::show_docs( 'Cookbook' ); },
     );
-    Getopt::Long::Configure('default', 'no_auto_help', 'no_auto_version');
 
     if ( !@ARGV ) {
         App::Ack::show_help();
