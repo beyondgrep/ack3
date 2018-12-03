@@ -117,16 +117,6 @@ INTERACTIVE_SINGLE_TARGET	t/interactive.t	/^INTERACTIVE_SINGLE_TARGET: {$/;"	l
 JUST_THE_DIR	t/command-line-files.t	/^JUST_THE_DIR: {$/;"	l
 LAST_ONE_LISTED_WINS	t/ack-ignore-dir.t	/^LAST_ONE_LISTED_WINS: {$/;"	l
 LAST_PAREN_MATCH	t/ack-output.t	/^LAST_PAREN_MATCH: {$/;"	l
-LINE	t/longopts.t	/^LINE: {$/;"	l
-LINES_THAT_MAY_BE_NON_EXISTENT	t/ack-line.t	/^LINES_THAT_MAY_BE_NON_EXISTENT: {$/;"	l
-LINES_WITH_A_COMMA	t/ack-line.t	/^LINES_WITH_A_COMMA: {$/;"	l
-LINES_WITH_A_RANGE	t/ack-line.t	/^LINES_WITH_A_RANGE: {$/;"	l
-LINES_WITH_CONTEXT	t/ack-line.t	/^LINES_WITH_CONTEXT: {$/;"	l
-LINE_1_CONTEXT	t/ack-line.t	/^LINE_1_CONTEXT: {$/;"	l
-LINE_1_MULTIPLE_FILES	t/ack-line.t	/^LINE_1_MULTIPLE_FILES: {$/;"	l
-LINE_6_AND_3	t/ack-line.t	/^LINE_6_AND_3: {$/;"	l
-LINE_AND_PASSTHRU	t/ack-line.t	/^LINE_AND_PASSTHRU: {$/;"	l
-LINE_WITH_REGEX	t/ack-line.t	/^LINE_WITH_REGEX: {$/;"	l
 L_PRINT0	t/ack-print0.t	/^L_PRINT0: {$/;"	l
 MAIN	ack	/^MAIN: {$/;"	l
 MAIN	t/named-pipes.t	/^MAIN: {$/;"	l
@@ -228,7 +218,6 @@ _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
 _remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
-_should_dump_options	lib/App/Ack/ConfigLoader.pm	/^sub _should_dump_options {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
 _test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
@@ -358,6 +347,7 @@ next	lib/App/Ack/Files.pm	/^sub next {$/;"	s
 no_home	t/config-finder.t	/^sub no_home {$/;"	s
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
+opt_parser	lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
 option_in_usage	t/ack-help.t	/^sub option_in_usage {$/;"	s
 options	lib/App/Ack/ConfigDefault.pm	/^sub options {$/;"	s
 options_clean	lib/App/Ack/ConfigDefault.pm	/^sub options_clean {$/;"	s
