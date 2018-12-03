@@ -671,7 +671,17 @@ sub print_matches_in_file {
                 $max_count--;
             }
             else {
-                print_line_if_context( $filename, $_, $., '-' );
+                if ( $after_context_pending ) {
+                    # Disable $opt_column since there are no matches in the context lines.
+                    local $opt_column = 0;
+                    print_line_with_options( $filename, $_, $., '-' );
+                    --$after_context_pending;
+                }
+                elsif ( $n_before_ctx_lines ) {
+                    # Save line for "before" context.
+                    $before_context_buf[$before_context_pos] = $_;
+                    $before_context_pos = ($before_context_pos+1) % $n_before_ctx_lines;
+                }
             }
 
             last if ($max_count == 0) && ($after_context_pending == 0);
@@ -935,25 +945,6 @@ sub print_line_with_context {
     $after_context_pending = $n_after_ctx_lines;
 
     $is_first_match = 0;
-
-    return;
-}
-
-# Print the line only if it's part of a context we need to display.
-sub print_line_if_context {
-    my ( $filename, $line, $lineno, $separator ) = @_;
-
-    if ( $after_context_pending ) {
-        # Disable $opt_column since there are no matches in the context lines.
-        local $opt_column = 0;
-        print_line_with_options( $filename, $line, $lineno, $separator );
-        --$after_context_pending;
-    }
-    elsif ( $n_before_ctx_lines ) {
-        # Save line for "before" context.
-        $before_context_buf[$before_context_pos] = $_;
-        $before_context_pos = ($before_context_pos+1) % $n_before_ctx_lines;
-    }
 
     return;
 }
