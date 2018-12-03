@@ -899,37 +899,6 @@ sub print_line_with_options {
     return;
 }
 
-sub iterate {
-    my $file = shift;
-    my $callback = shift;
-
-    my $fh = $file->open;
-    if ( !$fh ) {
-        if ( $App::Ack::report_bad_filenames ) {
-            App::Ack::warn( $file->name . ': ' . $! );
-        }
-        return;
-    }
-
-    # Check for context before the main loop, so we don't pay for it if we don't need it.
-    if ( $is_tracking_context ) {
-        $after_context_pending = 0;
-
-        while ( <$fh> ) {
-            last unless $callback->();
-        }
-    }
-    else {
-        local $_ = undef;
-
-        while ( <$fh> ) {
-            last unless $callback->();
-        }
-    }
-
-    return;
-}
-
 sub print_line_with_context {
     my ( $filename, $matching_line, $lineno ) = @_;
 

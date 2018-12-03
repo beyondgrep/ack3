@@ -322,7 +322,6 @@ is_inverted	lib/App/Ack/Filter.pm	/^sub is_inverted {$/;"	s
 is_inverted	lib/App/Ack/Filter/Inverse.pm	/^sub is_inverted {$/;"	s
 is_nonempty_array	t/Util.pm	/^sub is_nonempty_array {$/;"	s
 is_windows	t/Util.pm	/^sub is_windows {$/;"	s
-iterate	ack	/^sub iterate {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 msg	t/Util.pm	/^sub msg {$/;"	s
