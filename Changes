@@ -6,6 +6,10 @@ NEXT
 The --tt option for Template Toolkit is now --ttml.  The short version
 still works.
 
+[FIXES]
+ack would stop finding files if there was a file named "0" in the current
+directory. Thanks, Rob Hoelz. (GH #162)
+
 [REMOVED FUNCTIONALITY]
 The --lines option has been removed. (GH #167)
 

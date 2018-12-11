@@ -110,7 +110,9 @@ sub from_stdin {
 sub next {
     my $self = shift;
 
-    my $file = $self->{iter}->() or return;
+    my $file = $self->{iter}->();
+
+    return unless defined($file);
 
     return App::Ack::File->new( $file );
 }
