@@ -42,7 +42,7 @@ our $opt_passthru;
 our $opt_p;
 our $opt_regex;
 our $opt_show_filename;
-our $opt_u;
+our $opt_underline;
 our $opt_v;
 
 # Flag if we need any context tracking.
@@ -131,7 +131,7 @@ MAIN: {
     $opt_passthru       = $opt->{passthru};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
-    $opt_u              = $opt->{u};
+    $opt_underline      = $opt->{underline};
     $opt_v              = $opt->{v};
 
     $App::Ack::report_bad_filenames = !$opt->{s};
@@ -849,7 +849,7 @@ sub print_line_with_options {
         my $underline = '';
 
         # We have to do underlining before any highlighting because highlighting modifies string length.
-        if ( $opt_u ) {
+        if ( $opt_underline ) {
             while ( $line =~ /$opt_regex/og ) {
                 my $match_start = $-[0];
                 next unless defined($match_start);

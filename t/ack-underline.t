@@ -3,15 +3,19 @@
 use warnings;
 use strict;
 
-use Test::More tests => 4;
+use Test::More tests => 8;
 
 use lib 't';
 use Util;
+use Barfly;
 
 prep_environment();
 
-# We need to do this tediously here rather than with Barfly because
-# Barfly relies on --underline working correctly.
+# Run some basic tests.
+Barfly->run_tests( 't/ack-underline.barfly' );
+
+# Most of the rest of this file is done manually rather than in Barfly
+# because Barfly relies on --underline working correctly.
 
 my $bill_ = reslash( 't/text/bill-of-rights.txt' );
 my $getty = reslash( 't/text/gettysburg.txt' );
@@ -19,6 +23,57 @@ my $getty = reslash( 't/text/gettysburg.txt' );
 # Spacing that the filenames take up.
 my $spc_b = ' ' x length( $bill_ );
 my $spc_g = ' ' x length( $getty );
+
+
+subtest 'Single file' => sub {
+    plan tests => 1;
+
+    my @expected = line_split( <<'HERE' );
+A well regulated Militia, being necessary to the security of a free State,
+                 ^^^^^^^
+cases arising in the land or naval forces, or in the Militia, when in
+                                                     ^^^^^^^
+HERE
+
+    my @files = $bill_;
+    my @args  = ( qw( --underline ), 'Militia' );
+
+    ack_lists_match( [ @args, @files ], \@expected, 'Single file' );
+};
+
+
+subtest 'Grouped' => sub {
+    plan tests => 1;
+
+    my @expected = line_split( <<"HERE" );
+$bill_
+10:A well regulated Militia, being necessary to the security of a free State,
+                    ^^^^^^^
+31:cases arising in the land or naval forces, or in the Militia, when in
+                                                        ^^^^^^^
+HERE
+
+    my @files = qw( t/text/bill-of-rights.txt t/text/ozymandias.txt ); # Don't want Constitution in here.
+    my @args  = ( qw( --underline --group ), 'Militia' );
+
+    ack_lists_match( [ @args, @files ], \@expected, 'Grouped' );
+};
+
+
+subtest 'Not grouped, with leading filename' => sub {
+    my @expected = line_split( <<"HERE" );
+$bill_:10:A well regulated Militia, being necessary to the security of a free State,
+$spc_b                     ^^^^^^^
+$bill_:31:cases arising in the land or naval forces, or in the Militia, when in
+$spc_b                                                         ^^^^^^^
+HERE
+
+    my $regex = 'Militia';
+    my @files = $bill_;
+    my @args  = ( qw( --underline --nogroup -H ), $regex );
+
+    ack_lists_match( [ @args, @files ], \@expected, "Looking for $regex - before with line numbers" );
+};
 
 subtest 'Grouped --underline' => sub {
     plan tests => 1;

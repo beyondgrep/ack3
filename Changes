@@ -13,6 +13,8 @@ directory. Thanks, Rob Hoelz. (GH #162)
 [REMOVED FUNCTIONALITY]
 The --lines option has been removed. (GH #167)
 
+The -u short alias for --underline has been removed. (GH #173)
+
 
 2.999_05 Sun Oct 21 21:37:39 CDT 2018
 =====================================

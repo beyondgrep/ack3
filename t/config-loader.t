@@ -39,7 +39,7 @@ my %defaults = (
     s          => undef,
     show_types => undef,
     sort_files => undef,
-    u          => undef,
+    underline  => undef,
     v          => undef,
     w          => undef,
 );

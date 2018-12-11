@@ -523,10 +523,10 @@ also L</"Defining your own types">.
 The filters associated with TYPE are removed from Ack, and are no longer considered
 for searches.
 
-=item B<-u>, B<--[no]underline>
+=item B<--[no]underline>
 
-Turns on underlining of matches, where "underlining" is not a true
-underlining, but printing a line of carets under the match.
+Turns on underlining of matches, where "underlining" is printing a line of
+carets under the match.
 
     $ ack -u foo
     peanuts.txt
@@ -536,7 +536,7 @@ underlining, but printing a line of carets under the match.
                           ^^^
 
 This is useful if you're dumping the results of an ack run into a text
-file or printer and don't get any coloring.
+file or printer that doesn't support ANSI color codes.
 
 The setting of underline does not affect highlighting of matches.
 

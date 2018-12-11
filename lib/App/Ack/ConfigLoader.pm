@@ -368,7 +368,7 @@ sub get_arg_spec {
                 App::Ack::die( "Unknown type '$value'" );
             }
         },
-        'u|underline!'      => \$opt->{u},
+        'underline!'        => \$opt->{underline},
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
