@@ -433,7 +433,7 @@ sub _options_block {
 
 # Template Toolkit (Perl)
 # http://template-toolkit.org/
---type-add=tt:ext:tt,tt2,ttml
+--type-add=ttml:ext:tt,tt2,ttml
 
 # Typescript
 # http://www.typescriptlang.org/

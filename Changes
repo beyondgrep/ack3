@@ -2,6 +2,10 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 =====================================
+[ENHANCEMENTS]
+The --tt option for Template Toolkit is now --ttml.  The short version
+still works.
+
 [REMOVED FUNCTIONALITY]
 The --lines option has been removed. (GH #167)
 

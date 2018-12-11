@@ -61,7 +61,7 @@ sql
 swift
 tcl
 tex
-tt
+ttml
 vb
 verilog
 vhdl
