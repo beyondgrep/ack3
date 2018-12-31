@@ -86,6 +86,10 @@ sub prep_environment {
         my $system32_dir = File::Spec->catdir($1,'system32');
         $ENV{'PATH'} = $system32_dir;
     }
+    else {
+        # XXX We probably don't want to keep this here, but Pod::Usage needs a PATH so it can find nroff.
+        $ENV{PATH} = '/usr/bin';
+    }
 
     $orig_wd = getcwd_clean();
 

@@ -218,6 +218,21 @@ sub show_help {
 
     return show_help_types() if $help_arg =~ /^types?/;
 
+    my $manual_options;
+    if ( $App::Ack::STANDALONE ) {
+        $manual_options = <<'END';
+  --man                         Print the manual, FAQ and cookbook
+END
+    }
+    else {
+        $manual_options = <<'END';
+  --man                         Print the manual
+  --faq                         Print the frequently asked questions
+  --cookbook                    Print a list of tips and tricks for using ack
+END
+    }
+    chomp $manual_options;
+
     App::Ack::print( <<"END_OF_HELP" );
 Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
 
@@ -348,9 +363,7 @@ Miscellaneous:
   --[no]filter                  Force ack to treat standard input as a pipe
                                 (--filter) or tty (--nofilter)
   --help, -?                    This help
-  --man                         Print the manual
-  --faq                         Print the frequently asked questions
-  --cookbook                    Print a list of tips and tricks for using ack
+$manual_options
   --thpppt                      Bill the Cat
   --bar                         The warning admiral
   --cathy                       Chocolate! Chocolate! Chocolate!
@@ -421,7 +434,7 @@ sub show_docs {
     require Pod::Usage;
 
     if ( $App::Ack::STANDALONE ) {
-        # Right now we just show all POD for the standalone.
+        # Standalone doesn't have the modules split out, so dump the entire file.
         Pod::Usage::pod2usage({
             -input     => $App::Ack::ORIGINAL_PROGRAM_NAME,
             -verbose   => 2,

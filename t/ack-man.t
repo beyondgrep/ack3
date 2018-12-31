@@ -2,44 +2,90 @@
 
 use strict;
 use warnings;
+use 5.010001;
 
 use lib 't';
 use Util;
 
-use Test::More tests => 2;
+my $is_standalone;
+
+BEGIN {
+    $is_standalone = $ENV{ACK_TEST_STANDALONE} // die 'ACK_TEST_STANDALONE is not set';
+}
+
+use Test::More tests => $is_standalone ? 2 : 4;
 
 prep_environment();
 
+
 # Some things to expect, not all.
-my @manual_sections = qw(
+my @man_sections = _section( qw(
     AUTHOR
     BUGS
     SUPPORT
-);
+) );
 
-my @faq_sections = qw(
+my @faq_sections = _section( qw(
     FAQ
-);
+) );
 
-subtest 'ack --man' => sub {
-    local $TODO = 'ack-standalone currently dumps all sections';
-    plan tests => 5;
+my @cookbook_sections = _section( qw(
+    COOKBOOK
+) );
 
-    my ($stdout, $stderr) = run_ack_with_stderr( '--man' );
-    is_empty_array( $stderr, 'Nothing in STDERR' );
-    want( $stdout, \@manual_sections );
-    dont( $stdout, \@faq_sections );
-};
+if ( $is_standalone ) {
+    subtest '--man, --faq and --cookbook all do the same thing' => sub {
+        plan tests => 6;
 
-subtest 'ack --faq' => sub {
-    local $TODO = 'ack-standalone currently dumps all sections';
-    plan tests => 5;
+        for my $option ( qw( --man --faq --cookbook ) ) {
+            my ($stdout, $stderr) = run_ack_with_stderr( $option );
+            is_empty_array( $stderr, 'Nothing in STDERR' );
+            $stdout = _clean( $stdout );
+            want( $stdout, [@man_sections, @faq_sections, @cookbook_sections] );
+        }
+    };
+    subtest '--faq and --cookbook should not show up in --help' => sub {
+        plan tests => 2;
 
-    my ($stdout, $stderr) = run_ack_with_stderr( '--faq' );
-    is_empty_array( $stderr, 'Nothing in STDERR' );
-    want( $stdout, \@faq_sections );
-    dont( $stdout, \@manual_sections );
-};
+        my ( $output, undef ) = run_ack_with_stderr( '--help' );
+        want( $output, [ _option( '--man' ) ] );
+        dont( $output, [qw( --faq --cookbook )] );
+    };
+}
+else {
+    subtest 'ack --man' => sub {
+        plan tests => 3;
+
+        my ($stdout, $stderr) = run_ack_with_stderr( '--man' );
+        is_empty_array( $stderr, 'Nothing in STDERR' );
+        $stdout = _clean( $stdout );
+        want( $stdout, [@man_sections] );
+        dont( $stdout, [@faq_sections, @cookbook_sections] );
+    };
+    subtest 'ack --faq' => sub {
+        plan tests => 3;
+
+        my ($stdout, $stderr) = run_ack_with_stderr( '--faq' );
+        is_empty_array( $stderr, 'Nothing in STDERR' );
+        $stdout = _clean( $stdout );
+        want( $stdout, [@faq_sections] );
+        dont( $stdout, [@man_sections, @cookbook_sections] );
+    };
+    subtest 'ack --cookbook' => sub {
+        plan tests => 3;
+
+        my ($stdout, $stderr) = run_ack_with_stderr( '--cookbook' );
+        is_empty_array( $stderr, 'Nothing in STDERR' );
+        $stdout = _clean( $stdout );
+        want( $stdout, [@cookbook_sections] );
+        dont( $stdout, [@man_sections, @faq_sections] );
+    };
+    subtest '--faq and --cookbook should be in --help' => sub {
+        my ( $output, undef ) = run_ack_with_stderr( '--help' );
+        want( $output, [ map { _option($_) } qw( --man --faq --cookbook ) ] );
+    };
+}
+
 
 done_testing();
 
@@ -50,14 +96,18 @@ sub want {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my $stdout   = shift;
-    my $sections = shift;
-    # We're sloppy with checking for headings because of potential embedded ANSI codes.
-    for my $wanted ( @{$sections} ) {
-        my $found = scalar grep { /\Q$wanted/ } @{$stdout};
-        is( $found, 1, "Found one $wanted section" );
-    }
+    my $patterns = shift;
 
-    return;
+    my $str = join( ', ', @{$patterns} );
+
+    return subtest "want( $str )" => sub {
+        plan tests => scalar @{$patterns};
+
+        for my $wanted ( @{$patterns} ) {
+            my @found = grep { /$wanted/ } @{$stdout};
+            is( scalar @found, 1, "Found one $wanted section" );
+        }
+    };
 }
 
 
@@ -65,11 +115,40 @@ sub dont {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my $stdout   = shift;
-    my $sections = shift;
+    my $patterns = shift;
 
-    for my $verboten ( @{$sections} ) {
-        is_empty_array( [grep { /\Q$verboten/ } @{$stdout}], "Find zero $verboten sections" );
-    }
+    my $str = join( ', ', @{$patterns} );
 
-    return;
+    return subtest "dont( $str )" => sub {
+        plan tests => scalar @{$patterns};
+
+        for my $verboten ( @{$patterns} ) {
+            my @found = grep { /$verboten/ } @{$stdout};
+            is_empty_array( [grep { /$verboten/ } @{$stdout}], "Find zero $verboten patterns" );
+        }
+    };
 }
+
+
+sub _section {
+    my $str = shift;
+
+    return qr/^$str$/sm;
+}
+
+
+sub _option {
+    my $str = shift;
+
+    return qr/^\s+$str\b/;
+}
+
+
+sub _clean {
+    my $output = shift;
+
+    s/.\cH//g for @{$output};
+
+    return $output;
+}
+
