@@ -9,8 +9,6 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan skip_all => q{Don't yet have a reliable way to ignore the Unicode complaints from Pod::Perldoc};
-
 my @types = (
     perl   => [qw{.pl .pod .pl .t}],
     python => [qw{.py}],
@@ -67,12 +65,8 @@ like $output, qr/Usage: ack/;
         'Should have no output to stderr: ack --env --man' )
         or diag( join( "\n", 'STDERR:', @{$stderr} ) );
 
-    if ( is_windows() ) {
-        like( join("\n", @{$output}[0,1]), qr/^NAME\s+ack(?:-standalone)?\s/ );
-    }
-    else {
-        like( $output->[0], qr/ACK(?:-STANDALONE)?\Q(1)\E/ );
-    }
+    my $first_two_lines = join( "\n", @{$output}[0,1] );
+    like( $first_two_lines, qr/^NAME\s+ack(?:-standalone)?\s/ );
 }
 
 $output = run_ack( '--env', '--thpppt' );
@@ -88,3 +82,5 @@ $output = run_ack( '--env', '--version' );
 like $output, qr/ack 2[.]\d+/;
 
 safe_chdir( $wd );
+
+exit 0;
