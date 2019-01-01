@@ -19,4 +19,4 @@ notifications:
     on_failure: always
 
 install: "cpanm File::Next && cpanm Pod::Perldoc && cpanm --notest IO::Pty Test::Pod"
-script:  "perl Makefile.PL && make fulltest"
+script:  "export PATH=/bin:/usr/bin && perl Makefile.PL && make fulltest"
