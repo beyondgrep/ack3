@@ -1,10 +1,13 @@
 #!perl -T
 
+use 5.010;
 use warnings;
 use strict;
+
 use Test::More tests => 23;
 
-use App::Ack;   # For the VERSION
+# Load all these modules to get their versions.
+use App::Ack;
 use File::Next;
 use Test::Harness;
 use Getopt::Long;
@@ -30,6 +33,7 @@ for my $module ( @modules ) {
     my $ver = ${$module . '::VERSION'};
     diag( "Using $module $ver" );
 }
+diag( "PATH=" . ($ENV{PATH} // '<undef>') );
 
 # Find all the .pm files in blib/ and make sure they can be C<use>d.
 my $iter = File::Next::files( { file_filter => sub { /\.pm$/ } }, 'blib' );
