@@ -7,16 +7,14 @@ use 5.010001;
 use lib 't';
 use Util;
 
-my $is_standalone;
+use Test::More;
 
-BEGIN {
-    $is_standalone = $ENV{ACK_TEST_STANDALONE} // die 'ACK_TEST_STANDALONE is not set';
-}
+plan skip_all => 'Travis has PATH problems that prevent this from running' if $ENV{TRAVIS};
 
-use Test::More tests => $is_standalone ? 2 : 4;
+my $is_standalone = $ENV{ACK_TEST_STANDALONE} // die 'ACK_TEST_STANDALONE is not set';
+plan tests => $is_standalone ? 2 : 4;
 
 prep_environment();
-
 
 # Some things to expect, not all.
 my @man_sections = _section( qw(
