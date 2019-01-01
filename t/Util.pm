@@ -88,7 +88,7 @@ sub prep_environment {
     }
     else {
         # XXX We probably don't want to keep this here, but Pod::Usage needs a PATH so it can find nroff.
-        $ENV{PATH} = '/usr/bin';
+        $ENV{PATH} = '/bin:/usr/bin';
     }
 
     $orig_wd = getcwd_clean();
