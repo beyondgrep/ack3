@@ -51,7 +51,7 @@ subtest 'Check for all the types' => sub {
 };
 
 SKIP: {
-    skip 2, 'Fails under Travis' if $ENV{TRAVIS};
+    skip 'Fails under Travis', 2 if $ENV{TRAVIS};
 
     ($output, my $stderr) = run_ack_with_stderr( '--env', '--man' );
     # Don't worry if man complains about long lines,
