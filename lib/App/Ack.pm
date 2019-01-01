@@ -431,26 +431,25 @@ END_OF_HELP
 sub show_docs {
     my $section = shift;
 
-    require Pod::Usage;
-
+    my $input;
     if ( $App::Ack::STANDALONE ) {
         # Standalone doesn't have the modules split out, so dump the entire file.
-        Pod::Usage::pod2usage({
-            -input     => $App::Ack::ORIGINAL_PROGRAM_NAME,
-            -verbose   => 2,
-            -exitval   => 0,
-        });
+        $input = $App::Ack::ORIGINAL_PROGRAM_NAME;
     }
     else {
         my $module = "App::Ack::Docs::$section";
         eval "require $module" or App::Ack::die( "Can't load $module" );
-
-        Pod::Usage::pod2usage({
-            -input     => $INC{ "App/Ack/Docs/$section.pm" },
-            -verbose   => 2,
-            -exitval   => 0,
-        });
+        $input = $INC{ "App/Ack/Docs/$section.pm" };
     }
+
+    require Pod::Usage;
+    Pod::Usage::pod2usage({
+        -input     => $input,
+        -verbose   => 2,
+        -exitval   => 0,
+        -noperldoc => $ENV{TRAVIS},
+        # Travis makes perldoc unhappy. See https://github.com/beyondgrep/ack3/issues/176.
+    });
 
     return;
 }

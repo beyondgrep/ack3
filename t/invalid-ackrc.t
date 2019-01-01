@@ -50,9 +50,7 @@ subtest 'Check for all the types' => sub {
     }
 };
 
-SKIP: {
-    skip 'Fails under Travis', 2 if $ENV{TRAVIS};  # See https://github.com/beyondgrep/ack3/issues/176
-
+{
     ($output, my $stderr) = run_ack_with_stderr( '--env', '--man' );
     # Don't worry if man complains about long lines,
     # or if the terminal doesn't handle Unicode:
@@ -64,7 +62,7 @@ SKIP: {
         or diag( join( "\n", 'STDERR:', @{$stderr} ) );
 
     my $first_two_lines = join( "\n", @{$output}[0,1] );
-    like( $first_two_lines, qr/^NAME\s+ack(?:-standalone)?\s/ );
+    like( $first_two_lines, qr/^NAME\s+ack(?:-standalone)?\s/sm );
 }
 
 $output = run_ack( '--env', '--thpppt' );
