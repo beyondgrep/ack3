@@ -10,6 +10,7 @@ use Util;
 use Test::More;
 
 plan skip_all => 'Travis has PATH problems that prevent this from running' if $ENV{TRAVIS};
+# See https://github.com/beyondgrep/ack3/issues/176
 
 my $is_standalone = $ENV{ACK_TEST_STANDALONE} // die 'ACK_TEST_STANDALONE is not set';
 plan tests => $is_standalone ? 2 : 4;
