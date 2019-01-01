@@ -4,18 +4,18 @@ use strict;
 use warnings;
 
 use File::Temp;
-use List::Util qw(sum);
+use List::Util qw( any sum );
 use Test::More;
 use lib 't';
 use Util;
 
-my @types = (
+my %types = (
     perl   => [qw{.pl .pod .pl .t}],
     python => [qw{.py}],
     ruby   => [qw{.rb Rakefile}],
 );
 
-plan tests => sum(map { ref($_) ? scalar(@{$_}) : 1 } @types) + 14; ## no critic ( BuiltinFunctions::ProhibitUselessTopic )
+plan tests => 13;
 
 prep_environment();
 
@@ -26,35 +26,33 @@ my $tempdir = File::Temp->newdir;
 safe_chdir( $tempdir->dirname );
 write_file( '.ackrc', "--frobnicate\n" );
 
-my $output;
+my $output = run_ack( '--env', '--help' );
+like( $output, qr/Usage: ack/ );
 
-$output = run_ack( '--env', '--help' );
-like $output, qr/Usage: ack/;
+subtest 'Check for all the types' => sub {
+    plan tests =>
+        2
+        + (scalar keys %types)
+        + (sum map { scalar @{$_} } values %types);
 
-{
-    my $stderr;
+    ( my $output, my $stderr ) = run_ack_with_stderr( '--env', '--help-types' );
 
-    ( $output, $stderr ) = run_ack_with_stderr( '--env', '--help-types' );
-    like join("\n", @{$output}), qr/Usage: ack/;
+    ok( (any { /Usage: ack/ } @{$output}), 'Found at least one usage line' );
+    ok( (any { /Unknown option: frobnicate/ } @{$stderr}), 'Found the illegal option in the ackrc' );
 
-    $stderr = join("\n", @{$stderr});
-    like $stderr, qr/Unknown option: frobnicate/;
-
-    # the following was shamelessly copied from ack-help-types.t
-    for (my $i = 0; $i < @types; $i += 2) {
-        my ( $type, $checks ) = @types[ $i , $i + 1 ];
-
+    while ( my ($type,$checks) = each %types ) {
         my ( $matching_line ) = grep { /--\[no\]$type/ } @{$output};
 
-        ok $matching_line;
-
+        ok( $matching_line, "Got at least one for --$type" );
         foreach my $check (@{$checks}) {
-            like $matching_line, qr/\Q$check\E/;
+            like( $matching_line, qr/\Q$check\E/ );
         }
     }
-}
+};
 
-{
+SKIP: {
+    skip 2, 'Fails under Travis' if $ENV{TRAVIS};
+
     ($output, my $stderr) = run_ack_with_stderr( '--env', '--man' );
     # Don't worry if man complains about long lines,
     # or if the terminal doesn't handle Unicode:
