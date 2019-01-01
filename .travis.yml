@@ -18,5 +18,9 @@ notifications:
     on_success: change
     on_failure: always
 
-install: "cpanm File::Next && cpanm Pod::Perldoc && cpanm --notest IO::Pty Test::Pod"
-script:  "export PATH=/bin && perl Makefile.PL && make fulltest"
+env:
+    global:
+        - PATH=/bin:/usr/bin
+
+install: "cpanm File::Next Pod::Perldoc && cpanm --notest IO::Pty Test::Pod"
+script:  "perl Makefile.PL && make fulltest"
