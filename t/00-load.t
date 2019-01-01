@@ -8,6 +8,7 @@ use App::Ack;   # For the VERSION
 use File::Next;
 use Test::Harness;
 use Getopt::Long;
+use Pod::Perldoc;
 use Pod::Usage;
 use File::Spec;
 
@@ -15,6 +16,7 @@ my @modules = qw(
     File::Next
     File::Spec
     Getopt::Long
+    Pod::Perldoc
     Pod::Usage
     Test::Harness
     Test::More
