@@ -10,6 +10,10 @@ The standalone version of ack no longer supports the --faq or --cookbook
 options, which never worked right for it anyway.  Instead, --man includes
 the FAQ and Cookbook.
 
+The --man option no longer uses the `perldoc` program for rendering the
+documentation.  This means you'll have to pipe it into your own pager if
+you want scrolling, but it makes it much more portable.
+
 [FIXES]
 ack would stop finding files if there was a file named "0" in the current
 directory. Thanks, Rob Hoelz. (GH #162)

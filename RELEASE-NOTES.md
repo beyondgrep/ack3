@@ -85,3 +85,10 @@ ack invocations.  This has been removed.  Use an ackrc file instead.
 
 The `--lines` option let you select a specific range of lines to print, and
 not match.  There are other better ways to do this (`sed`, for example).
+
+## The `--man` option no longer uses perldoc
+
+The `--man` option would use the external `perldoc` program for displaying
+documentation.  However, this was causing portability problems since some
+users might not have it installed.  The downside is that the text rendering
+is not quite as pretty.

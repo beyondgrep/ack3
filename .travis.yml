@@ -18,5 +18,5 @@ notifications:
     on_success: change
     on_failure: always
 
-install: "cpanm File::Next Pod::Perldoc && cpanm --notest IO::Pty Test::Pod"
+install: "cpanm File::Next IO::Pty Test::Pod"
 script:  "perl Makefile.PL && make fulltest"

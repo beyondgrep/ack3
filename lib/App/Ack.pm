@@ -447,8 +447,7 @@ sub show_docs {
         -input     => $input,
         -verbose   => 2,
         -exitval   => 0,
-        -noperldoc => $ENV{TRAVIS},
-        # Travis makes perldoc unhappy. See https://github.com/beyondgrep/ack3/issues/176.
+        -noperldoc => 1, # Use Pod::Text.
     });
 
     return;

@@ -38,6 +38,7 @@ my %parms = (
         'if'                => 0,
         'List::Util'        => 0,
         'parent'            => 0,
+        'Pod::Text'         => 0,      # Used to render pod by Pod::Usage.
         'Pod::Usage'        => '1.26',
         'Scalar::Util'      => 0,
         'Term::ANSIColor'   => '1.10',
