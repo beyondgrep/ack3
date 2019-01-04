@@ -60,6 +60,7 @@ DASH_C	t/ack-v.t	/^DASH_C: {$/;"	l
 DASH_CAPITAL_L	t/ack-c.t	/^DASH_CAPITAL_L: {$/;"	l
 DASH_F	t/ack-1.t	/^DASH_F: {$/;"	l
 DASH_F	t/zero.t	/^DASH_F: {$/;"	l
+DASH_F_CWD	t/zero.t	/^DASH_F_CWD: {$/;"	l
 DASH_G	t/ack-1.t	/^DASH_G: {$/;"	l
 DASH_HC	t/ack-c.t	/^DASH_HC: {$/;"	l
 DASH_IGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR: {$/;"	l
@@ -195,6 +196,7 @@ _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutually_exclusive_options {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
+_clean	t/ack-man.t	/^sub _clean {$/;"	s
 _compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
 _compile_descend_filter	ack	/^sub _compile_descend_filter {$/;"	s
 _compile_file_filter	ack	/^sub _compile_file_filter {$/;"	s
@@ -207,6 +209,7 @@ _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
 _invalid_combinations	lib/App/Ack/ConfigLoader.pm	/^sub _invalid_combinations {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
+_option	t/ack-man.t	/^sub _option {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
 _populate_help_options	t/ack-help.t	/^    sub _populate_help_options {$/;"	s
@@ -218,6 +221,7 @@ _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
 _remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
+_section	t/ack-man.t	/^sub _section {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
 _test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s

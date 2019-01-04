@@ -25,6 +25,7 @@ use App::Ack::Filter::Match ();
 use App::Ack::Filter::Collection ();
 
 # Global command-line options
+our $opt_1;
 our $opt_after_context;
 our $opt_before_context;
 our $opt_break;
@@ -115,6 +116,7 @@ MAIN: {
 
     my $opt = App::Ack::ConfigLoader::process_args( @arg_sources );
 
+    $opt_1              = $opt->{1};
     $opt_after_context  = $opt->{after_context};
     $opt_before_context = $opt->{before_context};
     $opt_break          = $opt->{break};
@@ -223,8 +225,6 @@ MAIN: {
     }
     App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};
 
-    my $only_first = $opt->{1};
-
     my $nmatches    = 0;
     my $total_count = 0;
 
@@ -286,7 +286,7 @@ FILES:
                 App::Ack::say( $file->name );
                 ++$nmatches;
 
-                last FILES if $only_first;
+                last FILES if $opt_1;
                 last FILES if defined($opt_m) && $nmatches >= $opt_m;
             }
         }
@@ -328,7 +328,7 @@ FILES:
             if ( $needs_line_scan ) {
                 $nmatches += print_matches_in_file( $file );
             }
-            if ( $nmatches && $only_first ) {
+            if ( $opt_1 && $nmatches ) {
                 last FILES;
             }
         }
