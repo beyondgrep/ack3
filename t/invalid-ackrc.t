@@ -15,7 +15,7 @@ my %types = (
     ruby   => [qw{.rb Rakefile}],
 );
 
-plan tests => 13;
+plan tests => 4;
 
 prep_environment();
 
@@ -26,8 +26,24 @@ my $tempdir = File::Temp->newdir;
 safe_chdir( $tempdir->dirname );
 write_file( '.ackrc', "--frobnicate\n" );
 
-my $output = run_ack( '--env', '--help' );
-like( $output, qr/Usage: ack/ );
+subtest 'Check --env and weird options' => sub {
+    plan tests => 10;
+
+    my $output = run_ack( '--env', '--help' );
+    like( $output, qr/Usage: ack/ );
+
+    $output = run_ack( '--env', '--thpppt' );
+    like( $output, qr/ack --thpppt/ );
+
+    $output = run_ack( '--env', '--bar' );
+    like( $output, qr/It's a grep/ );
+
+    $output = run_ack( '--env', '--cathy' );
+    like( $output, qr/CHOCOLATE/ );
+
+    $output = run_ack( '--env', '--version' );
+    like( $output, qr/ack 2[.]\d+/ );
+};
 
 subtest 'Check for all the types' => sub {
     plan tests =>
@@ -51,7 +67,7 @@ subtest 'Check for all the types' => sub {
 };
 
 {
-    ($output, my $stderr) = run_ack_with_stderr( '--env', '--man' );
+    my ($output, $stderr) = run_ack_with_stderr( '--env', '--man' );
     # Don't worry if man complains about long lines,
     # or if the terminal doesn't handle Unicode:
     is( scalar(grep { !m{can't\ break\ line
@@ -64,18 +80,6 @@ subtest 'Check for all the types' => sub {
     my $first_two_lines = join( "\n", @{$output}[0,1] );
     like( $first_two_lines, qr/^NAME\s+ack(?:-standalone)?\s/sm );
 }
-
-$output = run_ack( '--env', '--thpppt' );
-like( $output, qr/ack --thpppt/ );
-
-$output = run_ack( '--env', '--bar' );
-like( $output, qr/It's a grep/ );
-
-$output = run_ack( '--env', '--cathy' );
-like $output, qr/CHOCOLATE/;
-
-$output = run_ack( '--env', '--version' );
-like $output, qr/ack 2[.]\d+/;
 
 safe_chdir( $wd );
 
