@@ -42,6 +42,7 @@ our $opt_passthru;
 our $opt_p;
 our $opt_regex;
 our $opt_show_filename;
+our $opt_show_types;
 our $opt_underline;
 our $opt_v;
 
@@ -131,6 +132,7 @@ MAIN: {
     $opt_passthru       = $opt->{passthru};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
+    $opt_show_types     = $opt->{show_types};
     $opt_underline      = $opt->{underline};
     $opt_v              = $opt->{v};
 
@@ -236,7 +238,7 @@ FILES:
 
         # ack -f
         if ( $opt_f ) {
-            if ( $opt->{show_types} ) {
+            if ( $opt_show_types ) {
                 App::Ack::show_types( $file );
             }
             else {
@@ -247,7 +249,7 @@ FILES:
         }
         # ack -g
         elsif ( $opt_g ) {
-            if ( $opt->{show_types} ) {
+            if ( $opt_show_types ) {
                 App::Ack::show_types( $file );
             }
             else {
