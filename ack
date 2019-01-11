@@ -182,7 +182,7 @@ MAIN: {
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
         $files     = App::Ack::Files->from_stdin();
         $opt_regex = shift @ARGV if not defined $opt_regex;
-        $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
+        $opt_regex = build_regex( $opt_regex, $opt );
     }
     else {
         if ( $opt_f ) {
@@ -190,7 +190,7 @@ MAIN: {
         }
         else {
             $opt_regex = shift @ARGV if not defined $opt_regex;
-            $opt_regex = $opt->{regex} = build_regex( $opt_regex, $opt );
+            $opt_regex = build_regex( $opt_regex, $opt );
         }
         if ( $opt_regex && $opt_regex =~ /\n/ ) {
             App::Ack::exit_from_ack( 0 );
