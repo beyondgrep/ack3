@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use File::Temp;
-use List::Util qw( any sum );
+use List::Util qw( sum );
 use Test::More;
 use lib 't';
 use Util;
@@ -53,8 +53,9 @@ subtest 'Check for all the types' => sub {
 
     ( my $output, my $stderr ) = run_ack_with_stderr( '--env', '--help-types' );
 
-    ok( (any { /Usage: ack/ } @{$output}), 'Found at least one usage line' );
-    ok( (any { /Unknown option: frobnicate/ } @{$stderr}), 'Found the illegal option in the ackrc' );
+    # We use "scalar grep" here instead of List::Util::any because any isn't in every version of List::Util.
+    ok( (scalar grep { /Usage: ack/ } @{$output}), 'Found at least one usage line' );
+    ok( (scalar grep { /Unknown option: frobnicate/ } @{$stderr}), 'Found the illegal option in the ackrc' );
 
     while ( my ($type,$checks) = each %types ) {
         my ( $matching_line ) = grep { /--\[no\]$type/ } @{$output};
