@@ -33,6 +33,14 @@ my %sets = (
         [ 'foo\w+', '-C10' ],
         [ '(set|get)_\w+' ],
     ],
+    smartcase => [
+        [ 'foo', '-w' ],
+        [ 'foo', '-S' ],
+        [ 'foo', '-w', '-S' ],
+        [ 'foo\w+', '-w' ],
+        [ 'foo\w+', '-S' ],
+        [ 'foo\w+', '-w', '-S' ],
+    ],
     context => [
         [ 'foo' ],
         [ 'foo', '-A10' ],
