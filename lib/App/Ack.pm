@@ -13,15 +13,15 @@ A container for functions for the ack program.
 
 =head1 VERSION
 
-Version 2.999_05
+Version 2.999_06
 
 =cut
 
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    $VERSION = '2.999_05';
-    $COPYRIGHT = 'Copyright 2005-2018 Andy Lester.';
+    $VERSION = '2.999_06';
+    $COPYRIGHT = 'Copyright 2005-2019 Andy Lester.';
 }
 our $STANDALONE = 0;
 our $ORIGINAL_PROGRAM_NAME;

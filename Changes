@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+2.999_06 Thu Jan 10 20:37:23 CST 2019
 =====================================
 [ENHANCEMENTS]
 The --tt option for Template Toolkit is now --ttml.  The short version
