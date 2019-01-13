@@ -5,11 +5,14 @@ use warnings;
 use autodie;
 use 5.10.1;
 
-use Getopt::Long;
-use File::Slurp qw(read_dir read_file write_file);
+use lib 't';
+use Util qw( read_file write_file );
+
+use File::Next;
 use File::Spec;
+use Getopt::Long;
 use JSON;
-use List::MoreUtils qw(any);
+use List::Util qw(any);
 use Term::ANSIColor qw(colored);
 use Time::HiRes qw(gettimeofday tv_interval);
 
@@ -78,8 +81,11 @@ if ( -e '.timings.json' ) {
     $previous_timings = $json->decode(scalar(read_file('.timings.json')));
 }
 
-my @acks = map { File::Spec->catfile('garage', $_) } read_dir('garage');
-push @acks, 'ack-standalone';
+my @acks = ( 'ack-standalone' );
+my $iter = File::Next::files( 'garage' );
+while ( my $file = $iter->() ) {
+    push( @acks, $file );
+}
 
 @acks = grab_versions(@acks);
 
