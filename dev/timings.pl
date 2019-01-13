@@ -29,17 +29,13 @@ my %sets = (
         [ 'zqj-not-there' ],
         [ 'foo' ],
         [ 'foo', '-w' ],
+        [ 'foo', '-w', '-i' ],
         [ 'foo\w+', '-w' ],
+        [ 'foo\w+', '-w', '-i' ],
         [ 'foo\w+', '-C10' ],
+        [ 'foo\w+', '-C10', '-i' ],
         [ '(set|get)_\w+' ],
-    ],
-    smartcase => [
-        [ 'foo', '-w' ],
-        [ 'foo', '-S' ],
-        [ 'foo', '-w', '-S' ],
-        [ 'foo\w+', '-w' ],
-        [ 'foo\w+', '-S' ],
-        [ 'foo\w+', '-w', '-S' ],
+        [ '(set|get)_\w+', '-i' ],
     ],
     context => [
         [ 'foo' ],
@@ -234,7 +230,7 @@ sub create_format {
         }
     }
 
-    return join(' | ', "%${max_invocation_length}s", map {
+    return join(' :', "%${max_invocation_length}s", map {
         "%${_}s"
     } @max_version_lengths) . "\n";
 }
