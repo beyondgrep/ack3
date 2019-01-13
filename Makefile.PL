@@ -151,6 +151,9 @@ time-head: ack-standalone
 timings: ack-standalone
 	./dev/timings.pl ~/parrot
 
+timings-beta: ack-standalone
+	./dev/timings.pl ~/parrot --ack=2.999_0{1,2,3,4,5,6}
+
 completion.bash: pm_to_blib
 	./dev/generate-completion-scripts.pl completion.bash
 
