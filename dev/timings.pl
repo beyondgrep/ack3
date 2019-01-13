@@ -25,8 +25,7 @@ my $perl = $^X;
 
 my %sets = (
     searching => [
-        [ 'zqj' ],
-        [ 'zqj-not-there' ],
+        [ 'xxx-no-match' ],
         [ 'foo' ],
         [ 'foo', '-w' ],
         [ 'foo', '-w', '-i' ],
