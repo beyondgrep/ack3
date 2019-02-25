@@ -472,15 +472,16 @@ sub _explode_sources {
     my %opt;
     my $arg_spec = get_arg_spec(\%opt);
 
+    my $dummy_sub = sub {};
     my $add_type = sub {
         my ( undef, $arg ) = @_;
 
         if ( $arg =~ /(\w+)=/) {
-            $arg_spec->{$1} = sub {};
+            $arg_spec->{$1} = $dummy_sub;
         }
         else {
             ( $arg ) = split /:/, $arg;
-            $arg_spec->{$arg} = sub {};
+            $arg_spec->{$arg} = $dummy_sub;
         }
     };
 
