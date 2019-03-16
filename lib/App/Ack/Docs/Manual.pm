@@ -701,6 +701,65 @@ Example:
 
 =back
 
+=head1 ACK COLORS
+
+ack allows customization of the colors it uses when presenting matches
+onscreen.  It uses the colors available in Perl's L<Term::ANSIColor>
+module, which provides the following listed values. Note that case does not
+matter when using these values.
+
+There are four different colors ack uses:
+
+    Aspect      Option              Env. variable       Default
+    --------    -----------------   ------------------  ---------------
+    filename    --color-filename    ACK_COLOR_FILENAME  black on_yellow
+    match       --color-match       ACK_COLOR_MATCH     bold green
+    line no.    --color-lineno      ACK COLOR_LINENO    bold yellow
+    column no.  --color-colno       ACK COLOR_COLNO     bold yellow
+
+The column number column is only used if the column number is shown because
+of the --column option.
+
+Colors may be specified by command-line option, such as
+C<ack --color-filename='red on_white'>, or by setting an environment
+variable, such as C<ACK_COLOR_FILENAME='red on_white'>.  Options for colors
+can be set in your ACKRC file (See "THE .ackrc FILE").
+
+ack can understand the following colors for the foreground:
+
+    black red green yellow blue magenta cyan white
+
+The optional background color is specified by prepending "on_" to one of
+the foreground colors:
+
+    on_black on_red on_green on_yellow on_blue on_magenta on_cyan on_white
+
+Each of the foreground colors can be modified with the following
+attributes, which may or may not be supported by your terminal:
+
+    bold faint italic underline blink reverse concealed
+
+Any combinations of modifiers can be added to the foreground color. If your
+terminal supports it, and you enjoy visual punishment, you can specify:
+
+    ack --color-filename="blink italic underline bold red on_yellow"
+
+For a chart of the colors and what they look like, run C<ack --help-colors>.
+
+If the eight standard colors, in their bold, faint and unmodified states,
+aren't enough for you to choose from, you can also specify colors by their
+RGB values.  They are specified as "rgbXYZ" where X, Y, and Z are values
+between 0 and 5 giving the intensity of red, green and blue, respectively.
+Therefore, "rgb500" is pure red, "rgb505" is purple, and so on.
+
+Background colors can be specified with the "on_" prefix prepended on an
+RGB color, so that "on_rgb505" would be a purple background.
+
+The modifier attributes of blink, italic, underscore and so on may or may
+not work on the RGB colors.
+
+For a chart of the 216 possible RGB colors, run C<ack --help-rgb-colors>.
+
 =head1 ENVIRONMENT VARIABLES
 
 For commonly-used ack options, environment variables can make life
@@ -714,38 +773,26 @@ on the command line.
 Specifies the location of the user's F<.ackrc> file.  If this file doesn't
 exist, F<ack> looks in the default location.
 
+=item ACK_COLOR_COLNO
+
+Color specification for the column number in ack's output.  By default, the
+column number is not shown.  You have to enable it with the B<--column>
+option.  See the section "ack Colors" above.
+
 =item ACK_COLOR_FILENAME
 
-Specifies the color of the filename when it's printed in B<--group>
-mode.  By default, it's "bold green".
-
-The recognized attributes are clear, reset, dark, bold, underline,
-underscore, blink, reverse, concealed black, red, green, yellow,
-blue, magenta, on_black, on_red, on_green, on_yellow, on_blue,
-on_magenta, on_cyan, and on_white.  Case is not significant.
-Underline and underscore are equivalent, as are clear and reset.
-The color alone sets the foreground color, and on_color sets the
-background color.
-
-This option can also be set with B<--color-filename>.
-
-=item ACK_COLOR_MATCH
-
-Specifies the color of the matching text when printed in B<--color>
-mode.  By default, it's "black on_yellow".
-
-This option can also be set with B<--color-match>.
-
-See B<ACK_COLOR_FILENAME> for the color specifications.
+Color specification for the filename in ack's output.  See the section "ack
+Colors" above.
 
 =item ACK_COLOR_LINENO
 
-Specifies the color of the line number when printed in B<--color>
-mode.  By default, it's "bold yellow".
+Color specification for the line number in ack's output.  See the section
+"ack Colors" above.
 
-This option can also be set with B<--color-lineno>.
+=item ACK_COLOR_MATCH
 
-See B<ACK_COLOR_FILENAME> for the color specifications.
+Color specification for the matched text in ack's output.  See the section
+"ack Colors" above.
 
 =item ACK_PAGER
 
@@ -767,27 +814,6 @@ like piping output on the command-line does.
 If you are not on Windows, you never need to use C<ACK_PAGER_COLOR>.
 
 =back
-
-=head1 AVAILABLE COLORS
-
-F<ack> uses the colors available in Perl's L<Term::ANSIColor> module, which
-provides the following listed values. Note that case does not matter when using
-these values.
-
-=head2 Foreground colors
-
-    black  red  green  yellow  blue  magenta  cyan  white
-
-    bright_black  bright_red      bright_green  bright_yellow
-    bright_blue   bright_magenta  bright_cyan   bright_white
-
-=head2 Background colors
-
-    on_black  on_red      on_green  on_yellow
-    on_blue   on_magenta  on_cyan   on_white
-
-    on_bright_black  on_bright_red      on_bright_green  on_bright_yellow
-    on_bright_blue   on_bright_magenta  on_bright_cyan   on_bright_white
 
 =head1 ACK & OTHER TOOLS
 
