@@ -375,9 +375,12 @@ sub get_arg_spec {
 
         'help|?:s'          => sub { shift; App::Ack::show_help(@_); exit; },
         'help-types'        => sub { App::Ack::show_help_types(); exit; },
+        'help-colors'       => sub { App::Ack::show_help_colors(); exit; },
+        'help-rgb-colors'   => sub { App::Ack::show_help_rgb(); exit; },
         $extra_specs ? %{$extra_specs} : (),
     }; # arg_specs
 }
+
 
 sub _context_value {
     my $val = shift;
