@@ -744,7 +744,8 @@ terminal supports it, and you enjoy visual punishment, you can specify:
 
     ack --color-filename="blink italic underline bold red on_yellow"
 
-For a chart of the colors and what they look like, run C<ack --help-colors>.
+For charts of the colors and what they look like, run C<ack --help-colors>
+and C<ack --help-rgb-colors>.
 
 If the eight standard colors, in their bold, faint and unmodified states,
 aren't enough for you to choose from, you can also specify colors by their

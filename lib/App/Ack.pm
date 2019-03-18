@@ -313,6 +313,7 @@ File presentation:
   --color-lineno=COLOR          Set the color for filenames, matches, line and
                                 column numbers.
   --help-colors                 Show a list of possible color combinations.
+  --help-rgb-colors             Show a list of advanced RGB colors.
   --flush                       Flush output immediately, even when ack is used
                                 non-interactively (when output goes to a pipe or
                                 file).
@@ -367,6 +368,7 @@ Miscellaneous:
 $manual_options
   --help-types                  Display all known types, and how they're defined.
   --help-colors                 Show a list of possible color combinations.
+  --help-rgb-colors             Show a list of advanced RGB colors.
   --thpppt                      Bill the Cat
   --bar                         The warning admiral
   --cathy                       Chocolate! Chocolate! Chocolate!
