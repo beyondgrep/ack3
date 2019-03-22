@@ -49,5 +49,5 @@ Copyright 2005-2019 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the
-[Artistic License v2.0](http://www.perlfoundation.org/artistic_license_2_0).
+[Artistic License v2.0](https://www.perlfoundation.org/artistic_license_2_0).
 See also the LICENSE.md file that comes with the ack distribution.
