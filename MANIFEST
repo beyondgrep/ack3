@@ -30,11 +30,11 @@ lib/App/Ack/Docs/FAQ.pm
 lib/App/Ack/Docs/Cookbook.pm
 
 squash
-test-pager
 
 t/Barfly.pm
 t/FilterTest.pm
 t/Util.pm
+t/test-pager
 
 t/00-load.t
 t/ack-1.t

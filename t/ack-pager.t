@@ -41,7 +41,7 @@ HERE
 }
 
 PAGER: {
-    my @args = qw(--nocolor --pager=./test-pager --sort-files -i nevermore t/text);
+    my @args = qw(--nocolor --pager=t/test-pager --sort-files -i nevermore t/text);
 
     my @expected = line_split( <<'HERE' );
 t/text/raven.txt
@@ -66,7 +66,7 @@ HERE
 PAGER_WITH_OPTS: {
     my @args = (
         '--nocolor',
-        '--pager=./test-pager --skip=2',    # --skip is an argument passed to test-pager
+        '--pager=t/test-pager --skip=2',    # --skip is an argument passed to test-pager
         '--sort-files',
         '-i',
         'nevermore',
@@ -90,7 +90,7 @@ HERE
 FORCE_NO_PAGER: {
     my @args = (
         '--nocolor',
-        '--pager=./test-pager --skip=2',    # --skip is an argument passed to test-pager
+        '--pager=t/test-pager --skip=2',    # --skip is an argument passed to test-pager
         '--nopager',
         '--sort-files',
         '-i',
@@ -119,7 +119,7 @@ HERE
 }
 
 PAGER_ENV: {
-    local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
+    local $ENV{'ACK_PAGER'} = 't/test-pager --skip=2';
     local $TODO             = q{Setting ACK_PAGER in tests won't work for the time being};
 
     my @args = qw( --nocolor --sort-files -i nevermore t/text );
@@ -139,7 +139,7 @@ HERE
 }
 
 PAGER_ENV_OVERRIDE: {
-    local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
+    local $ENV{'ACK_PAGER'} = 't/test-pager --skip=2';
 
     my @args = qw( --nocolor --nopager --sort-files -i nevermore t/text );
 
@@ -168,7 +168,7 @@ PAGER_ACKRC: {
     my @args = qw( --nocolor --sort-files -i nevermore t/text );
 
     my $ackrc = <<'HERE';
---pager=./test-pager --skip=2
+--pager=t/test-pager --skip=2
 HERE
 
     my @expected = line_split( <<'HERE' );
@@ -192,7 +192,7 @@ PAGER_ACKRC_OVERRIDE: {
     my @args = qw( --nocolor --nopager --sort-files -i nevermore t/text );
 
     my $ackrc = <<'HERE';
---pager=./test-pager --skip=2
+--pager=t/test-pager --skip=2
 HERE
 
     my @expected = line_split( <<'HERE' );
@@ -218,7 +218,7 @@ HERE
 }
 
 PAGER_NOENV: {
-    local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
+    local $ENV{'ACK_PAGER'} = 't/test-pager --skip=2';
 
     my @args = qw( --nocolor --noenv --sort-files -i nevermore t/text );
 
