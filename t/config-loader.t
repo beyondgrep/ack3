@@ -156,17 +156,17 @@ test_loader(
 subtest 'ACK_PAGER' => sub {
     plan tests => 3;
 
-    local $ENV{'ACK_PAGER'} = './test-pager --skip=2';
+    local $ENV{'ACK_PAGER'} = 't/test-pager --skip=2';
 
     test_loader(
         argv             => [],
-        expected_opts    => { %defaults, pager => './test-pager --skip=2' },
+        expected_opts    => { %defaults, pager => 't/test-pager --skip=2' },
         'ACK_PAGER should set the default pager',
     );
 
     test_loader(
-        argv             => ['--pager=./test-pager'],
-        expected_opts    => { %defaults, pager => './test-pager' },
+        argv             => ['--pager=t/test-pager'],
+        expected_opts    => { %defaults, pager => 't/test-pager' },
         '--pager should override ACK_PAGER',
     );
 
@@ -181,17 +181,17 @@ subtest 'ACK_PAGER' => sub {
 subtest 'ACK_PAGER_COLOR' => sub {
     plan tests => 6;
 
-    local $ENV{'ACK_PAGER_COLOR'} = './test-pager --skip=2';
+    local $ENV{'ACK_PAGER_COLOR'} = 't/test-pager --skip=2';
 
     test_loader(
         argv             => [],
-        expected_opts    => { %defaults, pager => './test-pager --skip=2' },
+        expected_opts    => { %defaults, pager => 't/test-pager --skip=2' },
         'ACK_PAGER_COLOR should set the default pager',
     );
 
     test_loader(
-        argv             => ['--pager=./test-pager'],
-        expected_opts    => { %defaults, pager => './test-pager' },
+        argv             => ['--pager=t/test-pager'],
+        expected_opts    => { %defaults, pager => 't/test-pager' },
         '--pager should override ACK_PAGER_COLOR',
     );
 
@@ -201,17 +201,17 @@ subtest 'ACK_PAGER_COLOR' => sub {
         '--nopager should suppress ACK_PAGER_COLOR',
     );
 
-    local $ENV{'ACK_PAGER'} = './test-pager --skip=3';
+    local $ENV{'ACK_PAGER'} = 't/test-pager --skip=3';
 
     test_loader(
         argv             => [],
-        expected_opts    => { %defaults, pager => './test-pager --skip=2' },
+        expected_opts    => { %defaults, pager => 't/test-pager --skip=2' },
         'ACK_PAGER_COLOR should override ACK_PAGER',
     );
 
     test_loader(
-        argv             => ['--pager=./test-pager'],
-        expected_opts    => { %defaults, pager => './test-pager' },
+        argv             => ['--pager=t/test-pager'],
+        expected_opts    => { %defaults, pager => 't/test-pager' },
         '--pager should override ACK_PAGER_COLOR and ACK_PAGER',
     );
 
@@ -226,7 +226,7 @@ subtest 'ACK_PAGER_COLOR' => sub {
 subtest 'PAGER' => sub {
     plan tests => 3;
 
-    local $ENV{'PAGER'} = './test-pager';
+    local $ENV{'PAGER'} = 't/test-pager';
 
     test_loader(
         argv             => [],
@@ -236,13 +236,13 @@ subtest 'PAGER' => sub {
 
     test_loader(
         argv             => ['--pager'],
-        expected_opts    => { %defaults, pager => './test-pager' },
+        expected_opts    => { %defaults, pager => 't/test-pager' },
         'PAGER is used if --pager is specified with no argument',
     );
 
     test_loader(
-        argv             => ['--pager=./test-pager --skip=2'],
-        expected_opts    => { %defaults, pager => './test-pager --skip=2' },
+        argv             => ['--pager=t/test-pager --skip=2'],
+        expected_opts    => { %defaults, pager => 't/test-pager --skip=2' },
         'PAGER is not used if --pager is specified with an argument',
     );
 };
