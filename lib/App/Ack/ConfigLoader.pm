@@ -15,18 +15,6 @@ use File::Spec 3.00 ();
 use Getopt::Long 2.38 ();
 use Text::ParseWords 3.1 ();
 
-=head1 NAME
-
-App::Ack::ConfigLoader
-
-=head1 DESCRIPTION
-
-Logic for loading configuration files.
-
-=head1 FUNCTIONS
-
-=cut
-
 sub opt_parser {
     my @opts = @_;
 
@@ -664,10 +652,6 @@ sub _check_for_mutually_exclusive_options {
 }
 
 
-=head2 process_args( @sources )
-
-=cut
-
 sub process_args {
     my $arg_sources = \@_;
 
@@ -781,12 +765,6 @@ sub retrieve_arg_sources {
 }
 
 
-=head2 read_rcfile( $filename )
-
-Reads the contents of the .ackrc file and returns the arguments.
-
-=cut
-
 sub read_rcfile {
     my $file = shift;
 
@@ -795,7 +773,7 @@ sub read_rcfile {
     my @lines;
 
     open( my $fh, '<', $file ) or App::Ack::die( "Unable to read $file: $!" );
-    while ( my $line = <$fh> ) {
+    while ( defined( my $line = <$fh> ) ) {
         chomp $line;
         $line =~ s/^\s+//;
         $line =~ s/\s+$//;
