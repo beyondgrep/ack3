@@ -373,7 +373,7 @@ sub get_arg_spec {
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
 
-        'help|?:s'          => sub { shift; App::Ack::show_help(@_); exit; },
+        'help'              => sub { App::Ack::show_help(); exit; },
         'help-types'        => sub { App::Ack::show_help_types(); exit; },
         'help-colors'       => sub { App::Ack::show_help_colors(); exit; },
         'help-rgb-colors'   => sub { App::Ack::show_help_rgb(); exit; },
