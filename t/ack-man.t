@@ -119,7 +119,6 @@ sub dont {
         plan tests => scalar @{$patterns};
 
         for my $verboten ( @{$patterns} ) {
-            my @found = grep { /$verboten/ } @{$stdout};
             is_empty_array( [grep { /$verboten/ } @{$stdout}], "Find zero $verboten patterns" );
         }
     };
