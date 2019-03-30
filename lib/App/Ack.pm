@@ -214,10 +214,6 @@ Dumps the help page to the user.
 =cut
 
 sub show_help {
-    my $help_arg = shift || 0;
-
-    return show_help_types() if $help_arg =~ /^types?/;
-
     my $manual_options;
     if ( $App::Ack::STANDALONE ) {
         $manual_options = <<'END';
@@ -364,7 +360,7 @@ Miscellaneous:
                                 and where they're defined.
   --[no]filter                  Force ack to treat standard input as a pipe
                                 (--filter) or tty (--nofilter)
-  --help, -?                    This help
+  --help                        This help
 $manual_options
   --help-types                  Display all known types, and how they're defined.
   --help-colors                 Show a list of possible color combinations.
