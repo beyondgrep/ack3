@@ -33,7 +33,7 @@ for my $module ( @modules ) {
     my $ver = ${$module . '::VERSION'};
     diag( "Using $module $ver" );
 }
-diag( "PATH=" . ($ENV{PATH} // '<undef>') );
+diag( 'PATH=' . ($ENV{PATH} // '<undef>') );
 
 # Find all the .pm files in blib/ and make sure they can be C<use>d.
 my $iter = File::Next::files( { file_filter => sub { /\.pm$/ } }, 'blib' );
