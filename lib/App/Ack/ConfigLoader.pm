@@ -268,9 +268,9 @@ sub get_arg_spec {
 
     return {
         1                   => sub { $opt->{1} = $opt->{m} = 1 },
-        'A|after-context:-1'  => sub { shift; $opt->{after_context}  = _context_value(shift) },
-        'B|before-context:-1' => sub { shift; $opt->{before_context} = _context_value(shift) },
-        'C|context:-1'        => sub { shift; $opt->{before_context} = $opt->{after_context} = _context_value(shift) },
+        'A|after-context:-1'  => sub { shift; $opt->{A} = _context_value(shift) },
+        'B|before-context:-1' => sub { shift; $opt->{B} = _context_value(shift) },
+        'C|context:-1'        => sub { shift; $opt->{B} = $opt->{A} = _context_value(shift) },
         'break!'            => \$opt->{break},
         c                   => \$opt->{count},
         'color|colour!'     => \$opt->{color},
@@ -298,8 +298,8 @@ sub get_arg_spec {
         'heading!'          => \$opt->{heading},
         'h|no-filename'     => \$opt->{h},
         'H|with-filename'   => \$opt->{H},
-        'i|ignore-case'     => sub { $opt->{i} = 1; $opt->{smart_case} = 0; },
-        'I'                 => sub { $opt->{i} = 0; $opt->{smart_case} = 0; },
+        'i|ignore-case'     => sub { $opt->{i} = 1; $opt->{S} = 0; },
+        'I'                 => sub { $opt->{i} = 0; $opt->{S} = 0; },
         'ignore-directory|ignore-dir=s' => _generate_ignore_dir('--ignore-dir', $opt),
         'ignore-file=s'     => sub {
             my ( undef, $file ) = @_;
@@ -337,7 +337,7 @@ sub get_arg_spec {
         'r|R|recurse'       => sub { $opt->{n} = 0 },
         's'                 => \$opt->{s},
         'show-types'        => \$opt->{show_types},
-        'S|smart-case!'     => sub { my (undef,$value) = @_; $opt->{smart_case} = $value; $opt->{i} = 0 if $value; },
+        'S|smart-case!'     => sub { my (undef,$value) = @_; $opt->{S} = $value; $opt->{i} = 0 if $value; },
         'sort-files'        => \$opt->{sort_files},
         'type=s'            => sub {
             my ( $getopt, $value ) = @_;

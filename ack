@@ -26,8 +26,8 @@ use App::Ack::Filter::Collection ();
 
 # Global command-line options
 our $opt_1;
-our $opt_after_context;
-our $opt_before_context;
+our $opt_A;
+our $opt_B;
 our $opt_break;
 our $opt_color;
 our $opt_column;
@@ -117,8 +117,8 @@ MAIN: {
     my $opt = App::Ack::ConfigLoader::process_args( @arg_sources );
 
     $opt_1              = $opt->{1};
-    $opt_after_context  = $opt->{after_context};
-    $opt_before_context = $opt->{before_context};
+    $opt_A              = $opt->{A};
+    $opt_B              = $opt->{B};
     $opt_break          = $opt->{break};
     $opt_color          = $opt->{color};
     $opt_column         = $opt->{column};
@@ -555,7 +555,7 @@ sub build_regex {
         }
     }
 
-    if ( $opt->{i} || ($opt->{smart_case} && $regex_is_lc) ) {
+    if ( $opt->{i} || ($opt->{S} && $regex_is_lc) ) {
         $str = "(?i)$str";
     }
 
@@ -594,8 +594,8 @@ state $has_printed_something = 0;
 
 # Set up context tracking variables.
 sub set_up_line_context {
-    $n_before_ctx_lines = $opt_output ? 0 : ($opt_before_context || 0);
-    $n_after_ctx_lines  = $opt_output ? 0 : ($opt_after_context || 0);
+    $n_before_ctx_lines = $opt_output ? 0 : ($opt_B || 0);
+    $n_after_ctx_lines  = $opt_output ? 0 : ($opt_A || 0);
 
     @before_context_buf = (undef) x $n_before_ctx_lines;
     $before_context_pos = 0;
@@ -917,7 +917,7 @@ sub print_line_with_context {
     $matching_line =~ s/[\r\n]+$//;
 
     # Check if we need to print context lines first.
-    if ( $opt_after_context || $opt_before_context ) {
+    if ( $opt_A || $opt_B ) {
         my $before_unprinted = $lineno - $printed_lineno - 1;
         if ( !$is_first_match && ( !$printed_lineno || $before_unprinted > $n_before_ctx_lines ) ) {
             App::Ack::say( '--' );

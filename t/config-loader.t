@@ -54,102 +54,104 @@ for my $option ( qw( after_context before_context ) ) {
     my $long_arg = $option;
     $long_arg =~ s/_/-/ or die;
 
+    my $target_arg = uc substr( $option, 0, 1 );
+
     test_loader(
         argv             => [ "--$long_arg=15" ],
-        expected_opts    => { %defaults, $option => 15 },
-        "--$long_arg=15 should set $option to 15",
+        expected_opts    => { %defaults, $target_arg => 15 },
+        "--$long_arg=15 should set $target_arg to 15",
     );
 
     test_loader(
         argv             => [ "--$long_arg=0" ],
-        expected_opts    => { %defaults, $option => 0 },
-        "--$long_arg=0 should set $option to 0",
+        expected_opts    => { %defaults, $target_arg => 0 },
+        "--$long_arg=0 should set $target_arg to 0",
     );
 
     test_loader(
         argv             => [ "--$long_arg" ],
-        expected_opts    => { %defaults, $option => 2 },
-        "--$long_arg without a value should default $option to 2",
+        expected_opts    => { %defaults, $target_arg => 2 },
+        "--$long_arg without a value should default $target_arg to 2",
     );
 
     test_loader(
         argv             => [ "--$long_arg=-43" ],
-        expected_opts    => { %defaults, $option => 2 },
-        "--$long_arg with a negative value should default $option to 2",
+        expected_opts    => { %defaults, $target_arg => 2 },
+        "--$long_arg with a negative value should default $target_arg to 2",
     );
 
     my $short_arg = '-' . uc substr( $option, 0, 1 );
     test_loader(
         argv             => [ $short_arg, 15 ],
-        expected_opts    => { %defaults, $option => 15 },
-        "$short_arg 15 should set $option to 15",
+        expected_opts    => { %defaults, $target_arg => 15 },
+        "$short_arg 15 should set $target_arg to 15",
     );
 
     test_loader(
         argv             => [ $short_arg, 0 ],
-        expected_opts    => { %defaults, $option => 0 },
-        "$short_arg 0 should set $option to 0",
+        expected_opts    => { %defaults, $target_arg => 0 },
+        "$short_arg 0 should set $target_arg to 0",
     );
 
     test_loader(
         argv             => [ $short_arg ],
-        expected_opts    => { %defaults, $option => 2 },
-        "$short_arg without a value should default $option to 2",
+        expected_opts    => { %defaults, $target_arg => 2 },
+        "$short_arg without a value should default $target_arg to 2",
     );
 
     test_loader(
         argv             => [ $short_arg, '-43' ],
-        expected_opts    => { %defaults, $option => 2 },
-        "$short_arg with a negative value should default $option to 2",
+        expected_opts    => { %defaults, $target_arg => 2 },
+        "$short_arg with a negative value should default $target_arg to 2",
     );
 }
 
 test_loader(
     argv             => ['-C', 5],
-    expected_opts    => { %defaults, after_context => 5, before_context => 5 },
-    '-C sets both before_context and after_context'
+    expected_opts    => { %defaults, A => 5, B => 5 },
+    '-C sets both B and A'
 );
 
 test_loader(
     argv             => ['-C'],
-    expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    '-C sets both before_context and after_context, with default'
+    expected_opts    => { %defaults, A => 2, B => 2 },
+    '-C sets both B and A, with default'
 );
 
 test_loader(
     argv             => ['-C', 0],
-    expected_opts    => { %defaults, after_context => 0, before_context => 0 },
-    '-C sets both before_context and after_context, with zero overriding default'
+    expected_opts    => { %defaults, A => 0, B => 0 },
+    '-C sets both B and A, with zero overriding default'
 );
 
 test_loader(
     argv             => ['-C', -43],
-    expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    '-C with invalid value sets both before_context and after_context to default'
+    expected_opts    => { %defaults, A => 2, B => 2 },
+    '-C with invalid value sets both B and A to default'
 );
 
 test_loader(
     argv             => ['--context=5'],
-    expected_opts    => { %defaults, after_context => 5, before_context => 5 },
-    '--context sets both before_context and after_context'
+    expected_opts    => { %defaults, A => 5, B => 5 },
+    '--context sets both B and A'
 );
 
 test_loader(
     argv             => ['--context'],
-    expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    '--context sets both before_context and after_context, with default'
+    expected_opts    => { %defaults, A => 2, B => 2 },
+    '--context sets both B and A, with default'
 );
 
 test_loader(
     argv             => ['--context=0'],
-    expected_opts    => { %defaults, after_context => 0, before_context => 0 },
-    '--context sets both before_context and after_context, with zero overriding default'
+    expected_opts    => { %defaults, A => 0, B => 0 },
+    '--context sets both B and A, with zero overriding default'
 );
 
 test_loader(
     argv             => ['--context=-43'],
-    expected_opts    => { %defaults, after_context => 2, before_context => 2 },
-    '--context with invalid value sets both before_context and after_context to default'
+    expected_opts    => { %defaults, A => 2, B => 2 },
+    '--context with invalid value sets both B and A to default'
 );
 
 

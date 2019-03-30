@@ -208,6 +208,7 @@ _context_value	lib/App/Ack/ConfigLoader.pm	/^sub _context_value {$/;"	s
 _create_ackrc	t/forbidden-options.t	/^sub _create_ackrc {$/;"	s
 _dump_options	lib/App/Ack/ConfigLoader.pm	/^sub _dump_options {$/;"	s
 _explode_sources	lib/App/Ack/ConfigLoader.pm	/^sub _explode_sources {$/;"	s
+_five_to_1	dev/generate-rgb-codes.pl	/^sub _five_to_1{$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
@@ -225,13 +226,16 @@ _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
 _remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
+_save_rgb_grid	dev/generate-rgb-codes.pl	/^sub _save_rgb_grid {$/;"	s
 _section	t/ack-man.t	/^sub _section {$/;"	s
 _show_color_grid	lib/App/Ack.pm	/^sub _show_color_grid {$/;"	s
+_show_hue_sat_grid	dev/generate-rgb-codes.pl	/^sub _show_hue_sat_grid {$/;"	s
 _show_rgb_grid	lib/App/Ack.pm	/^sub _show_rgb_grid {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
 _test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
 _untaint	t/Barfly.pm	/^sub _untaint {$/;"	s
+_where	dev/generate-rgb-codes.pl	/^sub _where {$/;"	s
 _write_file	t/Util.pm	/^sub _write_file {$/;"	s
 ack	t/command-line-files.t	/^ack: non-existent-file.txt: No such file or directory$/;"	l
 ack_error_matches	t/Util.pm	/^sub ack_error_matches {$/;"	s
