@@ -299,7 +299,7 @@ sub get_arg_spec {
         'h|no-filename'     => \$opt->{h},
         'H|with-filename'   => \$opt->{H},
         'i|ignore-case'     => sub { $opt->{i} = 1; $opt->{S} = 0; },
-        'I'                 => sub { $opt->{i} = 0; $opt->{S} = 0; },
+        'I|no-ignore-case'  => sub { $opt->{i} = 0; $opt->{S} = 0; },
         'ignore-directory|ignore-dir=s' => _generate_ignore_dir('--ignore-dir', $opt),
         'ignore-file=s'     => sub {
             my ( undef, $file ) = @_;

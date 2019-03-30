@@ -248,7 +248,7 @@ Searching:
   -S, --[no]smart-case          Ignore case distinctions in PATTERN,
                                 only if PATTERN contains no upper case.
                                 Ignored if -i or -I are specified.
-  -I                            Turns on case-sensitivity in PATTERN.
+  -I, --no-ignore-case          Turns on case-sensitivity in PATTERN.
                                 Negates -i and --smart-case.
   -v, --invert-match            Invert match: select non-matching lines
   -w, --word-regexp             Force PATTERN to match only whole words
