@@ -6,6 +6,10 @@ NEXT
 Added --help-colors and --help-rgb-colors options to display colors
 available for color options.
 
+Overhauled the handling of mutually exclusive options.  We now properly
+handle mutex options even if they are abbreviated.  The actual argument
+used is now shown.  Fixes GH #57.
+
 
 2.999_06 Thu Jan 10 20:37:23 CST 2019
 =====================================

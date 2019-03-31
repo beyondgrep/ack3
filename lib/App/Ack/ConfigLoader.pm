@@ -28,31 +28,6 @@ sub opt_parser {
     return Getopt::Long::Parser->new( config => [ @standard, @opts ] );
 }
 
-sub _invalid_combinations {
-    my @context    = qw( -A -B -C --after-context --before-context --context );
-    my @pretty     = qw( --heading --group --break );
-    my @filename   = qw( -h -H --with-filename --no-filename );
-    my @file_lists = qw( -f -g -l -L );
-
-    return (
-        [qw(-l)]                 => [@context, @pretty, @filename, qw(-L -o --passthru --output --max-count --column -f -g --show-types)],
-        [qw(-L)]                 => [@context, @pretty, @filename, qw(-l -o --passthru --output --max-count --column -f -g --show-types -c --count -v)],
-        [qw(-o)]                 => [@context, qw(--output -c --count --column --column -f --show-types)],
-        [qw(--passthru)]         => [@context, @file_lists, qw(--output --column -m --max-count -1 -c --count -f -g)],
-        [qw(--output)]           => [@context, @file_lists, qw(-c --count)],
-        [qw(--match)]            => [qw(-f -g)],
-        [qw(-m --max-count)]     => [qw(-1 -f -g -c --count)],
-        [qw(-h --no-filename)]   => [@file_lists, qw(-H --with-filename --group --heading)],
-        [qw(-H --with-filename)] => [@file_lists, qw(-h --no-filename)],
-        [qw(-c --count)]         => [@context, @pretty, qw(--column -f -g)],
-        [qw(--column)]           => [@file_lists],
-        [@context]               => [@file_lists],
-        [qw(-f)]                 => [qw(-g), @pretty],
-        [qw(-g)]                 => [qw(-f), @pretty],
-        [qw(-p)]                 => [@context, @file_lists, qw( --passthru -c )],
-    );
-}
-
 sub _generate_ignore_dir {
     my ( $option_name, $opt ) = @_;
 
@@ -272,14 +247,13 @@ sub get_arg_spec {
         'B|before-context:-1' => sub { shift; $opt->{B} = _context_value(shift) },
         'C|context:-1'        => sub { shift; $opt->{B} = $opt->{A} = _context_value(shift) },
         'break!'            => \$opt->{break},
-        c                   => \$opt->{count},
+        'c|count'           => \$opt->{count},
         'color|colour!'     => \$opt->{color},
         'color-match=s'     => \$ENV{ACK_COLOR_MATCH},
         'color-filename=s'  => \$ENV{ACK_COLOR_FILENAME},
         'color-colno=s'     => \$ENV{ACK_COLOR_COLNO},
         'color-lineno=s'    => \$ENV{ACK_COLOR_LINENO},
         'column!'           => \$opt->{column},
-        count               => \$opt->{count},
         'create-ackrc'      => sub { say for ( '--ignore-ack-defaults', App::Ack::ConfigDefault::options() ); exit; },
         'env!'              => sub {
             my ( undef, $value ) = @_;
@@ -398,7 +372,7 @@ sub _process_other {
         );
     }
 
-    my $arg_specs = get_arg_spec($opt, $extra_specs);
+    my $arg_specs = get_arg_spec( $opt, $extra_specs );
 
     my $p = opt_parser();
     foreach my $source (@{$arg_sources}) {
@@ -461,7 +435,7 @@ sub _explode_sources {
     my @new_sources;
 
     my %opt;
-    my $arg_spec = get_arg_spec(\%opt);
+    my $arg_spec = get_arg_spec( \%opt, {} );
 
     my $dummy_sub = sub {};
     my $add_type = sub {
@@ -598,68 +572,12 @@ sub _remove_default_options_if_needed {
 }
 
 
-sub _check_for_mutually_exclusive_options {
-    my ( $arg_sources ) = @_;
-
-    my %mutually_exclusive_with;
-    my @copy = @{$arg_sources};
-
-    my @combos = _invalid_combinations();
-    for ( my $i = 0; $i < @combos; $i += 2 ) {
-        my ( $lhs, $rhs ) = @combos[ $i, $i + 1 ];
-
-        foreach my $l_opt ( @{$lhs} ) {
-            foreach my $r_opt ( @{$rhs} ) {
-                push @{ $mutually_exclusive_with{ $l_opt } }, $r_opt;
-                push @{ $mutually_exclusive_with{ $r_opt } }, $l_opt;
-            }
-        }
-    }
-
-    while ( @copy ) {
-        my %set_opts;
-
-        my $source = shift @copy;
-        my $args = $source->{contents};
-        $args = ref($args) ? [ @{$args} ] : [ Text::ParseWords::shellwords($args) ];
-
-        foreach my $opt ( @{$args} ) {
-            next unless $opt =~ /^[-+]/;
-            last if $opt eq '--';
-
-            if ( $opt =~ /^(.*)=/ ) {
-                $opt = $1;
-            }
-            elsif ( $opt =~ /^(-[^-]).+/ ) {
-                $opt = $1;
-            }
-
-            $set_opts{ $opt } = 1;
-
-            my $mutex_opts = $mutually_exclusive_with{ $opt };
-
-            next unless $mutex_opts;
-
-            foreach my $mutex_opt ( @{$mutex_opts} ) {
-                if ( $set_opts{ $mutex_opt } ) {
-                    App::Ack::die( "Options '$mutex_opt' and '$opt' are mutually exclusive" );
-                }
-            }
-        }
-    }
-
-    return;
-}
-
-
 sub process_args {
     my $arg_sources = \@_;
 
     my %opt = (
         pager => $ENV{ACK_PAGER_COLOR} || $ENV{ACK_PAGER},
     );
-
-    _check_for_mutually_exclusive_options($arg_sources);
 
     $arg_sources = _remove_default_options_if_needed($arg_sources);
 
@@ -679,6 +597,8 @@ sub process_args {
     }
 
     my $type_specs = _process_filetypes(\%opt, $arg_sources);
+
+    _check_for_mutually_exclusive_options( $type_specs );
 
     _process_other(\%opt, $type_specs, $arg_sources);
     while ( @{$arg_sources} ) {
@@ -787,5 +707,418 @@ sub read_rcfile {
 
     return @lines;
 }
+
+
+# Verifies no mutually-exclusive options were passed.  Dies if they were.
+sub _check_for_mutually_exclusive_options {
+    my $type_specs = shift;
+
+    my $mutex = mutex_options();
+
+    my ($raw,$used) = _options_used( $type_specs );
+
+    my @used = sort { lc $a cmp lc $b } keys %{$used};
+
+    for my $i ( @used ) {
+        for my $j ( @used ) {
+            next if $i eq $j;
+            if ( $mutex->{$i}{$j} ) {
+                my $x = $raw->[ $used->{$i} ];
+                my $y = $raw->[ $used->{$j} ];
+                App::Ack::die( "Options '$x' and '$y' are mutually exclusive" );
+            }
+        }
+    }
+
+    return;
+}
+
+
+# Processes the command line option and returns a hash of the options that were
+# used on the command line, using their full name.  "--prox" shows up in the hash as "--proximate".
+sub _options_used {
+    my $type_specs = shift;
+
+    my %dummy_opt;
+    my $real_spec = get_arg_spec( \%dummy_opt, $type_specs );
+
+    # The real argument parsing doesn't check for --type-add, --type-del or --type-set because
+    # they get removed by the argument processing.  We have to account for them here.
+    my $sub_dummy = sub {};
+    $real_spec = {
+        %{$real_spec},
+        'type-add=s'          => $sub_dummy,
+        'type-del=s'          => $sub_dummy,
+        'type-set=s'          => $sub_dummy,
+        'ignore-ack-defaults' => $sub_dummy,
+    };
+
+    #    my @keeps = grep { /^f$/ || /prox/ } keys %{$real_spec};
+    #$real_spec = {
+    #    map { $_ => $real_spec->{$_} } @keeps
+    #};
+
+    my %parsed;
+    my @raw;
+    my %spec_capture_parsed;
+    my %spec_capture_raw;
+
+=pod
+
+We have to build two argument specs.
+
+To populate the C<%parsed> hash: Capture the arguments that the user has
+passed in, as parsed by the GetOptions function. Aliases are converted
+down to their short options. If a user passes "--proximate", Getopt::Long
+converts that to "-p" and we store it as "-p".
+
+To populate the C<@raw> array: Capture the arguments raw, without having
+been converted to their short options.  If a user passes "--proximate",
+we store it in C<@raw> as "--proximate".
+
+=cut
+
+    # Capture the %parsed hash.
+    CAPTURE_PARSED: {
+        my $parsed_pos = 0;
+        my $sub_count = sub {
+            my $arg = shift;
+            $arg = "$arg";
+            $parsed{$arg} = $parsed_pos++;
+        };
+        %spec_capture_parsed = (
+            '<>' => sub { $parsed_pos++ },
+            map { $_ => $sub_count } keys %{$real_spec}
+        );
+    }
+
+    # Capture the @raw array.
+    CAPTURE_RAW: {
+        my $raw_pos = 0;
+        %spec_capture_raw = (
+            '<>' => sub { $raw_pos++ },
+        );
+
+        my $sub_count = sub {
+            my $arg = shift;
+
+            $arg = "$arg";
+            $raw[$raw_pos] = length($arg) == 1 ? "-$arg" : "--$arg";
+            $raw_pos++;
+        };
+
+        for my $opt_spec ( keys %{$real_spec} ) {
+            my $negatable;
+            my $type;
+            my $default;
+
+            $negatable = ($opt_spec =~ s/!$//);
+
+            if ( $opt_spec =~ s/(=[si])$// ) {
+                $type = $1;
+            }
+            if ( $opt_spec =~ s/(:.+)$// ) {
+                $default = $1;
+            }
+
+            my @aliases = split( /\|/, $opt_spec );
+            for my $alias ( @aliases ) {
+                $alias .= $type    if defined $type;
+                $alias .= $default if defined $default;
+                $alias .= '!'      if $negatable;
+
+                $spec_capture_raw{$alias} = $sub_count;
+            }
+        }
+    }
+
+    # Parse @ARGV twice, once with each capture spec.
+    my $p = opt_parser();
+    $p->getoptionsfromarray( [@ARGV], %spec_capture_raw );
+    $p->getoptionsfromarray( [@ARGV], %spec_capture_parsed );
+
+    return (\@raw,\%parsed);
+}
+
+
+sub mutex_options {
+    # This list is machine-generated by crank-mutex.  Do not modify it by hand.
+
+    return {
+        1 => {
+            m => 1,
+            passthru => 1,
+        },
+        A => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        B => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        C => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        H => {
+            L => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+        },
+        L => {
+            A => 1,
+            B => 1,
+            C => 1,
+            H => 1,
+            L => 1,
+            break => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            group => 1,
+            h => 1,
+            heading => 1,
+            l => 1,
+            'no-filename' => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+            'show-types' => 1,
+            v => 1,
+            'with-filename' => 1,
+        },
+        break => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+        },
+        c => {
+            A => 1,
+            B => 1,
+            C => 1,
+            L => 1,
+            break => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            group => 1,
+            heading => 1,
+            m => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        column => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            passthru => 1,
+        },
+        f => {
+            A => 1,
+            B => 1,
+            C => 1,
+            H => 1,
+            L => 1,
+            break => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            group => 1,
+            h => 1,
+            heading => 1,
+            l => 1,
+            m => 1,
+            match => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        g => {
+            A => 1,
+            B => 1,
+            C => 1,
+            H => 1,
+            L => 1,
+            break => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            group => 1,
+            h => 1,
+            heading => 1,
+            l => 1,
+            m => 1,
+            match => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+        },
+        group => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+        },
+        h => {
+            L => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+        },
+        heading => {
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+        },
+        l => {
+            A => 1,
+            B => 1,
+            C => 1,
+            H => 1,
+            L => 1,
+            break => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            group => 1,
+            h => 1,
+            heading => 1,
+            l => 1,
+            'no-filename' => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+            passthru => 1,
+            'show-types' => 1,
+            'with-filename' => 1,
+        },
+        m => {
+            1 => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            passthru => 1,
+        },
+        match => {
+            f => 1,
+            g => 1,
+        },
+        'no-filename' => {
+            L => 1,
+            l => 1,
+        },
+        o => {
+            A => 1,
+            B => 1,
+            C => 1,
+            L => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            passthru => 1,
+            'show-types' => 1,
+        },
+        output => {
+            A => 1,
+            B => 1,
+            C => 1,
+            L => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+            passthru => 1,
+            'show-types' => 1,
+        },
+        p => {
+            A => 1,
+            B => 1,
+            C => 1,
+            L => 1,
+            c => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            passthru => 1,
+        },
+        passthru => {
+            1 => 1,
+            A => 1,
+            B => 1,
+            C => 1,
+            L => 1,
+            c => 1,
+            column => 1,
+            f => 1,
+            g => 1,
+            l => 1,
+            m => 1,
+            o => 1,
+            output => 1,
+            p => 1,
+        },
+        'show-types' => {
+            L => 1,
+            l => 1,
+            o => 1,
+            output => 1,
+        },
+        v => {
+            L => 1,
+        },
+        'with-filename' => {
+            L => 1,
+            l => 1,
+        },
+    };
+}   # End of mutex_options()
+
 
 1; # End of App::Ack::ConfigLoader

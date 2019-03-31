@@ -1,0 +1,61 @@
+#!/bin/env perl
+
+use 5.010;
+use strict;
+use warnings;
+
+use Data::Dumper 2.160; # For the TrailingComma option.
+
+
+sub invalid_combinations {
+    my @context    = qw( -A -B -C );
+    my @pretty     = qw( --heading --group --break );
+    my @filename   = qw( -h -H --with-filename --no-filename );
+    my @file_lists = qw( -f -g -l -L );
+    my @output     = qw( -o --output );
+    my @fg         = qw( -f -g );
+
+    return (
+        [qw(-l)]         => [@context, @file_lists, @pretty, @filename, @output, qw(--passthru --column --show-types)],
+        [qw(-L)]         => [@context, @file_lists, @pretty, @filename, @output, qw(--passthru --column --show-types -c -v)],
+        [@output]        => [@context, @file_lists, @output, qw(-c --column --show-types)],
+        [qw(--passthru)] => [@context, @file_lists, @output, qw(-c --column -m -1)],
+        [qw(--match)]    => [qw(-f -g)],
+        [qw(-m)]         => [qw(-1 -c -f -g)],
+        [qw(-h)]         => [@file_lists],
+        [qw(-H)]         => [@file_lists],
+        [qw(-c)]         => [@context, @pretty, qw(--column -f -g)],
+        [qw(--column)]   => [@file_lists],
+        [@context]       => [@file_lists],
+        [@fg]            => [@fg, @pretty],
+        [qw(-p)]         => [@context, @file_lists, qw( --passthru -c )],
+    );
+}
+
+my %mutex;
+my @combos = invalid_combinations();
+
+while ( my ($lefts,$rights) = splice( @combos, 0, 2 ) ) {
+    for my $left ( @{$lefts} ) {
+        $left =~ s/^-+//;
+
+        for my $right ( @{$rights} ) {
+            $right =~ s/^-+//;
+            $mutex{$left}->{$right} = 1;
+            $mutex{$right}->{$left} = 1;
+        }
+    }
+}
+
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Trailingcomma = 1;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Quotekeys = 0;
+
+my $out = Dumper( \%mutex );
+$out =~ s/  /    /g;
+$out =~ s/^/    /gsm; # Indent a tabstop
+$out =~ s/\$VAR1 =/return/sm;
+say $out;
+
+exit 0;

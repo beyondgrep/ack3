@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 183;
+use Test::More tests => 181;
 use lib 't';
 use Util;
 
@@ -13,6 +13,20 @@ my $file = 't/text/raven.txt';
 my $word = 'nevermore';
 
 
+# Order doesn't matter.  They are reported in alphabetical order.
+for my $opt ( qw( -p --proximate ) ) {
+    are_mutually_exclusive( '-f', $opt, ['-f', $opt] );
+    are_mutually_exclusive( '-f', $opt, [$opt, '-f'] );
+}
+
+# Check for abbreviations. https://github.com/beyondgrep/ack3/issues/57
+for my $opt ( qw( --pro --prox --proxima --proximat --proximate ) ) {
+    are_mutually_exclusive( '-f', '--proximate',
+        ['-f', $opt, '4'],
+        ['-f', "$opt=4"],
+    );
+}
+
 # XXX Should also handle --files-with-matches and --files-without-matches.  See https://github.com/beyondgrep/ack3/issues/57
 are_mutually_exclusive('-l', '-L', ['-l', '-L', $word, $file]);
 for my $opt ( qw( -l -L ) ) {
@@ -20,8 +34,6 @@ for my $opt ( qw( -l -L ) ) {
     are_mutually_exclusive( $opt, '--passthru', [$opt, '--passthru', $word, $file] );
     are_mutually_exclusive( $opt, '--output', [$opt, '--output', '$&', $word, $file] );
     are_mutually_exclusive( $opt, '--output', [$opt, '--output=$&', $word, $file] );
-    are_mutually_exclusive( $opt, '--max-count', [$opt, '--max-count', 1, $word, $file] );
-    are_mutually_exclusive( $opt, '--max-count', [$opt, '--max-count=1', $word, $file] );
     are_mutually_exclusive( $opt, '-h', [$opt, '-h', $word, $file] );
     are_mutually_exclusive( $opt, '--with-filename', [$opt, '--with-filename', $word, $file] );
     are_mutually_exclusive( $opt, '--no-filename', [$opt, '--no-filename', $word, $file] );
@@ -116,20 +128,13 @@ for my $opt ( qw( -1 -c -f -g ) ) {
     );
 }
 
-# -h/--no-filename
 for my $opt ( qw( -h --no-filename ) ) {
-    are_mutually_exclusive( $opt, '-H', [$opt, '-H', $word, $file] );
-    are_mutually_exclusive( $opt, '--with-filename', [$opt, '--with-filename', $word, $file] );
     are_mutually_exclusive( $opt, '-f', [$opt, '-f', $word, $file] );
     are_mutually_exclusive( $opt, '-g', [$opt, '-g', $word, $file] );
-    are_mutually_exclusive( $opt, '--group', [$opt, '--group', $word, $file] );
-    are_mutually_exclusive( $opt, '--heading', [$opt, '--heading', $word, $file] );
 }
 
 # -H/--with-filename
 for my $opt ( qw( -H --with-filename ) ) {
-    are_mutually_exclusive( $opt, '-h', [ $opt, '-h', $word, $file] );
-    are_mutually_exclusive( $opt, '--no-filename', [ $opt, '--no-filename', $word, $file] );
     are_mutually_exclusive( $opt, '-f', [ $opt, '-f', $word, $file] );
     are_mutually_exclusive( $opt, '-g', [ $opt, '-g', $word, $file] );
 }
