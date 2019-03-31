@@ -38,6 +38,8 @@ BREAK_NO_HEADING	t/ack-group.t	/^BREAK_NO_HEADING: {$/;"	l
 BRITISH_COLOR	t/ack-color.t	/^BRITISH_COLOR: {$/;"	l
 Barfly	t/Barfly.pm	/^package Barfly;$/;"	p
 Barfly::Block	t/Barfly.pm	/^package Barfly::Block;$/;"	p
+CAPTURE_PARSED	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_PARSED: {$/;"	l
+CAPTURE_RAW	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_RAW: {$/;"	l
 CHARACTER_SUBSTITUTIONS	t/ack-output.t	/^CHARACTER_SUBSTITUTIONS: {$/;"	l
 COMBINED_FILTERS	t/ack-f.t	/^COMBINED_FILTERS: {$/;"	l
 COMBOS_1	t/ack-output.t	/^COMBOS_1: {$/;"	l
@@ -212,10 +214,10 @@ _five_to_1	dev/generate-rgb-codes.pl	/^sub _five_to_1{$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
-_invalid_combinations	lib/App/Ack/ConfigLoader.pm	/^sub _invalid_combinations {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _option	t/ack-man.t	/^sub _option {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
+_options_used	lib/App/Ack/ConfigLoader.pm	/^sub _options_used {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
 _populate_help_options	t/ack-help.t	/^    sub _populate_help_options {$/;"	s
 _populate_man_options	xt/man.t	/^    sub _populate_man_options {$/;"	s
@@ -329,6 +331,7 @@ inspect	lib/App/Ack/Filter/IsGroup.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/IsPath.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/IsPathGroup.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/Match.pm	/^sub inspect {$/;"	s
+invalid_combinations	dev/crank-mutex	/^sub invalid_combinations {$/;"	s
 invert	lib/App/Ack/Filter.pm	/^sub invert {$/;"	s
 invert	lib/App/Ack/Filter/Inverse.pm	/^sub invert {$/;"	s
 is_cygwin	t/Util.pm	/^sub is_cygwin {$/;"	s
@@ -343,6 +346,7 @@ line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 main	Makefile.PL	/^package main;$/;"	p
 msg	t/Util.pm	/^sub msg {$/;"	s
+mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub mutex_options {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
 new	lib/App/Ack/File.pm	/^sub new {$/;"	s
