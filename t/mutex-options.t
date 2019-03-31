@@ -44,8 +44,10 @@ for my $opt ( qw( -l -L ) ) {
 }
 
 # -o
-are_mutually_exclusive('-o', '--output', ['-o', '--output', '$&', $word, $file]);
-are_mutually_exclusive('-o', '--output', ['-o', '--output=$&', $word, $file]);
+are_mutually_exclusive( '-o', '--output',
+    ['-o', '--output', '$&', $word, $file],
+    ['-o', '--output=$&', $word, $file],
+);
 are_mutually_exclusive('-o', '-c', ['-o', '-c', $word, $file]);
 are_mutually_exclusive('-o', '--count', ['-o', '--count', $word, $file]);
 are_mutually_exclusive('-o', '--column', ['-o', '--column', $word, $file]);
@@ -83,14 +85,13 @@ are_mutually_exclusive('--passthru', '-g', ['--passthru', '-g', $word, $file]);
 are_mutually_exclusive('--passthru', '--column', ['--passthru', '--column', $word, $file]);
 
 # --output
-are_mutually_exclusive('--output', '-c', ['--output', '$&', '-c', $word, $file]);
-are_mutually_exclusive('--output', '--count', ['--output', '$&', '--count', $word, $file]);
-are_mutually_exclusive('--output', '-f', ['--output', '$&', '-f', $file]);
-are_mutually_exclusive('--output', '-g', ['--output', '$&', '-g', $word, $file]);
-are_mutually_exclusive('--output', '-c', ['--output=$&', '-c', $word, $file]);
-are_mutually_exclusive('--output', '--count', ['--output=$&', '--count', $word, $file]);
-are_mutually_exclusive('--output', '-f', ['--output=$&', '-f', $file]);
-are_mutually_exclusive('--output', '-g', ['--output=$&', '-g', $word, $file]);
+for my $opt ( qw( -f -g -c --count ) ) {
+    are_mutually_exclusive('--output', $opt,
+        ['--output', '$&', $opt, $word, $file],
+        ['--output=$&', $opt, $word, $file],
+    );
+}
+
 are_mutually_exclusive('--output', '-A', ['--output=$&', '-A2', $word, $file]);
 are_mutually_exclusive('--output', '-B', ['--output=$&', '-B2', $word, $file]);
 are_mutually_exclusive('--output', '-C', ['--output=$&', '-C2', $word, $file]);
@@ -99,16 +100,20 @@ are_mutually_exclusive('--output', '--before-context', ['--output=$&', '--before
 are_mutually_exclusive('--output', '--context', ['--output=$&', '--context=2', $word, $file]);
 
 # --match
-are_mutually_exclusive('--match', '-f', ['--match', $word, '-f', $file]);
-are_mutually_exclusive('--match', '-g', ['--match', $word, '-g', $file]);
-are_mutually_exclusive('--match', '-f', ['--match=science', '-f', $file]);
-are_mutually_exclusive('--match', '-g', ['--match=science', '-g', $file]);
+for my $opt ( qw( -f -g ) ) {
+    are_mutually_exclusive('--match', $opt,
+        ['--match', $word, $opt, $file],
+        ['--match=science', $opt, $file],
+    );
+}
 
 # --max-count
 for my $opt ( qw( -1 -c -f -g ) ) {
     are_mutually_exclusive( '-m', $opt, ['-m', 1, $opt, $word, $file] );
-    are_mutually_exclusive( '--max-count', $opt, ['--max-count', 1, $opt, $word, $file] );
-    are_mutually_exclusive( '--max-count', $opt, ['--max-count=1', $opt, $word, $file] );
+    are_mutually_exclusive( '--max-count', $opt,
+        ['--max-count', 1, $opt, $word, $file],
+        ['--max-count=1', $opt, $word, $file],
+    );
 }
 
 # -h/--no-filename
@@ -185,31 +190,37 @@ done_testing();
 sub are_mutually_exclusive {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-    my ( $opt1, $opt2, $args ) = @_;
+    my $opt1    = shift;
+    my $opt2    = shift;
+    my @argsets = @_;
 
-    my @args = @{$args};
+    @argsets or die 'Must pass argsets';
 
-    my ( $stdout, $stderr ) = run_ack_with_stderr(@args);
+    for my $argset ( @argsets ) {
+        my @args = @{$argset};
 
-    return subtest subtest_name( $opt1, $opt2, $args ) => sub {
-        plan tests => 4;
+        my ( $stdout, $stderr ) = run_ack_with_stderr(@args);
 
-        isnt( get_rc(), 0, 'The ack command should fail' );
-        is_empty_array( $stdout, 'No lines should be present on standard output' );
-        is( scalar(@{$stderr}), 1, 'A single line should be present on standard error' );
+        subtest subtest_name( $opt1, $opt2, $argset ) => sub {
+            plan tests => 4;
 
-        my $opt1_re = quotemeta($opt1);
-        my $opt2_re = quotemeta($opt2);
+            isnt( get_rc(), 0, 'The ack command should fail' );
+            is_empty_array( $stdout, 'No lines should be present on standard output' );
+            is( scalar(@{$stderr}), 1, 'A single line should be present on standard error' );
 
-        my $error = $stderr->[0] || ''; # avoid undef warnings
-        if ( $error =~ /Options '$opt1_re' and '$opt2_re' are mutually exclusive/ ||
-            $error =~ /Options '$opt2_re' and '$opt1_re' are mutually exclusive/ ) {
+            my $opt1_re = quotemeta($opt1);
+            my $opt2_re = quotemeta($opt2);
 
-            pass( qq{Error message resembles "Options '$opt1' and '$opt2' are mutually exclusive"} );
-        }
-        else {
-            fail( qq{Error message does not resemble "Options '$opt1' and '$opt2' are mutually exclusive"} );
-            diag("Error message: '$error'");
-        }
-    };
+            my $error = $stderr->[0] || ''; # avoid undef warnings
+            if ( $error =~ /Options '$opt1_re' and '$opt2_re' are mutually exclusive/ ||
+                $error =~ /Options '$opt2_re' and '$opt1_re' are mutually exclusive/ ) {
+
+                pass( qq{Error message resembles "Options '$opt1' and '$opt2' are mutually exclusive"} );
+            }
+            else {
+                fail( qq{Error message does not resemble "Options '$opt1' and '$opt2' are mutually exclusive"} );
+                diag("Error message: '$error'");
+            }
+        };
+    }
 }
