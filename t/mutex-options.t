@@ -105,18 +105,11 @@ are_mutually_exclusive('--match', '-f', ['--match=science', '-f', $file]);
 are_mutually_exclusive('--match', '-g', ['--match=science', '-g', $file]);
 
 # --max-count
-are_mutually_exclusive('-m', '-1', ['-m', 1, '-1', $word, $file]);
-are_mutually_exclusive('-m', '-c', ['-m', 1, '-c', $word, $file]);
-are_mutually_exclusive('-m', '-f', ['-m', 1, '-f', $word, $file]);
-are_mutually_exclusive('-m', '-g', ['-m', 1, '-g', $word, $file]);
-are_mutually_exclusive('--max-count', '-1', ['--max-count', 1, '-1', $word, $file]);
-are_mutually_exclusive('--max-count', '-c', ['--max-count', 1, '-c', $word, $file]);
-are_mutually_exclusive('--max-count', '-f', ['--max-count', 1, '-f', $word, $file]);
-are_mutually_exclusive('--max-count', '-g', ['--max-count', 1, '-g', $word, $file]);
-are_mutually_exclusive('--max-count', '-1', ['--max-count=1', '-1', $word, $file]);
-are_mutually_exclusive('--max-count', '-c', ['--max-count=1', '-c', $word, $file]);
-are_mutually_exclusive('--max-count', '-f', ['--max-count=1', '-f', $word, $file]);
-are_mutually_exclusive('--max-count', '-g', ['--max-count=1', '-g', $word, $file]);
+for my $opt ( qw( -1 -c -f -g ) ) {
+    are_mutually_exclusive( '-m', $opt, ['-m', 1, $opt, $word, $file] );
+    are_mutually_exclusive( '--max-count', $opt, ['--max-count', 1, $opt, $word, $file] );
+    are_mutually_exclusive( '--max-count', $opt, ['--max-count=1', $opt, $word, $file] );
+}
 
 # -h/--no-filename
 for my $opt ( qw( -h --no-filename ) ) {
