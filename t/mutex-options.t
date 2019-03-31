@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 187;
+use Test::More tests => 183;
 use lib 't';
 use Util;
 
@@ -12,63 +12,36 @@ prep_environment();
 my $file = 't/text/raven.txt';
 my $word = 'nevermore';
 
-# -l/--files-with-matches
-are_mutually_exclusive('-l', '-L', ['-l', '-L', $word, $file]);
-are_mutually_exclusive('-l', '-o', ['-l', '-o', $word, $file]);
-are_mutually_exclusive('-l', '--passthru', ['-l', '--passthru', $word, $file]);
-are_mutually_exclusive('-l', '--output', ['-l', '--output', '$&', $word, $file]);
-are_mutually_exclusive('-l', '--output', ['-l', '--output=$&', $word, $file]);
-are_mutually_exclusive('-l', '--max-count', ['-l', '--max-count', 1, $word, $file]);
-are_mutually_exclusive('-l', '--max-count', ['-l', '--max-count=1', $word, $file]);
-are_mutually_exclusive('-l', '-h', ['-l', '-h', $word, $file]);
-are_mutually_exclusive('-l', '--with-filename', ['-l', '--with-filename', $word, $file]);
-are_mutually_exclusive('-l', '--no-filename', ['-l', '--no-filename', $word, $file]);
-are_mutually_exclusive('-l', '--column', ['-l', '--column', $word, $file]);
-are_mutually_exclusive('-l', '-A', ['-l', '-A', 1, $word, $file]);
-are_mutually_exclusive('-l', '--after-context', ['-l', '--after-context', 1, $word, $file]);
-are_mutually_exclusive('-l', '--after-context', ['-l', '--after-context=1', $word, $file]);
-are_mutually_exclusive('-l', '-B', ['-l', '-B', 1, $word, $file]);
-are_mutually_exclusive('-l', '--before-context', ['-l', '--before-context', 1, $word, $file]);
-are_mutually_exclusive('-l', '--before-context', ['-l', '--before-context=1', $word, $file]);
-are_mutually_exclusive('-l', '-C', ['-l', '-C', 1, $word, $file]);
-are_mutually_exclusive('-l', '--context', ['-l', '--context', 1, $word, $file]);
-are_mutually_exclusive('-l', '--context', ['-l', '--context=1', $word, $file]);
-are_mutually_exclusive('-l', '--heading', ['-l', '--heading', $word, $file]);
-are_mutually_exclusive('-l', '--break', ['-l', '--break', $word, $file]);
-are_mutually_exclusive('-l', '--group', ['-l', '--group', $word, $file]);
-are_mutually_exclusive('-l', '-f', ['-l', '-f', $file]);
-are_mutually_exclusive('-l', '-g', ['-l', '-g', $word, $file]);
-are_mutually_exclusive('-l', '--show-types', ['-l', '--show-types', $word, $file]);
 
-# -L/--files-without-matches
-are_mutually_exclusive('-L', '-l', ['-L', '-l', $word, $file]);
-are_mutually_exclusive('-L', '-o', ['-L', '-o', $word, $file]);
-are_mutually_exclusive('-L', '--passthru', ['-L', '--passthru', $word, $file]);
-are_mutually_exclusive('-L', '--output', ['-L', '--output', '$&', $word, $file]);
-are_mutually_exclusive('-L', '--output', ['-L', '--output=$&', $word, $file]);
-are_mutually_exclusive('-L', '--max-count', ['-L', '--max-count', 1, $word, $file]);
-are_mutually_exclusive('-L', '--max-count', ['-L', '--max-count=1', $word, $file]);
-are_mutually_exclusive('-L', '-h', ['-L', '-h', $word, $file]);
-are_mutually_exclusive('-L', '--with-filename', ['-L', '--with-filename', $word, $file]);
-are_mutually_exclusive('-L', '--no-filename', ['-L', '--no-filename', $word, $file]);
-are_mutually_exclusive('-L', '--column', ['-L', '--column', $word, $file]);
-are_mutually_exclusive('-L', '-A', ['-L', '-A', 1, $word, $file]);
-are_mutually_exclusive('-L', '--after-context', ['-L', '--after-context', 1, $word, $file]);
-are_mutually_exclusive('-L', '--after-context', ['-L', '--after-context=1', $word, $file]);
-are_mutually_exclusive('-L', '-B', ['-L', '-B', 1, $word, $file]);
-are_mutually_exclusive('-L', '--before-context', ['-L', '--before-context', 1, $word, $file]);
-are_mutually_exclusive('-L', '--before-context', ['-L', '--before-context=1', $word, $file]);
-are_mutually_exclusive('-L', '-C', ['-L', '-C', 1, $word, $file]);
-are_mutually_exclusive('-L', '--context', ['-L', '--context', 1, $word, $file]);
-are_mutually_exclusive('-L', '--context', ['-L', '--context=1', $word, $file]);
-are_mutually_exclusive('-L', '--heading', ['-L', '--heading', $word, $file]);
-are_mutually_exclusive('-L', '--break', ['-L', '--break', $word, $file]);
-are_mutually_exclusive('-L', '--group', ['-L', '--group', $word, $file]);
-are_mutually_exclusive('-L', '-f', ['-L', '-f', $file]);
-are_mutually_exclusive('-L', '-g', ['-L', '-g', $word, $file]);
-are_mutually_exclusive('-L', '--show-types', ['-L', '--show-types', $word, $file]);
-are_mutually_exclusive('-L', '-c', ['-L', '-c', $word, $file]);
-are_mutually_exclusive('-L', '--count', ['-L', '--count', $word, $file]);
+# XXX Should also handle --files-with-matches and --files-without-matches.  See https://github.com/beyondgrep/ack3/issues/57
+are_mutually_exclusive('-l', '-L', ['-l', '-L', $word, $file]);
+for my $opt ( qw( -l -L ) ) {
+    are_mutually_exclusive( $opt, '-o', [$opt, '-o', $word, $file] );
+    are_mutually_exclusive( $opt, '--passthru', [$opt, '--passthru', $word, $file] );
+    are_mutually_exclusive( $opt, '--output', [$opt, '--output', '$&', $word, $file] );
+    are_mutually_exclusive( $opt, '--output', [$opt, '--output=$&', $word, $file] );
+    are_mutually_exclusive( $opt, '--max-count', [$opt, '--max-count', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--max-count', [$opt, '--max-count=1', $word, $file] );
+    are_mutually_exclusive( $opt, '-h', [$opt, '-h', $word, $file] );
+    are_mutually_exclusive( $opt, '--with-filename', [$opt, '--with-filename', $word, $file] );
+    are_mutually_exclusive( $opt, '--no-filename', [$opt, '--no-filename', $word, $file] );
+    are_mutually_exclusive( $opt, '--column', [$opt, '--column', $word, $file] );
+    are_mutually_exclusive( $opt, '-A', [$opt, '-A', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--after-context', [$opt, '--after-context', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--after-context', [$opt, '--after-context=1', $word, $file] );
+    are_mutually_exclusive( $opt, '-B', [$opt, '-B', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--before-context', [$opt, '--before-context', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--before-context', [$opt, '--before-context=1', $word, $file] );
+    are_mutually_exclusive( $opt, '-C', [$opt, '-C', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--context', [$opt, '--context', 1, $word, $file] );
+    are_mutually_exclusive( $opt, '--context', [$opt, '--context=1', $word, $file] );
+    are_mutually_exclusive( $opt, '--heading', [$opt, '--heading', $word, $file] );
+    are_mutually_exclusive( $opt, '--break', [$opt, '--break', $word, $file] );
+    are_mutually_exclusive( $opt, '--group', [$opt, '--group', $word, $file] );
+    are_mutually_exclusive( $opt, '-f', [$opt, '-f', $file] );
+    are_mutually_exclusive( $opt, '-g', [$opt, '-g', $word, $file] );
+    are_mutually_exclusive( $opt, '--show-types', [$opt, '--show-types', $word, $file] );
+}
 
 # -o
 are_mutually_exclusive('-o', '--output', ['-o', '--output', '$&', $word, $file]);
@@ -95,7 +68,6 @@ are_mutually_exclusive('--passthru', '--max-count', ['--passthru', '--max-count'
 are_mutually_exclusive('--passthru', '--max-count', ['--passthru', '--max-count=1', $word, $file]);
 are_mutually_exclusive('--passthru', '-1', ['--passthru', '-1', $word, $file]);
 are_mutually_exclusive('--passthru', '-c', ['--passthru', '-c', $word, $file]);
-are_mutually_exclusive('--passthru', '--count', ['--passthru', '--count', $word, $file]);
 are_mutually_exclusive('--passthru', '--count', ['--passthru', '--count', $word, $file]);
 are_mutually_exclusive('--passthru', '-A', ['--passthru', '-A', 1, $word, $file]);
 are_mutually_exclusive('--passthru', '--after-context', ['--passthru', '--after-context', 1, $word, $file]);
@@ -147,29 +119,22 @@ are_mutually_exclusive('--max-count', '-f', ['--max-count=1', '-f', $word, $file
 are_mutually_exclusive('--max-count', '-g', ['--max-count=1', '-g', $word, $file]);
 
 # -h/--no-filename
-are_mutually_exclusive('-h', '-H', ['-h', '-H', $word, $file]);
-are_mutually_exclusive('-h', '--with-filename', ['-h', '--with-filename', $word, $file]);
-are_mutually_exclusive('-h', '-f', ['-h', '-f', $word, $file]);
-are_mutually_exclusive('-h', '-g', ['-h', '-g', $word, $file]);
-are_mutually_exclusive('-h', '--group', ['-h', '--group', $word, $file]);
-are_mutually_exclusive('-h', '--heading', ['-h', '--heading', $word, $file]);
-
-are_mutually_exclusive('--no-filename', '-H', ['--no-filename', '-H', $word, $file]);
-are_mutually_exclusive('--no-filename', '--with-filename', ['--no-filename', '--with-filename', $word, $file]);
-are_mutually_exclusive('--no-filename', '-f', ['--no-filename', '-f', $word, $file]);
-are_mutually_exclusive('--no-filename', '-g', ['--no-filename', '-g', $word, $file]);
-are_mutually_exclusive('--no-filename', '--group', ['--no-filename', '--group', $word, $file]);
-are_mutually_exclusive('--no-filename', '--heading', ['--no-filename', '--heading', $word, $file]);
+for my $opt ( qw( -h --no-filename ) ) {
+    are_mutually_exclusive( $opt, '-H', [$opt, '-H', $word, $file] );
+    are_mutually_exclusive( $opt, '--with-filename', [$opt, '--with-filename', $word, $file] );
+    are_mutually_exclusive( $opt, '-f', [$opt, '-f', $word, $file] );
+    are_mutually_exclusive( $opt, '-g', [$opt, '-g', $word, $file] );
+    are_mutually_exclusive( $opt, '--group', [$opt, '--group', $word, $file] );
+    are_mutually_exclusive( $opt, '--heading', [$opt, '--heading', $word, $file] );
+}
 
 # -H/--with-filename
-are_mutually_exclusive('-H', '-h', ['-H', '-h', $word, $file]);
-are_mutually_exclusive('-H', '--no-filename', ['-H', '--no-filename', $word, $file]);
-are_mutually_exclusive('-H', '-f', ['-H', '-f', $word, $file]);
-are_mutually_exclusive('-H', '-g', ['-H', '-g', $word, $file]);
-are_mutually_exclusive('--with-filename', '-h', ['--with-filename', '-h', $word, $file]);
-are_mutually_exclusive('--with-filename', '--no-filename', ['--with-filename', '--no-filename', $word, $file]);
-are_mutually_exclusive('--with-filename', '-f', ['--with-filename', '-f', $word, $file]);
-are_mutually_exclusive('--with-filename', '-g', ['--with-filename', '-g', $word, $file]);
+for my $opt ( qw( -H --with-filename ) ) {
+    are_mutually_exclusive( $opt, '-h', [ $opt, '-h', $word, $file] );
+    are_mutually_exclusive( $opt, '--no-filename', [ $opt, '--no-filename', $word, $file] );
+    are_mutually_exclusive( $opt, '-f', [ $opt, '-f', $word, $file] );
+    are_mutually_exclusive( $opt, '-g', [ $opt, '-g', $word, $file] );
+}
 
 # -c/--count
 for my $opt ( qw( -c --count ) ) {
