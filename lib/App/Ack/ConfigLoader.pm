@@ -753,11 +753,6 @@ sub _options_used {
         'ignore-ack-defaults' => $sub_dummy,
     };
 
-    #    my @keeps = grep { /^f$/ || /prox/ } keys %{$real_spec};
-    #$real_spec = {
-    #    map { $_ => $real_spec->{$_} } @keeps
-    #};
-
     my %parsed;
     my @raw;
     my %spec_capture_parsed;
