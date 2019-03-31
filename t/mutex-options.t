@@ -152,26 +152,20 @@ for my $opt ( qw( -c --count ) ) {
     are_mutually_exclusive( $opt, '-g', [ $opt, '-g', $word, $file ] );
 }
 
-# --column
-are_mutually_exclusive('--column', '-f', ['--column', '-f', $word, $file]);
-are_mutually_exclusive('--column', '-g', ['--column', '-g', $word, $file]);
-
 # -A/-B/-C/--after-context/--before-context/--context
 for my $opt ( qw( -A -B -C --after-context --before-context --context ) ) {
     are_mutually_exclusive( $opt, '-f', [$opt, 1, '-f', $word, $file] );
     are_mutually_exclusive( $opt, '-g', [$opt, 1, '-g', $word, $file] );
 }
 
-# -f
+# -f/-g
 are_mutually_exclusive('-f', '-g', ['-f', '-g', $word, $file]);
-are_mutually_exclusive('-f', '--group', ['-f', '--group', $word, $file]);
-are_mutually_exclusive('-f', '--heading', ['-f', '--heading', $word, $file]);
-are_mutually_exclusive('-f', '--break', ['-f', '--break', $word, $file]);
-
-# -g
-are_mutually_exclusive('-g', '--group', ['-g', '--group', $word, $file]);
-are_mutually_exclusive('-g', '--heading', ['-g', '--heading', $word, $file]);
-are_mutually_exclusive('-g', '--break', ['-g', '--break', $word, $file]);
+for my $opt ( qw( -f -g ) ) {
+    are_mutually_exclusive( $opt, '--group',   [$opt, '--group', $word, $file] );
+    are_mutually_exclusive( $opt, '--heading', [$opt, '--heading', $word, $file] );
+    are_mutually_exclusive( $opt, '--break',   [$opt, '--break', $word, $file] );
+    are_mutually_exclusive( $opt, '--column',  [$opt, '--column', $word, $file] );
+}
 
 subtest q{Verify that "options" that follow -- aren't factored into the mutual exclusivity} => sub {
     my ( $stdout, $stderr ) = run_ack_with_stderr('-A', 5, $word, $file, '--', '-l');
