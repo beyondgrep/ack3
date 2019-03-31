@@ -252,19 +252,27 @@ searched.
 Print a filename heading above each file's results.  This is the default
 when used interactively.
 
-=item B<--help>, B<-?>
+=item B<--help>
 
 Print a short help statement.
 
-=item B<--help-types>, B<--help=types>
+=item B<--help-types>
 
 Print all known types.
+
+=item B<--help-colors>
+
+Print a chart of various color combinations.
+
+=item B<--help-rgb-colors>
+
+Like B<--help-colors> but with more precise RGB colors.
 
 =item B<-i>, B<--ignore-case>
 
 Ignore case distinctions in PATTERN.  Overrides B<--smart-case> and B<-I>.
 
-=item B<-I>
+=item B<-I>, B<--no-ignore-case>
 
 Turns on case distinctions in PATTERN.  Overrides B<--smart-case> and B<-i>.
 
