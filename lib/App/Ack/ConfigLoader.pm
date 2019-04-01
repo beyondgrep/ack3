@@ -940,6 +940,7 @@ sub mutex_options {
             o => 1,
             output => 1,
             passthru => 1,
+            v => 1,
         },
         f => {
             A => 1,
@@ -962,6 +963,9 @@ sub mutex_options {
             output => 1,
             p => 1,
             passthru => 1,
+            u => 1,
+            v => 1,
+            x => 1,
         },
         g => {
             A => 1,
@@ -984,6 +988,8 @@ sub mutex_options {
             output => 1,
             p => 1,
             passthru => 1,
+            u => 1,
+            x => 1,
         },
         group => {
             L => 1,
@@ -1054,6 +1060,7 @@ sub mutex_options {
             l => 1,
             o => 1,
             output => 1,
+            p => 1,
             passthru => 1,
             'show-types' => 1,
         },
@@ -1069,8 +1076,10 @@ sub mutex_options {
             l => 1,
             o => 1,
             output => 1,
+            p => 1,
             passthru => 1,
             'show-types' => 1,
+            u => 1,
         },
         p => {
             A => 1,
@@ -1081,6 +1090,9 @@ sub mutex_options {
             f => 1,
             g => 1,
             l => 1,
+            o => 1,
+            output => 1,
+            p => 1,
             passthru => 1,
         },
         passthru => {
@@ -1105,12 +1117,23 @@ sub mutex_options {
             o => 1,
             output => 1,
         },
+        u => {
+            f => 1,
+            g => 1,
+            output => 1,
+        },
         v => {
             L => 1,
+            column => 1,
+            f => 1,
         },
         'with-filename' => {
             L => 1,
             l => 1,
+        },
+        x => {
+            f => 1,
+            g => 1,
         },
     };
 }   # End of mutex_options()
