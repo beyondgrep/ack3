@@ -1,10 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+2.999_07 Sun Mar 31 21:54:55 CDT 2019
 =====================================
 [ENHANCEMENTS]
 Added --help-colors and --help-rgb-colors options to display colors
 available for color options.
+
+Many more mutex options have been added to help users know when they've
+made a mistake.  For example, it doesn't make sense to have -C to show
+context when using -f to get a file list.
 
 Overhauled the handling of mutually exclusive options.  We now properly
 handle mutex options even if they are abbreviated.  The actual argument
