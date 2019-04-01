@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 181;
+use Test::More tests => 187;
 use lib 't';
 use Util;
 
@@ -159,6 +159,7 @@ for my $opt ( qw( -c --count ) ) {
 for my $opt ( qw( -A -B -C --after-context --before-context --context ) ) {
     are_mutually_exclusive( $opt, '-f', [$opt, 1, '-f', $word, $file] );
     are_mutually_exclusive( $opt, '-g', [$opt, 1, '-g', $word, $file] );
+    are_mutually_exclusive( $opt, '-p', [$opt, 1, '-p', $word, $file] );
 }
 
 # -f/-g
