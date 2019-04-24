@@ -1,4 +1,4 @@
-package App::Ack::Docs::Manual;
+package App::Ack::Manual;
 
 =pod
 
@@ -148,10 +148,6 @@ Sets the color to be used for line numbers.
 Show the column number of the first match.  This is helpful for
 editors that can place your cursor at a given position.
 
-=item B<--cookbook>
-
-Print the ack cookbook, a list of common tricks and recipes for using ack.
-
 =item B<--create-ackrc>
 
 Dumps the default ack options to standard output.  This is useful for
@@ -167,10 +163,6 @@ output.  Handy for debugging.
 B<--noenv> disables all environment processing. No F<.ackrc> is
 read and all environment variables are ignored. By default, F<ack>
 considers F<.ackrc> and settings in the environment.
-
-=item B<--faq>
-
-Print the list of frequently asked questions.
 
 =item B<--flush>
 
@@ -395,8 +387,6 @@ The intended usage is to provide the grep or compile-error syntax needed for edi
 e.g. C<--output=$f:$.:$_> or C<--output=$f\t$.\t$&>
 
 =back
-
-For examples of using C<--output>, see the Cookbook section of the manual.
 
 =item B<--pager=I<program>>, B<--nopager>
 
@@ -1001,6 +991,112 @@ L<http://groups.google.com/group/ack-users>
 
 There are ack mailing lists and a Slack channel for ack.  See
 L<https://beyondgrep.com/community/> for details.
+
+=head1 FAQ
+
+This is the Frequently Asked Questions list for ack.
+
+=head2 Can I stop using grep now?
+
+Many people find I<ack> to be better than I<grep> as an everyday tool
+99% of the time, but don't throw I<grep> away, because there are times
+you'll still need it.  For example, you might be looking through huge
+log files and not using regular expressions.  In that case, I<grep>
+will probably perform better.
+
+=head2 Why isn't ack finding a match in (some file)?
+
+First, take a look and see if ack is even looking at the file.  ack is
+intelligent in what files it will search and which ones it won't, but
+sometimes that can be surprising.
+
+Use the C<-f> switch, with no regex, to see a list of files that ack
+will search for you.  If your file doesn't show up in the list of files
+that C<ack -f> shows, then ack never looks in it.
+
+=head2 Wouldn't it be great if F<ack> did search & replace?
+
+No, ack will always be read-only.  Perl has a perfectly good way
+to do search & replace in files, using the C<-i>, C<-p> and C<-n>
+switches.
+
+You can certainly use ack to select your files to update.  For
+example, to change all "foo" to "bar" in all PHP files, you can do
+this from the Unix shell:
+
+    $ perl -i -p -e's/foo/bar/g' $(ack -f --php)
+
+=head2 Can I make ack recognize F<.xyz> files?
+
+Yes!  Please see L</"Defining your own types"> in the ack manual.
+
+=head2 Will you make ack recognize F<.xyz> files by default?
+
+We might, depending on how widely-used the file format is.
+
+Submit an issue at in the GitHub issue queue at
+L<https://github.com/beyondgrep/ack3/issues>.  Explain what the file format
+is, where we can find out more about it, and what you have been using
+in your F<.ackrc> to support it.
+
+Please do not bother creating a pull request.  The code for filetypes
+is trivial compared to the rest of the process we go through.
+
+=head2 Why is it called ack if it's called ack-grep?
+
+The name of the program is "ack".  Some packagers have called it
+"ack-grep" when creating packages because there's already a package
+out there called "ack" that has nothing to do with this ack.
+
+I suggest you make a symlink named F<ack> that points to F<ack-grep>
+because one of the crucial benefits of ack is having a name that's
+so short and simple to type.
+
+To do that, run this with F<sudo> or as root:
+
+   ln -s /usr/bin/ack-grep /usr/bin/ack
+
+Alternatively, you could use a shell alias:
+
+    # bash/zsh
+    alias ack=ack-grep
+
+    # csh
+    alias ack ack-grep
+
+=head2 What does F<ack> mean?
+
+Nothing.  I wanted a name that was easy to type and that you could
+pronounce as a single syllable.
+
+=head2 Can I do multi-line regexes?
+
+No, ack does not support regexes that match multiple lines.  Doing
+so would require reading in the entire file at a time.
+
+If you want to see lines near your match, use the C<--A>, C<--B>
+and C<--C> switches for displaying context.
+
+=head2 Why is ack telling me I have an invalid option when searching for C<+foo>?
+
+ack treats command line options beginning with C<+> or C<-> as options; if you
+would like to search for these, you may prefix your search term with C<--> or
+use the C<--match> option.  (However, don't forget that C<+> is a regular
+expression metacharacter!)
+
+=head2 Why does C<"ack '.{40000,}'"> fail?  Isn't that a valid regex?
+
+The Perl language limits the repetition quantifier to 32K.  You
+can search for C<.{32767}> but not C<.{32768}>.
+
+=head2 Ack does "X" and shouldn't, should it?
+
+We try to remain as close to grep's behavior as possible, so when in
+doubt, see what grep does!  If there's a mismatch in functionality there,
+please submit an issue to GitHub, and/or bring it up on the ack-users
+mailing list.
+
+=cut
 
 =head1 ACKNOWLEDGEMENTS
 

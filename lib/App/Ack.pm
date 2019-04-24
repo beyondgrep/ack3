@@ -215,19 +215,6 @@ Dumps the help page to the user.
 
 sub show_help {
     my $manual_options;
-    if ( $App::Ack::STANDALONE ) {
-        $manual_options = <<'END';
-  --man                         Print the manual, FAQ and cookbook
-END
-    }
-    else {
-        $manual_options = <<'END';
-  --man                         Print the manual
-  --faq                         Print the frequently asked questions
-  --cookbook                    Print a list of tips and tricks for using ack
-END
-    }
-    chomp $manual_options;
 
     App::Ack::print( <<"END_OF_HELP" );
 Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
@@ -361,7 +348,7 @@ Miscellaneous:
   --[no]filter                  Force ack to treat standard input as a pipe
                                 (--filter) or tty (--nofilter)
   --help                        This help
-$manual_options
+  --man                         Print the manual.
   --help-types                  Display all known types, and how they're defined.
   --help-colors                 Show a list of possible color combinations.
   --help-rgb-colors             Show a list of advanced RGB colors.
@@ -570,26 +557,24 @@ HERE
 }
 
 
-sub show_docs {
-    my $section = shift;
-
+sub show_man {
     my $input;
+
     if ( $App::Ack::STANDALONE ) {
-        # Standalone doesn't have the modules split out, so dump the entire file.
+        # Standalone doesn't have a separate App::Ack::Manual
         $input = $App::Ack::ORIGINAL_PROGRAM_NAME;
     }
     else {
-        my $module = "App::Ack::Docs::$section";
+        my $module = 'App::Ack::Manual';
         eval "require $module" or App::Ack::die( "Can't load $module" );
-        $input = $INC{ "App/Ack/Docs/$section.pm" };
+        $input = $INC{ 'App/Ack/Manual.pm' };
     }
 
     require Pod::Usage;
     Pod::Usage::pod2usage({
-        -input     => $input,
-        -verbose   => 2,
-        -exitval   => 0,
-        -noperldoc => 1, # Use Pod::Text.
+        -input   => $input,
+        -verbose => 2,
+        -exitval => 0,
     });
 
     return;
