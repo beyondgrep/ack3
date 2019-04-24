@@ -1,11 +1,8 @@
-package App::Ack::Docs::Cookbook;
-
 =head1 COOKBOOK
 
 Here are examples of how to effectively use ack.
 
 Note: on Windows CMD prompt, the quoting may need to switch C<"> for C<'> and/or vice-versa.
-
 
 =head1 COMPOUND QUERIES
 

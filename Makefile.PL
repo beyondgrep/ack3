@@ -88,9 +88,7 @@ CODE_PM = \
     lib/App/Ack/Filter/MatchGroup.pm \
 
 DOCS_PM = \
-    lib/App/Ack/Docs/Manual.pm \
-    lib/App/Ack/Docs/FAQ.pm \
-    lib/App/Ack/Docs/Cookbook.pm \
+    lib/App/Ack/Manual.pm \
 
 TEST_VERBOSE=0
 TEST_UTILS=t/*.pm

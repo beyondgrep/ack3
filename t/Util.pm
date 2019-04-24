@@ -63,6 +63,7 @@ our @EXPORT = qw(
     caret_X
     get_rc
     getcwd_clean
+    filter_out_perldoc_noise
 
     safe_chdir
     safe_mkdir
@@ -1030,4 +1031,28 @@ sub safe_mkdir {
 
     return;
 }
+
+
+sub filter_out_perldoc_noise {
+    my $stderr = shift;
+
+    # Don't worry if man complains about long lines, or if the terminal doesn't handle Unicode.
+    $stderr = [
+        grep {
+            !m{
+                can't\ break\ line
+                |
+                Wide\ character\ in\ print
+                |
+                Unknown\ escape\ E<0x[[:xdigit:]]+>
+                |
+                stty:\ stdin\ isn't\ a\ terminal
+            }x
+        } @{$stderr}
+    ];
+
+    return $stderr;
+}
+
+
 1;

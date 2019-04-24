@@ -66,7 +66,7 @@ MAIN: {
     for my $arg ( @ARGV ) {
         last if ( $arg eq '--' );
 
-        # Get the --thpppt, --bar, --cathy checking out of the way.
+        # Get the --thpppt, --bar, --cathy and --man checking out of the way.
         $arg =~ /^--th[pt]+t+$/ and App::Ack::thpppt($arg);
         $arg eq '--bar'         and App::Ack::ackbar();
         $arg eq '--cathy'       and App::Ack::cathy();
@@ -102,9 +102,7 @@ MAIN: {
     $p->getoptions(
         help     => sub { App::Ack::show_help(); exit; },
         version  => sub { App::Ack::print( App::Ack::get_version_statement() ); exit; },
-        man      => sub { App::Ack::show_docs( 'Manual' ); }, # man/faq/cookbook all exit.
-        faq      => sub { App::Ack::show_docs( 'FAQ' ); },
-        cookbook => sub { App::Ack::show_docs( 'Cookbook' ); },
+        man      => sub { App::Ack::show_man(); },
     );
 
     if ( !@ARGV ) {

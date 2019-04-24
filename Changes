@@ -1,5 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
+
+
+NEXT
+=====================================
+[ENHANCEMENTS]
+Consolidated the manual and FAQ into one document, accessible with --man.
+Cookbook.pm has been moved to dev for future use.
+
+
 2.999_07 Sun Mar 31 21:54:55 CDT 2019
 =====================================
 [ENHANCEMENTS]

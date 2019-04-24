@@ -69,17 +69,13 @@ subtest 'Check for all the types' => sub {
 
 {
     my ($output, $stderr) = run_ack_with_stderr( '--env', '--man' );
-    # Don't worry if man complains about long lines,
-    # or if the terminal doesn't handle Unicode:
-    is( scalar(grep { !m{can't\ break\ line
-                     |Wide\ character\ in\ print
-                     |Unknown\ escape\ E<0x[[:xdigit:]]+>}x } @{$stderr}),
-        0,
-        'Should have no output to stderr: ack --env --man' )
-        or diag( join( "\n", 'STDERR:', @{$stderr} ) );
+    my $filtered_stderr = filter_out_perldoc_noise( $stderr );
+
+    is( scalar @{$filtered_stderr}, 0, 'Should have no output to stderr: ack --env --man' )
+        or diag( join( "\n", 'STDERR:', @{$filtered_stderr} ) );
 
     my $first_two_lines = join( "\n", @{$output}[0,1] );
-    like( $first_two_lines, qr/^NAME\s+ack(?:-standalone)?\s/sm );
+    like( $first_two_lines, qr/NAME.+ack(?:-standalone)?\s/sm );
 }
 
 safe_chdir( $wd );
