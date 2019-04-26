@@ -1,5 +1,7 @@
 #!perl -T
 
+# https://github.com/beyondgrep/ack2/issues/571
+
 use strict;
 use warnings;
 use lib 't';
