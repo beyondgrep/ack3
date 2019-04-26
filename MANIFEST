@@ -99,6 +99,7 @@ t/illegal-regex.t
 t/incomplete-last-line.t
 t/interactive.t
 t/invalid-ackrc.t
+t/invalid-options.t
 t/inverted-file-filter.t
 t/is-filter.t
 t/issue244.t

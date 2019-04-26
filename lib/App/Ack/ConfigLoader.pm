@@ -782,7 +782,7 @@ we store it in C<@raw> as "--proximate".
             $parsed{$arg} = $parsed_pos++;
         };
         %spec_capture_parsed = (
-            '<>' => sub { $parsed_pos++ },
+            '<>' => sub { $parsed_pos++ },  # Bump forward one pos for non-options.
             map { $_ => $sub_count } keys %{$real_spec}
         );
     }
@@ -791,7 +791,7 @@ we store it in C<@raw> as "--proximate".
     CAPTURE_RAW: {
         my $raw_pos = 0;
         %spec_capture_raw = (
-            '<>' => sub { $raw_pos++ },
+            '<>' => sub { $raw_pos++ }, # Bump forward one pos for non-options.
         );
 
         my $sub_count = sub {
@@ -828,7 +828,7 @@ we store it in C<@raw> as "--proximate".
     }
 
     # Parse @ARGV twice, once with each capture spec.
-    my $p = opt_parser();
+    my $p = opt_parser( 'pass_through' );   # Ignore invalid options.
     $p->getoptionsfromarray( [@ARGV], %spec_capture_raw );
     $p->getoptionsfromarray( [@ARGV], %spec_capture_parsed );
 
