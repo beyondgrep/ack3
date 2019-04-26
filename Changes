@@ -8,6 +8,9 @@ NEXT
 Consolidated the manual and FAQ into one document, accessible with --man.
 Cookbook.pm has been moved to dev for future use.
 
+[FIXES]
+Invalid options used to cause an error message triplicate. Fixes GH #192.
+
 
 2.999_07 Sun Mar 31 21:54:55 CDT 2019
 =====================================
