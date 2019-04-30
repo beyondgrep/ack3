@@ -4,6 +4,9 @@ This file exists just to have slightly over 100K of content, and then
 have a some text to find at the end.  It is to test the needs_line_scan()
 function.
 
+Unfortunately, we've updated the size that we read for buffering is 10MB,
+so this doesn't really test it.
+
 # Preamble
 
 We the People of the United States, in Order to form a more perfect
