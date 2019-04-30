@@ -229,4 +229,6 @@ sub are_mutually_exclusive {
             }
         };
     }
+
+    return;
 }
