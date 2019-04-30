@@ -214,8 +214,6 @@ Dumps the help page to the user.
 =cut
 
 sub show_help {
-    my $manual_options;
-
     App::Ack::print( <<"END_OF_HELP" );
 Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
 
