@@ -1047,6 +1047,8 @@ sub filter_out_perldoc_noise {
                 Unknown\ escape\ E<0x[[:xdigit:]]+>
                 |
                 stty:\ stdin\ isn't\ a\ terminal
+                |
+                stty:\ standard\ input:\ Inappropriate\ ioctl\ for\ device
             }x
         } @{$stderr}
     ];
