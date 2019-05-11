@@ -31,7 +31,7 @@ our $opt_B;
 our $opt_break;
 our $opt_color;
 our $opt_column;
-our $opt_count;
+our $opt_c;
 our $opt_f;
 our $opt_g;
 our $opt_heading;
@@ -118,9 +118,9 @@ MAIN: {
     $opt_A              = $opt->{A};
     $opt_B              = $opt->{B};
     $opt_break          = $opt->{break};
+    $opt_c              = $opt->{c};
     $opt_color          = $opt->{color};
     $opt_column         = $opt->{column};
-    $opt_count          = $opt->{count};
     $opt_f              = $opt->{f};
     $opt_g              = $opt->{g};
     $opt_heading        = $opt->{heading};
@@ -259,7 +259,7 @@ FILES:
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
         }
         # ack -c
-        elsif ( $opt_count ) {
+        elsif ( $opt_c ) {
             my $matches_for_this_file = count_matches_in_file( $file );
 
             if ( not $opt_show_filename ) {
@@ -332,7 +332,7 @@ FILES:
         }
     }
 
-    if ( $opt_count && !$opt_show_filename ) {
+    if ( $opt_c && !$opt_show_filename ) {
         App::Ack::print( $total_count, "\n" );
     }
 

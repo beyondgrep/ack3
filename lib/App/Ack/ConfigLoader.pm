@@ -247,7 +247,7 @@ sub get_arg_spec {
         'B|before-context:-1' => sub { shift; $opt->{B} = _context_value(shift) },
         'C|context:-1'        => sub { shift; $opt->{B} = $opt->{A} = _context_value(shift) },
         'break!'            => \$opt->{break},
-        'c|count'           => \$opt->{count},
+        'c|count'           => \$opt->{c},
         'color|colour!'     => \$opt->{color},
         'color-match=s'     => \$ENV{ACK_COLOR_MATCH},
         'color-filename=s'  => \$ENV{ACK_COLOR_FILENAME},

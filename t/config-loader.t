@@ -14,9 +14,9 @@ delete @ENV{qw( PAGER ACK_PAGER ACK_PAGER_COLOR )};
 
 my %defaults = (
     'break'    => undef,
+    c          => undef,
     color      => undef,
     column     => undef,
-    count      => undef,
     f          => undef,
     files_from => undef,
     filters    => [ App::Ack::Filter::Default->new ],
