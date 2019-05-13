@@ -556,21 +556,9 @@ HERE
 
 
 sub show_man {
-    my $input;
-
-    if ( $App::Ack::STANDALONE ) {
-        # Standalone doesn't have a separate App::Ack::Manual
-        $input = $App::Ack::ORIGINAL_PROGRAM_NAME;
-    }
-    else {
-        my $module = 'App::Ack::Manual';
-        eval "require $module" or App::Ack::die( "Can't load $module" );
-        $input = $INC{ 'App/Ack/Manual.pm' };
-    }
-
     require Pod::Usage;
     Pod::Usage::pod2usage({
-        -input   => $input,
+        -input   => $App::Ack::ORIGINAL_PROGRAM_NAME,
         -verbose => 2,
         -exitval => 0,
     });

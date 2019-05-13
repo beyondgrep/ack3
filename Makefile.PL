@@ -87,9 +87,6 @@ CODE_PM = \
     lib/App/Ack/Filter/Match.pm \
     lib/App/Ack/Filter/MatchGroup.pm \
 
-DOCS_PM = \
-    lib/App/Ack/Manual.pm \
-
 TEST_VERBOSE=0
 TEST_UTILS=t/*.pm
 TEST_FILES=t/*.t
@@ -110,8 +107,8 @@ tags:
 critic:
 	perlcritic -1 -q -profile perlcriticrc $(ACK) $(CODE_PM) $(TEST_UTILS) $(TEST_FILES) $(TEST_XT_FILES)
 
-ack-standalone : $(ACK) $(CODE_PM) $(DOCS_PM) squash Makefile
-	$(PERL) squash $(ACK) $(CODE_PM) File::Next $(DOCS_PM) %s > ack-standalone
+ack-standalone : $(ACK) $(CODE_PM) squash Makefile
+	$(PERL) squash $(ACK) $(CODE_PM) File::Next %s > ack-standalone
 	$(FIXIN) ack-standalone
 	-$(NOECHO) $(CHMOD) $(PERM_RWX) ack-standalone
 	$(PERL) -c ack-standalone
