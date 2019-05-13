@@ -8,6 +8,8 @@ NEXT
 Consolidated the manual and FAQ into one document, accessible with --man.
 Cookbook.pm has been moved to dev for future use.
 
+Added SVG filetype.
+
 [FIXES]
 Invalid options used to cause an error message triplicate. Fixes GH #192.
 

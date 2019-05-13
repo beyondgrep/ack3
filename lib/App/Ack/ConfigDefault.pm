@@ -418,6 +418,10 @@ sub _options_block {
 # http://learnboost.github.io/stylus/
 --type-add=stylus:ext:styl
 
+# SVG
+# https://en.wikipedia.org/wiki/Scalable_Vector_Graphics
+--type-add=svg:ext:svg
+
 # Swift
 # https://developer.apple.com/swift/
 --type-add=swift:ext:swift
