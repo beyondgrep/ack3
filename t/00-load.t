@@ -4,7 +4,7 @@ use 5.010;
 use warnings;
 use strict;
 
-use Test::More tests => 21;
+use Test::More tests => 20;
 
 # Load all these modules to get their versions.
 use App::Ack;

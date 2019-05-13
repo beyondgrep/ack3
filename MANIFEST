@@ -24,7 +24,6 @@ lib/App/Ack/Filter/IsPath.pm
 lib/App/Ack/Filter/IsPathGroup.pm
 lib/App/Ack/Filter/Match.pm
 lib/App/Ack/Filter/MatchGroup.pm
-lib/App/Ack/Manual.pm
 
 squash
 

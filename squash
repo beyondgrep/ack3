@@ -9,7 +9,7 @@ The arguments to squash are either filenames from the ack distro
 like Ack.pm, or module names like File::Next.  For modules, squash
 loads them and then pushes them into ack-standalone.
 
-POD gets stripped from all modules except for App::Ack::Docs:: modules.
+POD gets stripped from all modules.
 
 =cut
 
@@ -65,8 +65,8 @@ for my $arg ( @ARGV ) {
             }
         }
 
-        # Omit any POD unless it's the doc module.
-        if ( $filename !~ m{/App/Ack/Manual} ) {
+        # See if we're in module POD blocks.
+        if ( $filename ne 'ack' ) {
             $was_in_pod = $in_pod;
 
             if ( /^=(\w+)/ ) {
