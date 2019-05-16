@@ -38,6 +38,7 @@ my %parms = (
         'if'                => 0,
         'List::Util'        => 0,
         'parent'            => 0,
+        'Pod::Perldoc'      => '3.20', # Starting with 3.20, default output is Pod::Perldoc::ToTerm instead of ::ToMan
         'Pod::Text'         => 0,      # Used to render pod by Pod::Usage.
         'Pod::Usage'        => '1.26',
         'Scalar::Util'      => 0,
