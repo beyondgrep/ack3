@@ -19,7 +19,7 @@ prep_environment();
 my $ack_pm = quotemeta( reslash( 'blib/lib/App/Ack.pm' ) );
 
 my @exclusions = qw(
-    --ignore-dir=Docs
+    --ignore-dir=dev
     --ignore-file=is:ack-standalone
 );
 
