@@ -11,6 +11,7 @@ use App::Ack;
 use File::Next;
 use Test::Harness;
 use Getopt::Long;
+use Pod::Perldoc;
 use Pod::Text;
 use Pod::Usage;
 use File::Spec;
@@ -19,6 +20,7 @@ my @modules = qw(
     File::Next
     File::Spec
     Getopt::Long
+    Pod::Perldoc
     Pod::Text
     Pod::Usage
     Test::Harness
