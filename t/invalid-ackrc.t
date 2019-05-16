@@ -15,7 +15,7 @@ my %types = (
     ruby   => [qw{.rb Rakefile}],
 );
 
-plan tests => 4;
+plan tests => 3;
 
 prep_environment();
 
@@ -67,7 +67,10 @@ subtest 'Check for all the types' => sub {
     }
 };
 
-{
+
+subtest 'Check --env --man' => sub {
+    plan tests => 2;
+
     my ($output, $stderr) = run_ack_with_stderr( '--env', '--man' );
     my $filtered_stderr = filter_out_perldoc_noise( $stderr );
 
@@ -76,7 +79,7 @@ subtest 'Check for all the types' => sub {
 
     my $first_two_lines = join( "\n", @{$output}[0,1] );
     like( $first_two_lines, qr/NAME.+ack(?:-standalone)?\s/sm );
-}
+};
 
 safe_chdir( $wd );
 
