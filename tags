@@ -12,9 +12,6 @@ App::Ack	lib/App/Ack.pm	/^package App::Ack;$/;"	p
 App::Ack::ConfigDefault	lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
 App::Ack::ConfigFinder	lib/App/Ack/ConfigFinder.pm	/^package App::Ack::ConfigFinder;$/;"	p
 App::Ack::ConfigLoader	lib/App/Ack/ConfigLoader.pm	/^package App::Ack::ConfigLoader;$/;"	p
-App::Ack::Docs::Cookbook	lib/App/Ack/Docs/Cookbook.pm	/^package App::Ack::Docs::Cookbook;$/;"	p
-App::Ack::Docs::FAQ	lib/App/Ack/Docs/FAQ.pm	/^package App::Ack::Docs::FAQ;$/;"	p
-App::Ack::Docs::Manual	lib/App/Ack/Docs/Manual.pm	/^package App::Ack::Docs::Manual;$/;"	p
 App::Ack::File	lib/App/Ack/File.pm	/^package App::Ack::File;$/;"	p
 App::Ack::Files	lib/App/Ack/Files.pm	/^package App::Ack::Files;$/;"	p
 App::Ack::Filter	lib/App/Ack/Filter.pm	/^package App::Ack::Filter;$/;"	p
@@ -129,9 +126,6 @@ MATCH_VIA_CONTENT	t/filetypes.t	/^MATCH_VIA_CONTENT: {$/;"	l
 MATCH_WITH_BACKREF	t/ack-color.t	/^MATCH_WITH_BACKREF: {$/;"	l
 METACHARACTERS	t/highlighting.t	/^METACHARACTERS: {$/;"	l
 MULTIPLE_MATCHES	t/ack-color.t	/^MULTIPLE_MATCHES: {$/;"	l
-MY	Makefile.PL	/^package MY;$/;"	p
-MY	Makefile.PL	/^sub MY::postamble {$/;"	s
-MY	Makefile.PL	/^sub MY::test {$/;"	s
 Miscellaneous	lib/App/Ack.pm	/^Miscellaneous:$/;"	l
 NEEDS_LINE_SCAN	t/needs-line-scan.t	/^NEEDS_LINE_SCAN: {$/;"	l
 NOIGNORE_DIR_RELATIVE_PATHS	t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$/;"	l
@@ -164,6 +158,7 @@ PREMATCH_MULTIPLE_FILES	t/ack-output.t	/^PREMATCH_MULTIPLE_FILES: {$/;"	l
 SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
+SKIP	t/ack-s.t	/^SKIP: {$/;"	l
 SKIP	t/file-permission.t	/^SKIP: {$/;"	l
 SMART_CASE	t/longopts.t	/^SMART_CASE: {$/;"	l
 SPECIFYING_A_BAK_FILE	t/command-line-files.t	/^SPECIFYING_A_BAK_FILE: {$/;"	l
@@ -191,7 +186,6 @@ WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
 WITH_COLUMNS_AND_CONTEXT	t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
 WITH_O	t/ack-o.t	/^WITH_O: {$/;"	l
 WITH_OUTPUT	t/ack-o.t	/^WITH_OUTPUT: {$/;"	l
-WITH_RESTRICTED_DIR	t/ack-s.t	/^WITH_RESTRICTED_DIR: {$/;"	l
 WITH_S	t/ack-s.t	/^WITH_S: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
@@ -201,7 +195,6 @@ _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutually_exclusive_options {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
-_clean	t/ack-man.t	/^sub _clean {$/;"	s
 _color_cell	lib/App/Ack.pm	/^sub _color_cell {$/;"	s
 _compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
 _compile_descend_filter	ack	/^sub _compile_descend_filter {$/;"	s
@@ -215,7 +208,6 @@ _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
-_option	t/ack-man.t	/^sub _option {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _options_used	lib/App/Ack/ConfigLoader.pm	/^sub _options_used {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
@@ -229,7 +221,6 @@ _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_defa
 _remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
 _save_rgb_grid	dev/generate-rgb-codes.pl	/^sub _save_rgb_grid {$/;"	s
-_section	t/ack-man.t	/^sub _section {$/;"	s
 _show_color_grid	lib/App/Ack.pm	/^sub _show_color_grid {$/;"	s
 _show_hue_sat_grid	dev/generate-rgb-codes.pl	/^sub _show_hue_sat_grid {$/;"	s
 _show_rgb_grid	lib/App/Ack.pm	/^sub _show_rgb_grid {$/;"	s
@@ -253,7 +244,6 @@ add_line	t/Barfly.pm	/^sub add_line {$/;"	s
 append_file	t/Util.pm	/^sub append_file {$/;"	s
 are_mutually_exclusive	t/mutex-options.t	/^sub are_mutually_exclusive {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
-bininst	Makefile.PL	/^bininst : $(ACK)$/;"	l
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
 build_regex	ack	/^sub build_regex {$/;"	s
@@ -276,12 +266,10 @@ create_group	lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Match.pm	/^sub create_group {$/;"	s
 create_tempfile	t/Util.pm	/^sub create_tempfile {$/;"	s
-critic	Makefile.PL	/^critic:$/;"	l
 die	lib/App/Ack.pm	/^sub die {$/;"	s
 dir_cleanup	t/named-pipes.t	/^sub dir_cleanup {$/;"	s
 do_parent	t/ack-x.t	/^sub do_parent {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
-dont	t/ack-man.t	/^sub dont {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
 file_has_match	ack	/^sub file_has_match {$/;"	s
@@ -299,6 +287,7 @@ filter	lib/App/Ack/Filter/IsPath.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/IsPathGroup.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Match.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/MatchGroup.pm	/^sub filter {$/;"	s
+filter_out_perldoc_noise	t/Util.pm	/^sub filter_out_perldoc_noise {$/;"	s
 filter_test	t/FilterTest.pm	/^sub filter_test {$/;"	s
 find_config_files	lib/App/Ack/ConfigFinder.pm	/^sub find_config_files {$/;"	s
 first_line_like	t/Util.pm	/^sub first_line_like {$/;"	s
@@ -306,7 +295,6 @@ firstliney	lib/App/Ack/File.pm	/^sub firstliney {$/;"	s
 from_argv	lib/App/Ack/Files.pm	/^sub from_argv {$/;"	s
 from_file	lib/App/Ack/Files.pm	/^sub from_file {$/;"	s
 from_stdin	lib/App/Ack/Files.pm	/^sub from_stdin {$/;"	s
-fulltest	Makefile.PL	/^fulltest: test_classic test_standalone test_xt$/;"	l
 get_arg_spec	lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
 get_expected_options	t/Util.pm	/^sub get_expected_options {$/;"	s
 get_file_id	ack	/^sub get_file_id {$/;"	s
@@ -344,7 +332,6 @@ is_nonempty_array	t/Util.pm	/^sub is_nonempty_array {$/;"	s
 is_windows	t/Util.pm	/^sub is_windows {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
-main	Makefile.PL	/^package main;$/;"	p
 msg	t/Util.pm	/^sub msg {$/;"	s
 mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub mutex_options {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
@@ -366,7 +353,6 @@ new	t/Barfly.pm	/^sub new {$/;"	s
 new	t/filter.t	/^sub new {$/;"	s
 next	lib/App/Ack/Files.pm	/^sub next {$/;"	s
 no_home	t/config-finder.t	/^sub no_home {$/;"	s
-nytprof	Makefile.PL	/^nytprof: all$/;"	l
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
 opt_parser	lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
@@ -406,27 +392,23 @@ set_up_line_context	ack	/^sub set_up_line_context {$/;"	s
 set_up_line_context_for_file	ack	/^sub set_up_line_context_for_file {$/;"	s
 set_up_pager	lib/App/Ack.pm	/^sub set_up_pager {$/;"	s
 sets_match	t/Util.pm	/^sub sets_match {$/;"	s
-show_docs	lib/App/Ack.pm	/^sub show_docs {$/;"	s
 show_help	lib/App/Ack.pm	/^sub show_help {$/;"	s
 show_help_colors	lib/App/Ack.pm	/^sub show_help_colors {$/;"	s
 show_help_rgb	lib/App/Ack.pm	/^sub show_help_rgb {$/;"	s
 show_help_types	lib/App/Ack.pm	/^sub show_help_types {$/;"	s
+show_man	lib/App/Ack.pm	/^sub show_man {$/;"	s
 show_types	lib/App/Ack.pm	/^sub show_types {$/;"	s
 slurp	t/file-iterator.t	/^sub slurp {$/;"	s
 strip_special_chars	xt/man.t	/^sub strip_special_chars {$/;"	s
+stty	t/Util.pm	/^                stty:\\ standard\\ input:\\ Inappropriate\\ ioctl\\ for\\ device$/;"	l
+stty	t/Util.pm	/^                stty:\\ stdin\\ isn't\\ a\\ terminal$/;"	l
 subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
 swamp_files	t/FilterTest.pm	/^sub swamp_files {$/;"	s
-tags	Makefile.PL	/^tags:$/;"	l
-test	Makefile.PL	/^test: test_classic test_standalone$/;"	l
 test_ack_with	t/illegal-regex.t	/^sub test_ack_with {$/;"	s
-test_classic	Makefile.PL	/^test_classic: all$/;"	l
 test_loader	t/config-loader.t	/^sub test_loader {$/;"	s
 test_match	t/ack-match.t	/^sub test_match {$/;"	s
-test_standalone	Makefile.PL	/^test_standalone: all ack-standalone$/;"	l
-test_xt	Makefile.PL	/^test_xt: all$/;"	l
 thpppt	lib/App/Ack.pm	/^sub thpppt {$/;"	s
 time_ack	dev/timings.pl	/^sub time_ack {$/;"	s
-timings	Makefile.PL	/^timings: ack-standalone$/;"	l
 to_string	lib/App/Ack/Filter.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Collection.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Extension.pm	/^sub to_string {$/;"	s
@@ -440,7 +422,6 @@ to_string	lib/App/Ack/Filter/Match.pm	/^sub to_string {$/;"	s
 touch	t/Util.pm	/^sub touch {$/;"	s
 touch_ackrc	t/Util.pm	/^sub touch_ackrc {$/;"	s
 untaint	t/Util.pm	/^sub untaint {$/;"	s
-want	t/ack-man.t	/^sub want {$/;"	s
 warn	lib/App/Ack.pm	/^sub warn {$/;"	s
 windows_slashify	t/Util.pm	/^sub windows_slashify {$/;"	s
 with_home	t/config-finder.t	/^sub with_home {$/;"	s
