@@ -16,7 +16,7 @@ my $libs = File::Next::files( { descend_filter => sub { !/\Q.git/ }, file_filter
 while ( my $file = $libs->() ) {
     push @files, $file;
 }
-@files == 23 or die 'I should have exactly 22 modules + ack';
+@files == 20 or die 'I should have exactly 20 modules + ack';
 
 # Get all the test files.
 for my $spec ( 't/*.t', 'xt/*.t' ) {
