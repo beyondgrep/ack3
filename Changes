@@ -1,8 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-
-
-NEXT
+2.999_08 Sun May 19 20:33:13 CDT 2019
 =====================================
 [ENHANCEMENTS]
 Consolidated the manual and FAQ into one document, accessible with --man.
