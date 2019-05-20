@@ -25,6 +25,8 @@ word matching.
 
 * Added many more checks for mutually exclusive command-line options.
 
+* Added a filetype for SVG files.
+
 # Bug fixes
 
 * Column numbers were not getting colorized in the output.  Added
