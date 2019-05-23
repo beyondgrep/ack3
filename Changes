@@ -1,5 +1,11 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+=====================================
+[FIXES]
+Fixed a failing test if Pod::Perldoc::ToTextOverstrike was being
+used. (GH#202)
+
 2.999_08 Sun May 19 20:33:13 CDT 2019
 =====================================
 [ENHANCEMENTS]

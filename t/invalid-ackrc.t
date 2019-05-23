@@ -78,6 +78,7 @@ subtest 'Check --env --man' => sub {
         or diag( join( "\n", 'STDERR:', @{$filtered_stderr} ) );
 
     my $first_two_lines = join( "\n", @{$output}[0,1] );
+    $first_two_lines =~ s/(.)\cH\1/$1/g;  # Eliminate the overstrike used by Pod::Perldoc::ToTextOverstrike
     like( $first_two_lines, qr/NAME.+ack(?:-standalone)?\s/sm );
 };
 
