@@ -8,51 +8,6 @@ use Test::More tests => 2;
 use lib 't';
 use Util;
 
-sub do_parent {
-    my %params = @_;
-
-    my ( $stdout_read, $stderr_read, $stdout_lines, $stderr_lines ) =
-        @params{qw/stdout_read stderr_read stdout_lines stderr_lines/};
-
-    while ( $stdout_read || $stderr_read ) {
-        my $rin = '';
-
-        vec( $rin, fileno($stdout_read), 1 ) = 1 if $stdout_read;
-        vec( $rin, fileno($stderr_read), 1 ) = 1 if $stderr_read;
-
-        select( $rin, undef, undef, undef );
-
-        if ( $stdout_read && vec( $rin, fileno($stdout_read), 1 ) ) {
-            my $line = <$stdout_read>;
-
-            if ( defined( $line ) ) {
-                push @{$stdout_lines}, $line;
-            }
-            else {
-                close $stdout_read;
-                undef $stdout_read;
-            }
-        }
-
-        if ( $stderr_read && vec( $rin, fileno($stderr_read), 1 ) ) {
-            my $line = <$stderr_read>;
-
-            if ( defined( $line ) ) {
-                push @{$stderr_lines}, $line;
-            }
-            else {
-                close $stderr_read;
-                undef $stderr_read;
-            }
-        }
-    }
-
-    chomp @{$stdout_lines};
-    chomp @{$stderr_lines};
-
-    return;
-}
-
 prep_environment();
 
 my $ozy__ = reslash( 't/text/ozymandias.txt' );
@@ -92,73 +47,7 @@ if ( is_windows() ) {
     ($stdout, $stderr) = run_cmd("@lhs_args | @rhs_args");
 }
 else {
-    my ( $stdout_read, $stdout_write );
-    my ( $stderr_read, $stderr_write );
-    my ( $lhs_rhs_read, $lhs_rhs_write );
-
-    pipe( $stdout_read, $stdout_write );
-    pipe( $stderr_read, $stderr_write );
-    pipe( $lhs_rhs_read, $lhs_rhs_write );
-
-    my $lhs_pid;
-    my $rhs_pid;
-
-    $lhs_pid = fork();
-
-    if ( !defined($lhs_pid) ) {
-        die 'Unable to fork';
-    }
-
-    if ( $lhs_pid ) {
-        $rhs_pid = fork();
-
-        if ( !defined($rhs_pid) ) {
-            kill TERM => $lhs_pid;
-            waitpid $lhs_pid, 0;
-            die 'Unable to fork';
-        }
-    }
-
-    if ( $rhs_pid ) { # parent
-        close $stdout_write;
-        close $stderr_write;
-        close $lhs_rhs_write;
-        close $lhs_rhs_read;
-
-        do_parent(
-            stdout_read  => $stdout_read,
-            stderr_read  => $stderr_read,
-            stdout_lines => ($stdout = []),
-            stderr_lines => ($stderr = []),
-        );
-
-        waitpid $lhs_pid, 0;
-        waitpid $rhs_pid, 0;
-    }
-    elsif ( $lhs_pid ) { # right-hand-side child
-        close $stdout_read;
-        close $stderr_read;
-        close $stderr_write;
-        close $lhs_rhs_write;
-
-        open STDIN, '<&', $lhs_rhs_read or die "Can't open: $!";
-        open STDOUT, '>&', $stdout_write or die "Can't open: $!";
-        close STDERR;
-
-        exec @rhs_args;
-    }
-    else { # left-hand side child
-        close $stdout_read;
-        close $stdout_write;
-        close $lhs_rhs_read;
-        close $stderr_read;
-
-        open STDOUT, '>&', $lhs_rhs_write or die "Can't open: $!";
-        open STDERR, '>&', $stderr_write or die "Can't open: $!";
-        close STDIN;
-
-        exec @lhs_args;
-    }
+    ($stdout, $stderr) = run_piped( \@lhs_args, \@rhs_args );
 }
 
 sets_match( $stdout, \@expected, __FILE__ );
