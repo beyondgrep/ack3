@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 
 use lib 't';
 use Util;
@@ -52,6 +52,25 @@ else {
 
 sets_match( $stdout, \@expected, __FILE__ );
 is_empty_array( $stderr );
+
+
+# GH #175: -s doesn't work with -x
+subtest 'GH #175' => sub {
+    plan tests => 5;
+
+    my $file = create_tempfile( 'non-existent-filename.txt' );
+
+    # Without -s, we get an error about the missing file.
+    my ($stdout,$stderr) = pipe_into_ack_with_stderr( $file->filename, '-x', 'foo' );
+    is_empty_array( $stdout, 'Nothing matches' );
+    is( scalar @{$stderr}, 1, 'Only one line of error' );
+    like( $stderr->[0], qr/\Qnon-existent-filename.txt: No such file/, 'Proper error message' );
+
+    # With -s, there is no warning.
+    ($stdout,$stderr) = pipe_into_ack_with_stderr( $file->filename, '-x', '-s', 'foo' );
+    is_empty_array( $stdout, 'Nothing matches' );
+    is_empty_array( $stderr, 'No errors' );
+};
 
 done_testing();
 exit 0;
