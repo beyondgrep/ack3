@@ -42,7 +42,7 @@ subtest 'Check --env and weird options' => sub {
     like( $output, qr/CHOCOLATE/ );
 
     $output = run_ack( '--env', '--version' );
-    like( $output, qr/ack 2[.]999_\d+/ );
+    like( $output, qr/ack v3\.\d+\.\d+/ );
 };
 
 subtest 'Check for all the types' => sub {

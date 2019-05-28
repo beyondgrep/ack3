@@ -1,7 +1,10 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
-=====================================
+v3.0.0      Mon May 27 21:46:34 CDT 2019
+========================================
+First official release of ack verison 3.
+
+
 [FIXES]
 Fixed a failing test if Pod::Perldoc::ToTextOverstrike was being
 used. (GH#202)
@@ -112,7 +115,7 @@ ack 3's new features are listed below for now.
 
 
 =============================
-# Release notes for ack 3.000
+# Release notes for ack 3.0.0
 =============================
 
 # New features
