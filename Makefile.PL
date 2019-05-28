@@ -102,6 +102,7 @@ tags:
 		--exclude='*~' \
 		--exclude=ack-standalone \
 		--exclude=garage/* \
+		--exclude=ack-3*/* \
 		--languages=Perl --langmap=Perl:+.t \
 
 # Don't run critic on docs.

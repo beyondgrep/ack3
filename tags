@@ -4,552 +4,277 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ADJACENT_CAPTURE_COLORING	ack-2.999_08/t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
 ADJACENT_CAPTURE_COLORING	t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
-AFTER	ack-2.999_08/t/context.t	/^AFTER: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
-ARG	ack-2.999_08/t/ack-output.t	/^ARG: {$/;"	l
 ARG	t/ack-output.t	/^ARG: {$/;"	l
-ARG_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
 ARG_MULTIPLE_FILES	t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
-App::Ack	ack-2.999_08/lib/App/Ack.pm	/^package App::Ack;$/;"	p
 App::Ack	lib/App/Ack.pm	/^package App::Ack;$/;"	p
-App::Ack::ConfigDefault	ack-2.999_08/lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
 App::Ack::ConfigDefault	lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
-App::Ack::ConfigFinder	ack-2.999_08/lib/App/Ack/ConfigFinder.pm	/^package App::Ack::ConfigFinder;$/;"	p
 App::Ack::ConfigFinder	lib/App/Ack/ConfigFinder.pm	/^package App::Ack::ConfigFinder;$/;"	p
-App::Ack::ConfigLoader	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^package App::Ack::ConfigLoader;$/;"	p
 App::Ack::ConfigLoader	lib/App/Ack/ConfigLoader.pm	/^package App::Ack::ConfigLoader;$/;"	p
-App::Ack::File	ack-2.999_08/lib/App/Ack/File.pm	/^package App::Ack::File;$/;"	p
 App::Ack::File	lib/App/Ack/File.pm	/^package App::Ack::File;$/;"	p
-App::Ack::Files	ack-2.999_08/lib/App/Ack/Files.pm	/^package App::Ack::Files;$/;"	p
 App::Ack::Files	lib/App/Ack/Files.pm	/^package App::Ack::Files;$/;"	p
-App::Ack::Filter	ack-2.999_08/lib/App/Ack/Filter.pm	/^package App::Ack::Filter;$/;"	p
 App::Ack::Filter	lib/App/Ack/Filter.pm	/^package App::Ack::Filter;$/;"	p
-App::Ack::Filter::Collection	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^package App::Ack::Filter::Collection;$/;"	p
 App::Ack::Filter::Collection	lib/App/Ack/Filter/Collection.pm	/^package App::Ack::Filter::Collection;$/;"	p
-App::Ack::Filter::Default	ack-2.999_08/lib/App/Ack/Filter/Default.pm	/^package App::Ack::Filter::Default;$/;"	p
 App::Ack::Filter::Default	lib/App/Ack/Filter/Default.pm	/^package App::Ack::Filter::Default;$/;"	p
-App::Ack::Filter::Extension	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^package App::Ack::Filter::Extension;$/;"	p
 App::Ack::Filter::Extension	lib/App/Ack/Filter/Extension.pm	/^package App::Ack::Filter::Extension;$/;"	p
-App::Ack::Filter::ExtensionGroup	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^package App::Ack::Filter::ExtensionGroup;$/;"	p
 App::Ack::Filter::ExtensionGroup	lib/App/Ack/Filter/ExtensionGroup.pm	/^package App::Ack::Filter::ExtensionGroup;$/;"	p
-App::Ack::Filter::FirstLineMatch	ack-2.999_08/lib/App/Ack/Filter/FirstLineMatch.pm	/^package App::Ack::Filter::FirstLineMatch;$/;"	p
 App::Ack::Filter::FirstLineMatch	lib/App/Ack/Filter/FirstLineMatch.pm	/^package App::Ack::Filter::FirstLineMatch;$/;"	p
-App::Ack::Filter::Inverse	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^package App::Ack::Filter::Inverse;$/;"	p
 App::Ack::Filter::Inverse	lib/App/Ack/Filter/Inverse.pm	/^package App::Ack::Filter::Inverse;$/;"	p
-App::Ack::Filter::Is	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^package App::Ack::Filter::Is;$/;"	p
 App::Ack::Filter::Is	lib/App/Ack/Filter/Is.pm	/^package App::Ack::Filter::Is;$/;"	p
-App::Ack::Filter::IsGroup	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^package App::Ack::Filter::IsGroup;$/;"	p
 App::Ack::Filter::IsGroup	lib/App/Ack/Filter/IsGroup.pm	/^package App::Ack::Filter::IsGroup;$/;"	p
-App::Ack::Filter::IsPath	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^package App::Ack::Filter::IsPath;$/;"	p
 App::Ack::Filter::IsPath	lib/App/Ack/Filter/IsPath.pm	/^package App::Ack::Filter::IsPath;$/;"	p
-App::Ack::Filter::IsPathGroup	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^package App::Ack::Filter::IsPathGroup;$/;"	p
 App::Ack::Filter::IsPathGroup	lib/App/Ack/Filter/IsPathGroup.pm	/^package App::Ack::Filter::IsPathGroup;$/;"	p
-App::Ack::Filter::Match	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^package App::Ack::Filter::Match;$/;"	p
 App::Ack::Filter::Match	lib/App/Ack/Filter/Match.pm	/^package App::Ack::Filter::Match;$/;"	p
-App::Ack::Filter::MatchGroup	ack-2.999_08/lib/App/Ack/Filter/MatchGroup.pm	/^package App::Ack::Filter::MatchGroup;$/;"	p
 App::Ack::Filter::MatchGroup	lib/App/Ack/Filter/MatchGroup.pm	/^package App::Ack::Filter::MatchGroup;$/;"	p
-BACK_ANCHORED	ack-2.999_08/t/anchored.t	/^BACK_ANCHORED: {$/;"	l
 BACK_ANCHORED	t/anchored.t	/^BACK_ANCHORED: {$/;"	l
-BASIC	ack-2.999_08/t/highlighting.t	/^BASIC: {$/;"	l
 BASIC	t/highlighting.t	/^BASIC: {$/;"	l
-BEFORE	ack-2.999_08/t/context.t	/^BEFORE: {$/;"	l
 BEFORE	t/context.t	/^BEFORE: {$/;"	l
-BEFORE_WITH_LINE_NO	ack-2.999_08/t/context.t	/^BEFORE_WITH_LINE_NO: {$/;"	l
 BEFORE_WITH_LINE_NO	t/context.t	/^BEFORE_WITH_LINE_NO: {$/;"	l
-BREAK_NO_HEADING	ack-2.999_08/t/ack-group.t	/^BREAK_NO_HEADING: {$/;"	l
 BREAK_NO_HEADING	t/ack-group.t	/^BREAK_NO_HEADING: {$/;"	l
-BRITISH_COLOR	ack-2.999_08/t/ack-color.t	/^BRITISH_COLOR: {$/;"	l
 BRITISH_COLOR	t/ack-color.t	/^BRITISH_COLOR: {$/;"	l
-Barfly	ack-2.999_08/t/Barfly.pm	/^package Barfly;$/;"	p
 Barfly	t/Barfly.pm	/^package Barfly;$/;"	p
-Barfly::Block	ack-2.999_08/t/Barfly.pm	/^package Barfly::Block;$/;"	p
 Barfly::Block	t/Barfly.pm	/^package Barfly::Block;$/;"	p
-CAPTURE_PARSED	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_PARSED: {$/;"	l
 CAPTURE_PARSED	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_PARSED: {$/;"	l
-CAPTURE_RAW	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_RAW: {$/;"	l
 CAPTURE_RAW	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_RAW: {$/;"	l
-CHARACTER_SUBSTITUTIONS	ack-2.999_08/t/ack-output.t	/^CHARACTER_SUBSTITUTIONS: {$/;"	l
 CHARACTER_SUBSTITUTIONS	t/ack-output.t	/^CHARACTER_SUBSTITUTIONS: {$/;"	l
-COMBINED_FILTERS	ack-2.999_08/t/ack-f.t	/^COMBINED_FILTERS: {$/;"	l
 COMBINED_FILTERS	t/ack-f.t	/^COMBINED_FILTERS: {$/;"	l
-COMBOS_1	ack-2.999_08/t/ack-output.t	/^COMBOS_1: {$/;"	l
 COMBOS_1	t/ack-output.t	/^COMBOS_1: {$/;"	l
-COMBOS_2	ack-2.999_08/t/ack-output.t	/^COMBOS_2: {$/;"	l
 COMBOS_2	t/ack-output.t	/^COMBOS_2: {$/;"	l
-COMBOS_3	ack-2.999_08/t/ack-output.t	/^COMBOS_3: {$/;"	l
 COMBOS_3	t/ack-output.t	/^COMBOS_3: {$/;"	l
-CONTEXT	ack-2.999_08/t/highlighting.t	/^CONTEXT: {$/;"	l
 CONTEXT	t/highlighting.t	/^CONTEXT: {$/;"	l
-CONTEXT_ADJACENT	ack-2.999_08/t/context.t	/^CONTEXT_ADJACENT: {$/;"	l
 CONTEXT_ADJACENT	t/context.t	/^CONTEXT_ADJACENT: {$/;"	l
-CONTEXT_DEFAULT	ack-2.999_08/t/context.t	/^CONTEXT_DEFAULT: {$/;"	l
 CONTEXT_DEFAULT	t/context.t	/^CONTEXT_DEFAULT: {$/;"	l
-CONTEXT_MAX_COUNT	ack-2.999_08/t/context.t	/^CONTEXT_MAX_COUNT: {$/;"	l
 CONTEXT_MAX_COUNT	t/context.t	/^CONTEXT_MAX_COUNT: {$/;"	l
-CONTEXT_NONADJACENT	ack-2.999_08/t/context.t	/^CONTEXT_NONADJACENT: {$/;"	l
 CONTEXT_NONADJACENT	t/context.t	/^CONTEXT_NONADJACENT: {$/;"	l
-CONTEXT_ONE	ack-2.999_08/t/context.t	/^CONTEXT_ONE: {$/;"	l
 CONTEXT_ONE	t/context.t	/^CONTEXT_ONE: {$/;"	l
-CONTEXT_OVERLAPPING	ack-2.999_08/t/context.t	/^CONTEXT_OVERLAPPING: {$/;"	l
 CONTEXT_OVERLAPPING	t/context.t	/^CONTEXT_OVERLAPPING: {$/;"	l
-CONTEXT_OVERLAPPING_COLOR	ack-2.999_08/t/context.t	/^CONTEXT_OVERLAPPING_COLOR: {$/;"	l
 CONTEXT_OVERLAPPING_COLOR	t/context.t	/^CONTEXT_OVERLAPPING_COLOR: {$/;"	l
-CONTEXT_OVERLAPPING_COLOR_AFTER	ack-2.999_08/t/context.t	/^CONTEXT_OVERLAPPING_COLOR_AFTER: {$/;"	l
 CONTEXT_OVERLAPPING_COLOR_AFTER	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_AFTER: {$/;"	l
-CONTEXT_OVERLAPPING_COLOR_BEFORE	ack-2.999_08/t/context.t	/^CONTEXT_OVERLAPPING_COLOR_BEFORE: {$/;"	l
 CONTEXT_OVERLAPPING_COLOR_BEFORE	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_BEFORE: {$/;"	l
-COUNT_PRINT0	ack-2.999_08/t/ack-print0.t	/^COUNT_PRINT0: {$/;"	l
 COUNT_PRINT0	t/ack-print0.t	/^COUNT_PRINT0: {$/;"	l
-DASH_C	ack-2.999_08/t/ack-c.t	/^DASH_C: {$/;"	l
-DASH_C	ack-2.999_08/t/ack-passthru.t	/^DASH_C: {$/;"	l
-DASH_C	ack-2.999_08/t/ack-v.t	/^DASH_C: {$/;"	l
 DASH_C	t/ack-c.t	/^DASH_C: {$/;"	l
 DASH_C	t/ack-passthru.t	/^DASH_C: {$/;"	l
 DASH_C	t/ack-v.t	/^DASH_C: {$/;"	l
-DASH_CAPITAL_L	ack-2.999_08/t/ack-c.t	/^DASH_CAPITAL_L: {$/;"	l
 DASH_CAPITAL_L	t/ack-c.t	/^DASH_CAPITAL_L: {$/;"	l
-DASH_F	ack-2.999_08/t/ack-1.t	/^DASH_F: {$/;"	l
-DASH_F	ack-2.999_08/t/zero.t	/^DASH_F: {$/;"	l
 DASH_F	t/ack-1.t	/^DASH_F: {$/;"	l
 DASH_F	t/zero.t	/^DASH_F: {$/;"	l
-DASH_F_CWD	ack-2.999_08/t/zero.t	/^DASH_F_CWD: {$/;"	l
 DASH_F_CWD	t/zero.t	/^DASH_F_CWD: {$/;"	l
-DASH_G	ack-2.999_08/t/ack-1.t	/^DASH_G: {$/;"	l
 DASH_G	t/ack-1.t	/^DASH_G: {$/;"	l
-DASH_HC	ack-2.999_08/t/ack-c.t	/^DASH_HC: {$/;"	l
 DASH_HC	t/ack-c.t	/^DASH_HC: {$/;"	l
-DASH_IGNORE_DIR	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_IGNORE_DIR: {$/;"	l
 DASH_IGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR: {$/;"	l
-DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS: {$/;"	l
 DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS: {$/;"	l
-DASH_IGNORE_DIR_MULTIPLE_TIMES	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
 DASH_IGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
-DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR: {$/;"	l
 DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR: {$/;"	l
-DASH_IGNORE_DIR_WITH_SLASH	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_SLASH: {$/;"	l
 DASH_IGNORE_DIR_WITH_SLASH	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_SLASH: {$/;"	l
-DASH_L	ack-2.999_08/t/ack-1.t	/^DASH_L: {$/;"	l
-DASH_L	ack-2.999_08/t/ack-c.t	/^DASH_L: {$/;"	l
-DASH_L	ack-2.999_08/t/ack-v.t	/^DASH_L: {$/;"	l
 DASH_L	t/ack-1.t	/^DASH_L: {$/;"	l
 DASH_L	t/ack-c.t	/^DASH_L: {$/;"	l
 DASH_L	t/ack-v.t	/^DASH_L: {$/;"	l
-DASH_LC	ack-2.999_08/t/ack-c.t	/^DASH_LC: {$/;"	l
 DASH_LC	t/ack-c.t	/^DASH_LC: {$/;"	l
-DASH_LV	ack-2.999_08/t/ack-c.t	/^DASH_LV: {$/;"	l
 DASH_LV	t/ack-c.t	/^DASH_LV: {$/;"	l
-DASH_NOIGNORE_DIR	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
 DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
-DASH_NOIGNORE_DIR_MULTIPLE_TIMES	ack-2.999_08/t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
 DASH_NOIGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
-DASH_V	ack-2.999_08/t/ack-1.t	/^DASH_V: {$/;"	l
 DASH_V	t/ack-1.t	/^DASH_V: {$/;"	l
-DEFAULT_DIR_EXCLUSIONS	ack-2.999_08/t/ack-f.t	/^DEFAULT_DIR_EXCLUSIONS: {$/;"	l
 DEFAULT_DIR_EXCLUSIONS	t/ack-f.t	/^DEFAULT_DIR_EXCLUSIONS: {$/;"	l
-DUMP	ack-2.999_08/t/ack-dump.t	/^DUMP: {$/;"	l
-DUMP	ack-2.999_08/t/ack-type-del.t	/^DUMP: {$/;"	l
 DUMP	t/ack-dump.t	/^DUMP: {$/;"	l
 DUMP	t/ack-type-del.t	/^DUMP: {$/;"	l
-EXCLUDE_ONLY	ack-2.999_08/t/inverted-file-filter.t	/^EXCLUDE_ONLY: {$/;"	l
 EXCLUDE_ONLY	t/inverted-file-filter.t	/^EXCLUDE_ONLY: {$/;"	l
-EXIT_CODE	ack-2.999_08/t/ack-f.t	/^EXIT_CODE: {$/;"	l
 EXIT_CODE	t/ack-f.t	/^EXIT_CODE: {$/;"	l
-Example	ack-2.999_08/lib/App/Ack.pm	/^Example: ack -i select$/;"	l
 Example	lib/App/Ack.pm	/^Example: ack -i select$/;"	l
-FILENAME_SUBSTITUTION_1	ack-2.999_08/t/ack-output.t	/^FILENAME_SUBSTITUTION_1 : {$/;"	l
 FILENAME_SUBSTITUTION_1	t/ack-output.t	/^FILENAME_SUBSTITUTION_1 : {$/;"	l
-FILENAME_SUBSTITUTION_2	ack-2.999_08/t/ack-output.t	/^FILENAME_SUBSTITUTION_2 : {$/;"	l
 FILENAME_SUBSTITUTION_2	t/ack-output.t	/^FILENAME_SUBSTITUTION_2 : {$/;"	l
-FILENAME_SUBSTITUTION_3	ack-2.999_08/t/ack-output.t	/^FILENAME_SUBSTITUTION_3 : {$/;"	l
 FILENAME_SUBSTITUTION_3	t/ack-output.t	/^FILENAME_SUBSTITUTION_3 : {$/;"	l
 FILES	ack	/^FILES:$/;"	l
-FILES	ack-2.999_08/ack	/^FILES:$/;"	l
-FILE_NOT_THERE	ack-2.999_08/t/command-line-files.t	/^FILE_NOT_THERE: {$/;"	l
 FILE_NOT_THERE	t/command-line-files.t	/^FILE_NOT_THERE: {$/;"	l
-FORCE_NO_PAGER	ack-2.999_08/t/ack-pager.t	/^FORCE_NO_PAGER: {$/;"	l
 FORCE_NO_PAGER	t/ack-pager.t	/^FORCE_NO_PAGER: {$/;"	l
-FRONT_ANCHORED	ack-2.999_08/t/anchored.t	/^FRONT_ANCHORED: {$/;"	l
 FRONT_ANCHORED	t/anchored.t	/^FRONT_ANCHORED: {$/;"	l
-F_PRINT0	ack-2.999_08/t/ack-print0.t	/^F_PRINT0: {$/;"	l
 F_PRINT0	t/ack-print0.t	/^F_PRINT0: {$/;"	l
-FilterTest	ack-2.999_08/t/FilterTest.pm	/^package FilterTest;$/;"	p
 FilterTest	t/FilterTest.pm	/^package FilterTest;$/;"	p
-GROUPING_MULTIPLE_FILES	ack-2.999_08/t/context.t	/^GROUPING_MULTIPLE_FILES: {$/;"	l
 GROUPING_MULTIPLE_FILES	t/context.t	/^GROUPING_MULTIPLE_FILES: {$/;"	l
-GROUPING_SINGLE_FILE	ack-2.999_08/t/context.t	/^GROUPING_SINGLE_FILE: {$/;"	l
 GROUPING_SINGLE_FILE	t/context.t	/^GROUPING_SINGLE_FILE: {$/;"	l
-G_NO_PRINT0	ack-2.999_08/t/ack-print0.t	/^G_NO_PRINT0: {$/;"	l
 G_NO_PRINT0	t/ack-print0.t	/^G_NO_PRINT0: {$/;"	l
-G_PRINT0	ack-2.999_08/t/ack-print0.t	/^G_PRINT0: {$/;"	l
 G_PRINT0	t/ack-print0.t	/^G_PRINT0: {$/;"	l
-HEADING_NO_BREAK	ack-2.999_08/t/ack-group.t	/^HEADING_NO_BREAK: {$/;"	l
 HEADING_NO_BREAK	t/ack-group.t	/^HEADING_NO_BREAK: {$/;"	l
-HIGHLIGHTING	ack-2.999_08/t/context.t	/^HIGHLIGHTING: {$/;"	l
 HIGHLIGHTING	t/context.t	/^HIGHLIGHTING: {$/;"	l
-IGNORE_DIR_DONT_IGNORE_TARGET	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_DONT_IGNORE_TARGET: {$/;"	l
 IGNORE_DIR_DONT_IGNORE_TARGET	t/ack-ignore-dir.t	/^IGNORE_DIR_DONT_IGNORE_TARGET: {$/;"	l
-IGNORE_DIR_EXT	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_EXT: {$/;"	l
 IGNORE_DIR_EXT	t/ack-ignore-dir.t	/^IGNORE_DIR_EXT: {$/;"	l
-IGNORE_DIR_FIRSTMATCH	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_FIRSTMATCH: {$/;"	l
 IGNORE_DIR_FIRSTMATCH	t/ack-ignore-dir.t	/^IGNORE_DIR_FIRSTMATCH: {$/;"	l
-IGNORE_DIR_MATCH	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH: {$/;"	l
 IGNORE_DIR_MATCH	t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH: {$/;"	l
-IGNORE_DIR_MATCH_NOIGNORE_DIR	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR: {$/;"	l
 IGNORE_DIR_MATCH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR: {$/;"	l
-IGNORE_DIR_MATCH_NOIGNORE_DIR_IS	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR_IS: {$/;"	l
 IGNORE_DIR_MATCH_NOIGNORE_DIR_IS	t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR_IS: {$/;"	l
-IGNORE_DIR_MATCH_NOIGNORE_DIR_MATCH	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR_MATCH: {$/;"	l
 IGNORE_DIR_MATCH_NOIGNORE_DIR_MATCH	t/ack-ignore-dir.t	/^IGNORE_DIR_MATCH_NOIGNORE_DIR_MATCH: {$/;"	l
-IGNORE_SUBDIR_OF_TARGET	ack-2.999_08/t/ack-ignore-dir.t	/^IGNORE_SUBDIR_OF_TARGET: {$/;"	l
 IGNORE_SUBDIR_OF_TARGET	t/ack-ignore-dir.t	/^IGNORE_SUBDIR_OF_TARGET: {$/;"	l
-INCLUDE_PLUS_EXCLUDE_ONLY	ack-2.999_08/t/inverted-file-filter.t	/^INCLUDE_PLUS_EXCLUDE_ONLY: {$/;"	l
 INCLUDE_PLUS_EXCLUDE_ONLY	t/inverted-file-filter.t	/^INCLUDE_PLUS_EXCLUDE_ONLY: {$/;"	l
-INCOMPLETE_LAST_LINE	ack-2.999_08/t/incomplete-last-line.t	/^INCOMPLETE_LAST_LINE: {$/;"	l
 INCOMPLETE_LAST_LINE	t/incomplete-last-line.t	/^INCOMPLETE_LAST_LINE: {$/;"	l
-INPUT_LINE_NUMBER	ack-2.999_08/t/ack-output.t	/^INPUT_LINE_NUMBER: {$/;"	l
 INPUT_LINE_NUMBER	t/ack-output.t	/^INPUT_LINE_NUMBER: {$/;"	l
-INPUT_LINE_NUMBER_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^INPUT_LINE_NUMBER_MULTIPLE_FILES: {$/;"	l
 INPUT_LINE_NUMBER_MULTIPLE_FILES	t/ack-output.t	/^INPUT_LINE_NUMBER_MULTIPLE_FILES: {$/;"	l
-INTERACTIVE_GROUPING_COLOR	ack-2.999_08/t/interactive.t	/^INTERACTIVE_GROUPING_COLOR: {$/;"	l
 INTERACTIVE_GROUPING_COLOR	t/interactive.t	/^INTERACTIVE_GROUPING_COLOR: {$/;"	l
-INTERACTIVE_GROUPING_NOCOLOR	ack-2.999_08/t/interactive.t	/^INTERACTIVE_GROUPING_NOCOLOR: {$/;"	l
 INTERACTIVE_GROUPING_NOCOLOR	t/interactive.t	/^INTERACTIVE_GROUPING_NOCOLOR: {$/;"	l
-INTERACTIVE_NOCOLOR_REGEXP_CAPTURE	ack-2.999_08/t/interactive.t	/^INTERACTIVE_NOCOLOR_REGEXP_CAPTURE: {$/;"	l
 INTERACTIVE_NOCOLOR_REGEXP_CAPTURE	t/interactive.t	/^INTERACTIVE_NOCOLOR_REGEXP_CAPTURE: {$/;"	l
-INTERACTIVE_NOGROUP_NOCOLOR	ack-2.999_08/t/interactive.t	/^INTERACTIVE_NOGROUP_NOCOLOR: {$/;"	l
 INTERACTIVE_NOGROUP_NOCOLOR	t/interactive.t	/^INTERACTIVE_NOGROUP_NOCOLOR: {$/;"	l
-INTERACTIVE_NOHEADING_NOCOLOR	ack-2.999_08/t/interactive.t	/^INTERACTIVE_NOHEADING_NOCOLOR: {$/;"	l
 INTERACTIVE_NOHEADING_NOCOLOR	t/interactive.t	/^INTERACTIVE_NOHEADING_NOCOLOR: {$/;"	l
-INTERACTIVE_SINGLE_TARGET	ack-2.999_08/t/interactive.t	/^INTERACTIVE_SINGLE_TARGET: {$/;"	l
 INTERACTIVE_SINGLE_TARGET	t/interactive.t	/^INTERACTIVE_SINGLE_TARGET: {$/;"	l
-JUST_THE_DIR	ack-2.999_08/t/command-line-files.t	/^JUST_THE_DIR: {$/;"	l
 JUST_THE_DIR	t/command-line-files.t	/^JUST_THE_DIR: {$/;"	l
-LAST_ONE_LISTED_WINS	ack-2.999_08/t/ack-ignore-dir.t	/^LAST_ONE_LISTED_WINS: {$/;"	l
 LAST_ONE_LISTED_WINS	t/ack-ignore-dir.t	/^LAST_ONE_LISTED_WINS: {$/;"	l
-LAST_PAREN_MATCH	ack-2.999_08/t/ack-output.t	/^LAST_PAREN_MATCH: {$/;"	l
 LAST_PAREN_MATCH	t/ack-output.t	/^LAST_PAREN_MATCH: {$/;"	l
-L_PRINT0	ack-2.999_08/t/ack-print0.t	/^L_PRINT0: {$/;"	l
 L_PRINT0	t/ack-print0.t	/^L_PRINT0: {$/;"	l
 MAIN	ack	/^MAIN: {$/;"	l
-MAIN	ack-2.999_08/ack	/^MAIN: {$/;"	l
-MAIN	ack-2.999_08/t/named-pipes.t	/^MAIN: {$/;"	l
 MAIN	t/named-pipes.t	/^MAIN: {$/;"	l
-MATCH	ack-2.999_08/t/ack-output.t	/^MATCH: {$/;"	l
 MATCH	t/ack-output.t	/^MATCH: {$/;"	l
-MATCH_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^MATCH_MULTIPLE_FILES: {$/;"	l
 MATCH_MULTIPLE_FILES	t/ack-output.t	/^MATCH_MULTIPLE_FILES: {$/;"	l
-MATCH_VIA_CONTENT	ack-2.999_08/t/filetypes.t	/^MATCH_VIA_CONTENT: {$/;"	l
 MATCH_VIA_CONTENT	t/filetypes.t	/^MATCH_VIA_CONTENT: {$/;"	l
-MATCH_WITH_BACKREF	ack-2.999_08/t/ack-color.t	/^MATCH_WITH_BACKREF: {$/;"	l
 MATCH_WITH_BACKREF	t/ack-color.t	/^MATCH_WITH_BACKREF: {$/;"	l
-METACHARACTERS	ack-2.999_08/t/highlighting.t	/^METACHARACTERS: {$/;"	l
 METACHARACTERS	t/highlighting.t	/^METACHARACTERS: {$/;"	l
-MULTIPLE_MATCHES	ack-2.999_08/t/ack-color.t	/^MULTIPLE_MATCHES: {$/;"	l
 MULTIPLE_MATCHES	t/ack-color.t	/^MULTIPLE_MATCHES: {$/;"	l
-Miscellaneous	ack-2.999_08/lib/App/Ack.pm	/^Miscellaneous:$/;"	l
 Miscellaneous	lib/App/Ack.pm	/^Miscellaneous:$/;"	l
-NEEDS_LINE_SCAN	ack-2.999_08/t/needs-line-scan.t	/^NEEDS_LINE_SCAN: {$/;"	l
 NEEDS_LINE_SCAN	t/needs-line-scan.t	/^NEEDS_LINE_SCAN: {$/;"	l
-NOIGNORE_DIR_RELATIVE_PATHS	ack-2.999_08/t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$/;"	l
 NOIGNORE_DIR_RELATIVE_PATHS	t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$/;"	l
-NOIGNORE_SUBDIR_WINS	ack-2.999_08/t/ack-ignore-dir.t	/^NOIGNORE_SUBDIR_WINS: {$/;"	l
 NOIGNORE_SUBDIR_WINS	t/ack-ignore-dir.t	/^NOIGNORE_SUBDIR_WINS: {$/;"	l
-NORMAL	ack-2.999_08/t/ack-passthru.t	/^NORMAL: {$/;"	l
 NORMAL	t/ack-passthru.t	/^NORMAL: {$/;"	l
-NORMAL_CASE	ack-2.999_08/t/ack-v.t	/^NORMAL_CASE: {$/;"	l
 NORMAL_CASE	t/ack-v.t	/^NORMAL_CASE: {$/;"	l
-NORMAL_COLOR	ack-2.999_08/t/ack-color.t	/^NORMAL_COLOR: {$/;"	l
 NORMAL_COLOR	t/ack-color.t	/^NORMAL_COLOR: {$/;"	l
-NO_GROUPING	ack-2.999_08/t/ack-group.t	/^NO_GROUPING: {$/;"	l
 NO_GROUPING	t/ack-group.t	/^NO_GROUPING: {$/;"	l
-NO_O	ack-2.999_08/t/ack-o.t	/^NO_O: {$/;"	l
 NO_O	t/ack-o.t	/^NO_O: {$/;"	l
-NO_PAGER	ack-2.999_08/t/ack-pager.t	/^NO_PAGER: {$/;"	l
 NO_PAGER	t/ack-pager.t	/^NO_PAGER: {$/;"	l
-NO_SWITCHES_MULTIPLE_FILES	ack-2.999_08/t/ack-h.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
-NO_SWITCHES_MULTIPLE_FILES	ack-2.999_08/t/basic.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
 NO_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
 NO_SWITCHES_MULTIPLE_FILES	t/basic.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
-NO_SWITCHES_ONE_FILE	ack-2.999_08/t/ack-h.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
-NO_SWITCHES_ONE_FILE	ack-2.999_08/t/basic.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NO_SWITCHES_ONE_FILE	t/ack-h.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NO_SWITCHES_ONE_FILE	t/basic.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
-NTESTS	ack-2.999_08/t/file-permission.t	/^use constant NTESTS => 6;$/;"	c
 NTESTS	t/file-permission.t	/^use constant NTESTS => 6;$/;"	c
-NUMERIC_SUBSTITUTIONS	ack-2.999_08/t/ack-output.t	/^NUMERIC_SUBSTITUTIONS: {$/;"	l
 NUMERIC_SUBSTITUTIONS	t/ack-output.t	/^NUMERIC_SUBSTITUTIONS: {$/;"	l
-OUTPUT_DOUBLE_QUOTES	ack-2.999_08/t/ack-o.t	/^OUTPUT_DOUBLE_QUOTES: {$/;"	l
 OUTPUT_DOUBLE_QUOTES	t/ack-o.t	/^OUTPUT_DOUBLE_QUOTES: {$/;"	l
-PAGER	ack-2.999_08/t/ack-pager.t	/^PAGER: {$/;"	l
 PAGER	t/ack-pager.t	/^PAGER: {$/;"	l
-PAGER_ACKRC	ack-2.999_08/t/ack-pager.t	/^PAGER_ACKRC: {$/;"	l
 PAGER_ACKRC	t/ack-pager.t	/^PAGER_ACKRC: {$/;"	l
-PAGER_ACKRC_OVERRIDE	ack-2.999_08/t/ack-pager.t	/^PAGER_ACKRC_OVERRIDE: {$/;"	l
 PAGER_ACKRC_OVERRIDE	t/ack-pager.t	/^PAGER_ACKRC_OVERRIDE: {$/;"	l
-PAGER_ENV	ack-2.999_08/t/ack-pager.t	/^PAGER_ENV: {$/;"	l
 PAGER_ENV	t/ack-pager.t	/^PAGER_ENV: {$/;"	l
-PAGER_ENV_OVERRIDE	ack-2.999_08/t/ack-pager.t	/^PAGER_ENV_OVERRIDE: {$/;"	l
 PAGER_ENV_OVERRIDE	t/ack-pager.t	/^PAGER_ENV_OVERRIDE: {$/;"	l
-PAGER_NOENV	ack-2.999_08/t/ack-pager.t	/^PAGER_NOENV: {$/;"	l
 PAGER_NOENV	t/ack-pager.t	/^PAGER_NOENV: {$/;"	l
-PAGER_WITH_OPTS	ack-2.999_08/t/ack-pager.t	/^PAGER_WITH_OPTS: {$/;"	l
 PAGER_WITH_OPTS	t/ack-pager.t	/^PAGER_WITH_OPTS: {$/;"	l
-PIPE_INTO_C	ack-2.999_08/t/ack-c.t	/^PIPE_INTO_C: {$/;"	l
 PIPE_INTO_C	t/ack-c.t	/^PIPE_INTO_C: {$/;"	l
-POSTMATCH	ack-2.999_08/t/ack-output.t	/^POSTMATCH: {$/;"	l
 POSTMATCH	t/ack-output.t	/^POSTMATCH: {$/;"	l
-POSTMATCH_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
 POSTMATCH_MULTIPLE_FILES	t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
-PREMATCH	ack-2.999_08/t/ack-output.t	/^PREMATCH: {$/;"	l
 PREMATCH	t/ack-output.t	/^PREMATCH: {$/;"	l
-PREMATCH_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^PREMATCH_MULTIPLE_FILES: {$/;"	l
 PREMATCH_MULTIPLE_FILES	t/ack-output.t	/^PREMATCH_MULTIPLE_FILES: {$/;"	l
-SINGLE_FILE_COUNT	ack-2.999_08/t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
-SINGLE_TEXT_MATCH	ack-2.999_08/t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
-SKIP	ack-2.999_08/t/ack-passthru.t	/^SKIP: {$/;"	l
-SKIP	ack-2.999_08/t/ack-s.t	/^SKIP: {$/;"	l
-SKIP	ack-2.999_08/t/file-permission.t	/^SKIP: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
 SKIP	t/ack-s.t	/^SKIP: {$/;"	l
 SKIP	t/file-permission.t	/^SKIP: {$/;"	l
-SMART_CASE	ack-2.999_08/t/longopts.t	/^SMART_CASE: {$/;"	l
 SMART_CASE	t/longopts.t	/^SMART_CASE: {$/;"	l
-SPECIFYING_A_BAK_FILE	ack-2.999_08/t/command-line-files.t	/^SPECIFYING_A_BAK_FILE: {$/;"	l
 SPECIFYING_A_BAK_FILE	t/command-line-files.t	/^SPECIFYING_A_BAK_FILE: {$/;"	l
-STANDARD_GROUPING	ack-2.999_08/t/ack-group.t	/^STANDARD_GROUPING: {$/;"	l
 STANDARD_GROUPING	t/ack-group.t	/^STANDARD_GROUPING: {$/;"	l
-SUBPATTERN_MATCH	ack-2.999_08/t/ack-output.t	/^SUBPATTERN_MATCH: {$/;"	l
 SUBPATTERN_MATCH	t/ack-output.t	/^SUBPATTERN_MATCH: {$/;"	l
-SUBPATTERN_MATCH_MULTIPLE_FILES	ack-2.999_08/t/ack-output.t	/^SUBPATTERN_MATCH_MULTIPLE_FILES: {$/;"	l
 SUBPATTERN_MATCH_MULTIPLE_FILES	t/ack-output.t	/^SUBPATTERN_MATCH_MULTIPLE_FILES: {$/;"	l
-Searching	ack-2.999_08/lib/App/Ack.pm	/^Searching:$/;"	l
 Searching	lib/App/Ack.pm	/^Searching:$/;"	l
-TEST_NOTYPE	ack-2.999_08/t/ack-type.t	/^TEST_NOTYPE: {$/;"	l
 TEST_NOTYPE	t/ack-type.t	/^TEST_NOTYPE: {$/;"	l
-TEST_NOTYPES	ack-2.999_08/t/ack-type.t	/^TEST_NOTYPES: {$/;"	l
 TEST_NOTYPES	t/ack-type.t	/^TEST_NOTYPES: {$/;"	l
-TEST_NOTYPE_ACKRC_CMD_LINE_OVERRIDE	ack-2.999_08/t/ack-type.t	/^TEST_NOTYPE_ACKRC_CMD_LINE_OVERRIDE: {$/;"	l
 TEST_NOTYPE_ACKRC_CMD_LINE_OVERRIDE	t/ack-type.t	/^TEST_NOTYPE_ACKRC_CMD_LINE_OVERRIDE: {$/;"	l
-TEST_NOTYPE_OVERRIDE	ack-2.999_08/t/ack-type.t	/^TEST_NOTYPE_OVERRIDE: {$/;"	l
 TEST_NOTYPE_OVERRIDE	t/ack-type.t	/^TEST_NOTYPE_OVERRIDE: {$/;"	l
-TEST_TYPE	ack-2.999_08/t/ack-type.t	/^TEST_TYPE: {$/;"	l
 TEST_TYPE	t/ack-type.t	/^TEST_TYPE: {$/;"	l
-TEST_TYPE_ACKRC_CMD_LINE_OVERRIDE	ack-2.999_08/t/ack-type.t	/^TEST_TYPE_ACKRC_CMD_LINE_OVERRIDE: {$/;"	l
 TEST_TYPE_ACKRC_CMD_LINE_OVERRIDE	t/ack-type.t	/^TEST_TYPE_ACKRC_CMD_LINE_OVERRIDE: {$/;"	l
-TEST_TYPE_OVERRIDE	ack-2.999_08/t/ack-type.t	/^TEST_TYPE_OVERRIDE: {$/;"	l
 TEST_TYPE_OVERRIDE	t/ack-type.t	/^TEST_TYPE_OVERRIDE: {$/;"	l
-TEST_UNKNOWN_TYPE	ack-2.999_08/t/ack-type.t	/^TEST_UNKNOWN_TYPE: {$/;"	l
 TEST_UNKNOWN_TYPE	t/ack-type.t	/^TEST_UNKNOWN_TYPE: {$/;"	l
-TestFilter	ack-2.999_08/t/filter.t	/^package TestFilter;$/;"	p
 TestFilter	t/filter.t	/^package TestFilter;$/;"	p
-UNANCHORED	ack-2.999_08/t/anchored.t	/^UNANCHORED: {$/;"	l
 UNANCHORED	t/anchored.t	/^UNANCHORED: {$/;"	l
-UNFILTERED	ack-2.999_08/t/file-iterator.t	/^UNFILTERED: {$/;"	l
 UNFILTERED	t/file-iterator.t	/^UNFILTERED: {$/;"	l
-Usage	ack-2.999_08/lib/App/Ack.pm	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
 Usage	lib/App/Ack.pm	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
-Util	ack-2.999_08/t/Util.pm	/^package Util;$/;"	p
 Util	t/Util.pm	/^package Util;$/;"	p
-VERIFY_LAST_LINE_IS_MISSING_NEWLINE	ack-2.999_08/t/incomplete-last-line.t	/^VERIFY_LAST_LINE_IS_MISSING_NEWLINE: {$/;"	l
 VERIFY_LAST_LINE_IS_MISSING_NEWLINE	t/incomplete-last-line.t	/^VERIFY_LAST_LINE_IS_MISSING_NEWLINE: {$/;"	l
-WITHOUT_COLUMNS	ack-2.999_08/t/ack-column.t	/^WITHOUT_COLUMNS: {$/;"	l
 WITHOUT_COLUMNS	t/ack-column.t	/^WITHOUT_COLUMNS: {$/;"	l
-WITHOUT_S	ack-2.999_08/t/ack-s.t	/^WITHOUT_S: {$/;"	l
 WITHOUT_S	t/ack-s.t	/^WITHOUT_S: {$/;"	l
-WITH_COLUMNS	ack-2.999_08/t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
 WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
-WITH_COLUMNS_AND_CONTEXT	ack-2.999_08/t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
 WITH_COLUMNS_AND_CONTEXT	t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
-WITH_O	ack-2.999_08/t/ack-o.t	/^WITH_O: {$/;"	l
 WITH_O	t/ack-o.t	/^WITH_O: {$/;"	l
-WITH_OUTPUT	ack-2.999_08/t/ack-o.t	/^WITH_OUTPUT: {$/;"	l
 WITH_OUTPUT	t/ack-o.t	/^WITH_OUTPUT: {$/;"	l
-WITH_S	ack-2.999_08/t/ack-s.t	/^WITH_S: {$/;"	l
 WITH_S	t/ack-s.t	/^WITH_S: {$/;"	l
-WITH_SWITCHES_MULTIPLE_FILES	ack-2.999_08/t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
-WITH_SWITCHES_MULTIPLE_FILES	ack-2.999_08/t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
-WITH_SWITCHES_ONE_FILE	ack-2.999_08/t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
-WITH_SWITCHES_ONE_FILE	ack-2.999_08/t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
-_check_command_for_taintedness	ack-2.999_08/t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
-_check_for_ackrc	ack-2.999_08/lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
-_check_for_mutually_exclusive_options	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutually_exclusive_options {$/;"	s
 _check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutually_exclusive_options {$/;"	s
-_check_message	ack-2.999_08/t/Util.pm	/^sub _check_message {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
-_color_cell	ack-2.999_08/lib/App/Ack.pm	/^sub _color_cell {$/;"	s
 _color_cell	lib/App/Ack.pm	/^sub _color_cell {$/;"	s
-_compare_opts	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
 _compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
 _compile_descend_filter	ack	/^sub _compile_descend_filter {$/;"	s
-_compile_descend_filter	ack-2.999_08/ack	/^sub _compile_descend_filter {$/;"	s
 _compile_file_filter	ack	/^sub _compile_file_filter {$/;"	s
-_compile_file_filter	ack-2.999_08/ack	/^sub _compile_file_filter {$/;"	s
-_context_value	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _context_value {$/;"	s
 _context_value	lib/App/Ack/ConfigLoader.pm	/^sub _context_value {$/;"	s
-_create_ackrc	ack-2.999_08/t/forbidden-options.t	/^sub _create_ackrc {$/;"	s
 _create_ackrc	t/forbidden-options.t	/^sub _create_ackrc {$/;"	s
-_do_parent	ack-2.999_08/t/Util.pm	/^sub _do_parent {$/;"	s
 _do_parent	t/Util.pm	/^sub _do_parent {$/;"	s
-_dump_options	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _dump_options {$/;"	s
 _dump_options	lib/App/Ack/ConfigLoader.pm	/^sub _dump_options {$/;"	s
-_explode_sources	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _explode_sources {$/;"	s
 _explode_sources	lib/App/Ack/ConfigLoader.pm	/^sub _explode_sources {$/;"	s
 _five_to_1	dev/generate-rgb-codes.pl	/^sub _five_to_1{$/;"	s
-_generate_error_handler	ack-2.999_08/lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
 _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"	s
-_generate_ignore_dir	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
-_get_good_and_bad	ack-2.999_08/t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
-_my_program	ack-2.999_08/lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
-_options_block	ack-2.999_08/lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
-_options_used	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _options_used {$/;"	s
 _options_used	lib/App/Ack/ConfigLoader.pm	/^sub _options_used {$/;"	s
-_pic_decode	ack-2.999_08/lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
 _pic_decode	lib/App/Ack.pm	/^sub _pic_decode {$/;"	s
-_populate_help_options	ack-2.999_08/t/ack-help.t	/^    sub _populate_help_options {$/;"	s
 _populate_help_options	t/ack-help.t	/^    sub _populate_help_options {$/;"	s
-_populate_man_options	ack-2.999_08/xt/man.t	/^    sub _populate_man_options {$/;"	s
 _populate_man_options	xt/man.t	/^    sub _populate_man_options {$/;"	s
-_process_filetypes	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _process_filetypes {$/;"	s
 _process_filetypes	lib/App/Ack/ConfigLoader.pm	/^sub _process_filetypes {$/;"	s
-_process_filter_spec	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _process_filter_spec {$/;"	s
 _process_filter_spec	lib/App/Ack/ConfigLoader.pm	/^sub _process_filter_spec {$/;"	s
-_process_other	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _process_other {$/;"	s
 _process_other	lib/App/Ack/ConfigLoader.pm	/^sub _process_other {$/;"	s
-_record_option_coverage	ack-2.999_08/t/Util.pm	/^sub _record_option_coverage {$/;"	s
 _record_option_coverage	t/Util.pm	/^sub _record_option_coverage {$/;"	s
-_remove_default_options_if_needed	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
 _remove_default_options_if_needed	lib/App/Ack/ConfigLoader.pm	/^sub _remove_default_options_if_needed {$/;"	s
-_remove_directory_separator	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
 _remove_directory_separator	lib/App/Ack/ConfigLoader.pm	/^sub _remove_directory_separator {$/;"	s
-_remove_redundancies	ack-2.999_08/lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
 _remove_redundancies	lib/App/Ack/ConfigFinder.pm	/^sub _remove_redundancies {$/;"	s
 _save_rgb_grid	dev/generate-rgb-codes.pl	/^sub _save_rgb_grid {$/;"	s
-_show_color_grid	ack-2.999_08/lib/App/Ack.pm	/^sub _show_color_grid {$/;"	s
 _show_color_grid	lib/App/Ack.pm	/^sub _show_color_grid {$/;"	s
 _show_hue_sat_grid	dev/generate-rgb-codes.pl	/^sub _show_hue_sat_grid {$/;"	s
-_show_rgb_grid	ack-2.999_08/lib/App/Ack.pm	/^sub _show_rgb_grid {$/;"	s
 _show_rgb_grid	lib/App/Ack.pm	/^sub _show_rgb_grid {$/;"	s
-_test_home_ackrc	ack-2.999_08/t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
-_test_project_ackrc	ack-2.999_08/t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
-_uninvert_filter	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
 _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
-_untaint	ack-2.999_08/t/Barfly.pm	/^sub _untaint {$/;"	s
 _untaint	t/Barfly.pm	/^sub _untaint {$/;"	s
 _where	dev/generate-rgb-codes.pl	/^sub _where {$/;"	s
-_write_file	ack-2.999_08/t/Util.pm	/^sub _write_file {$/;"	s
 _write_file	t/Util.pm	/^sub _write_file {$/;"	s
-ack	ack-2.999_08/t/command-line-files.t	/^ack: non-existent-file.txt: No such file or directory$/;"	l
 ack	t/command-line-files.t	/^ack: non-existent-file.txt: No such file or directory$/;"	l
-ack_error_matches	ack-2.999_08/t/Util.pm	/^sub ack_error_matches {$/;"	s
 ack_error_matches	t/Util.pm	/^sub ack_error_matches {$/;"	s
-ack_lists_match	ack-2.999_08/t/Util.pm	/^sub ack_lists_match {$/;"	s
 ack_lists_match	t/Util.pm	/^sub ack_lists_match {$/;"	s
-ack_sets_match	ack-2.999_08/t/Util.pm	/^sub ack_sets_match {$/;"	s
 ack_sets_match	t/Util.pm	/^sub ack_sets_match {$/;"	s
-ackbar	ack-2.999_08/lib/App/Ack.pm	/^sub ackbar {$/;"	s
 ackbar	lib/App/Ack.pm	/^sub ackbar {$/;"	s
-add	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^sub add {$/;"	s
-add	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^sub add {$/;"	s
-add	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^sub add {$/;"	s
-add	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^sub add {$/;"	s
-add	ack-2.999_08/lib/App/Ack/Filter/MatchGroup.pm	/^sub add {$/;"	s
 add	lib/App/Ack/Filter/Collection.pm	/^sub add {$/;"	s
 add	lib/App/Ack/Filter/ExtensionGroup.pm	/^sub add {$/;"	s
 add	lib/App/Ack/Filter/IsGroup.pm	/^sub add {$/;"	s
 add	lib/App/Ack/Filter/IsPathGroup.pm	/^sub add {$/;"	s
 add	lib/App/Ack/Filter/MatchGroup.pm	/^sub add {$/;"	s
-add_line	ack-2.999_08/t/Barfly.pm	/^sub add_line {$/;"	s
 add_line	t/Barfly.pm	/^sub add_line {$/;"	s
-append_file	ack-2.999_08/t/Util.pm	/^sub append_file {$/;"	s
 append_file	t/Util.pm	/^sub append_file {$/;"	s
-are_mutually_exclusive	ack-2.999_08/t/mutex-options.t	/^sub are_mutually_exclusive {$/;"	s
 are_mutually_exclusive	t/mutex-options.t	/^sub are_mutually_exclusive {$/;"	s
-basename	ack-2.999_08/lib/App/Ack/File.pm	/^sub basename {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
-build_ack_invocation	ack-2.999_08/t/Util.pm	/^sub build_ack_invocation {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
 build_regex	ack	/^sub build_regex {$/;"	s
-build_regex	ack-2.999_08/ack	/^sub build_regex {$/;"	s
-caret_X	ack-2.999_08/t/Util.pm	/^sub caret_X {$/;"	s
 caret_X	t/Util.pm	/^sub caret_X {$/;"	s
-cathy	ack-2.999_08/lib/App/Ack.pm	/^sub cathy {$/;"	s
 cathy	lib/App/Ack.pm	/^sub cathy {$/;"	s
-check_for_option_in_man_output	ack-2.999_08/xt/man.t	/^sub check_for_option_in_man_output {$/;"	s
 check_for_option_in_man_output	xt/man.t	/^sub check_for_option_in_man_output {$/;"	s
-check_with	ack-2.999_08/t/file-permission.t	/^sub check_with {$/;"	s
 check_with	t/file-permission.t	/^sub check_with {$/;"	s
-clean_up_globals	ack-2.999_08/t/Util.pm	/^sub clean_up_globals {$/;"	s
 clean_up_globals	t/Util.pm	/^sub clean_up_globals {$/;"	s
-clone	ack-2.999_08/lib/App/Ack/File.pm	/^sub clone {$/;"	s
 clone	lib/App/Ack/File.pm	/^sub clone {$/;"	s
-close	ack-2.999_08/lib/App/Ack/File.pm	/^sub close {$/;"	s
 close	lib/App/Ack/File.pm	/^sub close {$/;"	s
 color	dev/timings.pl	/^sub color {$/;"	s
-colorize	ack-2.999_08/t/Util.pm	/^sub colorize {$/;"	s
 colorize	t/Util.pm	/^sub colorize {$/;"	s
 count_matches_in_file	ack	/^sub count_matches_in_file {$/;"	s
-count_matches_in_file	ack-2.999_08/ack	/^sub count_matches_in_file {$/;"	s
 counts_valid	dev/timings.pl	/^sub counts_valid {$/;"	s
-create_filter	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub create_filter {$/;"	s
 create_filter	lib/App/Ack/Filter.pm	/^sub create_filter {$/;"	s
 create_format	dev/timings.pl	/^sub create_format {$/;"	s
-create_globals	ack-2.999_08/t/Util.pm	/^sub create_globals {$/;"	s
 create_globals	t/Util.pm	/^sub create_globals {$/;"	s
-create_group	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^sub create_group {$/;"	s
-create_group	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
-create_group	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
-create_group	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Extension.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Match.pm	/^sub create_group {$/;"	s
-create_tempfile	ack-2.999_08/t/Util.pm	/^sub create_tempfile {$/;"	s
 create_tempfile	t/Util.pm	/^sub create_tempfile {$/;"	s
-die	ack-2.999_08/lib/App/Ack.pm	/^sub die {$/;"	s
 die	lib/App/Ack.pm	/^sub die {$/;"	s
-dir_cleanup	ack-2.999_08/t/named-pipes.t	/^sub dir_cleanup {$/;"	s
 dir_cleanup	t/named-pipes.t	/^sub dir_cleanup {$/;"	s
-do_test	ack-2.999_08/t/ack-show-types.t	/^sub do_test {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
-exit_from_ack	ack-2.999_08/lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
-expect_ackrcs	ack-2.999_08/t/config-finder.t	/^sub expect_ackrcs {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
 file_has_match	ack	/^sub file_has_match {$/;"	s
-file_has_match	ack-2.999_08/ack	/^sub file_has_match {$/;"	s
-filetypes	ack-2.999_08/lib/App/Ack.pm	/^sub filetypes {$/;"	s
-filetypes	ack-2.999_08/t/filetypes.t	/^sub filetypes {$/;"	s
 filetypes	lib/App/Ack.pm	/^sub filetypes {$/;"	s
 filetypes	t/filetypes.t	/^sub filetypes {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Default.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/FirstLineMatch.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^sub filter {$/;"	s
-filter	ack-2.999_08/lib/App/Ack/Filter/MatchGroup.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Default.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Extension.pm	/^sub filter {$/;"	s
@@ -562,57 +287,27 @@ filter	lib/App/Ack/Filter/IsPath.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/IsPathGroup.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/Match.pm	/^sub filter {$/;"	s
 filter	lib/App/Ack/Filter/MatchGroup.pm	/^sub filter {$/;"	s
-filter_out_perldoc_noise	ack-2.999_08/t/Util.pm	/^sub filter_out_perldoc_noise {$/;"	s
 filter_out_perldoc_noise	t/Util.pm	/^sub filter_out_perldoc_noise {$/;"	s
-filter_test	ack-2.999_08/t/FilterTest.pm	/^sub filter_test {$/;"	s
 filter_test	t/FilterTest.pm	/^sub filter_test {$/;"	s
-find_config_files	ack-2.999_08/lib/App/Ack/ConfigFinder.pm	/^sub find_config_files {$/;"	s
 find_config_files	lib/App/Ack/ConfigFinder.pm	/^sub find_config_files {$/;"	s
-first_line_like	ack-2.999_08/t/Util.pm	/^sub first_line_like {$/;"	s
 first_line_like	t/Util.pm	/^sub first_line_like {$/;"	s
-firstliney	ack-2.999_08/lib/App/Ack/File.pm	/^sub firstliney {$/;"	s
 firstliney	lib/App/Ack/File.pm	/^sub firstliney {$/;"	s
-from_argv	ack-2.999_08/lib/App/Ack/Files.pm	/^sub from_argv {$/;"	s
 from_argv	lib/App/Ack/Files.pm	/^sub from_argv {$/;"	s
-from_file	ack-2.999_08/lib/App/Ack/Files.pm	/^sub from_file {$/;"	s
 from_file	lib/App/Ack/Files.pm	/^sub from_file {$/;"	s
-from_stdin	ack-2.999_08/lib/App/Ack/Files.pm	/^sub from_stdin {$/;"	s
 from_stdin	lib/App/Ack/Files.pm	/^sub from_stdin {$/;"	s
-get_arg_spec	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
 get_arg_spec	lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
-get_expected_options	ack-2.999_08/t/Util.pm	/^sub get_expected_options {$/;"	s
 get_expected_options	t/Util.pm	/^sub get_expected_options {$/;"	s
 get_file_id	ack	/^sub get_file_id {$/;"	s
-get_file_id	ack-2.999_08/ack	/^sub get_file_id {$/;"	s
-get_help_options	ack-2.999_08/t/ack-help.t	/^    sub get_help_options {$/;"	s
 get_help_options	t/ack-help.t	/^    sub get_help_options {$/;"	s
-get_man_options	ack-2.999_08/xt/man.t	/^    sub get_man_options {$/;"	s
 get_man_options	xt/man.t	/^    sub get_man_options {$/;"	s
 get_match_colno	ack	/^sub get_match_colno {$/;"	s
-get_match_colno	ack-2.999_08/ack	/^sub get_match_colno {$/;"	s
-get_rc	ack-2.999_08/t/Util.pm	/^sub get_rc {$/;"	s
 get_rc	t/Util.pm	/^sub get_rc {$/;"	s
 get_releases	dev/find-minimum-dep-versions.pl	/^sub get_releases {$/;"	s
-get_types	ack-2.999_08/t/ack-show-types.t	/^sub get_types {$/;"	s
 get_types	t/ack-show-types.t	/^sub get_types {$/;"	s
-get_version_statement	ack-2.999_08/lib/App/Ack.pm	/^sub get_version_statement {$/;"	s
 get_version_statement	lib/App/Ack.pm	/^sub get_version_statement {$/;"	s
-getcwd_clean	ack-2.999_08/t/Util.pm	/^sub getcwd_clean {$/;"	s
 getcwd_clean	t/Util.pm	/^sub getcwd_clean {$/;"	s
 grab_versions	dev/timings.pl	/^sub grab_versions {$/;"	s
-has_io_pty	ack-2.999_08/t/Util.pm	/^    sub has_io_pty {$/;"	s
 has_io_pty	t/Util.pm	/^    sub has_io_pty {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/FirstLineMatch.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^sub inspect {$/;"	s
-inspect	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/Collection.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/Extension.pm	/^sub inspect {$/;"	s
@@ -625,52 +320,21 @@ inspect	lib/App/Ack/Filter/IsPath.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/IsPathGroup.pm	/^sub inspect {$/;"	s
 inspect	lib/App/Ack/Filter/Match.pm	/^sub inspect {$/;"	s
 invalid_combinations	dev/crank-mutex	/^sub invalid_combinations {$/;"	s
-invert	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub invert {$/;"	s
-invert	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^sub invert {$/;"	s
 invert	lib/App/Ack/Filter.pm	/^sub invert {$/;"	s
 invert	lib/App/Ack/Filter/Inverse.pm	/^sub invert {$/;"	s
-is_cygwin	ack-2.999_08/t/Util.pm	/^sub is_cygwin {$/;"	s
 is_cygwin	t/Util.pm	/^sub is_cygwin {$/;"	s
-is_empty_array	ack-2.999_08/t/Util.pm	/^sub is_empty_array {$/;"	s
 is_empty_array	t/Util.pm	/^sub is_empty_array {$/;"	s
-is_filetype	ack-2.999_08/t/filetypes.t	/^sub is_filetype {$/;"	s
 is_filetype	t/filetypes.t	/^sub is_filetype {$/;"	s
-is_global_file	ack-2.999_08/t/noenv.t	/^sub is_global_file {$/;"	s
 is_global_file	t/noenv.t	/^sub is_global_file {$/;"	s
-is_inverted	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub is_inverted {$/;"	s
-is_inverted	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^sub is_inverted {$/;"	s
 is_inverted	lib/App/Ack/Filter.pm	/^sub is_inverted {$/;"	s
 is_inverted	lib/App/Ack/Filter/Inverse.pm	/^sub is_inverted {$/;"	s
-is_nonempty_array	ack-2.999_08/t/Util.pm	/^sub is_nonempty_array {$/;"	s
 is_nonempty_array	t/Util.pm	/^sub is_nonempty_array {$/;"	s
-is_windows	ack-2.999_08/t/Util.pm	/^sub is_windows {$/;"	s
 is_windows	t/Util.pm	/^sub is_windows {$/;"	s
-line_split	ack-2.999_08/t/Util.pm	/^sub line_split {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
-lists_match	ack-2.999_08/t/Util.pm	/^sub lists_match {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
-msg	ack-2.999_08/t/Util.pm	/^sub msg {$/;"	s
 msg	t/Util.pm	/^sub msg {$/;"	s
-mutex_options	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub mutex_options {$/;"	s
 mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub mutex_options {$/;"	s
-name	ack-2.999_08/lib/App/Ack/File.pm	/^sub name {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
-new	ack-2.999_08/lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/File.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Default.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/FirstLineMatch.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Inverse.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^sub new {$/;"	s
-new	ack-2.999_08/lib/App/Ack/Filter/MatchGroup.pm	/^sub new {$/;"	s
-new	ack-2.999_08/t/Barfly.pm	/^sub new {$/;"	s
-new	ack-2.999_08/t/filter.t	/^sub new {$/;"	s
 new	lib/App/Ack/ConfigFinder.pm	/^sub new {$/;"	s
 new	lib/App/Ack/File.pm	/^sub new {$/;"	s
 new	lib/App/Ack/Filter/Collection.pm	/^sub new {$/;"	s
@@ -687,132 +351,65 @@ new	lib/App/Ack/Filter/Match.pm	/^sub new {$/;"	s
 new	lib/App/Ack/Filter/MatchGroup.pm	/^sub new {$/;"	s
 new	t/Barfly.pm	/^sub new {$/;"	s
 new	t/filter.t	/^sub new {$/;"	s
-next	ack-2.999_08/lib/App/Ack/Files.pm	/^sub next {$/;"	s
 next	lib/App/Ack/Files.pm	/^sub next {$/;"	s
-no_home	ack-2.999_08/t/config-finder.t	/^sub no_home {$/;"	s
 no_home	t/config-finder.t	/^sub no_home {$/;"	s
-o	ack-2.999_08/t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
-open	ack-2.999_08/lib/App/Ack/File.pm	/^sub open {$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
-opt_parser	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
 opt_parser	lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
-option_in_usage	ack-2.999_08/t/ack-help.t	/^sub option_in_usage {$/;"	s
 option_in_usage	t/ack-help.t	/^sub option_in_usage {$/;"	s
-options	ack-2.999_08/lib/App/Ack/ConfigDefault.pm	/^sub options {$/;"	s
 options	lib/App/Ack/ConfigDefault.pm	/^sub options {$/;"	s
-options_clean	ack-2.999_08/lib/App/Ack/ConfigDefault.pm	/^sub options_clean {$/;"	s
 options_clean	lib/App/Ack/ConfigDefault.pm	/^sub options_clean {$/;"	s
-output_to_pipe	ack-2.999_08/lib/App/Ack.pm	/^sub output_to_pipe {$/;"	s
 output_to_pipe	lib/App/Ack.pm	/^sub output_to_pipe {$/;"	s
-pipe_into_ack	ack-2.999_08/t/Util.pm	/^sub pipe_into_ack {$/;"	s
 pipe_into_ack	t/Util.pm	/^sub pipe_into_ack {$/;"	s
-pipe_into_ack_with_stderr	ack-2.999_08/t/Util.pm	/^sub pipe_into_ack_with_stderr {$/;"	s
 pipe_into_ack_with_stderr	t/Util.pm	/^sub pipe_into_ack_with_stderr {$/;"	s
-populate_filetypes	ack-2.999_08/t/filetypes.t	/^sub populate_filetypes {$/;"	s
 populate_filetypes	t/filetypes.t	/^sub populate_filetypes {$/;"	s
-prep_environment	ack-2.999_08/t/Util.pm	/^sub prep_environment {$/;"	s
 prep_environment	t/Util.pm	/^sub prep_environment {$/;"	s
-print	ack-2.999_08/lib/App/Ack.pm	/^sub print            { print {$fh} @_; return; }$/;"	s
 print	lib/App/Ack.pm	/^sub print            { print {$fh} @_; return; }$/;"	s
-print_blank_line	ack-2.999_08/lib/App/Ack.pm	/^sub print_blank_line { print {$fh} "\\n"; return; }$/;"	s
 print_blank_line	lib/App/Ack.pm	/^sub print_blank_line { print {$fh} "\\n"; return; }$/;"	s
 print_line_with_context	ack	/^sub print_line_with_context {$/;"	s
-print_line_with_context	ack-2.999_08/ack	/^sub print_line_with_context {$/;"	s
 print_line_with_options	ack	/^sub print_line_with_options {$/;"	s
-print_line_with_options	ack-2.999_08/ack	/^sub print_line_with_options {$/;"	s
 print_matches_in_file	ack	/^sub print_matches_in_file {$/;"	s
-print_matches_in_file	ack-2.999_08/ack	/^sub print_matches_in_file {$/;"	s
-process_args	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
-read_file	ack-2.999_08/t/Util.pm	/^sub read_file {$/;"	s
 read_file	t/Util.pm	/^sub read_file {$/;"	s
-read_rcfile	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
 read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
-register_filter	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
-remove_defaults_and_globals	ack-2.999_08/t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
-reset	ack-2.999_08/lib/App/Ack/File.pm	/^sub reset {$/;"	s
 reset	lib/App/Ack/File.pm	/^sub reset {$/;"	s
-reslash	ack-2.999_08/t/Util.pm	/^sub reslash {$/;"	s
 reslash	t/Util.pm	/^sub reslash {$/;"	s
-reslash_all	ack-2.999_08/t/Util.pm	/^sub reslash_all {$/;"	s
 reslash_all	t/Util.pm	/^sub reslash_all {$/;"	s
-retrieve_arg_sources	ack-2.999_08/lib/App/Ack/ConfigLoader.pm	/^sub retrieve_arg_sources {$/;"	s
 retrieve_arg_sources	lib/App/Ack/ConfigLoader.pm	/^sub retrieve_arg_sources {$/;"	s
 retrieve_issues	dev/issues-scrub.pl	/^sub retrieve_issues {$/;"	s
-run	ack-2.999_08/t/Barfly.pm	/^sub run {$/;"	s
 run	t/Barfly.pm	/^sub run {$/;"	s
-run_ack	ack-2.999_08/t/Util.pm	/^sub run_ack {$/;"	s
 run_ack	t/Util.pm	/^sub run_ack {$/;"	s
-run_ack_with_stderr	ack-2.999_08/t/Util.pm	/^sub run_ack_with_stderr {$/;"	s
 run_ack_with_stderr	t/Util.pm	/^sub run_ack_with_stderr {$/;"	s
-run_cmd	ack-2.999_08/t/Util.pm	/^sub run_cmd {$/;"	s
 run_cmd	t/Util.pm	/^sub run_cmd {$/;"	s
-run_piped	ack-2.999_08/t/Util.pm	/^sub run_piped {$/;"	s
 run_piped	t/Util.pm	/^sub run_piped {$/;"	s
-run_tests	ack-2.999_08/t/Barfly.pm	/^sub run_tests {$/;"	s
 run_tests	t/Barfly.pm	/^sub run_tests {$/;"	s
-safe_chdir	ack-2.999_08/t/Util.pm	/^sub safe_chdir {$/;"	s
 safe_chdir	t/Util.pm	/^sub safe_chdir {$/;"	s
-safe_mkdir	ack-2.999_08/t/Util.pm	/^sub safe_mkdir {$/;"	s
 safe_mkdir	t/Util.pm	/^sub safe_mkdir {$/;"	s
-say	ack-2.999_08/lib/App/Ack.pm	/^sub say              { print {$fh} @_, $ors; return; }$/;"	s
 say	lib/App/Ack.pm	/^sub say              { print {$fh} @_, $ors; return; }$/;"	s
-set_up_assertion_that_these_options_will_ignore_those_directories	ack-2.999_08/t/ack-ignore-dir.t	/^sub set_up_assertion_that_these_options_will_ignore_those_directories {$/;"	s
 set_up_assertion_that_these_options_will_ignore_those_directories	t/ack-ignore-dir.t	/^sub set_up_assertion_that_these_options_will_ignore_those_directories {$/;"	s
 set_up_line_context	ack	/^sub set_up_line_context {$/;"	s
-set_up_line_context	ack-2.999_08/ack	/^sub set_up_line_context {$/;"	s
 set_up_line_context_for_file	ack	/^sub set_up_line_context_for_file {$/;"	s
-set_up_line_context_for_file	ack-2.999_08/ack	/^sub set_up_line_context_for_file {$/;"	s
-set_up_pager	ack-2.999_08/lib/App/Ack.pm	/^sub set_up_pager {$/;"	s
 set_up_pager	lib/App/Ack.pm	/^sub set_up_pager {$/;"	s
-sets_match	ack-2.999_08/t/Util.pm	/^sub sets_match {$/;"	s
 sets_match	t/Util.pm	/^sub sets_match {$/;"	s
-show_help	ack-2.999_08/lib/App/Ack.pm	/^sub show_help {$/;"	s
 show_help	lib/App/Ack.pm	/^sub show_help {$/;"	s
-show_help_colors	ack-2.999_08/lib/App/Ack.pm	/^sub show_help_colors {$/;"	s
 show_help_colors	lib/App/Ack.pm	/^sub show_help_colors {$/;"	s
-show_help_rgb	ack-2.999_08/lib/App/Ack.pm	/^sub show_help_rgb {$/;"	s
 show_help_rgb	lib/App/Ack.pm	/^sub show_help_rgb {$/;"	s
-show_help_types	ack-2.999_08/lib/App/Ack.pm	/^sub show_help_types {$/;"	s
 show_help_types	lib/App/Ack.pm	/^sub show_help_types {$/;"	s
-show_man	ack-2.999_08/lib/App/Ack.pm	/^sub show_man {$/;"	s
 show_man	lib/App/Ack.pm	/^sub show_man {$/;"	s
-show_types	ack-2.999_08/lib/App/Ack.pm	/^sub show_types {$/;"	s
 show_types	lib/App/Ack.pm	/^sub show_types {$/;"	s
-slurp	ack-2.999_08/t/file-iterator.t	/^sub slurp {$/;"	s
 slurp	t/file-iterator.t	/^sub slurp {$/;"	s
-strip_special_chars	ack-2.999_08/xt/man.t	/^sub strip_special_chars {$/;"	s
 strip_special_chars	xt/man.t	/^sub strip_special_chars {$/;"	s
-stty	ack-2.999_08/t/Util.pm	/^                stty:\\ standard\\ input:\\ Inappropriate\\ ioctl\\ for\\ device$/;"	l
-stty	ack-2.999_08/t/Util.pm	/^                stty:\\ stdin\\ isn't\\ a\\ terminal$/;"	l
 stty	t/Util.pm	/^                stty:\\ standard\\ input:\\ Inappropriate\\ ioctl\\ for\\ device$/;"	l
 stty	t/Util.pm	/^                stty:\\ stdin\\ isn't\\ a\\ terminal$/;"	l
-subtest_name	ack-2.999_08/t/Util.pm	/^sub subtest_name {$/;"	s
 subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
-swamp_files	ack-2.999_08/t/FilterTest.pm	/^sub swamp_files {$/;"	s
 swamp_files	t/FilterTest.pm	/^sub swamp_files {$/;"	s
-test_ack_with	ack-2.999_08/t/illegal-regex.t	/^sub test_ack_with {$/;"	s
 test_ack_with	t/illegal-regex.t	/^sub test_ack_with {$/;"	s
-test_loader	ack-2.999_08/t/config-loader.t	/^sub test_loader {$/;"	s
 test_loader	t/config-loader.t	/^sub test_loader {$/;"	s
-test_match	ack-2.999_08/t/ack-match.t	/^sub test_match {$/;"	s
 test_match	t/ack-match.t	/^sub test_match {$/;"	s
-thpppt	ack-2.999_08/lib/App/Ack.pm	/^sub thpppt {$/;"	s
 thpppt	lib/App/Ack.pm	/^sub thpppt {$/;"	s
 time_ack	dev/timings.pl	/^sub time_ack {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/Collection.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/Extension.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/ExtensionGroup.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/FirstLineMatch.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/Is.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/IsGroup.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/IsPath.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/IsPathGroup.pm	/^sub to_string {$/;"	s
-to_string	ack-2.999_08/lib/App/Ack/Filter/Match.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Collection.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Extension.pm	/^sub to_string {$/;"	s
@@ -823,17 +420,10 @@ to_string	lib/App/Ack/Filter/IsGroup.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/IsPath.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/IsPathGroup.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Match.pm	/^sub to_string {$/;"	s
-touch	ack-2.999_08/t/Util.pm	/^sub touch {$/;"	s
 touch	t/Util.pm	/^sub touch {$/;"	s
-touch_ackrc	ack-2.999_08/t/Util.pm	/^sub touch_ackrc {$/;"	s
 touch_ackrc	t/Util.pm	/^sub touch_ackrc {$/;"	s
-untaint	ack-2.999_08/t/Util.pm	/^sub untaint {$/;"	s
 untaint	t/Util.pm	/^sub untaint {$/;"	s
-warn	ack-2.999_08/lib/App/Ack.pm	/^sub warn {$/;"	s
 warn	lib/App/Ack.pm	/^sub warn {$/;"	s
-windows_slashify	ack-2.999_08/t/Util.pm	/^sub windows_slashify {$/;"	s
 windows_slashify	t/Util.pm	/^sub windows_slashify {$/;"	s
-with_home	ack-2.999_08/t/config-finder.t	/^sub with_home {$/;"	s
 with_home	t/config-finder.t	/^sub with_home {$/;"	s
-write_file	ack-2.999_08/t/Util.pm	/^sub write_file {$/;"	s
 write_file	t/Util.pm	/^sub write_file {$/;"	s
