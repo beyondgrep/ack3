@@ -584,7 +584,7 @@ sub get_version_statement {
         $this_perl .= $ext unless $this_perl =~ m/$ext$/i;
     }
     my $perl_ver = sprintf( 'v%vd', $^V );
-    my $ack_ver  = sprintf( 'v%vd', $App::Ack::VERSION );
+    my $ack_ver  = sprintf( 'v%vd', $VERSION );
 
     my $build_type = $App::Ack::STANDALONE ? 'standalone version' : 'standard build';
 
