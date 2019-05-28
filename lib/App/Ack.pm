@@ -13,7 +13,7 @@ A container for functions for the ack program.
 
 =head1 VERSION
 
-Version 2.999_08
+v3.0.0
 
 =cut
 
