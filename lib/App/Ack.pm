@@ -20,7 +20,7 @@ Version 2.999_08
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    $VERSION = '2.999_08';
+    $VERSION = v3.0.0;
     $COPYRIGHT = 'Copyright 2005-2019 Andy Lester.';
 }
 our $STANDALONE = 0;
@@ -214,6 +214,7 @@ Dumps the help page to the user.
 =cut
 
 sub show_help {
+    my $ack_ver = sprintf( 'v%vd', $VERSION );
     App::Ack::print( <<"END_OF_HELP" );
 Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
 
@@ -369,7 +370,7 @@ ack's home page is at https://beyondgrep.com/
 
 The full ack manual is available by running "ack --man".
 
-This is version $VERSION of ack.  Run "ack --version" for full version info.
+This is version $ack_ver of ack.  Run "ack --version" for full version info.
 END_OF_HELP
 
     return;
@@ -582,13 +583,14 @@ sub get_version_statement {
         my $ext = $Config::Config{_exe};
         $this_perl .= $ext unless $this_perl =~ m/$ext$/i;
     }
-    my $ver = sprintf( '%vd', $^V );
+    my $perl_ver = sprintf( 'v%vd', $^V );
+    my $ack_ver  = sprintf( 'v%vd', $VERSION );
 
     my $build_type = $App::Ack::STANDALONE ? 'standalone version' : 'standard build';
 
     return <<"END_OF_VERSION";
-ack ${VERSION} ($build_type)
-Running under Perl $ver at $this_perl
+ack $ack_ver ($build_type)
+Running under Perl $perl_ver at $this_perl
 
 $copyright
 

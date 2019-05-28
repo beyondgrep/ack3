@@ -29,7 +29,7 @@ my @modules = qw(
 
 pass( 'All external modules loaded' );
 
-diag( "Testing ack version $App::Ack::VERSION under Perl $], $^X" );
+diag sprintf( 'Testing ack v%vd under Perl v%vd, %s', $App::Ack::VERSION, $^V, $^X );
 for my $module ( @modules ) {
     no strict 'refs';
     my $ver = ${$module . '::VERSION'};
