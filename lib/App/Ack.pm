@@ -11,10 +11,6 @@ App::Ack
 
 A container for functions for the ack program.
 
-=head1 VERSION
-
-v3.0.0
-
 =cut
 
 our $VERSION;
