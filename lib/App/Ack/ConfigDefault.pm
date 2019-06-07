@@ -457,6 +457,10 @@ sub _options_block {
 # http://www.vim.org/
 --type-add=vim:ext:vim
 
+# Vue
+# https://vuejs.org/
+--type-add=vue:ext:vue
+
 # XML
 # http://www.w3.org/TR/REC-xml/
 --type-add=xml:ext:xml,dtd,xsd,xsl,xslt,ent,wsdl
