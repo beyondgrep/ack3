@@ -22,8 +22,12 @@ ack is written and maintained by Andy Lester (andy@beyondgrep.com).
 
 # Building
 
-ack requires Perl 5.10.1 or higher.  Perl 5.10.1 was released August 2009.
+ack requires Perl 5.10.1 or higher. Perl 5.10.1 was released August 2009.
 
+ack is dependent on the [File::Next](https://github.com/karenetheridge/File-Next) module which will have to be installed before building.
+
+    # Install File::Next dependency
+    perl -MCPAN -e install File::Next
     # Required
     perl Makefile.PL
     make
