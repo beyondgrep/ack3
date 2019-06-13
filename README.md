@@ -10,7 +10,7 @@ ack is a code-searching tool, similar to grep but optimized for
 programmers searching large trees of source code.  It is highly
 portable and runs on any platform that runs Perl.
 
-ack is written and maintained by Andy Lester (andy@beyondgrep.com).
+ack is written and maintained by Andy Lester (andy@petdance.com).
 
 * [Project home page](https://beyondgrep.com/)
 * [Code home page](https://github.com/beyondgrep/ack3)
