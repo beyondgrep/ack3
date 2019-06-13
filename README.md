@@ -27,9 +27,9 @@ ack requires Perl 5.10.1 or higher, and it requires the
 
 ## Checking prerequisites
 
-To check ack's dependencies, run this command:
+To check ack's dependencies, run this command in the shell:
 
-    $ perl -MFile::Next -E'say "ack is ready to build!"'
+    perl -MFile::Next -E'say "ack is ready to build!"'
 
 If everything is OK, you'll see:
 
