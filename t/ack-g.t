@@ -127,6 +127,7 @@ subtest 'Case-insensitive via -i' => sub {
     ack_sets_match( [ @args, @files ], \@expected, "Looking for -i -g $regex " );
 };
 
+
 subtest 'Case-insensitive via (?i:)' => sub {
     plan tests => 1;
 
@@ -141,6 +142,7 @@ subtest 'Case-insensitive via (?i:)' => sub {
     ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex" );
 };
 
+
 subtest 'Negate -i via -I' => sub {
     plan tests => 1;
 
@@ -152,6 +154,7 @@ subtest 'Negate -i via -I' => sub {
 
     ack_sets_match( [ @args, @files ], \@expected, "Looking for -i -I -g $regex" );
 };
+
 
 subtest 'Negate -I via -i' => sub {
     plan tests => 1;
@@ -167,6 +170,7 @@ subtest 'Negate -I via -i' => sub {
     ack_sets_match( [ @args, @files ], \@expected, "Looking for -I -i -g $regex " );
 
 };
+
 
 subtest 'File on command line is always searched' => sub {
     plan tests => 1;
