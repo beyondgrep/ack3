@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 18;
+use Test::More tests => 20;
 
 use lib 't';
 use Util;
@@ -140,6 +140,35 @@ subtest 'Case-insensitive via (?i:)' => sub {
     my @args  = ( '-g', $regex );
 
     ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex" );
+};
+
+
+subtest 'Negate -i via -I' => sub {
+    plan tests => 1;
+
+    my @expected = qw();
+    my $regex = 'PIPE';
+
+    my @args = ( '-i', '-I', '-g', $regex);
+    my @files = qw( t/swamp );
+
+    ack_sets_match( [ @args, @files ], \@expected, "Looking for -i -I -g $regex" );
+};
+
+
+subtest 'Negate -I via -i' => sub {
+    plan tests => 1;
+
+    my @expected = qw(
+        t/swamp/pipe-stress-freaks.F
+    );
+    my $regex = 'PIPE';
+
+    my @args  = ( '-I', '-i', '-g', $regex );
+    my @files = qw( t/swamp );
+
+    ack_sets_match( [ @args, @files ], \@expected, "Looking for -I -i -g $regex " );
+
 };
 
 
