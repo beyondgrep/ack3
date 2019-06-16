@@ -67,10 +67,15 @@ sub from_file {
     my $file  = shift;
 
     my $error_handler = _generate_error_handler();
+    my $warning_handler = $error_handler;
+    if ( !$App::Ack::report_bad_filenames ) {
+      $warning_handler = sub {};
+    }
+
     my $iter =
         File::Next::from_file( {
             error_handler   => $error_handler,
-            warning_handler => $error_handler,
+            warning_handler => $warning_handler,
             sort_files      => $opt->{sort_files},
         }, $file ) or return undef;
 
