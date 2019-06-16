@@ -4,3 +4,4 @@ RUN mkdir -p /app
 WORKDIR /app
 
 RUN perl -MCPAN -e "install File::Next"
+RUN perl -MCPAN -e "install Test::Pod"
