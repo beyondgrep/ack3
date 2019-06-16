@@ -842,7 +842,9 @@ sub print_line_with_options {
             my %keep = map { ($_ => ${$_} // '') } @special_vars_used_by_opt_output;
             $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
             $keep{f} = $filename if exists $keep{f};
-            $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/ego;
+            if (scalar @special_vars_used_by_opt_output != 0) {
+                $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/ego;
+            }
             App::Ack::say( join( $separator, @line_parts, $output ) );
         }
     }
