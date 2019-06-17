@@ -125,15 +125,7 @@ sub _generate_error_handler {
             App::Ack::warn( $msg );
         };
     }
-    else {
-        return sub {
-            my $msg = shift;
-            if ( $! == EACCES ) {
-                return;
-            }
-            App::Ack::warn( $msg );
-        };
-    }
+    return sub {};
 }
 
 1;
