@@ -42,7 +42,7 @@ for my $word ( qw( chdir mkdir ) ) {
     subtest "Finding $word" => sub {
         plan tests => 3;
 
-        my @args = ( '-w', '--ignore-file=is:coresubs.t', '--ignore-dir=garage', @exclusions, $word );
+        my @args = ( '-w', '--ignore-file=is:coresubs.t', '--ignore-file=is:Dockerfile', '--ignore-dir=garage', @exclusions, $word );
         my @results = run_ack( @args );
 
         is( scalar @results, 1, 'Exactly one hit...' ) or do { require Data::Dumper; warn Data::Dumper::Dumper( \@results ) };

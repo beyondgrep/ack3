@@ -88,6 +88,20 @@ will remove them later.
 We have a perlcriticrc and a perltidyrc file for checking the Perl source
 files.
 
+## Docker for Development
+
+To simplify setup of a development environment for working on ack, you
+can use the provided Docker-based environment. Running
+`docker-compose -f dev/docker/docker-compose.yml build`
+will generate an isolated development environment that has Perl 5.30 and
+the required `File::Next` package installed. To get a bash shell in the
+development environment by running
+`docker-compose -f dev/docker/docker-compose.yml run app bash`. The first
+time this runs it will run `perl Makefile.PL` to generate the `Makefile` and
+then run `make` followed by `make test`. Subsequent runs of
+`docker-compose -f dev/docker/docker-compose.yml run app bash` will not repeat
+that process.
+
 ## How to cut a release
 
 ### For all releases
