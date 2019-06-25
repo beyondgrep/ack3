@@ -52,7 +52,6 @@ our $opt_v;
 our $is_tracking_context;
 
 our @special_vars_used_by_opt_output;
-our $special_vars_used_by_opt_output;
 
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
@@ -163,7 +162,6 @@ MAIN: {
 
         my @supported_special_variables = ( 1..9, qw( _ . ` & ' +  f ) );
         @special_vars_used_by_opt_output = grep { $opt_output =~ /\$$_/ } @supported_special_variables;
-        $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );
 
         # If the $opt_output contains $&, $` or $', those vars won't be
         # captured until they're used at least once in the program.
@@ -833,16 +831,19 @@ sub print_line_with_options {
 
     if ( $opt_output ) {
         while ( $line =~ /$opt_regex/og ) {
-            no strict;
-
             my $output = $opt_output;
+            if ( @special_vars_used_by_opt_output ) {
+                no strict;
 
-            # Stash copies of the special variables because we can't rely
-            # on them not changing in the process of doing the s///.
-            my %keep = map { ($_ => ${$_} // '') } @special_vars_used_by_opt_output;
-            $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
-            $keep{f} = $filename if exists $keep{f};
-            $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/ego;
+                # Stash copies of the special variables because we can't rely
+                # on them not changing in the process of doing the s///.
+
+                my %keep = map { ($_ => ${$_} // '') } @special_vars_used_by_opt_output;
+                $keep{_} = $line if exists $keep{_}; # Manually set it because $_ gets reset in a map.
+                $keep{f} = $filename if exists $keep{f};
+                my $special_vars_used_by_opt_output = join( '', @special_vars_used_by_opt_output );
+                $output =~ s/\$([$special_vars_used_by_opt_output])/$keep{$1}/ego;
+            }
             App::Ack::say( join( $separator, @line_parts, $output ) );
         }
     }

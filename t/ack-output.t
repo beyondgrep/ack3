@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 42;
+use Test::More tests => 44;
 
 use lib 't';
 use Util;
@@ -301,6 +301,19 @@ HERE
     lists_match( \@results, \@expected, 'Filename with last match' );
 }
 
+
+NO_SPECIALS_IN_OUTPUT_EXPRESSION : {
+    my @expected = line_split( <<'HERE' );
+literal
+literal
+HERE
+
+    my @files = qw( t/text/ozymandias.txt );
+    my @args = qw( sand --output=literal );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Filename with last match' );
+}
 
 
 done_testing();

@@ -8,6 +8,10 @@ it tries to search.  The -s option would not always work in conjection with
 the -x option.  Now it does.  Thanks, Anders Eriksson and M. Scott Ford.
 (GH #175)
 
+ack would die if you specified a --output option that didn't use one
+of Perl's special match variables.  Now it won't.  Thanks, M. Scott
+Ford. (GH #210)
+
 [INTERNALS]
 Added a Dockerfile for use when working on ack development.  Thanks,
 M. Scott Ford. (GH #208)
