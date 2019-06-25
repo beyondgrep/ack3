@@ -1,5 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
+v3.0.1
+========================================
+[INTERNALS]
+Added a Dockerfile for use when working on ack development.  Thanks,
+M. Scott Ford. (GH #208)
+
+
 v3.0.0      Mon May 27 21:46:34 CDT 2019
 ========================================
 First official release of ack verison 3.
