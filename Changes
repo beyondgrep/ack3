@@ -2,6 +2,12 @@ History file for ack 3.  https://beyondgrep.com/
 
 v3.0.1
 ========================================
+[FIXES]
+The -s option tells ack not to complain about missing or unreadable files
+it tries to search.  The -s option would not always work in conjection with
+the -x option.  Now it does.  Thanks, Anders Eriksson and M. Scott Ford.
+(GH #175)
+
 [INTERNALS]
 Added a Dockerfile for use when working on ack development.  Thanks,
 M. Scott Ford. (GH #208)

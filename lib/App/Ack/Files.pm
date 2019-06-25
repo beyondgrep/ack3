@@ -4,7 +4,6 @@ use App::Ack ();
 use App::Ack::File ();
 
 use File::Next 1.16 ();
-use Errno qw(EACCES);
 
 use warnings;
 use strict;
@@ -126,13 +125,7 @@ sub _generate_error_handler {
         };
     }
     else {
-        return sub {
-            my $msg = shift;
-            if ( $! == EACCES ) {
-                return;
-            }
-            App::Ack::warn( $msg );
-        };
+        return sub {};
     }
 }
 

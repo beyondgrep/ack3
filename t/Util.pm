@@ -1189,17 +1189,38 @@ sub filter_out_perldoc_noise {
 sub make_unreadable {
     my $file = shift;
 
-    # Change permissions of this file to unreadable.
-    my (undef, undef, $old_mode) = stat($file);
-    chmod 0000, $file;
-    my (undef, undef, $new_mode) = stat($file);
-
+    my $old_mode;
+    my $new_mode;
     my $error;
-    if ( $old_mode eq $new_mode ) {
-        $error = qq{Unable to modify ${file}'s permissions};
+
+    # Change permissions of this file to unreadable.
+    my @old_stat = stat($file);
+    if ( !@old_stat ) {
+        $error = "Unable to stat $file: $!";
     }
-    elsif ( -r $file ) {
-        $error = qq{File $file is still readable despite our attempts to changes its permissions};
+    else {
+        $old_mode = $old_stat[2];
+
+        my $nfiles = chmod 0000, $file;
+        if ( !$nfiles ) {
+            $error = "Unable to chmod $file: $!";
+        }
+        else {
+            my @new_stat = stat($file);
+            if ( !@new_stat ) {
+                $error = "Unable to stat $file after chmod: $!";
+            }
+            else {
+                $new_mode = $new_stat[2];
+
+                if ( $old_mode eq $new_mode ) {
+                    $error = "chmod did not modify modify ${file}'s permissions";
+                }
+                elsif ( -r $file ) {
+                    $error = "File $file is still readable despite our attempts to changes its permissions";
+                }
+            }
+        }
     }
 
     return ($old_mode, $error);
