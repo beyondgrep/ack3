@@ -29,7 +29,6 @@ my %parms = (
 
     PREREQ_PM => {
         'Cwd'               => '3.00',
-        'Errno'             => 0,
         'File::Basename'    => '1.00015',
         'File::Next'        => '1.16',
         'File::Spec'        => '3.00',

@@ -2107,6 +2107,7 @@ mailing list.
 How appropriate to have I<ack>nowledgements!
 
 Thanks to everyone who has contributed to ack in any way, including
+M. Scott Ford,
 Anders Eriksson,
 H.Merijn Brand,
 Duke Leto,
