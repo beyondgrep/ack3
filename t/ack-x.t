@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 2;
 
 use lib 't';
 use Util;
@@ -32,26 +32,30 @@ $raven:122:And his eyes have all the seeming of a demon's that is dreaming,
 $raven:124:And my soul from out that shadow that lies floating on the floor
 HERE
 
-my $perl = caret_X();
-my @lhs_args = ( $perl, '-Mblib', build_ack_invocation( '--sort-files', '-g', '[vz]', 't/text' ) );
-my @rhs_args = ( $perl, '-Mblib', build_ack_invocation( '-x', '-i', 'that' ) );
+subtest 'Basics' => sub {
+    plan tests => 2;
 
-if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-    @lhs_args = grep { $_ ne '-Mblib' } @lhs_args;
-    @rhs_args = grep { $_ ne '-Mblib' } @rhs_args;
-}
+    my $perl = caret_X();
+    my @lhs_args = ( $perl, '-Mblib', build_ack_invocation( '--sort-files', '-g', '[vz]', 't/text' ) );
+    my @rhs_args = ( $perl, '-Mblib', build_ack_invocation( '-x', '-i', 'that' ) );
 
-my ($stdout, $stderr);
+    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
+        @lhs_args = grep { $_ ne '-Mblib' } @lhs_args;
+        @rhs_args = grep { $_ ne '-Mblib' } @rhs_args;
+    }
 
-if ( is_windows() ) {
-    ($stdout, $stderr) = run_cmd("@lhs_args | @rhs_args");
-}
-else {
-    ($stdout, $stderr) = run_piped( \@lhs_args, \@rhs_args );
-}
+    my ($stdout, $stderr);
 
-sets_match( $stdout, \@expected, __FILE__ );
-is_empty_array( $stderr );
+    if ( is_windows() ) {
+        ($stdout, $stderr) = run_cmd("@lhs_args | @rhs_args");
+    }
+    else {
+        ($stdout, $stderr) = run_piped( \@lhs_args, \@rhs_args );
+    }
+
+    sets_match( $stdout, \@expected, __FILE__ );
+    is_empty_array( $stderr );
+};
 
 
 # GH #175: -s doesn't work with -x
