@@ -65,6 +65,7 @@ our @EXPORT = qw(
     get_rc
     getcwd_clean
     filter_out_perldoc_noise
+    make_unreadable
 
     safe_chdir
     safe_mkdir
@@ -1182,6 +1183,26 @@ sub filter_out_perldoc_noise {
     ];
 
     return $stderr;
+}
+
+
+sub make_unreadable {
+    my $file = shift;
+
+    # Change permissions of this file to unreadable.
+    my (undef, undef, $old_mode) = stat($file);
+    chmod 0000, $file;
+    my (undef, undef, $new_mode) = stat($file);
+
+    my $error;
+    if ( $old_mode eq $new_mode ) {
+        $error = qq{Unable to modify ${file}'s permissions};
+    }
+    elsif ( -r $file ) {
+        $error = qq{File $file is still readable despite our attempts to changes its permissions};
+    }
+
+    return ($old_mode, $error);
 }
 
 

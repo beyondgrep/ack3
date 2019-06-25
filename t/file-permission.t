@@ -14,7 +14,7 @@ use File::Spec;
 use File::Copy;
 use File::Temp;
 
-use constant NTESTS => 6;
+use constant NTESTS => 5;
 
 plan skip_all => q{Can't be checked under Win32} if is_windows();
 plan skip_all => q{Can't be run as root}         if $> == 0;
@@ -28,18 +28,12 @@ my $target   = File::Spec->catfile( $temp_dir, 'foo' );
 
 copy( $0, $target ) or die "Can't copy $0 to $target";
 
-# Change permissions of this file to unreadable.
-my (undef, undef, $old_mode) = stat($target);
-chmod 0000, $target;
-my (undef, undef, $new_mode) = stat($target);
+my ($old_mode,$error) = make_unreadable( $target );
 
 sub o { return sprintf '%o', shift }
 
 SKIP: {
-    skip q{Unable to modify test program's permissions}, NTESTS if $old_mode eq $new_mode;
-    skip q{Program readable despite permission changes}, NTESTS if -r $target;
-
-    isnt( o($new_mode), o($old_mode), "chmodded $target to be unreadable" );
+    skip $error if $error;
 
     # Execute a search on this file.
     check_with( 'regex 1', $target );
