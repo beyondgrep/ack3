@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-v3.0.1
+v3.0.1      Tue Jun 25 20:47:58 CDT 2019
 ========================================
 [FIXES]
 The -s option tells ack not to complain about missing or unreadable files
