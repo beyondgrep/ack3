@@ -194,11 +194,14 @@ sub grab_versions {
         }
         else {
             my $output = `$^X $ack --noenv --version 2>&1`;
-            if($output =~ /ack\s+(?<version>\d+[.]\d+(_\d+)?)/) {
+            if ( $output =~ /ack\s+(?<version>\d+[.]\d+(_\d+)?)/ ) {
+                $version = $+{'version'};
+            }
+            elsif ( $output =~ /ack\s+v(?<version>\d+[.]\d+[.]\d+)/ ) {
                 $version = $+{'version'};
             }
             else {
-                # XXX uh-oh
+                die "UNABLE TO PARSE $output";
             }
         }
 
