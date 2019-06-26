@@ -2,7 +2,7 @@
 
 * Linux [![Build Status](https://travis-ci.org/beyondgrep/ack3.png?branch=dev)](https://travis-ci.org/beyondgrep/ack3)
 * Windows [![Build Status](https://ci.appveyor.com/api/projects/status/github/beyondgrep/ack3)](https://ci.appveyor.com/project/petdance/ack3)
-* [CPAN Testers](https://cpantesters.org/distro/A/ack.html)
+* [CPAN Testers](http://cpantesters.org/distro/A/ack.html)
 
 # ack 3
 
@@ -16,9 +16,9 @@ ack is written and maintained by Andy Lester (andy@petdance.com).
 * [Code home page](https://github.com/beyondgrep/ack3)
 * [Issue tracker](https://github.com/beyondgrep/ack3/issues)
 * Mailing lists
-    * [Announcements](https://groups.google.com/d/forum/ack-announcements)
-    * [Users](https://groups.google.com/d/forum/ack-users)
-    * [Developers](https://groups.google.com/d/forum/ack-dev)
+    * [ack-announce](https://groups.google.com/d/forum/ack-announce), announcements-only
+    * [ack-users](https://groups.google.com/d/forum/ack-users), for users of ack
+    * [ack-dev](https://groups.google.com/d/forum/ack-dev), for ack development
 
 # Building
 
