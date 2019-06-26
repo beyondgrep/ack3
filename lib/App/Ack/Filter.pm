@@ -43,7 +43,7 @@ responsible for filtering filenames to be searched.
 
 =head1 METHODS
 
-=head2 App::Ack:Filter->create_filter($type, @args)
+=head2 App::Ack::Filter->create_filter($type, @args)
 
 Creates a filter implementation, registered as C<$type>.  C<@args>
 are provided as additional arguments to the implementation's constructor.
@@ -60,7 +60,7 @@ sub create_filter {
     App::Ack::die( "Unknown filter type '$type'.  Type must be one of: $allowed_types." );
 }
 
-=head2 App::Ack:Filter->register_filter($type, $package)
+=head2 App::Ack::Filter->register_filter($type, $package)
 
 Registers a filter implementation package C<$package> under
 the name C<$type>.
