@@ -22,19 +22,23 @@
 
 * Merge to master and build
 
-    git co master
-    git merge dev
-    perl Makefile.PL
-    make tardist
+```
+git co master
+git merge dev
+perl Makefile.PL
+make tardist
+```
 
 * Upload the tarball to PAUSE
 
 * Copy to garage
 
-    make ack-standalone
-    mv ack-standalone garage/ack-v3.x.y
-    git add garage/ack-v3.x.y
-    git commit -m'Added 3.x.y to the garage'
+```
+make ack-standalone
+mv ack-standalone garage/ack-v3.x.y
+git add garage/ack-v3.x.y
+git commit -m'Added 3.x.y to the garage'
+```
 
 ## Update the website
 
@@ -42,9 +46,11 @@ This is all in the beyondgrep/website project.
 
 * Copy the ack-standalone and changelog
 
-    cd ~/website
-    cp ~/ack3/ack-standalone static/ack-v3.x.y
-    cp ~/ack3/Changes static/changes.txt
+```
+cd ~/website
+cp ~/ack3/ack-standalone static/ack-v3.x.y
+cp ~/ack3/Changes static/changes.txt
+```
 
 * Update version in `crank`
 
@@ -56,19 +62,25 @@ This is all in the beyondgrep/website project.
 
 * Regenerate the help text
 
-    perl static/ack-v3.x.y > tt/ack-help.txt
+```
+perl static/ack-v3.x.y > tt/ack-help.txt
+```
 
 * Regenerate the HTML help page
 
-    pod2html static/ack-v3.x.y > static/documentation/ack-v3.x.y-man.html
+```
+pod2html static/ack-v3.x.y > static/documentation/ack-v3.x.y-man.html
+```
 
 * ack for the old version number just to be sure there aren't others.
 
 * Make and install
 
-    make
-    make test
-    make rsync
+```
+make
+make test
+make rsync
+```
 
 ## GitHub cleanup
 
