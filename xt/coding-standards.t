@@ -24,6 +24,8 @@ for my $spec ( 't/*.t', 'xt/*.t' ) {
     push( @files, @these_files );
 }
 
+@files = grep !/lowercase.t/, @files; # lowercase.t has hi-bit and it's OK.
+
 plan tests => scalar @files;
 
 for my $file ( @files ) {

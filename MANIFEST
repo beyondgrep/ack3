@@ -107,6 +107,7 @@ t/issue522.t
 t/issue562.t
 t/issue571.t
 t/longopts.t
+t/lowercase.t
 t/match-filter.t
 t/mutex-options.t
 t/named-pipes.t
