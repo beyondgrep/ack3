@@ -681,4 +681,52 @@ sub filetypes {
 }
 
 
+sub is_lowercase {
+    my $pat = shift;
+
+    # The simplest case.
+    return 1 if lc($pat) eq $pat;
+
+    # If we have capitals, then go clean up any metacharacters that might have capitals.
+
+    # Get rid of any literal backslashes first to avoid confusion.
+    $pat =~ s/\\\\//g;
+
+    my $metacharacter = qr/
+        |\\A                # Beginning of string
+        |\\B                # Not word boundary
+        |\\c[a-zA-Z]        # Control characters
+        |\\D                # Non-digit character
+        |\\G                # End-of-match position of prior match
+        |\\H                # Not horizontal whitespace
+        |\\K                # Keep to the left
+        |\\N(\{.+?\})?      # Anything but \n, OR Unicode sequence
+        |\\[pP]\{.+?\}      # Named property and negation
+        |\\R                # Linebreak
+        |\\S                # Non-space character
+        |\\V                # Not vertical whitespace
+        |\\W                # Non-word character
+        |\\X                # ???
+        |\\x[0-9A-Fa-f]{2}  # Hex sequence
+        |\\Z                # End of string
+    /x;
+    $pat =~ s/$metacharacter//g;
+
+    my $name = qr/[_A-Za-z][_A-Za-z0-9]*?/;
+    # Eliminate named captures.
+    $pat =~ s/\(\?'$name'//g;
+    $pat =~ s/\(\?<$name>//g;
+
+    # Eliminate named backreferences.
+    $pat =~ s/\\k'$name'//g;
+    $pat =~ s/\\k<$name>//g;
+    $pat =~ s/\\k\{$name\}//g;
+
+    # Now with those metacharacters and named things removed, now see if it's lowercase.
+    return 1 if lc($pat) eq $pat;
+
+    return 0;
+}
+
+
 1; # End of App::Ack

@@ -512,7 +512,7 @@ sub build_regex {
     defined $str or App::Ack::die( 'No regular expression found.' );
 
     # Check for lowercaseness before we do any modifications.
-    my $regex_is_lc = $str eq lc $str;
+    my $regex_is_lc = App::Ack::is_lowercase( $str );
 
     $str = quotemeta( $str ) if $opt->{Q};
 

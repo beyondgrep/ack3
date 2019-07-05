@@ -1,5 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[FIXES]
+ack's smart-case feature would think that a pattern like "select \S+ from"
+is looking for a uppercase letter, and so would not make a case-insensitive
+search.  Now, ack knows that uppercase letters in metacharacters don't
+count as looking for a uppercase letter. (GH #156, 187, 214)
+
+
 v3.0.1      Tue Jun 25 20:47:58 CDT 2019
 ========================================
 [FIXES]
