@@ -45,6 +45,7 @@ my %parms = (
         'Test::Harness'     => '2.50', # Something reasonably newish
         'Test::More'        => '0.98', # For subtest()
         'Text::ParseWords'  => '3.1',
+        'version'           => 0,
         ( $^O eq 'MSWin32' ? ('Win32::ShellQuote' => '0.002001') : () ),
     },
     MAN3PODS            => {}, # no need for man pages for any of the .pm files
