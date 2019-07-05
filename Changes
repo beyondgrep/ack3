@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.0.2      Thu Jul  4 21:42:43 CDT 2019
 ========================================
 [FIXES]
 ack's smart-case feature would think that a pattern like "select \S+ from"
