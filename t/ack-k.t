@@ -28,8 +28,6 @@ HERE
 };
 
 subtest 'Only known types' => sub {
-    local $TODO = '-k not added yet';
-
     my $expected = <<'HERE';
 t/etc/buttonhook.xml.xxx => xml
 t/etc/shebang.php.xxx => php
