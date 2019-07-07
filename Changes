@@ -1,5 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
+
+NEXT
+========================================
+[FIXES]
+Made the check for lowercase patterns smarter.
+
+
 v3.0.2      Thu Jul  4 21:42:43 CDT 2019
 ========================================
 [FIXES]

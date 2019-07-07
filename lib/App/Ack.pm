@@ -703,6 +703,7 @@ sub is_lowercase {
         |\\K                # Keep to the left
         |\\N(\{.+?\})?      # Anything but \n, OR Unicode sequence
         |\\[pP]\{.+?\}      # Named property and negation
+        |\\[pP][A-Z]        # Named property and negation, single-character shorthand
         |\\R                # Linebreak
         |\\S                # Non-space character
         |\\V                # Not vertical whitespace
