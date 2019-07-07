@@ -403,11 +403,11 @@ sub _compile_file_filter {
 
     return sub {
         if ( $opt_g ) {
-            if ( $File::Next::name =~ /$opt_regex/ && $opt_v ) {
-                return 0;
+            if ( $File::Next::name =~ /$opt_regex/ ) {
+                return 0 if $opt_v;
             }
-            if ( $File::Next::name !~ /$opt_regex/ && !$opt_v ) {
-                return 0;
+            else {
+                return 0 if !$opt_v;
             }
         }
         # ack always selects files that are specified on the command
