@@ -63,12 +63,7 @@ of the file.
 sub basename {
     my ( $self ) = @_;
 
-    # XXX Definedness? Pre-populate the slot with an undef?
-    unless ( exists $self->{basename} ) {
-        $self->{basename} = (File::Spec->splitpath($self->name))[2];
-    }
-
-    return $self->{basename};
+    return $self->{basename} //= (File::Spec->splitpath($self->name))[2];
 }
 
 
