@@ -52,6 +52,9 @@ our $opt_v;
 # Flag if we need any context tracking.
 our $is_tracking_context;
 
+# Special /m version of our $opt_regex.
+our $line_scan_regex;
+
 our @special_vars_used_by_opt_output;
 
 MAIN: {
@@ -315,7 +318,7 @@ FILES:
                         }
                         else {
                             # Check for the pattern in what we got.
-                            $needs_line_scan = ($buffer =~ /$opt_regex/mo);
+                            $needs_line_scan = ($buffer =~ /$line_scan_regex/o);
                         }
                         if ( $needs_line_scan ) {
                             $file->reset();
@@ -557,12 +560,16 @@ sub build_regex {
         $str = "(?i)$str";
     }
 
-    my $re = eval { qr/$str/m };
-    if ( !$re ) {
+    my $re = eval { qr/$str/ };
+    if ( $re ) {
+        $line_scan_regex = eval { qr/$str/m };
+    }
+    if ( !$re || !$line_scan_regex ) {
         my $err = $@;
         chomp $err;
         App::Ack::die( "Invalid regex '$str':\n  $err" );
     }
+
 
     return $re;
 
