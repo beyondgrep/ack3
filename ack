@@ -403,7 +403,7 @@ sub _compile_file_filter {
 
     return sub {
         if ( $opt_g ) {
-            if ( $File::Next::name =~ /$opt_regex/ ) {
+            if ( $File::Next::name =~ /$opt_regex/o ) {
                 return 0 if $opt_v;
             }
             else {
