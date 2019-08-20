@@ -14,8 +14,6 @@ perl:
 
 env:
   global:
-    - AUTHOR_TESTING=1
-    - RELEASE_TESTING=1
     - HARNESS_OPTIONS='j:c'
 
 notifications:
@@ -31,9 +29,10 @@ before_install:
     - perl -V
 
 install:
+    - cpanm Test::More --force      # Perl 5.10 and 5.12 need this, and Test::More fails to install for them.
     - cpanm --installdeps .
-    - cpanm IO::Pty
-    - cpanm Test::Pod
+    - cpanm IO::Pty     # For testing
+    - cpanm Test::Pod   # For testing
 
 script:
     - perl Makefile.PL
