@@ -12,6 +12,12 @@ perl:
   - "5.12"
   - "5.10"
 
+env:
+  global:
+    - AUTHOR_TESTING=1
+    - RELEASE_TESTING=1
+    - HARNESS_OPTIONS='j:c'
+
 notifications:
     recipients:
         - andy@petdance.com
@@ -19,15 +25,16 @@ notifications:
     on_failure: always
 
 before_install:
-  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
-  - source ~/travis-perl-helpers/init
-  - build-perl
-  - perl -V
-  - build-dist
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
+    - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+    - source ~/travis-perl-helpers/init
+    - build-perl
+    - perl -V
 
-install: "cpanm File::Next IO::Pty Test::Pod Pod::Perldoc"
+install:
+    - cpanm --installdeps .
+    - cpanm IO::Pty
+    - cpanm Test::Pod
 
 script:
-  - perl Makefile.PL
-  - make fulltest
+    - perl Makefile.PL
+    - make fulltest
