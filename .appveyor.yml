@@ -21,7 +21,7 @@ build_script:
 
   - perl Makefile.PL
 
-  - gmake test
+  - gmake fulltest
 
     # Add an author test target too.
 
