@@ -32,7 +32,8 @@ sub strip_special_chars {
             diag explain $man_stderr;
         }
         else {
-            is( $man_stderr->[0], 'stty: standard input: Inappropriate ioctl for device', 'The one warning is one we can ignore' );
+            # Sometimes "standard input" is in single quotes, and sometimes it's not.
+            like( $man_stderr->[0], qr/stty: '?standard input'?: Inappropriate ioctl for device/, 'The one warning is one we can ignore' );
         }
 
         my $in_options_section;
