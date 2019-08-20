@@ -46,52 +46,52 @@ sub _options_block {
 ### Directories to ignore
 
 # Bazaar
-# http://bazaar.canonical.com/
+# https://bazaar.canonical.com/
 --ignore-directory=is:.bzr
 
 # Codeville
-# http://freecode.com/projects/codeville
+# http://freshmeat.sourceforge.net/projects/codeville
 --ignore-directory=is:.cdv
 
 # Interface Builder (Xcode)
-# http://en.wikipedia.org/wiki/Interface_Builder
+# https://en.wikipedia.org/wiki/Interface_Builder
 --ignore-directory=is:~.dep
 --ignore-directory=is:~.dot
 --ignore-directory=is:~.nib
 --ignore-directory=is:~.plst
 
 # Git
-# http://git-scm.com/
+# https://git-scm.com/
 --ignore-directory=is:.git
 # When submodules are used, .git is a file.
 --ignore-file=is:.git
 
 # Mercurial
-# http://mercurial.selenic.com/
+# https://www.mercurial-scm.org/
 --ignore-directory=is:.hg
 
-# quilt
-# http://directory.fsf.org/wiki/Quilt
+# Quilt
+# https://directory.fsf.org/wiki/Quilt
 --ignore-directory=is:.pc
 
 # Subversion
-# http://subversion.tigris.org/
+# https://subversion.apache.org/
 --ignore-directory=is:.svn
 
 # Monotone
-# http://www.monotone.ca/
+# https://www.monotone.ca/
 --ignore-directory=is:_MTN
 
 # CVS
-# http://savannah.nongnu.org/projects/cvs
+# https://savannah.nongnu.org/projects/cvs
 --ignore-directory=is:CVS
 
 # RCS
-# http://www.gnu.org/software/rcs/
+# https://www.gnu.org/software/rcs/
 --ignore-directory=is:RCS
 
 # SCCS
-# http://en.wikipedia.org/wiki/Source_Code_Control_System
+# https://en.wikipedia.org/wiki/Source_Code_Control_System
 --ignore-directory=is:SCCS
 
 # darcs
@@ -102,7 +102,7 @@ sub _options_block {
 --ignore-directory=is:_sgbak
 
 # autoconf
-# http://www.gnu.org/software/autoconf/
+# https://www.gnu.org/software/autoconf/
 --ignore-directory=is:autom4te.cache
 
 # Perl module building
@@ -117,15 +117,15 @@ sub _options_block {
 --ignore-directory=is:node_modules
 
 # CMake cache
-# http://www.cmake.org/
+# https://www.cmake.org/
 --ignore-directory=is:CMakeFiles
 
 # Eclipse workspace folder
-# http://eclipse.org/
+# https://eclipse.org/
 --ignore-directory=is:.metadata
 
 # Cabal (Haskell) sandboxes
-# http://www.haskell.org/cabal/users-guide/installing-packages.html
+# https://www.haskell.org/cabal/users-guide/installing-packages.html
 --ignore-directory=is:.cabal-sandbox
 
 ### Files to ignore
@@ -168,7 +168,7 @@ sub _options_block {
 ### Filetypes defined
 
 # Makefiles
-# http://www.gnu.org/s/make/
+# https://www.gnu.org/s/make/
 --type-add=make:ext:mk
 --type-add=make:ext:mak
 --type-add=make:is:makefile
@@ -178,11 +178,11 @@ sub _options_block {
 --type-add=make:is:GNUmakefile
 
 # Rakefiles
-# http://rake.rubyforge.org/
+# https://rake.rubyforge.org/
 --type-add=rake:is:Rakefile
 
 # CMake
-# http://www.cmake.org/
+# https://cmake.org/
 --type-add=cmake:is:CMakeLists.txt
 --type-add=cmake:ext:cmake
 
@@ -190,15 +190,15 @@ sub _options_block {
 --type-add=actionscript:ext:as,mxml
 
 # Ada
-# http://www.adaic.org/
+# https://www.adaic.org/
 --type-add=ada:ext:ada,adb,ads
 
 # ASP
-# http://msdn.microsoft.com/en-us/library/aa286483.aspx
+# https://docs.microsoft.com/en-us/previous-versions/office/developer/server-technologies/aa286483(v=msdn.10)
 --type-add=asp:ext:asp
 
 # ASP.Net
-# http://www.asp.net/
+# https://dotnet.microsoft.com/apps/aspnet
 --type-add=aspx:ext:master,ascx,asmx,aspx,svc
 
 # Assembly
@@ -208,11 +208,11 @@ sub _options_block {
 --type-add=batch:ext:bat,cmd
 
 # ColdFusion
-# http://en.wikipedia.org/wiki/ColdFusion
+# https://en.wikipedia.org/wiki/ColdFusion
 --type-add=cfmx:ext:cfc,cfm,cfml
 
 # Clojure
-# http://clojure.org/
+# https://clojure.org/
 --type-add=clojure:ext:clj,cljs,edn,cljc
 
 # C
@@ -223,7 +223,7 @@ sub _options_block {
 --type-add=hh:ext:h
 
 # CoffeeScript
-# http://coffeescript.org/
+# https://coffeescript.org/
 --type-add=coffeescript:ext:coffee
 
 # C++
@@ -236,43 +236,43 @@ sub _options_block {
 --type-add=csharp:ext:cs
 
 # CSS
-# http://www.w3.org/Style/CSS/
+# https://www.w3.org/Style/CSS/
 --type-add=css:ext:css
 
 # Dart
-# http://www.dartlang.org/
+# https://dart.dev/
 --type-add=dart:ext:dart
 
 # Delphi
-# http://en.wikipedia.org/wiki/Embarcadero_Delphi
+# https://en.wikipedia.org/wiki/Embarcadero_Delphi
 --type-add=delphi:ext:pas,int,dfm,nfm,dof,dpk,dproj,groupproj,bdsgroup,bdsproj
 
 # Elixir
-# http://elixir-lang.org/
+# https://elixir-lang.org/
 --type-add=elixir:ext:ex,exs
 
 # Emacs Lisp
-# http://www.gnu.org/software/emacs
+# https://www.gnu.org/software/emacs
 --type-add=elisp:ext:el
 
 # Erlang
-# http://www.erlang.org/
+# https://www.erlang.org/
 --type-add=erlang:ext:erl,hrl
 
 # Fortran
-# http://en.wikipedia.org/wiki/Fortran
+# https://en.wikipedia.org/wiki/Fortran
 --type-add=fortran:ext:f,f77,f90,f95,f03,for,ftn,fpp
 
 # Go
-# http://golang.org/
+# https://golang.org/
 --type-add=go:ext:go
 
 # Groovy
-# http://groovy.codehaus.org/
+# https://www.groovy-lang.org/
 --type-add=groovy:ext:groovy,gtmpl,gpp,grunit,gradle
 
 # GSP
-# http://groovy.codehaus.org/GSP
+# https://gsp.grails.org/
 --type-add=gsp:ext:gsp
 
 # Haskell
@@ -287,18 +287,18 @@ sub _options_block {
 --type-add=jade:ext:jade
 
 # Java
-# http://www.oracle.com/technetwork/java/index.html
+# https://www.oracle.com/technetwork/java/index.html
 --type-add=java:ext:java,properties
 
 # JavaScript
 --type-add=js:ext:js
 
 # JSP
-# http://www.oracle.com/technetwork/java/javaee/jsp/index.html
+# https://www.oracle.com/technetwork/java/javaee/jsp/index.html
 --type-add=jsp:ext:jsp,jspx,jspf,jhtm,jhtml
 
 # JSON
-# http://www.json.org/
+# https://json.org/
 --type-add=json:ext:json
 
 # Kotlin
@@ -310,11 +310,11 @@ sub _options_block {
 --type-add=less:ext:less
 
 # Common Lisp
-# http://common-lisp.net/
+# https://common-lisp.net/
 --type-add=lisp:ext:lisp,lsp
 
 # Lua
-# http://www.lua.org/
+# https://www.lua.org/
 --type-add=lua:ext:lua
 --type-add=lua:firstlinematch:/^#!.*\blua(jit)?/
 
@@ -326,7 +326,7 @@ sub _options_block {
 # You are free to add your own in your ackrc file.
 
 # Matlab
-# http://en.wikipedia.org/wiki/MATLAB
+# https://en.wikipedia.org/wiki/MATLAB
 --type-add=matlab:ext:m
 
 # Objective-C
@@ -336,7 +336,7 @@ sub _options_block {
 --type-add=objcpp:ext:mm,h
 
 # OCaml
-# http://caml.inria.fr/
+# https://ocaml.org/
 --type-add=ocaml:ext:ml,mli,mll,mly
 
 # Parrot
@@ -355,21 +355,21 @@ sub _options_block {
 --type-add=pod:ext:pod
 
 # PHP
-# http://www.php.net/
+# https://www.php.net/
 --type-add=php:ext:php,phpt,php3,php4,php5,phtml
 --type-add=php:firstlinematch:/^#!.*\bphp/
 
 # Plone
-# http://plone.org/
+# https://plone.org/
 --type-add=plone:ext:pt,cpt,metadata,cpy,py
 
 # Python
-# http://www.python.org/
+# https://www.python.org/
 --type-add=python:ext:py
 --type-add=python:firstlinematch:/^#!.*\bpython/
 
 # R
-# http://www.r-project.org/
+# https://www.r-project.org/
 --type-add=rr:ext:R
 
 # reStructured Text
@@ -377,25 +377,25 @@ sub _options_block {
 --type-add=rst:ext:rst
 
 # Ruby
-# http://www.ruby-lang.org/
+# https://www.ruby-lang.org/
 --type-add=ruby:ext:rb,rhtml,rjs,rxml,erb,rake,spec
 --type-add=ruby:is:Rakefile
 --type-add=ruby:firstlinematch:/^#!.*\bruby/
 
 # Rust
-# http://www.rust-lang.org/
+# https://www.rust-lang.org/
 --type-add=rust:ext:rs
 
 # Sass
-# http://sass-lang.com
+# https://sass-lang.com
 --type-add=sass:ext:sass,scss
 
 # Scala
-# http://www.scala-lang.org/
+# https://www.scala-lang.org/
 --type-add=scala:ext:scala
 
 # Scheme
-# http://groups.csail.mit.edu/mac/projects/scheme/
+# https://groups.csail.mit.edu/mac/projects/scheme/
 --type-add=scheme:ext:scm,ss
 
 # Shell
@@ -407,15 +407,15 @@ sub _options_block {
 --type-add=smalltalk:ext:st
 
 # Smarty
-# http://www.smarty.net/
+# https://www.smarty.net/
 --type-add=smarty:ext:tpl
 
 # SQL
-# http://www.iso.org/iso/catalogue_detail.htm?csnumber=45498
+# https://www.iso.org/standard/45498.html
 --type-add=sql:ext:sql,ctl
 
 # Stylus
-# http://learnboost.github.io/stylus/
+# http://stylus-lang.com/
 --type-add=stylus:ext:styl
 
 # SVG
@@ -428,19 +428,19 @@ sub _options_block {
 --type-add=swift:firstlinematch:/^#!.*\bswift/
 
 # Tcl
-# http://www.tcl.tk/
+# https://www.tcl.tk/
 --type-add=tcl:ext:tcl,itcl,itk
 
 # TeX & LaTeX
-# http://www.latex-project.org/
+# https://www.latex-project.org/
 --type-add=tex:ext:tex,cls,sty
 
 # Template Toolkit (Perl)
-# http://template-toolkit.org/
+# http//template-toolkit.org/
 --type-add=ttml:ext:tt,tt2,ttml
 
 # Typescript
-# http://www.typescriptlang.org/
+# https://www.typescriptlang.org/
 --type-add=ts:ext:ts,tsx
 
 # Visual Basic
@@ -454,16 +454,16 @@ sub _options_block {
 --type-add=vhdl:ext:vhd,vhdl
 
 # Vim
-# http://www.vim.org/
+# https://www.vim.org/
 --type-add=vim:ext:vim
 
 # XML
-# http://www.w3.org/TR/REC-xml/
+# https://www.w3.org/TR/REC-xml/
 --type-add=xml:ext:xml,dtd,xsd,xsl,xslt,ent,wsdl
 --type-add=xml:firstlinematch:/<[?]xml/
 
 # YAML
-# http://yaml.org/
+# https://yaml.org/
 --type-add=yaml:ext:yaml,yml
 HERE
     $lines =~ s/==VERSION==/$App::Ack::VERSION/sm;

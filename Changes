@@ -6,6 +6,9 @@ NEXT
 [FIXES]
 Made the check for lowercase patterns smarter.
 
+[DOCUMENTATION]
+Updated many URLs, especially in the config. (GH #223)
+
 
 v3.0.2      Thu Jul  4 21:42:43 CDT 2019
 ========================================
