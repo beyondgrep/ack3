@@ -1035,9 +1035,9 @@ If no FILE or DIRECTORY is given, the current directory will be searched.
 PATTERN is a Perl regular expression.  Perl regular expressions
 are commonly found in other programming languages, but for the particulars
 of their behavior, please consult
-L<http://perldoc.perl.org/perlreref.html|perlreref>.  If you don't know
+L<https://perldoc.perl.org/perlreref.html|perlreref>.  If you don't know
 how to use regular expression but are interested in learning, you may
-consult L<http://perldoc.perl.org/perlretut.html|perlretut>.  If you do not
+consult L<https://perldoc.perl.org/perlretut.html|perlretut>.  If you do not
 need or want ack to use regular expressions, please see the
 C<-Q>/C<--literal> option.
 
@@ -1986,15 +1986,15 @@ L<https://github.com/beyondgrep/ack3/issues>
 
 =item * The ack announcements mailing list
 
-L<http://groups.google.com/group/ack-announcement>
+L<https://groups.google.com/group/ack-announcement>
 
 =item * The ack users' mailing list
 
-L<http://groups.google.com/group/ack-users>
+L<https://groups.google.com/group/ack-users>
 
 =item * The ack development mailing list
 
-L<http://groups.google.com/group/ack-users>
+L<https://groups.google.com/group/ack-users>
 
 =back
 
@@ -2240,7 +2240,7 @@ Copyright 2005-2019 Andy Lester.
 This program is free software; you can redistribute it and/or modify
 it under the terms of the Artistic License v2.0.
 
-See http://www.perlfoundation.org/artistic_license_2_0 or the LICENSE.md
+See https://www.perlfoundation.org/artistic-license-20.html or the LICENSE.md
 file that comes with the ack distribution.
 
 =cut

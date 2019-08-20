@@ -1,6 +1,6 @@
 ack is released under the [Artistic License 2.0][1].
 
-[1]: http://www.perlfoundation.org/artistic_license_2_0
+[1]: https://www.perlfoundation.org/artistic-license-20.html
 
 Artistic License 2.0
 ====================
