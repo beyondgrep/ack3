@@ -304,7 +304,7 @@ The string after (to the right of) the match.
 =back
 
 For more details and other variables see
-L<http://perldoc.perl.org/perlvar.html#Variables-related-to-regular-expressions|perlvar>.
+L<https://perldoc.perl.org/perlvar.html#Variables-related-to-regular-expressions|perlvar>.
 
 This example shows how to add text around a particular pattern
 (in this case adding _ around word with "e")

@@ -19,7 +19,7 @@ my %parms = (
         resources => {
             homepage    => 'https://beyondgrep.com/',
             bugtracker  => 'https://github.com/beyondgrep/ack3',
-            license     => 'http://www.perlfoundation.org/artistic_license_2_0',
+            license     => 'https://www.perlfoundation.org/artistic-license-20.html',
             repository  => 'git://github.com/beyondgrep/ack3.git',
             MailingList => 'https://groups.google.com/group/ack-users',
         },

@@ -676,7 +676,7 @@ sub filetypes {
         }
     }
 
-    # http://search.cpan.org/dist/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitReturnSort.pm
+    # https://metacpan.org/pod/distribution/Perl-Critic/lib/Perl/Critic/Policy/Subroutines/ProhibitReturnSort.pm
     @matches = sort @matches;
     return @matches;
 }
