@@ -17,7 +17,7 @@ our $VERSION;
 our $COPYRIGHT;
 BEGIN {
     use version;
-    $VERSION = version->declare( 'v3.0.2' ); # Check https://beyondgrep.com/ for updates
+    $VERSION = version->declare( 'v3.0.3' ); # Check https://beyondgrep.com/ for updates
     $COPYRIGHT = 'Copyright 2005-2019 Andy Lester.';
 }
 our $STANDALONE = 0;
