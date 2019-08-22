@@ -238,25 +238,15 @@ FILES:
         }
 
         # ack -f
-        if ( $opt_f ) {
+        if ( $opt_f || $opt_g ) {
             if ( $opt_show_types ) {
                 App::Ack::show_types( $file );
+            }
+            elsif ( $opt_g ) {
+                print_line_with_options( undef, $file->name, 0, $App::Ack::ors );
             }
             else {
                 App::Ack::say( $file->name );
-            }
-            ++$nmatches;
-            last FILES if defined($opt_m) && $nmatches >= $opt_m;
-        }
-        # ack -g
-        elsif ( $opt_g ) {
-            if ( $opt_show_types ) {
-                App::Ack::show_types( $file );
-            }
-            else {
-                local $opt_show_filename = 0; # XXX Why is this local?
-
-                print_line_with_options( '', $file->name, 0, $App::Ack::ors );
             }
             ++$nmatches;
             last FILES if defined($opt_m) && $nmatches >= $opt_m;
@@ -800,7 +790,7 @@ sub print_line_with_options {
 
     my @line_parts;
 
-    if ( $opt_show_filename ) {
+    if ( $opt_show_filename && defined($filename) ) {
         my $colno;
         $colno = get_match_colno() if $opt_column;
         if ( $opt_color ) {
