@@ -800,12 +800,11 @@ sub print_line_with_options {
         }
         if ( $opt_heading ) {
             push @line_parts, $lineno;
-            push @line_parts, $colno if $opt_column;
         }
         else {
             push @line_parts, $filename, $lineno;
-            push @line_parts, $colno if $opt_column;
         }
+        push @line_parts, $colno if $opt_column;
     }
 
     if ( $opt_output ) {
