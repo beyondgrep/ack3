@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use 5.010;
 
-use Test::More tests => 2;;
+use Test::More tests => 2;
 
 use App::Ack;
 
@@ -107,11 +107,5 @@ exit 0;
 sub _big_split {
     my $str = shift;
 
-    my @list = split( /\n/, $str );
-
-    @list = grep /./, @list;
-
-    @list = grep !/^#/, @list;
-
-    return @list;
+    return grep { /./ && !/^#/ } split( /\n/, $str );
 }
