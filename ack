@@ -800,25 +800,6 @@ sub print_line_with_options {
 
     my @line_parts;
 
-    # Figure out how many spaces are used per line for the ANSI coloring.
-    state $chars_used_by_coloring;
-    if ( !defined($chars_used_by_coloring) ) {
-        $chars_used_by_coloring = 0;
-        if ( $opt_color ) {
-            my $filename_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_FILENAME} ) ) - 1;
-            my $lineno_uses   = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
-            if ( $opt_heading ) {
-                $chars_used_by_coloring = $lineno_uses;
-            }
-            else {
-                $chars_used_by_coloring = $filename_uses + $lineno_uses;
-            }
-            if ( $opt_column ) {
-                $chars_used_by_coloring += length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
-            }
-        }
-    }
-
     if ( $opt_show_filename ) {
         my $colno;
         $colno = get_match_colno() if $opt_column;
@@ -904,7 +885,27 @@ sub print_line_with_options {
         push @line_parts, $line;
         App::Ack::say( join( $separator, @line_parts ) );
 
+        # Print the underline, if appropriate.
         if ( $underline ne '' ) {
+            # Figure out how many spaces are used per line for the ANSI coloring.
+            state $chars_used_by_coloring;
+            if ( !defined($chars_used_by_coloring) ) {
+                $chars_used_by_coloring = 0;
+                if ( $opt_color ) {
+                    my $lineno_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
+                    if ( $opt_heading ) {
+                        $chars_used_by_coloring = $lineno_uses;
+                    }
+                    else {
+                        my $filename_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_FILENAME} ) ) - 1;
+                        $chars_used_by_coloring = $filename_uses + $lineno_uses;
+                    }
+                    if ( $opt_column ) {
+                        $chars_used_by_coloring += length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_COLNO} ) ) - 1;
+                    }
+                }
+            }
+
             pop @line_parts; # Leave only the stuff on the left.
             if ( @line_parts ) {
                 my $stuff_on_the_left = join( $separator, @line_parts );
