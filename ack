@@ -875,17 +875,10 @@ sub print_line_with_options {
             if ( !defined($chars_used_by_coloring) ) {
                 $chars_used_by_coloring = 0;
                 if ( $opt_color ) {
-                    my $lineno_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_LINENO} ) ) - 1;
-                    if ( $opt_heading ) {
-                        $chars_used_by_coloring = $lineno_uses;
-                    }
-                    else {
-                        my $filename_uses = length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_FILENAME} ) ) - 1;
-                        $chars_used_by_coloring = $filename_uses + $lineno_uses;
-                    }
-                    if ( $opt_column ) {
-                        $chars_used_by_coloring += length( Term::ANSIColor::colored( 'x', $ENV{ACK_COLOR_COLNO} ) ) - 1;
-                    }
+                    my $len_fn = sub { length( Term::ANSIColor::colored( 'x', $ENV{$_[0]} ) ) - 1 };
+                    $chars_used_by_coloring += $len_fn->('ACK_COLOR_FILENAME') unless $opt_heading;
+                    $chars_used_by_coloring += $len_fn->('ACK_COLOR_LINENO');
+                    $chars_used_by_coloring += $len_fn->('ACK_COLOR_COLNO') if $opt_column;
                 }
             }
 
