@@ -831,7 +831,7 @@ sub print_line_with_options {
         # We have to do underlining before any highlighting because highlighting modifies string length.
         if ( $opt_underline ) {
             while ( $line =~ /$opt_regex/og ) {
-                my $match_start = $-[0] // next;;
+                my $match_start = $-[0] // next;
                 my $match_end = $+[0];
                 my $match_length = $match_end - $match_start;
                 last if $match_length <= 0;
