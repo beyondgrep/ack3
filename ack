@@ -855,17 +855,15 @@ sub print_line_with_options {
                 my $match_length = $match_end - $match_start;
                 last if $match_length <= 0;
 
-                if ( $opt_color ) {
-                    my $substring    = substr( $line, $match_start, $match_length );
-                    my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
+                my $substring    = substr( $line, $match_start, $match_length );
+                my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
 
-                    # Fourth argument replaces the string specified by the first three.
-                    substr( $line, $match_start, $match_length, $substitution );
+                # Fourth argument replaces the string specified by the first three.
+                substr( $line, $match_start, $match_length, $substitution );
 
-                    # Move the offset of where /g left off forward the number of spaces of highlighting.
-                    pos($line) = $match_end + (length( $substitution ) - length( $substring ));
-                    $highlighted = 1;
-                }
+                # Move the offset of where /g left off forward the number of spaces of highlighting.
+                pos($line) = $match_end + (length( $substitution ) - length( $substring ));
+                $highlighted = 1;
             }
             # Reset formatting and delete everything to the end of the line.
             $line .= "\e[0m\e[K" if $highlighted;
