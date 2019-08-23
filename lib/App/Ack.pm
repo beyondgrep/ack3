@@ -236,6 +236,8 @@ Searching:
   -v, --invert-match            Invert match: select non-matching lines
   -w, --word-regexp             Force PATTERN to match only whole words
   -Q, --literal                 Quote all metacharacters; PATTERN is literal
+  --range-start PATTERN         Specify PATTERN as the start of a match range.
+  --range-end PATTERN           Specify PATTERN as the end of a match range.
   --match PATTERN               Specify PATTERN explicitly. Typically omitted.
 
 Search output:

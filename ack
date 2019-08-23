@@ -43,6 +43,9 @@ our $opt_m;
 our $opt_output;
 our $opt_passthru;
 our $opt_p;
+our $opt_range_start;
+our $opt_range_end;
+our $opt_range_invert;
 our $opt_regex;
 our $opt_show_filename;
 our $opt_show_types;
@@ -134,11 +137,22 @@ MAIN: {
     $opt_output         = $opt->{output};
     $opt_p              = $opt->{p};
     $opt_passthru       = $opt->{passthru};
+    $opt_range_start    = $opt->{range_start};
+    $opt_range_end      = $opt->{range_end};
+    $opt_range_invert   = $opt->{range_invert};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
     $opt_show_types     = $opt->{show_types};
     $opt_underline      = $opt->{underline};
     $opt_v              = $opt->{v};
+
+
+    if ( $opt_range_start ) {
+        $opt_range_start = build_regex( $opt_range_start, {} );
+    }
+    if ( $opt_range_end ) {
+        $opt_range_end   = build_regex( $opt_range_end, {} );
+    }
 
     $App::Ack::report_bad_filenames = !$opt->{s};
     $App::Ack::ors = $opt->{print0} ? "\0" : "\n";
@@ -323,7 +337,7 @@ FILES:
                 last FILES;
             }
         }
-    }
+    }   # while file->next
 
     if ( $opt_c && !$opt_show_filename ) {
         App::Ack::print( $total_count, "\n" );
@@ -637,22 +651,32 @@ sub print_matches_in_file {
 
     # Check for context before the main loop, so we don't pay for it if we don't need it.
     if ( $is_tracking_context ) {
+        local $_ = undef;
+
         $after_context_pending = 0;
+
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
             chomp;
-            my $does_match;
             $match_colno = undef;
 
-            if ( $opt_v ) {
-                $does_match = !/$opt_regex/o;
-            }
-            else {
-                if ( $does_match = /$opt_regex/o ) {
-                    # @- = @LAST_MATCH_START
-                    # @+ = @LAST_MATCH_END
-                    $match_colno = $-[0] + 1;
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
+            my $does_match;
+            if ( $in_range ) {
+                if ( $opt_v ) {
+                    $does_match = !/$opt_regex/o;
+                }
+                else {
+                    if ( $does_match = /$opt_regex/o ) {
+                        # @- = @LAST_MATCH_START
+                        # @+ = @LAST_MATCH_END
+                        $match_colno = $-[0] + 1;
+                    }
                 }
             }
+
             if ( $does_match && $max_count ) {
                 if ( !$has_printed_for_this_file ) {
                     if ( $opt_break && $has_printed_something ) {
@@ -681,16 +705,23 @@ sub print_matches_in_file {
                 }
             }
 
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+
             last if ($max_count == 0) && ($after_context_pending == 0);
         }
     }
     elsif ( $opt_passthru ) {
         local $_ = undef;
 
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
             chomp;
+
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
             $match_colno = undef;
-            if ( $opt_v ? !/$opt_regex/o : /$opt_regex/o ) {
+            if ( $in_range && ($opt_v xor /$opt_regex/o) ) {
                 if ( !$opt_v ) {
                     $match_colno = $-[0] + 1;
                 }
@@ -711,9 +742,12 @@ sub print_matches_in_file {
                 if ( $opt_break && !$has_printed_for_this_file && $has_printed_something ) {
                     App::Ack::print_blank_line();
                 }
-                print_line_with_options( $filename, $_, $., ':' );
+                print_line_with_options( $filename, $_, $., ':', 1 );
                 $has_printed_for_this_file = 1;
             }
+
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+
             last if $max_count == 0;
         }
     }
@@ -721,59 +755,79 @@ sub print_matches_in_file {
         local $_ = undef;
 
         $match_colno = undef;
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
             chomp;
-            if ( !/$opt_regex/o ) {
-                if ( !$has_printed_for_this_file ) {
-                    if ( $opt_break && $has_printed_something ) {
-                        App::Ack::print_blank_line();
+
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
+            if ( $in_range ) {
+                if ( !/$opt_regex/o ) {
+                    if ( !$has_printed_for_this_file ) {
+                        if ( $opt_break && $has_printed_something ) {
+                            App::Ack::print_blank_line();
+                        }
+                        if ( $opt_show_filename && $opt_heading ) {
+                            App::Ack::say( $display_filename );
+                        }
                     }
-                    if ( $opt_show_filename && $opt_heading ) {
-                        App::Ack::say( $display_filename );
-                    }
+                    print_line_with_context( $filename, $_, $. );
+                    $has_printed_for_this_file = 1;
+                    $nmatches++;
+                    $max_count--;
                 }
-                print_line_with_context( $filename, $_, $. );
-                $has_printed_for_this_file = 1;
-                $nmatches++;
-                $max_count--;
             }
+
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+
             last if $max_count == 0;
         }
     }
-    else {
+    else {  # Normal search: No context, no -v, no --passthru
         local $_ = undef;
 
         my $last_match_lineno;
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
             chomp;
-            $match_colno = undef;
-            if ( /$opt_regex/o ) {
-                $match_colno = $-[0] + 1;
-                if ( !$has_printed_for_this_file ) {
-                    if ( $opt_break && $has_printed_something ) {
-                        App::Ack::print_blank_line();
+
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
+            if ( $in_range ) {
+                $match_colno = undef;
+                if ( /$opt_regex/o ) {
+                    $match_colno = $-[0] + 1;
+                    if ( !$has_printed_for_this_file ) {
+                        if ( $opt_break && $has_printed_something ) {
+                            App::Ack::print_blank_line();
+                        }
+                        if ( $opt_show_filename && $opt_heading ) {
+                            App::Ack::say( $display_filename );
+                        }
                     }
-                    if ( $opt_show_filename && $opt_heading ) {
-                        App::Ack::say( $display_filename );
-                    }
-                }
-                if ( $opt_p ) {
-                    if ( $last_match_lineno ) {
-                        if ( $. > $last_match_lineno + $opt_p ) {
+                    if ( $opt_p ) {
+                        if ( $last_match_lineno ) {
+                            if ( $. > $last_match_lineno + $opt_p ) {
+                                App::Ack::print_blank_line();
+                            }
+                        }
+                        elsif ( !$opt_break && $has_printed_something ) {
                             App::Ack::print_blank_line();
                         }
                     }
-                    elsif ( !$opt_break && $has_printed_something ) {
-                        App::Ack::print_blank_line();
-                    }
+                    s/[\r\n]+$//;
+                    print_line_with_options( $filename, $_, $., ':' );
+                    $has_printed_for_this_file = 1;
+                    $nmatches++;
+                    $max_count--;
+                    $last_match_lineno = $.;
                 }
-                s/[\r\n]+$//;
-                print_line_with_options( $filename, $_, $., ':' );
-                $has_printed_for_this_file = 1;
-                $nmatches++;
-                $max_count--;
-                $last_match_lineno = $.;
             }
+
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+
             last if $max_count == 0;
         }
     }
@@ -783,7 +837,7 @@ sub print_matches_in_file {
 
 
 sub print_line_with_options {
-    my ( $filename, $line, $lineno, $separator ) = @_;
+    my ( $filename, $line, $lineno, $separator, $skip_coloring ) = @_;
 
     $has_printed_something = 1;
     $printed_lineno = $lineno;
@@ -829,7 +883,7 @@ sub print_line_with_options {
         my $underline = '';
 
         # We have to do underlining before any highlighting because highlighting modifies string length.
-        if ( $opt_underline ) {
+        if ( $opt_underline && !$skip_coloring ) {
             while ( $line =~ /$opt_regex/og ) {
                 my $match_start = $-[0] // next;
                 my $match_end = $+[0];
@@ -842,7 +896,7 @@ sub print_line_with_options {
                 $underline .= ('^' x $match_length);
             }
         }
-        if ( $opt_color ) {
+        if ( $opt_color && !$skip_coloring ) {
             my $highlighted = 0; # If highlighted, need to escape afterwards.
 
             while ( $line =~ /$opt_regex/og ) {
@@ -954,12 +1008,21 @@ sub file_has_match {
         }
     }
     else {
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
             chomp;
-            if (/$opt_regex/o xor $opt_v) {
-                $has_match = 1;
-                last;
+
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
+            if ( $in_range ) {
+                if ( /$opt_regex/o xor $opt_v ) {
+                    $has_match = 1;
+                    last;
+                }
             }
+
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
         }
         $file->close;
     }
@@ -978,13 +1041,29 @@ sub count_matches_in_file {
         }
     }
     else {
+        my ($using_ranges, $in_range) = range_setup();
+
         while ( <$fh> ) {
-            ++$nmatches if (/$opt_regex/o xor $opt_v);
+            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+
+            if ( $in_range ) {
+                ++$nmatches if (/$opt_regex/o xor $opt_v);
+            }
+
+            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
         }
         $file->close;
     }
 
     return $nmatches;
+}
+
+
+sub range_setup {
+    my $using_ranges = $opt_range_start || $opt_range_end;
+    my $in_range = !$using_ranges || (!$opt_range_start && $opt_range_end);
+
+    return ($using_ranges, $in_range);
 }
 
 
@@ -1068,6 +1147,102 @@ to add/remove multiple directories from the ignore list.
 
 For a complete list of directories that do not get searched, run
 C<ack --dump>.
+
+=head1 MATCHING IN A RANGE OF LINES
+
+The C<--range-start> and C<--range-stop> options let you specify ranges of
+lines to search within each file.
+
+Say you had the following file, called F<testfile>:
+
+    # This function calls print on "foo".
+    sub foo {
+        print 'foo';
+    }
+    my $print = 1;
+    sub bar {
+        print 'bar';
+    }
+    my $task = 'print';
+
+Calling C<ack print> will give us five matches:
+
+    $ ack print testfile
+    # This function calls print on "foo".
+        print 'foo';
+    my $print = 1;
+        print 'bar';
+    my $task = 'print';
+
+What if we only want to search for C<print> within the subroutines?  We can
+specify ranges of lines that we want ack to search.  The range starts with
+any line that matches the pattern C<^sub \w+>, and stops with any line that
+matches C<^}>.
+
+    $ ack --range-start='^sub \w+' --range-stop='^}' print testfile
+        print 'foo';
+        print 'bar';
+
+Note that ack searched two ranges of lines.  The listing below shows which
+lines were in a range and which were out of the range.
+
+    Out # This function calls print on "foo".
+    In  sub foo {
+    In      print 'foo';
+    In  }
+    Out my $print = 1;
+    In  sub bar {
+    In      print 'bar';
+    In  }
+    Out my $task = 'print';
+
+You don't have to specify both C<--range-start> and C<--range-stop>.  IF
+C<--range-start> is omitted, then the range runs from the first line in the
+file unitl the first line that matches C<--range-stop>.  Similarly, if
+C<--range-stop> is omitted, the range runs from the first line matching
+C<--range-start> to the end of the file.
+
+For example, if you wanted to search all HTML files up until the first
+instance of the C<< <body> >>, you could do
+
+    ack foo --range-stop='<body>'
+
+Or to search after Perl's `__DATA__` or `__END__` markers, you would do
+
+    ack pattern --range-end='^__(END|DATA)__'
+
+It's possible for a range to start and stop on the same line.  For example
+
+    --range-start='<title>' --range-end='</title>'
+
+would match this line as both the start and end of the range, making a
+one-line range.
+
+    <title>Page title</title>
+
+Note that the patterns in C<--range-start> and C<--range-end> are not
+affected by options like C<-i>, C<-w> and C<-Q> that modify the behavior of
+the main pattern being matched.
+
+Again, ranges only affect where matches are looked for.  Everything else in
+ack works the same way.  Using C<-c> option with a range will give a count
+of all the matches that appear within those ranges.  The C<-l> shows those
+files that have a match within a range, and the C<-L> option shows files
+that do not have a match within a range.
+
+The C<-v> option for negating a match works inside the range, too.
+To see lines that don't match "google" within the "<head>" section of
+your HTML files, you could do:
+
+    ack google -v --html --range-start='<head' --range-end='</head>'
+
+Specifying a range to search does not affect how matches are displayed.
+The context for a match will still be the same, and
+
+Using the context options work the same way, and will show context
+lines for matches even if the context lines fall outside the range.
+Similarly, C<--passthru> will show all lines in the file, but only show
+matches for lines within the range.
 
 =head1 OPTIONS
 
@@ -1450,6 +1625,11 @@ Quote all metacharacters in PATTERN, it is treated as a literal.
 
 Recurse into sub-directories. This is the default and just here for
 compatibility with grep. You can also use it for turning B<--no-recurse> off.
+
+=item B<--range-start=PATTERN>, B<--range-end=PATTERN>
+
+Specifies patterns that mark the start and end of a range.  See
+L<MATCHING IN A RANGE OF LINES> for details.
 
 =item B<-s>
 

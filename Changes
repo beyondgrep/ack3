@@ -1,5 +1,11 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[FEATURES]
+Added the --range-start and --range-end options to allow searching only
+ranges of each file. (GH #165)
+
 
 v3.0.3      Tue Aug 20 23:42:02 CDT 2019
 ========================================

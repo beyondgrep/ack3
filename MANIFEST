@@ -129,6 +129,13 @@ t/etc/shebang.rb.xxx
 t/etc/shebang.sh.xxx
 
 t/home/.ackrc
+
+t/range/rangefile.pm
+t/range/america-the-beautiful.html
+t/range/anchors-aweigh.html
+t/range/johnny-rebeck.txt
+t/range/stars-and-stripes-forever.html
+
 t/swamp/#emacs-workfile.pl#
 t/swamp/0
 t/swamp/CMakeLists.txt
