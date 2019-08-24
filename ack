@@ -1091,9 +1091,9 @@ If no FILE or DIRECTORY is given, the current directory will be searched.
 PATTERN is a Perl regular expression.  Perl regular expressions
 are commonly found in other programming languages, but for the particulars
 of their behavior, please consult
-L<https://perldoc.perl.org/perlreref.html|perlreref>.  If you don't know
+L<perlreref|https://perldoc.perl.org/perlreref.html>.  If you don't know
 how to use regular expression but are interested in learning, you may
-consult L<https://perldoc.perl.org/perlretut.html|perlretut>.  If you do not
+consult L<perlretut|https://perldoc.perl.org/perlretut.html>.  If you do not
 need or want ack to use regular expressions, please see the
 C<-Q>/C<--literal> option.
 
