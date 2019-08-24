@@ -2,6 +2,9 @@
 
 =pod
 
+This test checks for problems where line endings aren't handled correctly
+by our pre-scanning of the file.
+
     # https://github.com/beyondgrep/ack2/issues/491
     v2.14 with "-l" not emitting all matching files.
 
@@ -49,19 +52,41 @@ my %all_files = ( %matching_files, %nonmatching_files );
 while ( my ($file,$content) = each %all_files ) {
     write_file( $file, $content );
 }
-my @all_files = keys %all_files;
+my @all_files         = keys %all_files;
+my @matching_files    = keys %matching_files;
+my @nonmatching_files = keys %nonmatching_files;
 
-my @matching_files = sort keys %matching_files;
+subtest 'Match normally' => sub {
+    plan tests => 2;
 
-my @results = run_ack( '-l', ' $', @all_files );
+    my @results = run_ack( ' $', @all_files );
+    my @files_matched = @results;
+    s/:.*// for @files_matched;
+    sets_match( \@files_matched, [ @matching_files ], 'Found all the matching files in results' );
+};
 
-sets_match( \@results, [ @matching_files ], 'Matching files should be in -l output' );
+subtest 'Match with -l' => sub {
+    plan tests => 2;
 
-@results = run_ack( '-c', ' $', @all_files );
+    my @results = run_ack( '-l', ' $', @all_files );
+    sets_match( \@results, [ @matching_files ], 'Matching files should be in -l output' );
+};
 
-sets_match( \@results, [
-    map { "$_:" . ( $matching_files{$_} ? 1 : 0 ) } @all_files
-], 'Matching files should be in -c output with correct counts' );
+subtest 'Non-match with -L' => sub {
+    plan tests => 2;
+
+    my @results = run_ack( '-L', ' $', @all_files );
+    sets_match( \@results, [ @nonmatching_files ], 'Nonmatching files should be in -L output' );
+};
+
+subtest 'Count with -c' => sub {
+    plan tests => 2;
+
+    my @results = run_ack( '-c', ' $', @all_files );
+    sets_match( \@results, [
+        map { "$_:" . ( $matching_files{$_} ? 1 : 0 ) } @all_files
+    ], 'Matching files should be in -c output with correct counts' );
+};
 
 safe_chdir( $wd );  # Get out of temp directory so it can be cleaned up.
 
