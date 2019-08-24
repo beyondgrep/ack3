@@ -1,5 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
+
+NEXT
+========================================
+[DOCUMENTATION]
+Fixed docs that referred to --range-stop instead of --range-end. (GH #228)
+
+
 v3.1.0
 ========================================
 [FEATURES]

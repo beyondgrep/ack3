@@ -1150,7 +1150,7 @@ C<ack --dump>.
 
 =head1 MATCHING IN A RANGE OF LINES
 
-The C<--range-start> and C<--range-stop> options let you specify ranges of
+The C<--range-start> and C<--range-end> options let you specify ranges of
 lines to search within each file.
 
 Say you had the following file, called F<testfile>:
@@ -1179,7 +1179,7 @@ specify ranges of lines that we want ack to search.  The range starts with
 any line that matches the pattern C<^sub \w+>, and stops with any line that
 matches C<^}>.
 
-    $ ack --range-start='^sub \w+' --range-stop='^}' print testfile
+    $ ack --range-start='^sub \w+' --range-end='^}' print testfile
         print 'foo';
         print 'bar';
 
@@ -1196,16 +1196,16 @@ lines were in a range and which were out of the range.
     In  }
     Out my $task = 'print';
 
-You don't have to specify both C<--range-start> and C<--range-stop>.  IF
+You don't have to specify both C<--range-start> and C<--range-end>.  IF
 C<--range-start> is omitted, then the range runs from the first line in the
-file unitl the first line that matches C<--range-stop>.  Similarly, if
-C<--range-stop> is omitted, the range runs from the first line matching
+file unitl the first line that matches C<--range-end>.  Similarly, if
+C<--range-end> is omitted, the range runs from the first line matching
 C<--range-start> to the end of the file.
 
 For example, if you wanted to search all HTML files up until the first
 instance of the C<< <body> >>, you could do
 
-    ack foo --range-stop='<body>'
+    ack foo --range-end='<body>'
 
 Or to search after Perl's `__DATA__` or `__END__` markers, you would do
 
