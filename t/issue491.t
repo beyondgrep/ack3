@@ -1,6 +1,22 @@
 #!perl -T
 
-# https://github.com/beyondgrep/ack2/issues/491
+=pod
+
+    # https://github.com/beyondgrep/ack2/issues/491
+    v2.14 with "-l" not emitting all matching files.
+
+    > echo ' ' >space-newline.txt
+    > echo $' \n' >space-newline-newline.txt
+    > ack ' $' space-newline*.txt
+    space-newline-newline.txt
+    1:
+
+    space-newline.txt
+    1:
+    > ack -l ' $' space-newline*.txt
+    space-newline.txt
+
+=cut
 
 use strict;
 use warnings;
@@ -16,22 +32,36 @@ my $dir = File::Temp->newdir;
 my $wd  = getcwd_clean();
 
 safe_chdir( $dir->dirname );
-write_file('space-newline.txt', " \n");
-write_file('space-newline-newline.txt', " \n\n");
 
-my @results = run_ack('-l', ' $', 'space-newline.txt', 'space-newline-newline.txt');
+my %matching_files = (
+    'space-newline.txt'          => " \n",
+    'space-newline-space.txt'    => " \n\t",
+    'space-newline-newline.txt'  => " \n\n",
+    'space-newline-and-more.txt' => "this\n \nthat\n",
+    'words-and-spaces.txt'       => "this \nand that\n",
+);
+my %nonmatching_files = (
+    'tabby.txt'      => "\t\n",
+    'also-tabby.txt' => " \t\n",
+);
 
-sets_match(\@results, [
-    'space-newline.txt',
-    'space-newline-newline.txt',
-], 'both files should be in -l output');
+my %all_files = ( %matching_files, %nonmatching_files );
+while ( my ($file,$content) = each %all_files ) {
+    write_file( $file, $content );
+}
+my @all_files = keys %all_files;
 
-@results = run_ack('-c', ' $', 'space-newline.txt', 'space-newline-newline.txt');
+my @matching_files = sort keys %matching_files;
 
-sets_match(\@results, [
-    'space-newline.txt:1',
-    'space-newline-newline.txt:1',
-], 'both files should be in -c output with correct counts');
+my @results = run_ack( '-l', ' $', @all_files );
+
+sets_match( \@results, [ @matching_files ], 'Matching files should be in -l output' );
+
+@results = run_ack( '-c', ' $', @all_files );
+
+sets_match( \@results, [
+    map { "$_:" . ( $matching_files{$_} ? 1 : 0 ) } @all_files
+], 'Matching files should be in -c output with correct counts' );
 
 safe_chdir( $wd );  # Get out of temp directory so it can be cleaned up.
 
