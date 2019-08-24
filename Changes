@@ -3,6 +3,10 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[FIXES]
+On Windows, patterns with $ to mark the end of the line would not match.
+(GH #229)
+
 [DOCUMENTATION]
 Fixed docs that referred to --range-stop instead of --range-end. (GH #228)
 

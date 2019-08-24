@@ -304,7 +304,7 @@ FILES:
             # Slurp up an entire file up to 10M, see if there are any matches
             # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
-            if ( $opt_regex && !$opt_passthru && !$opt_v ) {
+            if ( $opt_regex && !$opt_passthru && !$opt_v && !$App::Ack::is_windows ) {
                 if ( $file->open() && -f $file->{fh} ) {
                     my $buffer;
                     my $size = 10_000_000;
