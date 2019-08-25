@@ -91,10 +91,45 @@ sub open {
 }
 
 
+sub may_be_present {
+    my $self  = shift;
+    my $regex = shift;
+
+    # The $regex may be undef if it had a "$" in it, and is therefore unsuitable for this heuristic.
+
+    my $may_be_present = 1;
+    if ( $regex && $self->open() && -f $self->{fh} ) {
+        my $buffer;
+        my $size = 10_000_000;
+        my $rc = sysread( $self->{fh}, $buffer, $size );
+        if ( !defined($rc) ) {
+            if ( $App::Ack::report_bad_filenames ) {
+                App::Ack::warn( $self->name . ": $!" );
+            }
+            $may_be_present = 0;
+        }
+        else {
+            # If we read all 10M, then we need to scan the rest.
+            # If there are any carriage returns, our results are flaky, so scan the rest.
+            if ( ($rc == $size) || (index($buffer,"\r") >= 0) ) {
+                $may_be_present = 1;
+            }
+            else {
+                if ( $buffer !~ /$regex/o ) {
+                    $may_be_present = 0;
+                }
+            }
+        }
+    }
+
+    return $may_be_present;
+}
+
+
 =head2 $file->reset()
 
 Resets the file back to the beginning.  This is only called if
-C<needs_line_scan()> is true, but not always if C<needs_line_scan()>
+C<may_be_present()> is true, but not always if C<may_be_present()>
 is true.
 
 =cut

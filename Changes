@@ -3,6 +3,10 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[SPEEDUP]
+Improved the speed up the -l, -L and -c options by pre-scanning the file
+in bulk before doing line-by-line scan. (GH #221)
+
 [FIXES]
 On Windows, patterns with $ to mark the end of the line would not match.
 (GH #229)

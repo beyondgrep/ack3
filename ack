@@ -285,7 +285,7 @@ FILES:
         }
         # ack -l, ack -L
         elsif ( $opt_l || $opt_L ) {
-            my $is_match = file_has_match( $file );
+            my $is_match = count_matches_in_file( $file, 1 );
 
             if ( $opt_L ? !$is_match : $is_match ) {
                 App::Ack::say( $file->name );
@@ -304,30 +304,12 @@ FILES:
             # Slurp up an entire file up to 10M, see if there are any matches
             # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
-            if ( $opt_regex && !$opt_passthru && !$opt_v && !$App::Ack::is_windows ) {
-                if ( $file->open() && -f $file->{fh} ) {
-                    my $buffer;
-                    my $size = 10_000_000;
-                    my $rc = sysread( $file->{fh}, $buffer, $size );
-                    if ( !defined($rc) ) {
-                        if ( $App::Ack::report_bad_filenames ) {
-                            App::Ack::warn( $file->name . ": $!" );
-                        }
-                        $needs_line_scan = 0;
-                    }
-                    else {
-                        # If we read all 10M, then we need to scan the rest.
-                        if ( $rc == $size ) {
-                            $needs_line_scan = 1;
-                        }
-                        else {
-                            # Check for the pattern in what we got.
-                            $needs_line_scan = ($buffer =~ /$line_scan_regex/o);
-                        }
-                        if ( $needs_line_scan ) {
-                            $file->reset();
-                        }
-                    }
+            if ( !$opt_passthru && !$opt_v ) {
+                if ( $file->may_be_present( $line_scan_regex ) ) {
+                    $file->reset();
+                }
+                else {
+                    $needs_line_scan = 0;
                 }
             }
             if ( $needs_line_scan ) {
@@ -566,9 +548,12 @@ sub build_regex {
 
     my $re = eval { qr/$str/ };
     if ( $re ) {
-        $line_scan_regex = eval { qr/$str/m };
+        if ( $str !~ /\$/ ) {
+            # No line_scan is possible if there's a $ in the regex.
+            $line_scan_regex = eval { qr/$str/m };
+        }
     }
-    if ( !$re || !$line_scan_regex ) {
+    else {
         my $err = $@;
         chomp $err;
         App::Ack::die( "Invalid regex '$str':\n  $err" );
@@ -996,61 +981,54 @@ sub get_match_colno {
     return $match_colno;
 }
 
-# Same as C<count_matches_in_file>, but exits as soon as there is a match.
-sub file_has_match {
-    my ( $file ) = @_;
-
-    my $has_match = 0;
-    my $fh = $file->open();
-    if ( !$fh ) {
-        if ( $App::Ack::report_bad_filenames ) {
-            App::Ack::warn( $file->name . ': ' . $! );
-        }
-    }
-    else {
-        my ($using_ranges, $in_range) = range_setup();
-
-        while ( <$fh> ) {
-            chomp;
-
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
-
-            if ( $in_range ) {
-                if ( /$opt_regex/o xor $opt_v ) {
-                    $has_match = 1;
-                    last;
-                }
-            }
-
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
-        }
-        $file->close;
-    }
-
-    return $has_match;
-}
-
 sub count_matches_in_file {
-    my ( $file ) = @_;
+    my $file = shift;
+    my $bail = shift;   # True if we're just checking for existence.
 
     my $nmatches = 0;
-    my $fh = $file->open;
-    if ( !$fh ) {
+    my $do_scan = 1;
+
+    if ( !$file->open() ) {
+        $do_scan = 0;
         if ( $App::Ack::report_bad_filenames ) {
-            App::Ack::warn( $file->name . ': ' . $! );
+            App::Ack::warn( $file->name . ": $!" );
         }
     }
     else {
+        if ( !$opt_v ) {
+            if ( !$file->may_be_present( $line_scan_regex ) ) {
+                $do_scan = 0;
+            }
+        }
+    }
+
+    if ( $do_scan ) {
+        $file->reset();
+
         my ($using_ranges, $in_range) = range_setup();
 
-        while ( <$fh> ) {
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
-
-            if ( $in_range ) {
-                ++$nmatches if (/$opt_regex/o xor $opt_v);
+        my $fh = $file->{fh};
+        if ( $using_ranges ) {
+            while ( <$fh> ) {
+                chomp;
+                $in_range = 1 if ( !$in_range && $opt_range_start && /$opt_range_start/o );
+                if ( $in_range ) {
+                    if ( /$opt_regex/o xor $opt_v ) {
+                        ++$nmatches;
+                        last if $bail;
+                    }
+                }
+                $in_range = 0 if ( $in_range && $opt_range_end && /$opt_range_end/o );
             }
-
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+        }
+        else {
+            while ( <$fh> ) {
+                chomp;
+                if ( /$opt_regex/o xor $opt_v ) {
+                    ++$nmatches;
+                    last if $bail;
+                }
+            }
         }
         $file->close;
     }

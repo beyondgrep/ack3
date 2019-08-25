@@ -125,9 +125,6 @@ MATCH_VIA_CONTENT	t/filetypes.t	/^MATCH_VIA_CONTENT: {$/;"	l
 MATCH_WITH_BACKREF	t/ack-color.t	/^MATCH_WITH_BACKREF: {$/;"	l
 METACHARACTERS	t/highlighting.t	/^METACHARACTERS: {$/;"	l
 MULTIPLE_MATCHES	t/ack-color.t	/^MULTIPLE_MATCHES: {$/;"	l
-MY	Makefile.PL	/^package MY;$/;"	p
-MY	Makefile.PL	/^sub MY::postamble {$/;"	s
-MY	Makefile.PL	/^sub MY::test {$/;"	s
 Miscellaneous	lib/App/Ack.pm	/^Miscellaneous:$/;"	l
 NEEDS_LINE_SCAN	t/needs-line-scan.t	/^NEEDS_LINE_SCAN: {$/;"	l
 NOIGNORE_DIR_RELATIVE_PATHS	t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$/;"	l
@@ -252,7 +249,6 @@ are_mutually_exclusive	t/mutex-options.t	/^sub are_mutually_exclusive {$/;"	s
 bar	t/range.t	/^sub bar {$/;"	s
 bar	t/range/rangefile.pm	/^sub bar {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
-bininst	Makefile.PL	/^bininst : $(ACK)$/;"	l
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
 build_regex	ack	/^sub build_regex {$/;"	s
@@ -276,13 +272,11 @@ create_group	lib/App/Ack/Filter/Is.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/IsPath.pm	/^sub create_group {$/;"	s
 create_group	lib/App/Ack/Filter/Match.pm	/^sub create_group {$/;"	s
 create_tempfile	t/Util.pm	/^sub create_tempfile {$/;"	s
-critic	Makefile.PL	/^critic:$/;"	l
 die	lib/App/Ack.pm	/^sub die {$/;"	s
 dir_cleanup	t/named-pipes.t	/^sub dir_cleanup {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
-file_has_match	ack	/^sub file_has_match {$/;"	s
 filetypes	lib/App/Ack.pm	/^sub filetypes {$/;"	s
 filetypes	t/filetypes.t	/^sub filetypes {$/;"	s
 filter	lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
@@ -307,7 +301,6 @@ foo	t/range/rangefile.pm	/^sub foo {$/;"	s
 from_argv	lib/App/Ack/Files.pm	/^sub from_argv {$/;"	s
 from_file	lib/App/Ack/Files.pm	/^sub from_file {$/;"	s
 from_stdin	lib/App/Ack/Files.pm	/^sub from_stdin {$/;"	s
-fulltest	Makefile.PL	/^fulltest: test_classic test_standalone test_xt$/;"	l
 get_arg_spec	lib/App/Ack/ConfigLoader.pm	/^sub get_arg_spec {$/;"	s
 get_expected_options	t/Util.pm	/^sub get_expected_options {$/;"	s
 get_file_id	ack	/^sub get_file_id {$/;"	s
@@ -346,8 +339,8 @@ is_nonempty_array	t/Util.pm	/^sub is_nonempty_array {$/;"	s
 is_windows	t/Util.pm	/^sub is_windows {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
-main	Makefile.PL	/^package main;$/;"	p
 make_unreadable	t/Util.pm	/^sub make_unreadable {$/;"	s
+may_be_present	lib/App/Ack/File.pm	/^sub may_be_present {$/;"	s
 msg	t/Util.pm	/^sub msg {$/;"	s
 mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub mutex_options {$/;"	s
 name	lib/App/Ack/File.pm	/^sub name {$/;"	s
@@ -369,7 +362,6 @@ new	t/Barfly.pm	/^sub new {$/;"	s
 new	t/filter.t	/^sub new {$/;"	s
 next	lib/App/Ack/Files.pm	/^sub next {$/;"	s
 no_home	t/config-finder.t	/^sub no_home {$/;"	s
-nytprof	Makefile.PL	/^nytprof: all$/;"	l
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
 opt_parser	lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
@@ -421,17 +413,11 @@ slurp	t/file-iterator.t	/^sub slurp {$/;"	s
 strip_special_chars	xt/man.t	/^sub strip_special_chars {$/;"	s
 subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
 swamp_files	t/FilterTest.pm	/^sub swamp_files {$/;"	s
-tags	Makefile.PL	/^tags:$/;"	l
-test	Makefile.PL	/^test: test_classic test_standalone$/;"	l
 test_ack_with	t/illegal-regex.t	/^sub test_ack_with {$/;"	s
-test_classic	Makefile.PL	/^test_classic: all$/;"	l
 test_loader	t/config-loader.t	/^sub test_loader {$/;"	s
 test_match	t/ack-match.t	/^sub test_match {$/;"	s
-test_standalone	Makefile.PL	/^test_standalone: all ack-standalone$/;"	l
-test_xt	Makefile.PL	/^test_xt: all$/;"	l
 thpppt	lib/App/Ack.pm	/^sub thpppt {$/;"	s
 time_ack	dev/timings.pl	/^sub time_ack {$/;"	s
-timings	Makefile.PL	/^timings: ack-standalone$/;"	l
 to_string	lib/App/Ack/Filter.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Collection.pm	/^sub to_string {$/;"	s
 to_string	lib/App/Ack/Filter/Extension.pm	/^sub to_string {$/;"	s
