@@ -54,11 +54,7 @@ cp ~/ack3/Changes static/changes.txt
 
 * Update version in `crank`
 
-* Update version and date in `tt/index.ttml`.
-
-* Update version in `tt/documentation.ttml`.
-
-* Update version and date in `tt/install.ttml`.
+* Update version and date in `tt/vars.tt`.
 
 * Regenerate the help text
 
