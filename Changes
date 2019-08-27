@@ -14,6 +14,9 @@ On Windows, patterns with $ to mark the end of the line would not match.
 [DOCUMENTATION]
 Fixed docs that referred to --range-stop instead of --range-end. (GH #228)
 
+[INTERNALS]
+Now requires File::Next 1.18.
+
 
 v3.1.0
 ========================================
