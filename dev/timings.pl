@@ -39,6 +39,16 @@ my %sets = (
         [ '(set|get)_\w+' ],
         [ '(set|get)_\w+', '-i' ],
     ],
+    range => [
+        [ 'foo' ],
+        [ 'foo', '--range-start=^sub' ],
+        [ 'foo', '--range-end=^}' ],
+        [ 'foo', '--range-start=^sub', '--range-end=^}' ],
+        [ 'foo', '-l' ],
+        [ 'foo', '-l', '--range-start=^sub' ],
+        [ 'foo', '-l', '--range-end=^}' ],
+        [ 'foo', '-l', '--range-start=^sub', '--range-end=^}' ],
+    ],
     context => [
         [ 'foo' ],
         [ 'foo', '-A10' ],
