@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use version;
-our $VERSION = version->declare( 'v3.1.0' ); # Check https://beyondgrep.com/ for updates
+our $VERSION = version->declare( 'v3.1.1' ); # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
 
