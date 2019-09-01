@@ -24,6 +24,7 @@ my $num_iterations = 1;
 my $set = 'searching';
 
 my @use_acks;
+my @use_acks_matches;
 my $perl = $^X;
 
 my %sets = (
@@ -80,15 +81,16 @@ my %sets = (
 
 
 GetOptions(
-    'clear'   => \$perfom_clear,
-    'store'   => \$perform_store,
-    'color'   => \$show_colors,
-    'others'  => \$test_others,
-    'times=i' => \$num_iterations,
-    'ack=s@'  => \@use_acks,
-    'perl=s'  => \$perl,
-    'set=s'   => \$set,
-    'head'    => sub { @use_acks = ('HEAD') },
+    'clear'        => \$perfom_clear,
+    'store'        => \$perform_store,
+    'color'        => \$show_colors,
+    'others'       => \$test_others,
+    'times=i'      => \$num_iterations,
+    'ack=s@'       => \@use_acks,
+    'ack-match=s@' => \@use_acks_matches,
+    'perl=s'       => \$perl,
+    'set=s'        => \$set,
+    'head'         => sub { @use_acks = ('HEAD') },
 ) or die;
 
 my $SOURCE_DIR = shift or die "Must specify a path";
@@ -115,13 +117,17 @@ while ( my $file = $iter->() ) {
 
 @acks = grab_versions(@acks);
 
-if ( @use_acks ) {
+if ( @use_acks || @use_acks_matches ) {
     foreach my $ack (@acks) {
-        next if $ack->{'version'} eq 'HEAD';
-        next if $ack->{'version'} eq 'previous';
-        unless(any { $_ eq $ack->{'version'} } @use_acks) {
-            undef $ack;
-        }
+        my $keep;
+
+        $keep ||= $ack->{'version'} eq 'HEAD';
+        $keep ||= $ack->{'version'} eq 'previous';
+
+        $keep ||= any { $ack->{'version'} eq $_ } @use_acks;
+        $keep ||= any { $ack->{'version'} =~ /$_/ } @use_acks_matches;
+
+        undef $ack unless $keep;
     }
     @acks = grep { defined } @acks;
 }
