@@ -55,8 +55,11 @@ our $opt_v;
 # Flag if we need any context tracking.
 our $is_tracking_context;
 
-# Special /m version of our $opt_regex.
-our $line_scan_regex;
+# The regex that we search for in each file.
+our $search_re;
+
+# Special /m version of our $search_re.
+our $scan_re;
 
 our @special_vars_used_by_opt_output;
 
@@ -148,10 +151,10 @@ MAIN: {
 
 
     if ( $opt_range_start ) {
-        $opt_range_start = build_regex( $opt_range_start, {} );
+        ($opt_range_start, undef) = build_regex( $opt_range_start, {} );
     }
     if ( $opt_range_end ) {
-        $opt_range_end   = build_regex( $opt_range_end, {} );
+        ($opt_range_end, undef)   = build_regex( $opt_range_end, {} );
     }
 
     $App::Ack::report_bad_filenames = !$opt->{s};
@@ -196,18 +199,19 @@ MAIN: {
     my $files;
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
         $files     = App::Ack::Files->from_stdin();
-        $opt_regex = shift @ARGV if not defined $opt_regex;
-        $opt_regex = build_regex( $opt_regex, $opt );
+        $opt_regex //= shift @ARGV;
+        ($search_re, $scan_re) = build_regex( $opt_regex, $opt );
     }
     else {
         if ( $opt_f ) {
             # No need to check for regex, since mutex options are handled elsewhere.
         }
         else {
-            $opt_regex = shift @ARGV if not defined $opt_regex;
-            $opt_regex = build_regex( $opt_regex, $opt );
+            $opt_regex //= shift @ARGV;
+            ($search_re, $scan_re) = build_regex( $opt_regex, $opt );
         }
-        if ( $opt_regex && $opt_regex =~ /\n/ ) {
+        # XXX What is this checking for?
+        if ( $search_re && $search_re =~ /\n/ ) {
             App::Ack::exit_from_ack( 0 );
         }
         my @start;
@@ -305,7 +309,7 @@ FILES:
             # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
             if ( !$opt_passthru && !$opt_v ) {
-                if ( $file->may_be_present( $line_scan_regex ) ) {
+                if ( $file->may_be_present( $scan_re ) ) {
                     $file->reset();
                 }
                 else {
@@ -392,7 +396,7 @@ sub _compile_file_filter {
 
     return sub {
         if ( $opt_g ) {
-            if ( $File::Next::name =~ /$opt_regex/o ) {
+            if ( $File::Next::name =~ /$search_re/o ) {
                 return 0 if $opt_v;
             }
             else {
@@ -546,11 +550,12 @@ sub build_regex {
         $str = "(?i)$str";
     }
 
+    my $scan_re = undef;
     my $re = eval { qr/$str/ };
     if ( $re ) {
         if ( $str !~ /\$/ ) {
             # No line_scan is possible if there's a $ in the regex.
-            $line_scan_regex = eval { qr/$str/m };
+            $scan_re = eval { qr/$str/m };
         }
     }
     else {
@@ -560,8 +565,7 @@ sub build_regex {
     }
 
 
-    return $re;
-
+    return ($re, $scan_re);
 }
 
 my $match_colno;
@@ -651,10 +655,10 @@ sub print_matches_in_file {
             my $does_match;
             if ( $in_range ) {
                 if ( $opt_v ) {
-                    $does_match = !/$opt_regex/o;
+                    $does_match = !/$search_re/o;
                 }
                 else {
-                    if ( $does_match = /$opt_regex/o ) {
+                    if ( $does_match = /$search_re/o ) {
                         # @- = @LAST_MATCH_START
                         # @+ = @LAST_MATCH_END
                         $match_colno = $-[0] + 1;
@@ -706,7 +710,7 @@ sub print_matches_in_file {
             $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
 
             $match_colno = undef;
-            if ( $in_range && ($opt_v xor /$opt_regex/o) ) {
+            if ( $in_range && ($opt_v xor /$search_re/o) ) {
                 if ( !$opt_v ) {
                     $match_colno = $-[0] + 1;
                 }
@@ -748,7 +752,7 @@ sub print_matches_in_file {
             $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
 
             if ( $in_range ) {
-                if ( !/$opt_regex/o ) {
+                if ( !/$search_re/o ) {
                     if ( !$has_printed_for_this_file ) {
                         if ( $opt_break && $has_printed_something ) {
                             App::Ack::print_blank_line();
@@ -782,7 +786,7 @@ sub print_matches_in_file {
 
             if ( $in_range ) {
                 $match_colno = undef;
-                if ( /$opt_regex/o ) {
+                if ( /$search_re/o ) {
                     $match_colno = $-[0] + 1;
                     if ( !$has_printed_for_this_file ) {
                         if ( $opt_break && $has_printed_something ) {
@@ -847,7 +851,7 @@ sub print_line_with_options {
     }
 
     if ( $opt_output ) {
-        while ( $line =~ /$opt_regex/og ) {
+        while ( $line =~ /$search_re/og ) {
             my $output = $opt_output;
             if ( @special_vars_used_by_opt_output ) {
                 no strict;
@@ -869,7 +873,7 @@ sub print_line_with_options {
 
         # We have to do underlining before any highlighting because highlighting modifies string length.
         if ( $opt_underline && !$skip_coloring ) {
-            while ( $line =~ /$opt_regex/og ) {
+            while ( $line =~ /$search_re/og ) {
                 my $match_start = $-[0] // next;
                 my $match_end = $+[0];
                 my $match_length = $match_end - $match_start;
@@ -884,7 +888,7 @@ sub print_line_with_options {
         if ( $opt_color && !$skip_coloring ) {
             my $highlighted = 0; # If highlighted, need to escape afterwards.
 
-            while ( $line =~ /$opt_regex/og ) {
+            while ( $line =~ /$search_re/og ) {
                 my $match_start = $-[0] // next;
                 my $match_end = $+[0];
                 my $match_length = $match_end - $match_start;
@@ -996,7 +1000,7 @@ sub count_matches_in_file {
     }
     else {
         if ( !$opt_v ) {
-            if ( !$file->may_be_present( $line_scan_regex ) ) {
+            if ( !$file->may_be_present( $scan_re ) ) {
                 $do_scan = 0;
             }
         }
@@ -1013,7 +1017,7 @@ sub count_matches_in_file {
                 chomp;
                 $in_range = 1 if ( !$in_range && $opt_range_start && /$opt_range_start/o );
                 if ( $in_range ) {
-                    if ( /$opt_regex/o xor $opt_v ) {
+                    if ( /$search_re/o xor $opt_v ) {
                         ++$nmatches;
                         last if $bail;
                     }
@@ -1024,7 +1028,7 @@ sub count_matches_in_file {
         else {
             while ( <$fh> ) {
                 chomp;
-                if ( /$opt_regex/o xor $opt_v ) {
+                if ( /$search_re/o xor $opt_v ) {
                     ++$nmatches;
                     last if $bail;
                 }
