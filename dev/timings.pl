@@ -12,7 +12,7 @@ use File::Next;
 use File::Spec;
 use Getopt::Long;
 use JSON;
-use List::Util qw(any);
+use List::Util qw( any max );
 use Term::ANSIColor qw(colored);
 use Time::HiRes qw(gettimeofday tv_interval);
 
@@ -97,7 +97,7 @@ GetOptions(
     'head'         => sub { @use_acks = ('HEAD') },
 ) or die;
 
-my $SOURCE_DIR = shift or die "Must specify a path";
+my $SOURCE_DIR = shift or die "Must specify a path\n";
 
 my $invocations = $sets{$set} or die "Unknown set $set: Must be one of: ", join( ', ', sort keys %sets ), "\n";
 my @invocations = @{$invocations};
@@ -200,7 +200,8 @@ foreach my $invocation (@invocations) {
             $stored_timings{join(' ', 'ack', @$invocation)} = $elapsed;
         }
     }
-    printf $format, join(' ', 'ack', @$invocation), map { $_ // color('x_x') } @timings;
+
+    printf $format, display_invocation( $invocation ), map { $_ // color('x_x') } @timings;
     if ( 0 && !counts_valid( @line_counts ) ) {
         say 'Line counts not valid: ' . join( ', ', map { $_ // 'undef' } @line_counts );
     }
@@ -257,14 +258,7 @@ sub grab_versions {
 sub create_format {
     my ( $invocations, $acks, $show_colors ) = @_;
 
-    my $max_invocation_length = -1;
-
-    foreach my $invocation (@$invocations) {
-        my $length = length(join(' ', 'ack', @$invocation));
-        if($length > $max_invocation_length) {
-            $max_invocation_length = $length;
-        }
-    }
+    my $max_invocation_length = max map { length display_invocation($_) } @{$invocations};
 
     my @max_version_lengths = (length(color('000.00'))) x @$acks;
 
@@ -274,7 +268,7 @@ sub create_format {
         }
     }
 
-    return join(' :', "%${max_invocation_length}s", map {
+    return join(' :', "%-${max_invocation_length}.${max_invocation_length}s", map {
         "%${_}s"
     } @max_version_lengths) . "\n";
 }
@@ -371,6 +365,16 @@ sub counts_valid {
     ++$counts{$_//'undef'} for @_;
 
     return (@counts>0) && ($counts[0]>0) && (keys %counts == 1);
+}
+
+
+sub display_invocation {
+    my $invocation = shift;
+
+    my @args = @{$invocation};
+    pop @args;  # Don't show the directory.
+
+    return join( ' ', 'ack', @args );
 }
 
 __DATA__
