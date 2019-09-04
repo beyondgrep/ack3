@@ -510,6 +510,8 @@ sub build_regex {
 
     $str = quotemeta( $str ) if $opt->{Q};
 
+    my $scan_str = $str;
+
     # Whole words only.
     if ( $opt->{w} ) {
         my $ok = 1;
@@ -547,15 +549,15 @@ sub build_regex {
     }
 
     if ( $opt->{i} || ($opt->{S} && $regex_is_lc) ) {
-        $str = "(?i)$str";
+        $_ = "(?i)$_" for ( $str, $scan_str );
     }
 
     my $scan_re = undef;
     my $re = eval { qr/$str/ };
     if ( $re ) {
-        if ( $str !~ /\$/ ) {
+        if ( $scan_str !~ /\$/ ) {
             # No line_scan is possible if there's a $ in the regex.
-            $scan_re = eval { qr/$str/m };
+            $scan_re = eval { qr/$scan_str/m };
         }
     }
     else {

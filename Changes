@@ -1,5 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[SPEEDUP]
+Using -w with a pattern that ended with a metacharacter would be slower
+than it should be because it would skip an optimization. Now it's fixed.
+(GH #181, #251)
+
 
 v3.1.1      Sat Aug 31 22:56:10 CDT 2019
 ========================================
