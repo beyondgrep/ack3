@@ -77,9 +77,8 @@ my %sets = (
         [ 'foo\w+', '-w', '-L' ],
     ],
     slow => [
-        [ 'foo\w+', '-w' ],
-        [ 'foo\w+', '-w', '-i' ],
-        [ 'ack (set|get)_\w+' ],
+        [ '\w+date', '-w' ],
+        [ '\w+date', '-w', '-i' ],
     ],
 );
 

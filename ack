@@ -33,6 +33,7 @@ our $opt_B;
 our $opt_break;
 our $opt_color;
 our $opt_column;
+our $opt_debug;
 our $opt_c;
 our $opt_f;
 our $opt_g;
@@ -62,6 +63,9 @@ our $search_re;
 our $scan_re;
 
 our @special_vars_used_by_opt_output;
+
+# Internal stats for debugging.
+our %stats;
 
 MAIN: {
     $App::Ack::ORIGINAL_PROGRAM_NAME = $0;
@@ -131,6 +135,7 @@ MAIN: {
     $opt_c              = $opt->{c};
     $opt_color          = $opt->{color};
     $opt_column         = $opt->{column};
+    $opt_debug          = $opt->{debug};
     $opt_f              = $opt->{f};
     $opt_g              = $opt->{g};
     $opt_heading        = $opt->{heading};
@@ -201,6 +206,8 @@ MAIN: {
         $files     = App::Ack::Files->from_stdin();
         $opt_regex //= shift @ARGV;
         ($search_re, $scan_re) = build_regex( $opt_regex, $opt );
+        $stats{search_re} = $search_re;
+        $stats{scan_re} = $scan_re;
     }
     else {
         if ( $opt_f ) {
@@ -209,6 +216,8 @@ MAIN: {
         else {
             $opt_regex //= shift @ARGV;
             ($search_re, $scan_re) = build_regex( $opt_regex, $opt );
+            $stats{search_re} = $search_re;
+            $stats{scan_re} = $scan_re;
         }
         # XXX What is this checking for?
         if ( $search_re && $search_re =~ /\n/ ) {
@@ -309,6 +318,7 @@ FILES:
             # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
             if ( !$opt_passthru && !$opt_v ) {
+                $stats{prescans}++;
                 if ( $file->may_be_present( $scan_re ) ) {
                     $file->reset();
                 }
@@ -317,6 +327,7 @@ FILES:
                 }
             }
             if ( $needs_line_scan ) {
+                $stats{linescans}++;
                 $nmatches += print_matches_in_file( $file );
             }
             if ( $opt_1 && $nmatches ) {
@@ -327,6 +338,16 @@ FILES:
 
     if ( $opt_c && !$opt_show_filename ) {
         App::Ack::print( $total_count, "\n" );
+    }
+
+    if ( $opt_debug ) {
+        require List::Util;
+        my @stats = qw( search_re scan_re prescans linescans filematches linematches );
+        my $width = List::Util::max( map { length } @stats );
+
+        for my $stat ( @stats ) {
+            App::Ack::warn( sprintf( "%-*.*s = %s", $width, $width, $stat, $stats{$stat} // 'undef' ) );
+        }
     }
 
     close $App::Ack::fh;
@@ -670,6 +691,7 @@ sub print_matches_in_file {
 
             if ( $does_match && $max_count ) {
                 if ( !$has_printed_for_this_file ) {
+                    $stats{filematches}++;
                     if ( $opt_break && $has_printed_something ) {
                         App::Ack::print_blank_line();
                     }
@@ -679,6 +701,7 @@ sub print_matches_in_file {
                 }
                 print_line_with_context( $filename, $_, $. );
                 $has_printed_for_this_file = 1;
+                $stats{linematches}++;
                 $nmatches++;
                 $max_count--;
             }
@@ -791,6 +814,7 @@ sub print_matches_in_file {
                 if ( /$search_re/o ) {
                     $match_colno = $-[0] + 1;
                     if ( !$has_printed_for_this_file ) {
+                        $stats{filematches}++;
                         if ( $opt_break && $has_printed_something ) {
                             App::Ack::print_blank_line();
                         }
@@ -812,6 +836,7 @@ sub print_matches_in_file {
                     print_line_with_options( $filename, $_, $., ':' );
                     $has_printed_for_this_file = 1;
                     $nmatches++;
+                    $stats{linematches}++;
                     $max_count--;
                     $last_match_lineno = $.;
                 }

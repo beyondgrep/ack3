@@ -17,6 +17,7 @@ my %defaults = (
     c            => undef,
     color        => undef,
     column       => undef,
+    debug        => undef,
     f            => undef,
     files_from   => undef,
     filters      => [ App::Ack::Filter::Default->new ],
