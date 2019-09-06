@@ -253,85 +253,18 @@ MAIN: {
     }
     App::Ack::set_up_pager( $opt->{pager} ) if defined $opt->{pager};
 
-    my $nmatches    = 0;
-    my $total_count = 0;
-
-    set_up_line_context();
-
-FILES:
-    while ( defined(my $file = $files->next) ) {
-        if ($is_tracking_context) {
-            set_up_line_context_for_file();
-        }
-
-        # ack -f
-        if ( $opt_f || $opt_g ) {
-            if ( $opt_show_types ) {
-                App::Ack::show_types( $file );
-            }
-            elsif ( $opt_g ) {
-                print_line_with_options( undef, $file->name, 0, $App::Ack::ors );
-            }
-            else {
-                App::Ack::say( $file->name );
-            }
-            ++$nmatches;
-            last FILES if defined($opt_m) && $nmatches >= $opt_m;
-        }
-        # ack -c
-        elsif ( $opt_c ) {
-            my $matches_for_this_file = count_matches_in_file( $file );
-
-            if ( not $opt_show_filename ) {
-                $total_count += $matches_for_this_file;
-                next FILES;
-            }
-
-            if ( !$opt_l || $matches_for_this_file > 0) {
-                if ( $opt_show_filename ) {
-                    App::Ack::say( $file->name, ':', $matches_for_this_file );
-                }
-                else {
-                    App::Ack::say( $matches_for_this_file );
-                }
-            }
-        }
-        # ack -l, ack -L
-        elsif ( $opt_l || $opt_L ) {
-            my $is_match = count_matches_in_file( $file, 1 );
-
-            if ( $opt_L ? !$is_match : $is_match ) {
-                App::Ack::say( $file->name );
-                ++$nmatches;
-
-                last FILES if $opt_1;
-                last FILES if defined($opt_m) && $nmatches >= $opt_m;
-            }
-        }
-        # Normal match-showing ack
-        else {
-            my $needs_line_scan = 1;
-            if ( !$opt_passthru && !$opt_v ) {
-                $stats{prescans}++;
-                if ( $file->may_be_present( $scan_re ) ) {
-                    $file->reset();
-                }
-                else {
-                    $needs_line_scan = 0;
-                }
-            }
-            if ( $needs_line_scan ) {
-                $stats{linescans}++;
-                $nmatches += print_matches_in_file( $file );
-            }
-            if ( $opt_1 && $nmatches ) {
-                last FILES;
-            }
-        }
-    }   # while file->next
-
-    if ( $opt_c && !$opt_show_filename ) {
-        App::Ack::print( $total_count, "\n" );
+    my $nmatches;
+    if ( $opt_f || $opt_g ) {
+        $nmatches = file_loop_fg( $files );
+    }
+    elsif ( $opt_c ) {
+        $nmatches = file_loop_c( $files );
+    }
+    elsif ( $opt_l || $opt_L ) {
+        $nmatches = file_loop_lL( $files );
+    }
+    else {
+        $nmatches = file_loop_normal( $files );
     }
 
     if ( $opt_debug ) {
@@ -340,7 +273,7 @@ FILES:
         my $width = List::Util::max( map { length } @stats );
 
         for my $stat ( @stats ) {
-            App::Ack::warn( sprintf( "%-*.*s = %s", $width, $width, $stat, $stats{$stat} // 'undef' ) );
+            App::Ack::warn( sprintf( '%-*.*s = %s', $width, $width, $stat, $stats{$stat} // 'undef' ) );
         }
     }
 
@@ -350,6 +283,78 @@ FILES:
 }
 
 # End of MAIN
+
+sub file_loop_fg {
+    my $files = shift;
+
+    my $nmatches = 0;
+    while ( defined( my $file = $files->next ) ) {
+        if ( $opt_show_types ) {
+            App::Ack::show_types( $file );
+        }
+        elsif ( $opt_g ) {
+            print_line_with_options( undef, $file->name, 0, $App::Ack::ors );
+        }
+        else {
+            App::Ack::say( $file->name );
+        }
+        ++$nmatches;
+        last if defined($opt_m) && ($nmatches >= $opt_m);
+    }
+
+    return $nmatches;
+}
+
+
+sub file_loop_c {
+    my $files = shift;
+
+    my $total_count = 0;
+    while ( defined( my $file = $files->next ) ) {
+        my $matches_for_this_file = count_matches_in_file( $file );
+
+        if ( not $opt_show_filename ) {
+            $total_count += $matches_for_this_file;
+            next;
+        }
+
+        if ( !$opt_l || $matches_for_this_file > 0 ) {
+            if ( $opt_show_filename ) {
+                App::Ack::say( $file->name, ':', $matches_for_this_file );
+            }
+            else {
+                App::Ack::say( $matches_for_this_file );
+            }
+        }
+    }
+
+    if ( !$opt_show_filename ) {
+        App::Ack::say( $total_count );
+    }
+
+    return;
+}
+
+
+sub file_loop_lL {
+    my $files = shift;
+
+    my $nmatches = 0;
+    while ( defined( my $file = $files->next ) ) {
+        my $is_match = count_matches_in_file( $file, 1 );
+
+        if ( $opt_L ? !$is_match : $is_match ) {
+            App::Ack::say( $file->name );
+            ++$nmatches;
+
+            last if $opt_1;
+            last if defined($opt_m) && ($nmatches >= $opt_m);
+        }
+    }
+
+    return $nmatches;
+}
+
 
 sub _compile_descend_filter {
     my ( $opt ) = @_;
@@ -581,7 +586,6 @@ sub build_regex {
         App::Ack::die( "Invalid regex '$str':\n  $err" );
     }
 
-
     return ($regex, $scan_regex);
 }
 
@@ -632,6 +636,38 @@ sub set_up_line_context_for_file {
 
     return;
 }
+
+
+sub file_loop_normal {
+    my $files = shift;
+
+    set_up_line_context();
+
+    my $nmatches = 0;
+    while ( defined( my $file = $files->next ) ) {
+        if ($is_tracking_context) {
+            set_up_line_context_for_file();
+        }
+        my $needs_line_scan = 1;
+        if ( !$opt_passthru && !$opt_v ) {
+            $stats{prescans}++;
+            if ( $file->may_be_present( $scan_re ) ) {
+                $file->reset();
+            }
+            else {
+                $needs_line_scan = 0;
+            }
+        }
+        if ( $needs_line_scan ) {
+            $stats{linescans}++;
+            $nmatches += print_matches_in_file( $file );
+        }
+        last if $opt_1 && $nmatches;
+    }
+
+    return $nmatches;
+}
+
 
 sub print_matches_in_file {
     my $file = shift;

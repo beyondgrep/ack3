@@ -83,7 +83,6 @@ Example	lib/App/Ack.pm	/^Example: ack -i select$/;"	l
 FILENAME_SUBSTITUTION_1	t/ack-output.t	/^FILENAME_SUBSTITUTION_1 : {$/;"	l
 FILENAME_SUBSTITUTION_2	t/ack-output.t	/^FILENAME_SUBSTITUTION_2 : {$/;"	l
 FILENAME_SUBSTITUTION_3	t/ack-output.t	/^FILENAME_SUBSTITUTION_3 : {$/;"	l
-FILES	ack	/^FILES:$/;"	l
 FILE_NOT_THERE	t/command-line-files.t	/^FILE_NOT_THERE: {$/;"	l
 FORCE_NO_PAGER	t/ack-pager.t	/^FORCE_NO_PAGER: {$/;"	l
 FRONT_ANCHORED	t/anchored.t	/^FRONT_ANCHORED: {$/;"	l
@@ -278,6 +277,10 @@ display_invocation	dev/timings.pl	/^sub display_invocation {$/;"	s
 do_test	t/ack-show-types.t	/^sub do_test {$/;"	s
 exit_from_ack	lib/App/Ack.pm	/^sub exit_from_ack {$/;"	s
 expect_ackrcs	t/config-finder.t	/^sub expect_ackrcs {$/;"	s
+file_loop_c	ack	/^sub file_loop_c {$/;"	s
+file_loop_fg	ack	/^sub file_loop_fg {$/;"	s
+file_loop_lL	ack	/^sub file_loop_lL {$/;"	s
+file_loop_normal	ack	/^sub file_loop_normal {$/;"	s
 filetypes	lib/App/Ack.pm	/^sub filetypes {$/;"	s
 filetypes	t/filetypes.t	/^sub filetypes {$/;"	s
 filter	lib/App/Ack/Filter/Collection.pm	/^sub filter {$/;"	s
