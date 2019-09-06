@@ -1055,8 +1055,8 @@ sub count_matches_in_file {
                 }
             }
         }
-        $file->close;
     }
+    $file->close;
 
     return $nmatches;
 }
