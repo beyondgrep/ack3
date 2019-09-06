@@ -567,12 +567,12 @@ sub build_regex {
         $_ = "(?i)$_" for ( $str, $scan_str );
     }
 
-    my $scan_re = undef;
-    my $re = eval { qr/$str/ };
-    if ( $re ) {
+    my $scan_regex = undef;
+    my $regex = eval { qr/$str/ };
+    if ( $regex ) {
         if ( $scan_str !~ /\$/ ) {
             # No line_scan is possible if there's a $ in the regex.
-            $scan_re = eval { qr/$scan_str/m };
+            $scan_regex = eval { qr/$scan_str/m };
         }
     }
     else {
@@ -582,7 +582,7 @@ sub build_regex {
     }
 
 
-    return ($re, $scan_re);
+    return ($regex, $scan_regex);
 }
 
 my $match_colno;
