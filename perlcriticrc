@@ -92,6 +92,7 @@ terminal_funcs = die App::Ack::die
 [-ValuesAndExpressions::ProhibitMagicNumbers]
 [-ValuesAndExpressions::ProhibitNoisyQuotes]
 [-ValuesAndExpressions::RequireConstantOnLeftSideOfEquality]
+[-ValuesAndExpressions::RequireConstantVersion]
 [-ValuesAndExpressions::RequireInterpolationOfMetachars]
 [-ValuesAndExpressions::RequireNumericVersion]
 [-ValuesAndExpressions::RestrictLongStrings]
