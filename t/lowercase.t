@@ -8,7 +8,7 @@ use Test::More tests => 2;
 
 use App::Ack;
 
-my $lc_list = <<'END';
+my $lc_list = <<'END'; ## no critic ( CodeLayout::RequireASCII )
 select . from table
 select \S+ from table
 select [^\s]+ from table
