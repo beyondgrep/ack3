@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 
 use lib 't';
 use Util;
@@ -87,6 +87,9 @@ DASH_C: {
     my @files = qw( t/text );
 
     ack_sets_match( [ @args, @files ], \@expected, 'God counts' );
+
+    push( @args, '--no-filename' );
+    ack_sets_match( [ @args, @files ], [ 5 ], 'God counts, total only' );
 }
 
 DASH_LC: {
