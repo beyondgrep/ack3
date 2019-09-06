@@ -310,12 +310,6 @@ FILES:
         }
         # Normal match-showing ack
         else {
-            # Tells if the file needs a line-by-line scan.  This is a big
-            # optimization because if you can tell from the outset that the pattern
-            # is not found in the file at all, then there's no need to do the
-            # line-by-line iteration.
-            # Slurp up an entire file up to 10M, see if there are any matches
-            # in it, and if so, let us know so we can iterate over it directly.
             my $needs_line_scan = 1;
             if ( !$opt_passthru && !$opt_v ) {
                 $stats{prescans}++;
