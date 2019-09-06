@@ -64,6 +64,8 @@ our $scan_re;
 
 our @special_vars_used_by_opt_output;
 
+our $using_ranges;
+
 # Internal stats for debugging.
 our %stats;
 
@@ -161,6 +163,7 @@ MAIN: {
     if ( $opt_range_end ) {
         ($opt_range_end, undef)   = build_regex( $opt_range_end, {} );
     }
+    $using_ranges = $opt_range_start || $opt_range_end;
 
     $App::Ack::report_bad_filenames = !$opt->{s};
     $App::Ack::ors = $opt->{print0} ? "\0" : "\n";
@@ -697,7 +700,7 @@ sub print_matches_in_file {
 
         $after_context_pending = 0;
 
-        my ($using_ranges, $in_range) = range_setup();
+        my $in_range = range_setup();
 
         while ( <$fh> ) {
             chomp;
@@ -757,7 +760,7 @@ sub print_matches_in_file {
     elsif ( $opt_passthru ) {
         local $_ = undef;
 
-        my ($using_ranges, $in_range) = range_setup();
+        my $in_range = range_setup();
 
         while ( <$fh> ) {
             chomp;
@@ -799,7 +802,7 @@ sub print_matches_in_file {
         local $_ = undef;
 
         $match_colno = undef;
-        my ($using_ranges, $in_range) = range_setup();
+        my $in_range = range_setup();
 
         while ( <$fh> ) {
             chomp;
@@ -832,7 +835,7 @@ sub print_matches_in_file {
         local $_ = undef;
 
         my $last_match_lineno;
-        my ($using_ranges, $in_range) = range_setup();
+        my $in_range = range_setup();
 
         while ( <$fh> ) {
             chomp;
@@ -1066,7 +1069,7 @@ sub count_matches_in_file {
     if ( $do_scan ) {
         $file->reset();
 
-        my ($using_ranges, $in_range) = range_setup();
+        my $in_range = range_setup();
 
         my $fh = $file->{fh};
         if ( $using_ranges ) {
@@ -1099,10 +1102,7 @@ sub count_matches_in_file {
 
 
 sub range_setup {
-    my $using_ranges = $opt_range_start || $opt_range_end;
-    my $in_range = !$using_ranges || (!$opt_range_start && $opt_range_end);
-
-    return ($using_ranges, $in_range);
+    return !$using_ranges || (!$opt_range_start && $opt_range_end);
 }
 
 
