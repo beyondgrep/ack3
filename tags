@@ -403,8 +403,6 @@ safe_chdir	t/Util.pm	/^sub safe_chdir {$/;"	s
 safe_mkdir	t/Util.pm	/^sub safe_mkdir {$/;"	s
 say	lib/App/Ack.pm	/^sub say              { print {$fh} @_, $ors; return; }$/;"	s
 set_up_assertion_that_these_options_will_ignore_those_directories	t/ack-ignore-dir.t	/^sub set_up_assertion_that_these_options_will_ignore_those_directories {$/;"	s
-set_up_line_context	ack	/^sub set_up_line_context {$/;"	s
-set_up_line_context_for_file	ack	/^sub set_up_line_context_for_file {$/;"	s
 set_up_pager	lib/App/Ack.pm	/^sub set_up_pager {$/;"	s
 sets_match	t/Util.pm	/^sub sets_match {$/;"	s
 show_help	lib/App/Ack.pm	/^sub show_help {$/;"	s

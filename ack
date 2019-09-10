@@ -614,8 +614,10 @@ my $printed_lineno;
 my $is_first_match;
 state $has_printed_something = 0;
 
-# Set up context tracking variables.
-sub set_up_line_context {
+
+sub file_loop_normal {
+    my $files = shift;
+
     $n_before_ctx_lines = $opt_output ? 0 : ($opt_B || 0);
     $n_after_ctx_lines  = $opt_output ? 0 : ($opt_A || 0);
 
@@ -626,30 +628,14 @@ sub set_up_line_context {
 
     $is_first_match = 1;
 
-    return;
-}
-
-# Adjust context tracking variables when entering a new file.
-sub set_up_line_context_for_file {
-    $printed_lineno = 0;
-    $after_context_pending = 0;
-    if ( $opt_heading ) {
-        $is_first_match = 1;
-    }
-
-    return;
-}
-
-
-sub file_loop_normal {
-    my $files = shift;
-
-    set_up_line_context();
-
     my $nmatches = 0;
     while ( defined( my $file = $files->next ) ) {
         if ($is_tracking_context) {
-            set_up_line_context_for_file();
+            $printed_lineno = 0;
+            $after_context_pending = 0;
+            if ( $opt_heading ) {
+                $is_first_match = 1;
+            }
         }
         my $needs_line_scan = 1;
         if ( !$opt_passthru && !$opt_v ) {
