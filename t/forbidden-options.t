@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 # XXX This test need to include not-forbidden-options, like --sort and --smart-case.
 

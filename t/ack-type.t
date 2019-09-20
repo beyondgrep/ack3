@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 use strict;
 use warnings;
@@ -15,14 +15,14 @@ my @SWAMP = qw( t/swamp );
 TEST_TYPE: {
     my @expected = line_split( <<'HERE' );
 t/swamp/0:1:#!/usr/bin/perl -w
-t/swamp/Makefile.PL:1:#!perl -T
+t/swamp/Makefile.PL:1:#!perl
 t/swamp/options-crlf.pl:1:#!/usr/bin/env perl
 t/swamp/options.pl:1:#!/usr/bin/env perl
-t/swamp/perl-test.t:1:#!perl -T
+t/swamp/perl-test.t:1:#!perl
 t/swamp/perl-without-extension:1:#!/usr/bin/perl -w
-t/swamp/perl.cgi:1:#!perl -T
-t/swamp/perl.pl:1:#!perl -T
-t/swamp/perl.pm:1:#!perl -T
+t/swamp/perl.cgi:1:#!perl
+t/swamp/perl.pl:1:#!perl
+t/swamp/perl.pm:1:#!perl
 HERE
 
     # Reslash the filenames in case we are on Windows.

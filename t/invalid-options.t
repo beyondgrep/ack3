@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 # https://github.com/beyondgrep/ack3/issues/192
 

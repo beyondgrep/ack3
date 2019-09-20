@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 # Checks that we are not using core C<die> or C<warn> except in very specific places.
 # Same with C<mkdir> and C<chdir>.

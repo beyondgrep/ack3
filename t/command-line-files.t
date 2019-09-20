@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 # This file validates behaviors of specifying files on the command line.
 

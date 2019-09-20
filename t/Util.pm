@@ -686,7 +686,7 @@ sub _record_option_coverage {
         # strip the command line up until 'ack' is found
         $command_line =~ s/^.*ack\b//;
 
-        $command_line = "$perl -T $record_options $command_line";
+        $command_line = "$perl $record_options $command_line";
 
         system $command_line;
     }
@@ -695,7 +695,7 @@ sub _record_option_coverage {
             shift @command_line;
         }
         shift @command_line; # get rid of 'ack' itself
-        unshift @command_line, $perl, '-T', $record_options;
+        unshift @command_line, $perl, $record_options;
 
         system @command_line;
     }
