@@ -11,6 +11,8 @@ than it should be because it would skip an optimization. Now it's fixed.
 Fixed test failures that would sometimes happen on Windows machines because
 of taint mode.  Thanks, Tomasz Konojacki. (GH #235)
 
+Remove the use of the version.pm module.
+
 
 v3.1.1      Sat Aug 31 22:56:10 CDT 2019
 ========================================

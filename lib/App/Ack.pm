@@ -16,8 +16,7 @@ A container for functions for the ack program.
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    use version;
-    $VERSION = version->declare( 'v3.1.1' ); # Check https://beyondgrep.com/ for updates
+    $VERSION = v3.1.1; # Check https://beyondgrep.com/ for updates
     $COPYRIGHT = 'Copyright 2005-2019 Andy Lester.';
 }
 our $STANDALONE = 0;
