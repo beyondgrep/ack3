@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.1.2      Mon Oct 14 21:47:51 CDT 2019
 ========================================
 [SPEEDUP]
 Using -w with a pattern that ended with a metacharacter would be slower

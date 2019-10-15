@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-our $VERSION = v3.1.1; # Check https://beyondgrep.com/ for updates
+our $VERSION = v3.1.2; # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
 
