@@ -2295,6 +2295,7 @@ mailing list.
 How appropriate to have I<ack>nowledgements!
 
 Thanks to everyone who has contributed to ack in any way, including
+Dan Book,
 Tomasz Konojacki,
 Salomon Smeke,
 M. Scott Ford,

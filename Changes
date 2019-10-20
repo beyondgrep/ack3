@@ -1,8 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+
+
 v3.1.3      Sat Oct 19 19:23:48 CDT 2019
 ========================================
 No changes to functionality.  Fixed a problem with version numbers.
+Thanks to Dan Book for his help.
+See https://github.com/beyondgrep/ack3/commit/b3c43d44109dea6ebc0753107a8e85a6b322f4ca
 
 
 v3.1.2      Mon Oct 14 21:47:51 CDT 2019
