@@ -16,7 +16,7 @@ A container for functions for the ack program.
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    $VERSION = v3.1.2; # Check https://beyondgrep.com/ for updates
+    $VERSION = 'v3.1.3'; # Check https://beyondgrep.com/ for updates
     $COPYRIGHT = 'Copyright 2005-2019 Andy Lester.';
 }
 our $STANDALONE = 0;
@@ -210,7 +210,6 @@ Dumps the help page to the user.
 =cut
 
 sub show_help {
-    my $ack_ver = sprintf( 'v%vd', $VERSION );
     App::Ack::print( <<"END_OF_HELP" );
 Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]
 
@@ -368,7 +367,7 @@ ack's home page is at https://beyondgrep.com/
 
 The full ack manual is available by running "ack --man".
 
-This is version $ack_ver of ack.  Run "ack --version" for full version info.
+This is version $App::Ack::VERSION of ack.  Run "ack --version" for full version info.
 END_OF_HELP
 
     return;
@@ -582,12 +581,11 @@ sub get_version_statement {
         $this_perl .= $ext unless $this_perl =~ m/$ext$/i;
     }
     my $perl_ver = sprintf( 'v%vd', $^V );
-    my $ack_ver  = sprintf( 'v%vd', $VERSION );
 
     my $build_type = $App::Ack::STANDALONE ? 'standalone version' : 'standard build';
 
     return <<"END_OF_VERSION";
-ack $ack_ver ($build_type)
+ack $App::Ack::VERSION ($build_type)
 Running under Perl $perl_ver at $this_perl
 
 $copyright

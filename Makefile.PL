@@ -6,13 +6,15 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+print "Running Perl $^V at $^X\n";
+
 my $debug_mode = (grep { $_ eq '--debug' } @ARGV) ? '--debug' : '';
 
 my %parms = (
     NAME                => 'ack',
     AUTHOR              => 'Andy Lester <andy@petdance.com>',
     ABSTRACT            => 'A grep-like program for searching source code',
-    VERSION             => _version_from( 'lib/App/Ack.pm' ),
+    VERSION_FROM        => 'lib/App/Ack.pm',
     LICENSE             => 'artistic_2',
     MIN_PERL_VERSION    => 5.010001,
     META_MERGE          => {
@@ -54,20 +56,6 @@ my %parms = (
 );
 
 WriteMakefile( %parms );
-
-# VERSION_FROM in MakeMaker can't handle version objects.
-sub _version_from {
-    my $file = shift;
-
-    open( my $fh, '<', $file ) or die "Can't open $file: $!";
-    my ($line) = grep { /^\s*\$VERSION\s+=/ } <$fh>;
-    close $fh;
-
-    die "Couldn't find a version line in $file" unless $line;
-    $line =~ /^\s*\$VERSION\s+=\s+(v3\.\d+\.\d+);/ or die "Can't parse VERSION on this line: $line";
-
-    return $1;
-}
 
 package MY;
 
