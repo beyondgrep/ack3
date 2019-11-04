@@ -73,7 +73,7 @@ t/swamp/notes.md
 );
 
 ack_sets_match( [ '--known-types', '-f', 't/swamp' ], \@files, '--known-types test #1' );
-ack_sets_match( [ '--known-types', '--noperl', '-f', 't/swamp' ], \@files_no_perl, '--known-types test #2' );
+ack_sets_match( [ '--known-types', '-T', 'perl', '-f', 't/swamp' ], \@files_no_perl, '--known-types test #2' );
 
 ack_sets_match( [ '-k', '-f', 't/swamp' ], \@files, '-k test #1' );
-ack_sets_match( [ '-k', '-f', '--noperl', 't/swamp' ], \@files_no_perl, '-k test #2' );
+ack_sets_match( [ '-k', '-f', '-T', 'perl', 't/swamp' ], \@files_no_perl, '-k test #2' );

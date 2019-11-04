@@ -192,7 +192,7 @@ subtest 'File on command line is always searched, even with wrong filetype' => s
         t/swamp/notes.md
     );
     my @files = qw( t/swamp/notes.md );
-    my @args  = ( '--html', '-g', 'notes' );
+    my @args  = qw( -t html -g notes );
 
     ack_sets_match( [ @args, @files ], \@expected, 'File on command line is always searched, even with wrong type.' );
 };

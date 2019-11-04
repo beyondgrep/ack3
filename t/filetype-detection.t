@@ -12,7 +12,7 @@ subtest 'Lua shebang' => sub {
     plan tests => 1;
 
     ack_sets_match(
-        [ '--lua', '-f', 't/swamp' ],
+        [qw( -t lua -f t/swamp )],
         [ 't/swamp/lua-shebang-test' ],
         'Lua files should be detected by shebang'
     );
@@ -26,7 +26,7 @@ subtest 'R extensions' => sub {
         t/swamp/example.R
     );
 
-    my @args    = qw( --rr -f );
+    my @args    = qw( -t rr -f );
     my @results = run_ack( @args );
 
     sets_match( \@results, \@expected, __FILE__ );

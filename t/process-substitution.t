@@ -61,3 +61,5 @@ else {
 }
 
 lists_match( \@output, \@expected, __FILE__ );
+
+exit 0;

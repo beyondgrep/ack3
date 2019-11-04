@@ -281,7 +281,7 @@ $target_file
 HERE
 
     my $regex = 'python';
-    my @args = ( '--python', '--group', '-C', $regex );
+    my @args = ( '-t', 'python', '--group', '-C', $regex );
 
     ack_lists_match( [ @args ], \@expected, "Looking for $regex in Python files with grouping" );
 }

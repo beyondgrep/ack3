@@ -17,23 +17,17 @@ my @types = (
     ruby   => [qw{.rb Rakefile}],
 );
 
-my @options = qw(
-    --help-types
-);
-
 plan tests => 11;
 
-foreach my $option ( @options ) {
-    my @output = run_ack($option);
+my @output = run_ack( '--help-types' );
 
-    while ( my ($type,$checks) = splice( @types, 0, 2 ) ) {
-        my ( $matching_line ) = grep { /--\[no\]$type/ } @output;
+while ( my ($type,$checks) = splice( @types, 0, 2 ) ) {
+    my ( $matching_line ) = grep { /^    $type / } @output;
 
-        ok( $matching_line, "A match should be found for --$type in the output for $option" );
+    ok( $matching_line, "A match should be found for $type in the output for --help-types" );
 
-        foreach my $check (@{$checks}) {
-            like( $matching_line, qr/\Q$check\E/, "Line for --$type in output for $option contains $check" );
-        }
+    foreach my $check (@{$checks}) {
+        like( $matching_line, qr/\Q$check\E/, "Line for --$type in output for --help-types contains $check" );
     }
 }
 

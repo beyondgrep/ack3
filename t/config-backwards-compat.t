@@ -33,7 +33,7 @@ my $temp_config = create_tempfile( <<'HERE' );
 --ignore-dir=nytprof
 HERE
 
-my @args = ( '--ackrc=' . $temp_config->filename, '--md', 'One', 't/swamp/' );
+my @args = ( '--ackrc=' . $temp_config->filename, '-t', 'md', 'One', 't/swamp/' );
 
 my $file = reslash('t/swamp/notes.md');
 my $line = 3;

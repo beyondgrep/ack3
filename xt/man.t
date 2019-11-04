@@ -127,3 +127,5 @@ prep_environment();
 foreach my $option ( @options ) {
     check_for_option_in_man_output( $option );
 }
+
+exit 0;

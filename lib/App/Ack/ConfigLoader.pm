@@ -241,6 +241,30 @@ sub get_arg_spec {
 
 =cut
 
+    sub _type_handler {
+        my ( $getopt, $value ) = @_;
+
+        my $cb_value = 1;
+        if ( $value =~ s/^no// ) {
+            $cb_value = 0;
+        }
+
+        my $callback;
+        {
+            no warnings;
+            $callback = $extra_specs->{ $value . '!' };
+        }
+
+        if ( $callback ) {
+            $callback->( $getopt, $cb_value );
+        }
+        else {
+            App::Ack::die( "Unknown type '$value'" );
+        }
+
+        return;
+    };
+
     return {
         1                   => sub { $opt->{1} = $opt->{m} = 1 },
         'A|after-context:-1'  => sub { shift; $opt->{A} = _context_value(shift) },
@@ -317,23 +341,8 @@ sub get_arg_spec {
         'show-types'        => \$opt->{show_types},
         'S|smart-case!'     => sub { my (undef,$value) = @_; $opt->{S} = $value; $opt->{i} = 0 if $value; },
         'sort-files'        => \$opt->{sort_files},
-        'type=s'            => sub {
-            my ( $getopt, $value ) = @_;
-
-            my $cb_value = 1;
-            if ( $value =~ s/^no// ) {
-                $cb_value = 0;
-            }
-
-            my $callback = $extra_specs->{ $value . '!' };
-
-            if ( $callback ) {
-                $callback->( $getopt, $cb_value );
-            }
-            else {
-                App::Ack::die( "Unknown type '$value'" );
-            }
-        },
+        't|type=s'          => \&_type_handler,
+        'T=s'               => sub { my ($getopt,$value) = @_; $value="no$value"; _type_handler($getopt,$value); },
         'underline!'        => \$opt->{underline},
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 26;
 
 use lib 't';
 use Util;
@@ -35,7 +35,17 @@ HERE
     my $target  = 'perl';
 
     my @results = run_ack( @args, $target, @files );
-    sets_match( \@results, \@expected, 'TEST_TYPE' );
+    sets_match( \@results, \@expected, 'TEST_TYPE with --type=perl' );
+
+    # Try it again with -t.
+    @args    = qw( -t perl --nogroup --noheading --nocolor );
+    @results = run_ack( @args, $target, @files );
+    sets_match( \@results, \@expected, 'TEST_TYPE with -t perl' );
+
+    # Try it again with --perl.
+    @args    = qw( --perl --nogroup --noheading --nocolor );
+    @results = run_ack( @args, $target, @files );
+    sets_match( \@results, \@expected, 'TEST_TYPE with --perl' );
 }
 
 TEST_NOTYPE: {
@@ -54,7 +64,23 @@ HERE
     my $target  = 'perl';
 
     my @results = run_ack( @args, $target, @files );
-    sets_match( \@results, \@expected, 'TEST_NOTYPE' );
+    sets_match( \@results, \@expected, 'TEST_NOTYPE with --type' );
+
+    # Try as --noperl
+    @args    = qw( --noperl --nogroup --noheading --nocolor );
+    @results = run_ack( @args, $target, @files );
+    sets_match( \@results, \@expected, 'TEST_NOTYPE with --noperl' );
+
+    # Try as -t noperl
+    @args    = qw( -t noperl --nogroup --noheading --nocolor );
+    @results = run_ack( @args, $target, @files );
+    sets_match( \@results, \@expected, 'TEST_NOTYPE with -t noperl' );
+
+
+    # Try it with -T.
+    @args    = qw( -T perl --nogroup --noheading --nocolor );
+    @results = run_ack( @args, $target, @files );
+    sets_match( \@results, \@expected, 'TEST_NOTYPE with -T' );
 }
 
 TEST_UNKNOWN_TYPE: {

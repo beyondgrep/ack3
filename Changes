@@ -2,6 +2,15 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[FEATURES]
+Added "-t X" as a short alias for --type=X.
+
+Added "-T X" as a short alias for --type=noX.
+
+The feature of using the name of the type as an option is deprecated.  For
+example, ack currently lets you use "--perl" instead of "--type=perl" or
+"-t perl",  This is now deprecated and will be removed in a future release.
+
 Removed support for Parrot (--parrot).
 
 

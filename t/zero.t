@@ -36,13 +36,13 @@ my @actual_swamp_perl = map { "$swamp/$_" } qw(
 );
 
 DASH_F: {
-    my @args = qw( -f --perl );
+    my @args = qw( -f -t perl );
 
     ack_sets_match( [ @args, $swamp ], \@actual_swamp_perl, 'DASH_F' );
 }
 
 DASH_F_CWD: {
-    my @args = qw( -f --perl --sort-files );
+    my @args = qw( -f -t perl --sort-files );
 
     my @swamp_basenames = @actual_swamp_perl;
     s{^$swamp/}{} for @swamp_basenames;
@@ -52,3 +52,5 @@ DASH_F_CWD: {
     ack_sets_match( [ @args, '.' ], \@swamp_basenames, 'DASH_F_CWD:' );
     safe_chdir($wd);
 }
+
+exit 0;

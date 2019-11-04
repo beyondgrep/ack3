@@ -58,7 +58,7 @@ subtest 'Check for all the types' => sub {
     ok( (scalar grep { /Unknown option: frobnicate/ } @{$stderr}), 'Found the illegal option in the ackrc' );
 
     while ( my ($type,$checks) = each %types ) {
-        my ( $matching_line ) = grep { /--\[no\]$type/ } @{$output};
+        my ( $matching_line ) = grep { /^\s+$type/ } @{$output};
 
         ok( $matching_line, "Got at least one for --$type" );
         foreach my $check (@{$checks}) {

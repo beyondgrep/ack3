@@ -91,7 +91,7 @@ COMBINED_FILTERS: {
         t/swamp/perl.pod
     );
 
-    my @args = qw( -f t/swamp --perl --rake );
+    my @args = qw( -f t/swamp --perl -t rake );
 
     ack_sets_match( [ @args ], \@expected, 'COMBINED_FILTERS' );
     is( get_rc(), 0, '-f with matches exits with 0' );
@@ -100,7 +100,7 @@ COMBINED_FILTERS: {
 EXIT_CODE: {
     my @expected;
 
-    my @args = qw( -f t/swamp --type-add=baz:ext:baz --baz );
+    my @args = qw( -f t/swamp --type-add=baz:ext:baz -t baz );
 
     ack_sets_match( \@args, \@expected, 'EXIT_CODE' );
     is( get_rc(), 1, '-f with no matches exits with 1' );

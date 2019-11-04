@@ -192,7 +192,7 @@ HERE
     my @expected_l = map { /^(.+):\d/ && $1 } @expected_c;
 
     # -l, no range
-    my @args = qw( sea -i --sort --html );
+    my @args = qw( sea -i --sort -t html );
     my @results = run_ack( @args, '-l', 't/range' );
     lists_match( \@results, \@expected_l, 'Found the correct files' );
 
