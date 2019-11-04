@@ -1681,20 +1681,24 @@ Outputs the filetypes that ack associates with each file.
 
 Works with B<-f> and B<-g> options.
 
-=item B<--type=[no]TYPE>
+=item B<-t TYPE>, B<--type=TYPE>, B<--TYPE>
 
-Specify the types of files to include or exclude from a search.
+Specify the types of files to include in the search.
 TYPE is a filetype, like I<perl> or I<xml>.  B<--type=perl> can
-also be specified as B<--perl>, and B<--type=noperl> can be done
-as B<--noperl>.
+also be specified as B<--perl>, although this is deprecated.
 
-If a file is of both type "foo" and "bar", specifying --foo and
---nobar will exclude the file, because an exclusion takes precedence
-over an inclusion.
-
-Type specifications can be repeated and are ORed together.
+Type inclusions can be repeated and are ORed together.
 
 See I<ack --help=types> for a list of valid types.
+
+=item B<-T TYPE>, B<--type=noTYPE>, B<--noTYPE>
+
+Specifies the type of files to exclude from the search.  B<--type=noperl>
+can be done as B<--noperl>, although this is deprecated.
+
+If a file is of both type "foo" and "bar", specifying both B<--type=foo>
+and B<--type=nobar> will exclude the file, because an exclusion takes
+precedence over an inclusion.
 
 =item B<--type-add I<TYPE>:I<FILTER>:I<ARGS>>
 

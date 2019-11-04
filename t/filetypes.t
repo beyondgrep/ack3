@@ -57,14 +57,13 @@ sub populate_filetypes {
     my @types_to_try;
 
     foreach my $line ( @{$type_lines} ) {
-        if ( $line =~ /^\s+--\[no\](\w+)/ ) {
+        if ( $line =~ /^    (\w+) / ) {
             push @types_to_try, $1;
         }
     }
 
     foreach my $type (@types_to_try) {
-        my ( $filenames, undef ) = run_ack_with_stderr('-f', "--$type",
-            't/swamp', 't/etc');
+        my ( $filenames, undef ) = run_ack_with_stderr('-f', '-t', $type, 't/swamp', 't/etc');
 
         foreach my $filename ( @{$filenames} ) {
             push @{ $types_for_file{$filename} }, $type;

@@ -17,7 +17,7 @@ my @expected = qw(
     t/swamp/service.svc
 );
 
-my @args    = qw( --aspx -f );
+my @args    = qw( -t aspx -f );
 my @results = run_ack(@args);
 
 sets_match( \@results, \@expected, __FILE__ );
