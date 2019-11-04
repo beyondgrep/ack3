@@ -34,7 +34,6 @@ UNFILTERED: {
 
     sets_match( \@files, [qw(
             t/swamp/0
-            t/swamp/blib/ignore.pir
             t/swamp/blib/ignore.pm
             t/swamp/blib/ignore.pod
             t/swamp/constitution-100k.pl
@@ -94,7 +93,6 @@ UNFILTERED: {
             t/swamp/options-crlf.pl
             t/swamp/options.pl
             t/swamp/options.pl.bak
-            t/swamp/parrot.pir
             t/swamp/perl-test.t
             t/swamp/perl-without-extension
             t/swamp/perl.cgi

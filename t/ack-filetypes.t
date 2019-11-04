@@ -43,8 +43,8 @@ make
 objc
 objcpp
 ocaml
-parrot
 perl
+perltest
 php
 plone
 python

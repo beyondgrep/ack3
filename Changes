@@ -2,6 +2,7 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+Removed support for Parrot (--parrot).
 
 
 v3.1.3      Sat Oct 19 19:23:48 CDT 2019

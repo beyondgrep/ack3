@@ -46,7 +46,6 @@ DEFAULT_DIR_EXCLUSIONS: {
         t/swamp/notes.md
         t/swamp/options-crlf.pl
         t/swamp/options.pl
-        t/swamp/parrot.pir
         t/swamp/perl-test.t
         t/swamp/perl-without-extension
         t/swamp/perl.cgi

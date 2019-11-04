@@ -14,7 +14,6 @@ my @files = qw(
 t/swamp/0
 t/swamp/constitution-100k.pl
 t/swamp/Rakefile
-t/swamp/parrot.pir
 t/swamp/options-crlf.pl
 t/swamp/options.pl
 t/swamp/javascript.js
@@ -50,7 +49,6 @@ t/swamp/notes.md
 
 my @files_no_perl = qw(
 t/swamp/Rakefile
-t/swamp/parrot.pir
 t/swamp/javascript.js
 t/swamp/html.html
 t/swamp/sample.rake
