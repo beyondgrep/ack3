@@ -388,8 +388,9 @@ The following is the list of filetypes supported by ack.  You can
 specify a file type with the --type=TYPE format, or the --TYPE
 format.  For example, both --type=perl and --perl work.
 
-Note that some extensions may appear in multiple types.  For example,
-.pod files are both Perl and Parrot.
+Note that some extensions may appear in multiple types.  For example, a
+file called Rakefile is both Ruby (--type ruby) and Rakefile (--type
+rakefile).
 
 END_OF_HELP
 

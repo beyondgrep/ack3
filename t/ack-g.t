@@ -189,12 +189,10 @@ subtest 'File on command line is always searched, even with wrong filetype' => s
     plan tests => 1;
 
     my @expected = qw(
-        t/swamp/parrot.pir
+        t/swamp/notes.md
     );
-    my $regex = 'parrot';
-
-    my @files = qw( t/swamp/parrot.pir );
-    my @args  = ( '--html', '-g', $regex );
+    my @files = qw( t/swamp/notes.md );
+    my @args  = ( '--html', '-g', 'notes' );
 
     ack_sets_match( [ @args, @files ], \@expected, 'File on command line is always searched, even with wrong type.' );
 };

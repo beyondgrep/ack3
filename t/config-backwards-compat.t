@@ -17,9 +17,6 @@ my $temp_config = create_tempfile( <<'HERE' );
 --noheading
 --break
 
-# Handle .pmc files
---type-set=pmc=.pmc
-
 # Handle .hwd files
 --type-set=hwd=.hwd
 

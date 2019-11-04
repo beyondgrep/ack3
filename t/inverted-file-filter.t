@@ -40,7 +40,6 @@ EXCLUDE_ONLY: {
         t/swamp/notaMakefile
         t/swamp/notaRakefile
         t/swamp/notes.md
-        t/swamp/parrot.pir
         t/swamp/pipe-stress-freaks.F
         t/swamp/Rakefile
         t/swamp/Sample.ascx

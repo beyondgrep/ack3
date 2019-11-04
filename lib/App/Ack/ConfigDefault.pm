@@ -339,10 +339,6 @@ sub _options_block {
 # https://ocaml.org/
 --type-add=ocaml:ext:ml,mli,mll,mly
 
-# Parrot
-# http://www.parrot.org/
---type-add=parrot:ext:pir,pasm,pmc,ops,pod,pg,tg
-
 # Perl
 # http://perl.org/
 --type-add=perl:ext:pl,pm,pod,t,psgi
