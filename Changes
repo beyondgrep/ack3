@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.2.0      Sun Nov  3 22:52:18 CST 2019
 ========================================
 [FEATURES]
 Added "-t X" as a short alias for --type=X.
