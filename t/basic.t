@@ -5,9 +5,24 @@ use warnings;
 use lib 't';
 
 use Util;
-use Test::More tests => 12;
+use Test::More tests => 14;
 
 prep_environment();
+
+
+NO_SWITCHES_ONE_DIRECTORY: {
+    my $target_file = reslash( 't/text/gettysburg.txt' );
+    my @expected = line_split( <<"HERE" );
+$target_file:14:struggled here, have consecrated it, far above our poor power to add or
+HERE
+
+    my @files = qw( t/text );
+    my @args = qw( consecrated );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Looking for strict in one directory' );
+}
+
 
 NO_SWITCHES_ONE_FILE: {
     my @expected = line_split( <<'HERE' );
