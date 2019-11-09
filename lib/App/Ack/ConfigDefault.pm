@@ -128,6 +128,10 @@ sub _options_block {
 # https://www.haskell.org/cabal/users-guide/installing-packages.html
 --ignore-directory=is:.cabal-sandbox
 
+# Python cache
+# https://docs.python.org/3/tutorial/modules.html
+--ignore-directory=is:__pycache__
+
 ### Files to ignore
 
 # Backup files
@@ -164,6 +168,14 @@ sub _options_block {
 # Common archives, as an optimization
 --ignore-file=ext:gz,tar,tgz,zip
 
+# Python compiles modules
+--ignore-file=ext:pyc,pyd,pyo
+
+# C extensions
+--ignore-file=ext:so
+
+# Compiled gettext files
+--ignore-file=ext:mo
 
 ### Filetypes defined
 

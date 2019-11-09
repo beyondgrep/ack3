@@ -58,6 +58,7 @@ filter_test(
         't/swamp/sample.aspx',
         't/swamp/sample.rake',
         't/swamp/service.svc',
+        't/swamp/__pycache__/notes.pl',
         't/swamp/blib/ignore.pm',
         't/swamp/blib/ignore.pod',
         't/swamp/groceries/fruit',

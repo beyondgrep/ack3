@@ -136,6 +136,7 @@ t/range/anchors-aweigh.html
 t/range/johnny-rebeck.txt
 t/range/stars-and-stripes-forever.html
 
+t/swamp/__pycache__/notes.pl
 t/swamp/#emacs-workfile.pl#
 t/swamp/0
 t/swamp/CMakeLists.txt
@@ -219,6 +220,7 @@ t/swamp/service.svc
 t/swamp/solution8.tar
 t/swamp/stuff.cmake
 t/swamp/swamp/ignoreme.txt
+
 t/text/amontillado.txt
 t/text/bill-of-rights.txt
 t/text/constitution.txt
