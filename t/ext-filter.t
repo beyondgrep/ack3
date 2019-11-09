@@ -12,6 +12,7 @@ use App::Ack::Filter::Extension;
 filter_test(
     [ ext => qw/pl pod pm t/ ], [
         't/swamp/Makefile.PL',
+        't/swamp/__pycache__/notes.pl',
         't/swamp/blib/ignore.pm',
         't/swamp/blib/ignore.pod',
         't/swamp/constitution-100k.pl',

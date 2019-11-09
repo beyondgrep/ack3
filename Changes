@@ -1,5 +1,21 @@
 History file for ack 3.  https://beyondgrep.com/
 
+
+NEXT
+========================================
+[FEATURES]
+ack now knows to ignore more compiled binary files:
+
+* Python's *.pyc, *.pyd and *.pyo compiled class files, and the __pycache__
+directory
+* Linux *.so shared object *.so files
+* Windows dynamic-link library *.dll files
+* gettext compiled *.mo translation files
+
+These files would not normally be searched, because they're binary, but
+ignoring them based on extension is a speedup.
+
+
 v3.2.0      Sun Nov  3 22:52:18 CST 2019
 ========================================
 [FEATURES]
