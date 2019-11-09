@@ -765,7 +765,7 @@ sub print_matches_in_file {
                         App::Ack::say( $display_filename );
                     }
                 }
-                print_line_with_context( $filename, $_, $. );
+                print_line_with_options( $filename, $_, $., ':' );
                 $has_printed_for_this_file = 1;
                 $nmatches++;
                 $max_count--;
