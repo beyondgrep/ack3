@@ -38,12 +38,14 @@ HERE
 
 
 NO_SWITCHES_MULTIPLE_FILES: {
-    my $target_file = reslash( 't/swamp/options.pl' );
+    my $options_file = reslash( 't/swamp/options.pl' );
+    my $const___file = reslash( 't/text/constitution.txt' );
     my @expected = line_split( <<"HERE" );
-$target_file:2:use strict;
+$const___file:225:such District (not exceeding ten Miles square) as may, by Cession of
+$options_file:2:use strict;
 HERE
 
-    my @files = qw( t/swamp/options.pl t/swamp/pipe-stress-freaks.F );
+    my @files = qw( t/text/constitution.txt t/swamp/pipe-stress-freaks.F t/swamp/options.pl );
     my @args = qw( strict );
     my @results = run_ack( @args, @files );
 
