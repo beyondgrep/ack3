@@ -11,9 +11,7 @@ This tests whether ack's command line options work as expected.
 
 use Test::More;
 
-# --no-recurse is inconsistent w/--nogroup
-
-plan tests => 42;
+plan tests => 52;
 
 use lib 't';
 use Util;
@@ -22,13 +20,28 @@ prep_environment();
 
 # Help
 for my $arg ( qw( --help ) ) {
+    my @sections = (
+        'File select actions:',
+        'File listing actions:',
+        'Searching:',
+        'Search output:',
+        'File presentation:',
+        'File finding:',
+        'File inclusion/exclusion:',
+        'File type inclusion/exclusion:',
+        'File type specification:',
+        'Miscellaneous:',
+        'Filter specifications:',
+    );
     my @args = ($arg);
     my $results = run_ack( @args );
-    like(
-        $results,
-        qr{ ^Usage: .* Example: }xs,
-        qq{$arg output is correct}
-    );
+    for my $section ( @sections ) {
+        like(
+            $results,
+            qr{^Usage:.*$section}ms,
+            qq{Found "$section" section}
+        );
+    }
 }
 
 # Version
