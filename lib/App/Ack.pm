@@ -222,7 +222,16 @@ or if one of them is "-".
 Default switches may be specified in an .ackrc file. If you want no dependency
 on the environment, turn it off with --noenv.
 
-Example: ack -i select
+File select actions:
+  -f                            Only print the files selected, without
+                                searching.  The PATTERN must not be specified.
+  -g                            Same as -f, but only select files matching
+                                PATTERN.
+
+File listing actions:
+  -l, --files-with-matches      Print filenames with at least one match
+  -L, --files-without-matches   Print filenames with no matches
+  -c, --count                   Print filenames and count of matching lines
 
 Searching:
   -i, --ignore-case             Ignore case distinctions in PATTERN
@@ -239,8 +248,6 @@ Searching:
   --match PATTERN               Specify PATTERN explicitly. Typically omitted.
 
 Search output:
-  -l, --files-with-matches      Only print filenames containing matches
-  -L, --files-without-matches   Only print filenames with no matches
   --output=expr                 Output the evaluation of expr for each line
                                 (turns off text highlighting)
   -o                            Show only the part of a line matching PATTERN
@@ -251,7 +258,6 @@ Search output:
   -H, --with-filename           Print the filename for each match (default:
                                 on unless explicitly searching a single file)
   -h, --no-filename             Suppress the prefixing filename on output
-  -c, --count                   Show number of lines matching per file
   --[no]column                  Show the column number of the first match
 
   -A NUM, --after-context=NUM   Print NUM lines of trailing context after
@@ -299,10 +305,6 @@ File presentation:
 
 
 File finding:
-  -f                            Only print the files selected, without
-                                searching.  The PATTERN must not be specified.
-  -g                            Same as -f, but only select files matching
-                                PATTERN.
   --sort-files                  Sort the found files lexically.
   --show-types                  Show which types each file has.
   --files-from=FILE             Read the list of files to search from FILE.

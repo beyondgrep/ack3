@@ -15,6 +15,9 @@ directory
 These files would not normally be searched, because they're binary, but
 ignoring them based on extension is a speedup.
 
+Reorganized the --help menu to put "action" options like -f, -g and -l at
+the top of the listing.
+
 
 v3.2.0      Sun Nov  3 22:52:18 CST 2019
 ========================================
