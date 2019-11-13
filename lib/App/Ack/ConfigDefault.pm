@@ -142,10 +142,10 @@ sub _options_block {
 --ignore-file=match:/^#.+#$/
 
 # vi/vim swap files http://vim.org/
---ignore-file=match:/[._].*\.swp$/
+--ignore-file=match:/[._].*[.]swp$/
 
 # core dumps
---ignore-file=match:/core\.\d+$/
+--ignore-file=match:/core[.]\d+$/
 
 # minified Javascript
 --ignore-file=match:/[.-]min[.]js$/
