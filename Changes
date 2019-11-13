@@ -4,16 +4,13 @@ History file for ack 3.  https://beyondgrep.com/
 NEXT
 ========================================
 [FEATURES]
-ack now knows to ignore more compiled binary files:
+Added many new file and directory exclusions to speed up file selection.
 
-* Python's *.pyc, *.pyd and *.pyo compiled class files, and the __pycache__
-directory
+* Python's *.pyc, *.pyd and *.pyo compiled files and __pycache__ directory
 * Linux *.so shared object *.so files
 * Windows dynamic-link library *.dll files
 * gettext compiled *.mo translation files
-
-These files would not normally be searched, because they're binary, but
-ignoring them based on extension is a speedup.
+* macOS's __MACOSX directories and .DS_Store files
 
 Reorganized the --help menu to put "action" options like -f, -g and -l at
 the top of the listing.

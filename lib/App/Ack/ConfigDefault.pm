@@ -132,6 +132,10 @@ sub _options_block {
 # https://docs.python.org/3/tutorial/modules.html
 --ignore-directory=is:__pycache__
 
+# macOS Finder remnants
+--ignore-directory=is:__MACOSX
+--ignore-file=is:.DS_Store
+
 ### Files to ignore
 
 # Backup files
