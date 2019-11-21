@@ -91,7 +91,7 @@ COMBINED_FILTERS: {
         t/swamp/perl.pod
     );
 
-    my @args = qw( -f t/swamp --perl -t rake );
+    my @args = qw( -f t/swamp -t perl -t rake );
 
     ack_sets_match( [ @args ], \@expected, 'COMBINED_FILTERS' );
     is( get_rc(), 0, '-f with matches exits with 0' );
