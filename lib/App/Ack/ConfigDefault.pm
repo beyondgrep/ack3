@@ -128,9 +128,10 @@ sub _options_block {
 # https://www.haskell.org/cabal/users-guide/installing-packages.html
 --ignore-directory=is:.cabal-sandbox
 
-# Python cache
+# Python caches
 # https://docs.python.org/3/tutorial/modules.html
 --ignore-directory=is:__pycache__
+--ignore-directory=is:.pytest_cache
 
 # macOS Finder remnants
 --ignore-directory=is:__MACOSX
