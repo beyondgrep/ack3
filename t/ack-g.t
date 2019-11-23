@@ -285,6 +285,7 @@ subtest 'test -g on a path' => sub {
 
     my $file_regex = 'text';
     my @expected   = qw(
+        t/context-with-newlines.t
         t/context.t
         t/text/amontillado.txt
         t/text/bill-of-rights.txt
@@ -306,6 +307,7 @@ subtest 'test -g with --color' => sub {
 
     my $file_regex = 'text';
     my $expected_original = <<'HERE';
+t/con(text)-with-newlines.t
 t/con(text).t
 t/(text)/amontillado.txt
 t/(text)/bill-of-rights.txt
@@ -339,6 +341,7 @@ subtest q{test -g without --color; make sure colors don't show} => sub {
 
     my $file_regex = 'text';
     my $expected   = <<'HERE';
+t/context-with-newlines.t
 t/context.t
 t/text/amontillado.txt
 t/text/bill-of-rights.txt
