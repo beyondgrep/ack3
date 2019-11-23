@@ -51,7 +51,6 @@ t/ack-ignore-dir.t
 t/ack-ignore-file.t
 t/ack-i.t
 t/ack-i.barfly
-t/ack-known-types.t
 t/ack-k.t
 t/ack-l.t
 t/ack-match.t
