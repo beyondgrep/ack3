@@ -41,4 +41,3 @@ sub get_types {
 
     return \@types;
 }
-
