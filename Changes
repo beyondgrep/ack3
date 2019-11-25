@@ -16,6 +16,10 @@ Added many new file and directory exclusions to speed up file selection.
 Reorganized the --help menu to put "action" options like -f, -g and -l at
 the top of the listing.
 
+The --show-types option only has an effect with -f or -g.  ack will now
+tell you if you use --show-types without -f or -g when it will have no
+effect.
+
 
 v3.2.0      Sun Nov  3 22:52:18 CST 2019
 ========================================

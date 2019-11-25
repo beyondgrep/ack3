@@ -155,6 +155,9 @@ MAIN: {
     $opt_underline      = $opt->{underline};
     $opt_v              = $opt->{v};
 
+    if ( $opt_show_types && not( $opt_f || $opt_g ) ) {
+        App::Ack::die( '--show-types can only be used with -f or -g.' );
+    }
 
     if ( $opt_range_start ) {
         ($opt_range_start, undef) = build_regex( $opt_range_start, {} );
