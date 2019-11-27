@@ -1692,7 +1692,7 @@ also be specified as B<--perl>, although this is deprecated.
 
 Type inclusions can be repeated and are ORed together.
 
-See I<ack --help=types> for a list of valid types.
+See I<ack --help-types> for a list of valid types.
 
 =item B<-T TYPE>, B<--type=noTYPE>, B<--noTYPE>
 
