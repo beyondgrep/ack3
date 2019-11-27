@@ -287,8 +287,6 @@ subtest 'test -g on a path' => sub {
 
     my $file_regex = 'text';
     my @expected   = qw(
-        t/context-with-newlines.t
-        t/context.t
         t/text/amontillado.txt
         t/text/bill-of-rights.txt
         t/text/constitution.txt
@@ -298,7 +296,7 @@ subtest 'test -g on a path' => sub {
         t/text/ozymandias.txt
         t/text/raven.txt
     );
-    my @args = ( '--sort-files', '-g', $file_regex );
+    my @args = ( '--sort-files', '-g', $file_regex, 't/text' );
 
     ack_sets_match( [ @args ], \@expected, 'Make sure -g matches the whole path' );
 };
