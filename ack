@@ -1692,7 +1692,7 @@ also be specified as B<--perl>, although this is deprecated.
 
 Type inclusions can be repeated and are ORed together.
 
-See I<ack --help=types> for a list of valid types.
+See I<ack --help-types> for a list of valid types.
 
 =item B<-T TYPE>, B<--type=noTYPE>, B<--noTYPE>
 
@@ -1818,7 +1818,7 @@ a filetype of "cobol", you can specify I<--type=cobol> or simply
 I<--cobol>.  File types must be at least two characters long.  This
 is why the C language is I<--cc> and the R language is I<--rr>.
 
-I<ack --perl foo> searches for foo in all perl files. I<ack --help=types>
+I<ack --perl foo> searches for foo in all perl files. I<ack --help-types>
 tells you, that perl files are files ending
 in .pl, .pm, .pod or .t. So what if you would like to include .xs
 files as well when searching for --perl files? I<ack --type-add perl:ext:xs --perl foo>
