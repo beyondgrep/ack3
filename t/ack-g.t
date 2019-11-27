@@ -341,8 +341,6 @@ subtest q{test -g without --color; make sure colors don't show} => sub {
 
     my $file_regex = 'text';
     my $expected   = <<'HERE';
-t/context-with-newlines.t
-t/context.t
 t/text/amontillado.txt
 t/text/bill-of-rights.txt
 t/text/constitution.txt
@@ -353,7 +351,7 @@ t/text/ozymandias.txt
 t/text/raven.txt
 HERE
 
-    my @args = ( '--sort-files', '-g', $file_regex );
+    my @args = ( '--sort-files', '-g', $file_regex, 't/text' );
 
     my $results = run_ack_interactive(@args);
 
