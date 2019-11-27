@@ -402,15 +402,8 @@ sub get_rc {
 sub run_ack_with_stderr {
     my @args = @_;
 
-    my $perl = caret_X();
-
     @args = build_ack_invocation( @args );
-    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-        unshift( @args, $perl );
-    }
-    else {
-        unshift( @args, $perl, "-Mblib=$orig_wd" );
-    }
+    @args = adjust_executable( @args );
 
     return run_cmd( @args );
 }
@@ -756,6 +749,8 @@ BEGIN {
 
             _record_option_coverage(@cmd);
 
+            @cmd = adjust_executable( @cmd );
+
             my $pty = IO::Pty->new;
 
             my $pid = fork;
@@ -800,15 +795,6 @@ BEGIN {
                 open STDERR, '>&', $slave->fileno() or die "Can't open: $!";
 
                 close $slave;
-
-                my $perl = caret_X();
-
-                if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-                    unshift( @cmd, $perl );
-                }
-                else {
-                    unshift( @cmd, $perl, "-Mblib=$orig_wd" );
-                }
 
                 exec @cmd;
             }
@@ -1224,6 +1210,22 @@ sub make_unreadable {
     }
 
     return ($old_mode, $error);
+}
+
+
+sub adjust_executable {
+    my @cmd = @_;
+
+    my $perl = caret_X();
+
+    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
+        unshift( @cmd, $perl );
+    }
+    else {
+        unshift( @cmd, $perl, "-Mblib=$orig_wd" );
+    }
+
+    return @cmd;
 }
 
 
