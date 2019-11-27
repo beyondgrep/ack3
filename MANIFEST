@@ -28,7 +28,6 @@ lib/App/Ack/Filter/MatchGroup.pm
 squash
 
 t/Barfly.pm
-t/FilterTest.pm
 t/Util.pm
 t/test-pager
 
@@ -85,16 +84,12 @@ t/config-finder.t
 t/config-loader.t
 t/context.t
 t/context-with-newlines.t
-t/default-filter.t
 t/empty-lines.t
 t/exit-code.t
-t/ext-filter.t
 t/file-iterator.t
 t/file-permission.t
 t/filetype-detection.t
 t/filetypes.t
-t/filter.t
-t/firstlinematch-filter.t
 t/forbidden-options.t
 t/highlighting.t
 t/illegal-regex.t
@@ -102,12 +97,9 @@ t/incomplete-last-line.t
 t/interactive.t
 t/invalid-ackrc.t
 t/invalid-options.t
-t/inverted-file-filter.t
-t/is-filter.t
 t/line-endings.t
 t/longopts.t
 t/lowercase.t
-t/match-filter.t
 t/multiple-captures.t
 t/mutex-options.t
 t/named-pipes.t
@@ -119,6 +111,15 @@ t/process-substitution.t
 t/runtests.pl
 t/trailing-whitespace.t
 t/zero.t
+
+t/filter/FilterTest.pm
+t/filter/default-filter.t
+t/filter/ext-filter.t
+t/filter/filter.t
+t/filter/firstlinematch-filter.t
+t/filter/inverted-file-filter.t
+t/filter/is-filter.t
+t/filter/match-filter.t
 
 t/etc/buttonhook.xml.xxx
 t/etc/shebang.empty.xxx
