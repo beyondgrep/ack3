@@ -79,16 +79,15 @@ subtest 'Front anchor' => sub {
     plan tests => 1;
 
     my @expected = qw(
-        t/file-iterator.t
-        t/file-permission.t
-        t/filetype-detection.t
-        t/filetypes.t
-        t/filter.t
+        t/swamp/c-header.h
+        t/swamp/c-source.c
+        t/swamp/constitution-100k.pl
+        t/swamp/crystallography-weenies.f
     );
-    my $regex = '^t.fil';
+    my $regex = '^t.swamp.c';
 
     my @args  = ( '-g', $regex );
-    my @files = qw( t );
+    my @files = qw( t/swamp );
 
     ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex" );
 };
@@ -98,7 +97,6 @@ subtest 'Back anchor' => sub {
     plan tests => 1;
 
     my @expected = qw(
-        t/runtests.pl
         t/swamp/constitution-100k.pl
         t/swamp/options-crlf.pl
         t/swamp/options.pl
@@ -107,7 +105,7 @@ subtest 'Back anchor' => sub {
     my $regex = 'pl$';
 
     my @args  = ( '-g', $regex );
-    my @files = qw( t );
+    my @files = qw( t/swamp );
 
     ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex" );
 };
@@ -199,15 +197,19 @@ subtest 'File on command line is always searched, even with wrong filetype' => s
 
 
 subtest '-Q works on -g' => sub {
-    plan tests => 1;
+    plan tests => 2;
 
-    my @expected = qw();
-    my $regex = 'ack-g.t$';
+    # Matches without the -Q
+    my @expected = qw( t/swamp/file.bar );
+    my $regex = 'file.bar$';
 
     my @files = qw( t );
-    my @args  = ( '-Q', '-g', $regex );
+    my @args  = ( '-g', $regex );
 
-    ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex with quotemeta." );
+    ack_sets_match( [ @args, @files ], \@expected, "Looking for $regex without -Q." );
+
+    # Doesn't match with -Q.
+    ack_sets_match( [ @args, '-Q', @files ], [], "Looking for $regex with -Q." );
 };
 
 
