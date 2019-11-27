@@ -108,7 +108,7 @@ END
 BEGIN -I overrides -i
 
 RUN
-ack --i -I Foo
+ack -i -I Foo
 
 YES
 Football
