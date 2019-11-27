@@ -307,8 +307,6 @@ subtest 'test -g with --color' => sub {
 
     my $file_regex = 'text';
     my $expected_original = <<'HERE';
-t/con(text)-with-newlines.t
-t/con(text).t
 t/(text)/amontillado.txt
 t/(text)/bill-of-rights.txt
 t/(text)/constitution.txt
@@ -325,7 +323,7 @@ HERE
 
     my @args = ( '--sort-files', '-g', $file_regex );
 
-    my @results = run_ack(@args, '--color');
+    my @results = run_ack(@args, '--color', 't/text');
 
     is_deeply( \@results, \@expected, 'Colorizing -g output with --color should work');
 };
