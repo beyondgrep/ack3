@@ -8,7 +8,12 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => has_io_pty() ? 8 : 5;
+if ( not has_io_pty() ) {
+    plan skip_all => q{You need to install IO::Pty to run this test};
+    exit(0);
+}
+
+plan tests => 8;
 
 prep_environment();
 
@@ -35,11 +40,6 @@ HERE
     }
 }
 
-# The tests past here test the default behaviors for ack.
-if ( not has_io_pty() ) {
-    done_testing();
-    exit(0);
-}
 
 STANDARD_GROUPING: {
     my @expected = line_split( <<"HERE" );
