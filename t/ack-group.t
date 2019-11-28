@@ -8,7 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => has_io_pty() ? 8 : 2;
+plan tests => has_io_pty() ? 8 : 5;
 
 prep_environment();
 
