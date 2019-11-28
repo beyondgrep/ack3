@@ -741,6 +741,9 @@ BEGIN {
 
     if ($has_io_pty) {
         no strict 'refs';
+        # This function fools ack into thinking it is not writing to a pipe. This lets us test some of ack's default
+        # behaviors, like defaulting to --break/--heading in interactive mode, but --nobreak/--noheading when writing
+        # to a pipe.
         *run_ack_interactive = sub {
             my ( @args) = @_;
 

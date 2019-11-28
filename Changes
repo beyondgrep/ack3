@@ -3,6 +3,11 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[FIXES]
+Fixed the behavior of --break and --heading.  Using --break would
+implicitly set --noheading, and --heading would implicitly set --nobreak.
+
+
 [FEATURES]
 Added many new file and directory exclusions to speed up file selection.
 
