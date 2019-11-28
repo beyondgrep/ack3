@@ -38,7 +38,7 @@ HERE
 }
 
 INTERACTIVE_NOHEADING_NOCOLOR: {
-    my @args  = qw( free --nocolor --noheading --sort-files );
+    my @args  = qw( free --nocolor --noheading --sort-files ); # But will still default to --break
     my @files = qw( t/text );
 
     my $output = run_ack_interactive(@args, @files);
@@ -46,7 +46,9 @@ INTERACTIVE_NOHEADING_NOCOLOR: {
     is( $output, <<'HERE' );
 t/text/bill-of-rights.txt:4:or prohibiting the free exercise thereof; or abridging the freedom of
 t/text/bill-of-rights.txt:10:A well regulated Militia, being necessary to the security of a free State,
+
 t/text/constitution.txt:32:Number of free Persons, including those bound to Service for a Term
+
 t/text/gettysburg.txt:23:shall have a new birth of freedom -- and that government of the people,
 HERE
 }

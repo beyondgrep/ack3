@@ -177,9 +177,8 @@ MAIN: {
         }
         $opt_color = !App::Ack::output_to_pipe() && $windows_color;
     }
-    if ( not defined $opt_heading and not defined $opt_break  ) {
-        $opt_heading = $opt_break = $opt->{break} = !App::Ack::output_to_pipe();
-    }
+    $opt_heading //= !App::Ack::output_to_pipe();
+    $opt_break //= !App::Ack::output_to_pipe();
 
     if ( defined($opt->{H}) || defined($opt->{h}) ) {
         $opt_show_filename = $opt->{show_filename} = $opt->{H} && !$opt->{h};

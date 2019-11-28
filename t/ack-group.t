@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 8;
 
 use lib 't';
 use Util;
@@ -28,7 +28,7 @@ HERE
         [qw( --nobreak --noheading --nocolor free )],
     );
     for my $args ( @cases ) {
-        my @results = run_ack( @{$args}, @TEXT_FILES );
+        my @results = run_ack_interactive( @{$args}, @TEXT_FILES );
         lists_match( \@results, \@expected, 'No grouping' );
     }
 }
@@ -52,7 +52,7 @@ HERE
         [qw( --heading --break --nocolor free )],
     );
     for my $args ( @cases ) {
-        my @results = run_ack( @{$args}, @TEXT_FILES );
+        my @results = run_ack_interactive( @{$args}, @TEXT_FILES );
         lists_match( \@results, \@expected, 'Standard grouping' );
     }
 }
@@ -70,10 +70,11 @@ HERE
 
     my @arg_sets = (
         [qw( --heading --nobreak --nocolor free )],
+        [qw( --nobreak --nocolor free )],
     );
     for my $set ( @arg_sets ) {
-        my @results = run_ack( @{$set}, @TEXT_FILES );
-        lists_match( \@results, \@expected, 'Standard grouping' );
+        my @results = run_ack_interactive( @{$set}, @TEXT_FILES );
+        lists_match( \@results, \@expected, 'Heading, no break' );
     }
 }
 
@@ -89,10 +90,11 @@ HERE
 
     my @arg_sets = (
         [qw( --break --noheading --nocolor free )],
+        [qw( --noheading --nocolor free )],
     );
     for my $set ( @arg_sets ) {
-        my @results = run_ack( @{$set}, @TEXT_FILES );
-        lists_match( \@results, \@expected, 'No grouping' );
+        my @results = run_ack_interactive( @{$set}, @TEXT_FILES );
+        lists_match( \@results, \@expected, 'Break, no heading' );
     }
 }
 
