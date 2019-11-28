@@ -3,10 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More;
 
 use lib 't';
 use Util;
+
+plan tests => has_io_pty() ? 8 : 2;
 
 prep_environment();
 
@@ -33,6 +35,11 @@ HERE
     }
 }
 
+# The tests past here test the default behaviors for ack.
+if ( not has_io_pty() ) {
+    done_testing();
+    exit(0);
+}
 
 STANDARD_GROUPING: {
     my @expected = line_split( <<"HERE" );
@@ -99,5 +106,4 @@ HERE
 }
 
 done_testing();
-
 exit 0;
