@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use lib 't', 't/filter';
+use lib 't', 't/internals';
 
 use FilterTest;
 use Test::More tests => 1;
