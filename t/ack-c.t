@@ -3,73 +3,12 @@
 use warnings;
 use strict;
 
-use Test::More tests => 13;
+use Test::More tests => 6;
 
 use lib 't';
 use Util;
 
 prep_environment();
-
-DASH_L: {
-    my @expected = qw(
-        t/text/amontillado.txt
-        t/text/gettysburg.txt
-        t/text/raven.txt
-    );
-
-    my @args  = qw( God -i -l --sort-files );
-    my @files = qw( t/text );
-
-    ack_sets_match( [ @args, @files ], \@expected, 'Looking for God with -l' );
-}
-
-DASH_CAPITAL_L: {
-    my @expected = qw(
-        t/text/bill-of-rights.txt
-        t/text/constitution.txt
-        t/text/number.txt
-        t/text/numbered-text.txt
-        t/text/ozymandias.txt
-    );
-
-    my @switches = (
-        ['-L'],
-        ['--files-without-matches'],
-    );
-
-    for my $switches ( @switches ) {
-        my @files = qw( t/text );
-        my @args  = ( 'God', @{$switches}, '--sort-files' );
-
-        ack_sets_match( [ @args, @files ], \@expected, "Looking for God with @{$switches}" );
-    }
-}
-
-DASH_LV: {
-    my @expected = qw(
-        t/text/amontillado.txt
-        t/text/bill-of-rights.txt
-        t/text/constitution.txt
-        t/text/gettysburg.txt
-        t/text/number.txt
-        t/text/numbered-text.txt
-        t/text/ozymandias.txt
-        t/text/raven.txt
-    );
-    my @switches = (
-        ['-l','-v'],
-        ['-l','--invert-match'],
-        ['--files-with-matches','-v'],
-        ['--files-with-matches','--invert-match'],
-    );
-
-    for my $switches ( @switches ) {
-        my @files = qw( t/text );
-        my @args  = ( 'religion', @{$switches}, '--sort-files' );
-
-        ack_sets_match( [ @args, @files ], \@expected, '-l -v will match all input files because "religion" will not be on every line' );
-    }
-}
 
 DASH_C: {
     my @expected = qw(
@@ -128,4 +67,4 @@ SINGLE_FILE_COUNT: {
     ack_sets_match( [ @args, @files ], \@expected, 'ack -c -h should return one line of results' );
 }
 
-done_testing();
+exit 0;
