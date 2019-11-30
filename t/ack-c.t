@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 use lib 't';
 use Util;
@@ -30,6 +30,26 @@ DASH_C: {
     push( @args, '--no-filename' );
     ack_sets_match( [ @args, @files ], [ 5 ], 'God counts, total only' );
 }
+
+
+WITH_DASH_V: {
+    my @expected = qw(
+        t/text/amontillado.txt:206
+        t/text/bill-of-rights.txt:45
+        t/text/constitution.txt:259
+        t/text/gettysburg.txt:15
+        t/text/number.txt:1
+        t/text/numbered-text.txt:20
+        t/text/ozymandias.txt:9
+        t/text/raven.txt:77
+    );
+
+    my @args  = qw( the -i -w -v -c --sort-files );
+    my @files = qw( t/text );
+
+    ack_sets_match( [ @args, @files ], \@expected, 'Non-the counts' );
+}
+
 
 DASH_LC: {
     my @expected = qw(
