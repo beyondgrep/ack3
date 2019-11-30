@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 4;
+use Test::More tests => 2;
 
 use lib 't';
 use Util;
@@ -11,50 +11,36 @@ use Util;
 prep_environment();
 
 NORMAL_CASE: {
-    my @expected = ( '# The Cask of Amontillado, by Edgar Allen Poe' );
+    my @expected = line_split( <<'END' );
+I met a traveller from an antique land
+Stand in the desert... Near them, on the sand,
+Which yet survive, stamped on these lifeless things,
+The hand that mocked them, and the heart that fed:
+'My name is Ozymandias, king of kings:
+Nothing beside remains. Round the decay
+END
 
-    my @args  = qw( -v x -h -m1 );
-    my @files = qw( t/text/amontillado.txt );
+    my @args  = qw( -v w );
+    my @files = qw( t/text/ozymandias.txt );
 
-    ack_lists_match( [ @args, @files ], \@expected, 'First line of a file that does not contain "x".' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Find the lines that do not contain a "w"' );
 }
 
-DASH_L: {
-    my @expected = qw(
-        t/text/amontillado.txt
-        t/text/bill-of-rights.txt
-        t/text/constitution.txt
-        t/text/gettysburg.txt
-        t/text/number.txt
-        t/text/numbered-text.txt
-        t/text/ozymandias.txt
-        t/text/raven.txt
-    );
+IGNORE_CASE: {
+    my @expected = line_split( <<'END' );
+I met a traveller from an antique land
+Stand in the desert... Near them, on the sand,
+The hand that mocked them, and the heart that fed:
+'My name is Ozymandias, king of kings:
+Nothing beside remains. Round the decay
+END
 
-    my @args  = qw( free -i -v -l --sort-files );
-    my @files = qw( t/text );
+    my @args  = qw( -i -v w );
+    my @files = qw( t/text/ozymandias.txt );
 
-    ack_sets_match( [ @args, @files ], \@expected, 'No free' );
-
-    ack_sets_match( [ '.*', '-l', '-v', 't/text' ], [], '-l -v with .* (which matches any line) should have no results' );
-}
-
-DASH_C: {
-    my @expected = qw(
-        t/text/amontillado.txt:206
-        t/text/bill-of-rights.txt:45
-        t/text/constitution.txt:259
-        t/text/gettysburg.txt:15
-        t/text/number.txt:1
-        t/text/numbered-text.txt:20
-        t/text/ozymandias.txt:9
-        t/text/raven.txt:77
-    );
-
-    my @args  = qw( the -i -w -v -c --sort-files );
-    my @files = qw( t/text );
-
-    ack_sets_match( [ @args, @files ], \@expected, 'Non-the counts' );
+    ack_lists_match( [ @args, @files ], \@expected, 'Find the lines that do not contain a "w", ignoring case' );
 }
 
 done_testing();
+
+exit 0;
