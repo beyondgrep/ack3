@@ -37,7 +37,6 @@ t/ack-color.t
 t/ack-column.t
 t/ack-c.t
 t/ack-files-from.t
-t/ack-filetypes.t
 t/ack-f.t
 t/ack-group.t
 t/ack-g.t
