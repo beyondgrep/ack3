@@ -35,14 +35,8 @@ HERE
 subtest 'Basics' => sub {
     plan tests => 2;
 
-    my $perl = caret_X();
-    my @lhs_args = ( $perl, '-Mblib', build_ack_invocation( '--sort-files', '-g', '[vz]', 't/text' ) );
-    my @rhs_args = ( $perl, '-Mblib', build_ack_invocation( '-x', '-i', 'that' ) );
-
-    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-        @lhs_args = grep { $_ ne '-Mblib' } @lhs_args;
-        @rhs_args = grep { $_ ne '-Mblib' } @rhs_args;
-    }
+    my @lhs_args = adjust_executable( build_ack_invocation( '--sort-files', '-g', '[vz]', 't/text' ) );
+    my @rhs_args = adjust_executable( build_ack_invocation( '-x', '-i', 'that' ) );
 
     my ($stdout, $stderr);
 
