@@ -31,6 +31,7 @@ our @EXPORT = qw(
 
     first_line_like
     build_ack_invocation
+    adjust_executable
 
     read_file
     write_file
@@ -402,8 +403,7 @@ sub get_rc {
 sub run_ack_with_stderr {
     my @args = @_;
 
-    @args = build_ack_invocation( @args );
-    @args = adjust_executable( @args );
+    @args = adjust_executable( build_ack_invocation( @args ) );
 
     return run_cmd( @args );
 }

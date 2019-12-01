@@ -47,15 +47,7 @@ else {
     open STDOUT, '>&', $write or die "Can't open: $!";
     open STDERR, '>&', $write or die "Can't open: $!";
 
-    my @args = build_ack_invocation( qw( --noenv --nocolor --smart-case this ) );
-    my $perl = caret_X();
-
-    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-        unshift( @args, $perl );
-    }
-    else {
-        unshift( @args, $perl, '-Mblib' );
-    }
+    my @args = adjust_executable( build_ack_invocation( qw( --noenv --nocolor --smart-case this ) ) );
     my $args = join( ' ', @args );
     exec 'bash', '-c', "$args <(cat t/swamp/options.pl)";
 }

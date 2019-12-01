@@ -54,8 +54,7 @@ CONTEXT_OVERLAPPING_COLOR_AFTER	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_AFTER: {
 CONTEXT_OVERLAPPING_COLOR_BEFORE	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_BEFORE: {$/;"	l
 COUNT_PRINT0	t/ack-print0.t	/^COUNT_PRINT0: {$/;"	l
 DASH_C	t/ack-c.t	/^DASH_C: {$/;"	l
-DASH_C	t/ack-v.t	/^DASH_C: {$/;"	l
-DASH_CAPITAL_L	t/ack-c.t	/^DASH_CAPITAL_L: {$/;"	l
+DASH_CAPITAL_L	t/ack-l.t	/^DASH_CAPITAL_L: {$/;"	l
 DASH_F	t/ack-1.t	/^DASH_F: {$/;"	l
 DASH_F	t/zero.t	/^DASH_F: {$/;"	l
 DASH_F_CWD	t/zero.t	/^DASH_F_CWD: {$/;"	l
@@ -67,10 +66,9 @@ DASH_IGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_MULTIPLE_TIM
 DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR: {$/;"	l
 DASH_IGNORE_DIR_WITH_SLASH	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_SLASH: {$/;"	l
 DASH_L	t/ack-1.t	/^DASH_L: {$/;"	l
-DASH_L	t/ack-c.t	/^DASH_L: {$/;"	l
-DASH_L	t/ack-v.t	/^DASH_L: {$/;"	l
+DASH_L	t/ack-l.t	/^DASH_L: {$/;"	l
 DASH_LC	t/ack-c.t	/^DASH_LC: {$/;"	l
-DASH_LV	t/ack-c.t	/^DASH_LV: {$/;"	l
+DASH_LV	t/ack-l.t	/^DASH_LV: {$/;"	l
 DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
 DASH_NOIGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
 DASH_V	t/ack-1.t	/^DASH_V: {$/;"	l
@@ -93,6 +91,7 @@ G_NO_PRINT0	t/ack-print0.t	/^G_NO_PRINT0: {$/;"	l
 G_PRINT0	t/ack-print0.t	/^G_PRINT0: {$/;"	l
 HEADING_NO_BREAK	t/ack-group.t	/^HEADING_NO_BREAK: {$/;"	l
 HIGHLIGHTING	t/context.t	/^HIGHLIGHTING: {$/;"	l
+IGNORE_CASE	t/ack-v.t	/^IGNORE_CASE: {$/;"	l
 IGNORE_DIR_DONT_IGNORE_TARGET	t/ack-ignore-dir.t	/^IGNORE_DIR_DONT_IGNORE_TARGET: {$/;"	l
 IGNORE_DIR_EXT	t/ack-ignore-dir.t	/^IGNORE_DIR_EXT: {$/;"	l
 IGNORE_DIR_FIRSTMATCH	t/ack-ignore-dir.t	/^IGNORE_DIR_FIRSTMATCH: {$/;"	l
@@ -151,7 +150,9 @@ PAGER_ENV	t/ack-pager.t	/^PAGER_ENV: {$/;"	l
 PAGER_ENV_OVERRIDE	t/ack-pager.t	/^PAGER_ENV_OVERRIDE: {$/;"	l
 PAGER_NOENV	t/ack-pager.t	/^PAGER_NOENV: {$/;"	l
 PAGER_WITH_OPTS	t/ack-pager.t	/^PAGER_WITH_OPTS: {$/;"	l
-PIPE_INTO_C	t/ack-c.t	/^PIPE_INTO_C: {$/;"	l
+PIPE_INTO_ACK	t/from-stdin.t	/^PIPE_INTO_ACK: {$/;"	l
+PIPE_INTO_DASH_C	t/from-stdin.t	/^PIPE_INTO_DASH_C: {$/;"	l
+PIPE_INTO_DASH_I	t/from-stdin.t	/^PIPE_INTO_DASH_I: {$/;"	l
 POSTMATCH	t/ack-output.t	/^POSTMATCH: {$/;"	l
 POSTMATCH_MULTIPLE_FILES	t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
 PREMATCH	t/ack-output.t	/^PREMATCH: {$/;"	l
@@ -189,6 +190,7 @@ WITHOUT_COLUMNS	t/ack-column.t	/^WITHOUT_COLUMNS: {$/;"	l
 WITHOUT_S	t/ack-s.t	/^WITHOUT_S: {$/;"	l
 WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
 WITH_COLUMNS_AND_CONTEXT	t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
+WITH_DASH_V	t/ack-c.t	/^WITH_DASH_V: {$/;"	l
 WITH_O	t/ack-o.t	/^WITH_O: {$/;"	l
 WITH_OUTPUT	t/ack-o.t	/^WITH_OUTPUT: {$/;"	l
 WITH_S	t/ack-s.t	/^WITH_S: {$/;"	l
