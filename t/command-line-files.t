@@ -49,19 +49,8 @@ HERE
 FILE_NOT_THERE: {
     my $file = reslash( 't/swamp/perl.pod' );
 
-    my @expected_stderr;
-
-    # I don't care for this, but it's the least of the evils I could think of
-    if ( $ENV{'ACK_TEST_STANDALONE'} ) {
-        @expected_stderr = line_split( <<'HERE' );
-ack-standalone: non-existent-file.txt: No such file or directory
-HERE
-    }
-    else {
-        @expected_stderr = line_split( <<'HERE' );
-ack: non-existent-file.txt: No such file or directory
-HERE
-    }
+    my $filename = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
+    my @expected_stderr = ( "$filename: non-existent-file.txt: No such file or directory" );
 
     my @expected_stdout = line_split( <<"HERE" );
 ${file}:3:=head2 There's important stuff in here!
@@ -74,3 +63,5 @@ HERE
     lists_match( $stderr, \@expected_stderr, q{Error if there's no file} );
     lists_match( $stdout, \@expected_stdout, 'Find the one file that has a hit' );
 }
+
+exit 0;
