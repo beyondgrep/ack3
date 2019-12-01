@@ -7,6 +7,8 @@ NEXT
 Fixed the behavior of --break and --heading.  Using --break would
 implicitly set --noheading, and --heading would implicitly set --nobreak.
 
+The -x and --files-from options are not mutually exclusive.
+
 
 [FEATURES]
 Added many new file and directory exclusions to speed up file selection.

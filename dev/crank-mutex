@@ -28,10 +28,11 @@ sub invalid_combinations {
         [qw(--column)]   => [@file_lists],
         [@context]       => [@file_lists],
         [qw(-f)]         => [qw(-v)],
-        [@fg]            => [@fg, @pretty, qw(-x -c -u)],
+        [@fg]            => [@fg, @pretty, qw(-x -c -u --files-from)],
         [qw(-p)]         => [@context, @file_lists, qw(--passthru -c)],
         [qw(-v)]         => [qw(--column)],
         [qw(-u)]         => [@fg, qw(--output)],
+        [qw(-x)]         => [qw( --files-from )],
     );
 }
 

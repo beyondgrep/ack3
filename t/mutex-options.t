@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 187;
+use Test::More tests => 192;
 use lib 't';
 use Util;
 
@@ -169,6 +169,12 @@ for my $opt ( qw( -f -g ) ) {
     are_mutually_exclusive( $opt, '--heading', [$opt, '--heading', $word, $file] );
     are_mutually_exclusive( $opt, '--break',   [$opt, '--break', $word, $file] );
     are_mutually_exclusive( $opt, '--column',  [$opt, '--column', $word, $file] );
+}
+# -x
+are_mutually_exclusive( '-x', '--files-from', ['-x', '--files-from', $word, $file] );
+for my $opt ( qw( -f -g ) ) {
+    are_mutually_exclusive( $opt, '-x',   [$opt, '-x', $word, $file] );
+    are_mutually_exclusive( $opt, '--files-from', [$opt, '--files-from', $word, $file] );
 }
 
 subtest q{Verify that "options" that follow -- aren't factored into the mutual exclusivity} => sub {
