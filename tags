@@ -240,7 +240,6 @@ _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
 _untaint	t/Barfly.pm	/^sub _untaint {$/;"	s
 _where	dev/generate-rgb-codes.pl	/^sub _where {$/;"	s
 _write_file	t/Util.pm	/^sub _write_file {$/;"	s
-ack	t/command-line-files.t	/^ack: non-existent-file.txt: No such file or directory$/;"	l
 ack_error_matches	t/Util.pm	/^sub ack_error_matches {$/;"	s
 ack_lists_match	t/Util.pm	/^sub ack_lists_match {$/;"	s
 ack_sets_match	t/Util.pm	/^sub ack_sets_match {$/;"	s
