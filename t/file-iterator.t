@@ -42,6 +42,7 @@ UNFILTERED: {
             t/swamp/c-source.c
             t/swamp/crystallography-weenies.f
             t/swamp/example.R
+            t/swamp/favicon.ico
             t/swamp/file.bar
             t/swamp/file.foo
             t/swamp/fresh.css
