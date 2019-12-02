@@ -80,7 +80,6 @@ t/context.t
 t/context-with-newlines.t
 t/empty-lines.t
 t/exit-code.t
-t/file-iterator.t
 t/file-permission.t
 t/filetype-detection.t
 t/filetypes.t
@@ -114,6 +113,7 @@ t/internals/config-finder.t
 t/internals/config-loader.t
 t/internals/default-filter.t
 t/internals/ext-filter.t
+t/internals/file-iterator.t
 t/internals/filter.t
 t/internals/firstlinematch-filter.t
 t/internals/is-filter.t
