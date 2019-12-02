@@ -71,7 +71,6 @@ t/ack-w.t
 t/ack-w.barfly
 t/ack-x.t
 t/anchored.t
-t/asp-net-ext.t
 t/bad-ackrc-opt.t
 t/basic.t
 t/command-line-files.t
