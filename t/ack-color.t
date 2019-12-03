@@ -12,14 +12,14 @@ plan tests => 14;
 
 prep_environment();
 
-my $match               = "\e[30;43m";
-my $green_bold          = "\e[1;32m";
-my $yellow_bold         = "\e[1;33m";
-my $red                 = "\e[31m";
-my $cyan                = "\e[36m";
-my $cyan_on_red         = "\e[36;41m";
-my $white_on_bold_green = "\e[37;102m";
-my $blue_bold           = "\e[1;34m";
+my $match          = "\e[30;43m";
+my $green_bold     = "\e[1;32m";
+my $yellow_bold    = "\e[1;33m";
+my $red            = "\e[31m";
+my $cyan           = "\e[36m";
+my $cyan_on_red    = "\e[36;41m";
+my $white_on_green = "\e[37;42m";
+my $blue_bold      = "\e[1;34m";
 
 my $color_end = "\e[0m";
 my $line_end  = "\e[0m\e[K";
@@ -122,14 +122,14 @@ subtest 'Passing args for colors' => sub {
     my @args = ( qw( mighty -i -w --color --group --column ),
         '--color-match=cyan on_red',
         '--color-filename=red',
-        '--color-lineno=white on_bright_green',
+        '--color-lineno=white on_green',
         '--color-colno=bold blue',
     );
     my @results = run_ack( @args, 't/text' );
 
     is_deeply( \@results, [
         "${red}$file${color_end}",
-        "${white_on_bold_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
+        "${white_on_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
     ] );
 
 };
