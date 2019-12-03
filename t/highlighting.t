@@ -7,7 +7,6 @@ use Test::More tests => 6;
 
 use lib 't';
 use Util;
-use Term::ANSIColor;
 
 prep_environment();
 
