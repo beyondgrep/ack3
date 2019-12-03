@@ -182,7 +182,7 @@ TEST_TYPE_OVERRIDE	t/ack-type.t	/^TEST_TYPE_OVERRIDE: {$/;"	l
 TEST_UNKNOWN_TYPE	t/ack-type.t	/^TEST_UNKNOWN_TYPE: {$/;"	l
 TestFilter	t/internals/filter.t	/^package TestFilter;$/;"	p
 UNANCHORED	t/anchored.t	/^UNANCHORED: {$/;"	l
-UNFILTERED	t/file-iterator.t	/^UNFILTERED: {$/;"	l
+UNFILTERED	t/internals/file-iterator.t	/^UNFILTERED: {$/;"	l
 Usage	lib/App/Ack.pm	/^Usage: ack [OPTION]... PATTERN [FILES OR DIRECTORIES]$/;"	l
 Util	t/Util.pm	/^package Util;$/;"	p
 VERIFY_LAST_LINE_IS_MISSING_NEWLINE	t/incomplete-last-line.t	/^VERIFY_LAST_LINE_IS_MISSING_NEWLINE: {$/;"	l
@@ -424,7 +424,7 @@ show_help_rgb	lib/App/Ack.pm	/^sub show_help_rgb {$/;"	s
 show_help_types	lib/App/Ack.pm	/^sub show_help_types {$/;"	s
 show_man	lib/App/Ack.pm	/^sub show_man {$/;"	s
 show_types	lib/App/Ack.pm	/^sub show_types {$/;"	s
-slurp	t/file-iterator.t	/^sub slurp {$/;"	s
+slurp	t/internals/file-iterator.t	/^sub slurp {$/;"	s
 strip_special_chars	xt/man.t	/^sub strip_special_chars {$/;"	s
 subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
 swamp_files	t/internals/FilterTest.pm	/^sub swamp_files {$/;"	s
