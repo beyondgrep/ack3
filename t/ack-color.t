@@ -8,19 +8,21 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 13;
+plan tests => 14;
 
 prep_environment();
 
-my $match_start  = "\e[30;43m";
-my $match_end    = "\e[0m";
-my $line_end     = "\e[0m\e[K";
+my $match               = "\e[30;43m";
+my $green_bold          = "\e[1;32m";
+my $yellow_bold         = "\e[1;33m";
+my $red                 = "\e[31m";
+my $cyan                = "\e[36m";
+my $cyan_on_red         = "\e[36;41m";
+my $white_on_bold_green = "\e[37;102m";
+my $blue_bold           = "\e[1;34m";
 
-my $green_start  = "\e[1;32m";
-my $green_end    = "\e[0m";
-
-my $yellow_start = "\e[1;33m";
-my $yellow_end   = "\e[0m";
+my $color_end = "\e[0m";
+my $line_end  = "\e[0m\e[K";
 
 NORMAL_COLOR: {
     my @files = qw( t/text/bill-of-rights.txt );
@@ -54,7 +56,7 @@ MULTIPLE_MATCHES: {
     my @results = run_ack( @args, @files );
 
     is_deeply( \@results, [
-        "\"A huge human foot d'or, in a field ${match_start}azure${match_end}; the foot crushes a ${match_start}serpent${match_end}$line_end",
+        "\"A huge human foot d'or, in a field ${match}azure${color_end}; the foot crushes a ${match}serpent${color_end}$line_end",
     ] );
 }
 
@@ -65,7 +67,7 @@ ADJACENT_CAPTURE_COLORING: {
     my @results = run_ack( @args, @files );
 
     is_deeply( \@results, [
-        "Whether ${match_start}Tempter${match_end} sent, or whether tempest tossed thee here ashore,$line_end",
+        "Whether ${match}Tempter${color_end} sent, or whether tempest tossed thee here ashore,$line_end",
     ] );
 }
 
@@ -79,13 +81,13 @@ subtest 'Heading colors, single line' => sub {
     my @results = run_ack( @args, $file );
 
     is_deeply( \@results, [
-        "${green_start}$file${green_end}:${yellow_start}11${yellow_end}:Look on my works, ye ${match_start}Mighty${match_end}, and despair!'$line_end",
+        "${green_bold}$file${color_end}:${yellow_bold}11${color_end}:Look on my works, ye ${match}Mighty${color_end}, and despair!'$line_end",
     ] );
 
     # With column number
     @results = run_ack( @args, '--column', $file );
     is_deeply( \@results, [
-        "${green_start}$file${green_end}:${yellow_start}11${yellow_end}:${yellow_start}22${yellow_end}:Look on my works, ye ${match_start}Mighty${match_end}, and despair!'$line_end",
+        "${green_bold}$file${color_end}:${yellow_bold}11${color_end}:${yellow_bold}22${color_end}:Look on my works, ye ${match}Mighty${color_end}, and despair!'$line_end",
     ] );
 };
 
@@ -99,17 +101,39 @@ subtest 'Heading colors, grouped' => sub {
     my @results = run_ack( @args, 't/text' );
 
     is_deeply( \@results, [
-        "${green_start}$file${green_end}",
-        "${yellow_start}11${yellow_end}:Look on my works, ye ${match_start}Mighty${match_end}, and despair!'$line_end",
+        "${green_bold}$file${color_end}",
+        "${yellow_bold}11${color_end}:Look on my works, ye ${match}Mighty${color_end}, and despair!'$line_end",
     ] );
 
     # With column number
     @results = run_ack( @args, '--column', 't/text' );
     is_deeply( \@results, [
-        "${green_start}$file${green_end}",
-        "${yellow_start}11${yellow_end}:${yellow_start}22${yellow_end}:Look on my works, ye ${match_start}Mighty${match_end}, and despair!'$line_end",
+        "${green_bold}$file${color_end}",
+        "${yellow_bold}11${color_end}:${yellow_bold}22${color_end}:Look on my works, ye ${match}Mighty${color_end}, and despair!'$line_end",
     ] );
 };
+
+
+subtest 'Passing args for colors' => sub {
+    plan tests => 2;
+
+    # Without the column number
+    my $file = reslash( 't/text/ozymandias.txt' );
+    my @args = ( qw( mighty -i -w --color --group --column ),
+        '--color-match=cyan on_red',
+        '--color-filename=red',
+        '--color-lineno=white on_bright_green',
+        '--color-colno=bold blue',
+    );
+    my @results = run_ack( @args, 't/text' );
+
+    is_deeply( \@results, [
+        "${red}$file${color_end}",
+        "${white_on_bold_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
+    ] );
+
+};
+
 
 done_testing();
 
