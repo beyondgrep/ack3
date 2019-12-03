@@ -9,12 +9,13 @@ use Test::More tests => 20;
 # Load all these modules to get their versions.
 use App::Ack;
 use File::Next;
-use Test::Harness;
+use File::Spec;
 use Getopt::Long;
 use Pod::Perldoc;
 use Pod::Text;
 use Pod::Usage;
-use File::Spec;
+use Term::ANSIColor;
+use Test::Harness;
 
 my @modules = qw(
     File::Next
@@ -23,6 +24,7 @@ my @modules = qw(
     Pod::Perldoc
     Pod::Text
     Pod::Usage
+    Term::ANSIColor
     Test::Harness
     Test::More
 );
