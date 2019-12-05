@@ -32,7 +32,7 @@ for my $arg ( qw( -l --files-with-matches ) ) {
         my @results = run_ack( $arg, 'strict', 't/text' );
         sets_match( \@results, \@matching, 'File list match' );
     }
-};
+}
 
 
 for my $arg ( qw( -L --files-without-matches ) ) {
@@ -40,7 +40,7 @@ for my $arg ( qw( -L --files-without-matches ) ) {
         my @results = run_ack( $arg, 'strict', 't/text' );
         sets_match( \@results, \@nonmatching, 'File list match' );
     }
-};
+}
 
 DASH_L: {
     my @expected = qw(
