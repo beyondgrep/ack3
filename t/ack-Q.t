@@ -22,8 +22,8 @@ subtest 'Plus sign' => sub {
 
     my $target = reslash( 't/swamp/Rakefile' );
     my @expected = line_split( <<"HERE" );
-$target:44:  baseurl = "svn+ssh:/#{ENV[\'USER\']}\@rubyforge.org/var/svn/#{PKG_NAME}"
-$target:50:  baseurl = "svn+ssh:/#{ENV[\'USER\']}\@rubyforge.org/var/svn/#{PKG_NAME}"
+$target:44:  baseurl = "svn+ssh:/#{ENV['USER']}\@rubyforge.org/var/svn/#{PKG_NAME}"
+$target:50:  baseurl = "svn+ssh:/#{ENV['USER']}\@rubyforge.org/var/svn/#{PKG_NAME}"
 HERE
     for my $arg ( qw( -Q --literal ) ) {
         ack_lists_match( [ @args, $arg ], \@expected, "$arg should make svn+ssh finable" );

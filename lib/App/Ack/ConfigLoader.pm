@@ -263,7 +263,7 @@ sub get_arg_spec {
         }
 
         return;
-    };
+    }
 
     return {
         1                   => sub { $opt->{1} = $opt->{m} = 1 },
