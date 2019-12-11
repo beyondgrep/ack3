@@ -9,6 +9,8 @@ implicitly set --noheading, and --heading would implicitly set --nobreak.
 
 The -x and --files-from options are not mutually exclusive.
 
+Fixed the minimum Getopt::Long required. (GH #287)
+
 
 [FEATURES]
 Added many new file and directory exclusions to speed up file selection.

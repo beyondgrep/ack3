@@ -12,7 +12,7 @@ use App::Ack::Filter::Collection ();
 use App::Ack::Filter::Default ();
 use App::Ack::Filter::IsPath ();
 use File::Spec 3.00 ();
-use Getopt::Long 2.38 ();
+use Getopt::Long 2.39 ();
 use Text::ParseWords 3.1 ();
 
 sub opt_parser {
