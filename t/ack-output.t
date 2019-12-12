@@ -3,14 +3,31 @@
 use warnings;
 use strict;
 
-use Test::More tests => 44;
+use Test::More tests => 46;
 
 use lib 't';
 use Util;
 
 prep_environment();
 
-ARG: {
+DOLLAR_1: {
+    my @files = qw( t/text/ );
+    my @args = qw/ --output=x$1x free(\\S+) --sort-files /;
+
+    my @target_file = map { reslash($_) } qw(
+        t/text/bill-of-rights.txt
+        t/text/gettysburg.txt
+    );
+    my @expected = (
+        "$target_file[0]:4:xdomx",
+        "$target_file[1]:23:xdomx",
+    );
+
+    ack_sets_match( [ @args, @files ], \@expected, 'Find all the things with --output function' );
+}
+
+
+DOLLAR_UNDERSCORE: {
     my @expected = line_split( <<'HERE' );
 shall have a new birth of freedom -- and that government of the people,xshall have a new birth of freedom -- and that government of the people,
 HERE
@@ -21,6 +38,7 @@ HERE
 
     lists_match( \@results, \@expected, 'Matching line' );
 }
+
 
 ARG_MULTIPLE_FILES: {
     # Note the first line is there twice because it matches twice.
@@ -38,6 +56,29 @@ HERE
 
     lists_match( \@results, \@expected, 'Matching line' );
 }
+
+
+# Find a match in multiple files, and output it in double quotes.
+DOUBLE_QUOTES: {
+    my @files = qw( t/text/ );
+    my @args  = ( '--output="$1"', '(free\\w*)', '--sort-files' );
+
+    my @target_file = map { reslash($_) } qw(
+        t/text/bill-of-rights.txt
+        t/text/constitution.txt
+        t/text/gettysburg.txt
+    );
+    my @expected = (
+        qq{$target_file[0]:4:"free"},
+        qq{$target_file[0]:4:"freedom"},
+        qq{$target_file[0]:10:"free"},
+        qq{$target_file[1]:32:"free"},
+        qq{$target_file[2]:23:"freedom"},
+    );
+
+    ack_sets_match( [ @args, @files ], \@expected, 'Find all the things with --output function' );
+}
+
 
 MATCH: {
     my @expected = (
