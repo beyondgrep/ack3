@@ -534,7 +534,7 @@ sub build_regex {
         my $err = $@;
         chomp $err;
 
-        if ( $err =~ m{^(.+?); marked by <-- HERE in m/(.+?) <-- HERE (.+)/ at} ) {
+        if ( $err =~ m{^(.+?); marked by <-- HERE in m/(.+?) <-- HERE} ) {
             my ($why, $where) = ($1,$2);
             my $pointy = ' ' x (6+length($where)) . '^---HERE';
             App::Ack::die( "Invalid regex '$str':\nWhy:   $1\nWhere: $str\n$pointy" );
