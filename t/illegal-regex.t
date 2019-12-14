@@ -32,7 +32,7 @@ HERE
 # In Perl 5.22 and above, we get a warning but the text changes.
 # This opening brace at the end is just a warning, but we still catch it in Perl > 5.20.
 subtest 'Check warning' => sub {
-    if ( $^V <= 5.20.0 ) {
+    if ( $^V < 5.022 ) {
         return pass( "Perl $^V does not throw a warning on the closing brace" );
     }
 
