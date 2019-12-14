@@ -11,6 +11,8 @@ use Barfly;
 
 prep_environment();
 
+my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
+
 Barfly->run_tests( 't/ack-w.barfly' );
 
 subtest '-w with trailing metachar \w' => sub {
@@ -121,9 +123,9 @@ subtest 'Alternating numbers' => sub {
 
 # In ack3, we try to warn people if they are misusing -w.
 subtest '-w warnings' => sub {
-    my ($good,$bad) = _get_good_and_bad();
+    my ($good,$bad,$inv) = _get_good_and_bad();
 
-    plan tests => @{$good} + @{$bad};
+    plan tests => @{$good} + @{$bad} + @{$inv};
 
     my $happy = reslash( 't/text/ozymandias.txt' );
     for my $pattern ( @{$good} ) {
@@ -144,7 +146,19 @@ subtest '-w warnings' => sub {
             my ( $stdout, $stderr ) = run_ack_with_stderr( '-w', '--', $pattern, $happy );
             is_empty_array( $stdout, 'Should have no output' );
             is( scalar @{$stderr}, 1, 'One warning' );
-            like( $stderr->[0], qr/ack(-standalone)?: -w will not do the right thing/, 'Got the correct warning' );
+            like( $stderr->[0], qr/$ACK: -w will not do the right thing/, 'Got the correct warning' );
+        };
+    }
+
+    for my $pattern ( @{$inv} ) {
+        subtest "Invalid regex: $pattern" => sub {
+            plan tests => 3;
+
+            # Add the -- because the pattern may have hyphens.
+            my ( $stdout, $stderr ) = run_ack_with_stderr( '-w', '--', $pattern, $happy );
+            is_empty_array( $stdout, 'Should have no output' );
+            is( scalar @{$stderr}, 3, 'One warning' );
+            like( $stderr->[0], qr/$ACK: Invalid regex '\Q$pattern'/ );
         };
     }
 };
@@ -153,6 +167,7 @@ subtest '-w warnings' => sub {
 sub _get_good_and_bad {
     # BAD = should throw a warning with -w
     # OK  = should not throw a warning with -w
+    # INV = is an invalid regex whether with -w or not
     my @examples = line_split( <<'HERE' );
 # Anchors
 BAD $foo
@@ -169,8 +184,8 @@ OK  (set|get)_foo
 OK  foo_(id|name)
 OK  func()
 OK  (all in one group)
-BAD )start with closing paren
-BAD end with opening paren(
+INV )start with closing paren
+INV end with opening paren(
 BAD end with an escaped closing paren\)
 
 # Character classes
@@ -179,31 +194,30 @@ OK  foo[lt]
 OK  [one big character class]
 OK  [multiple][character][classes]
 BAD ]starting with a closing bracket
-BAD ending with a opening bracket[
+INV ending with an opening bracket[
 BAD ending with an escaped closing bracket \]
 
 # Quantifiers
 OK  thpppt{1,5}
 BAD }starting with an closing curly brace
-BAD ending with an opening curly brace{
 BAD ending with an escaped closing curly brace\}
 
 OK  foo+
 BAD foo\+
-BAD +foo
+INV +foo
 OK  foo*
 BAD foo\*
-BAD *foo
+INV *foo
 OK  foo?
 BAD foo\?
-BAD ?foo
+INV ?foo
 
 # Miscellaneous debris
 BAD -foo
 BAD foo-
 BAD &mpersand
 BAD ampersand&
-BAD function(
+INV function(
 BAD ->method
 BAD <header.h>
 BAD =14
@@ -216,6 +230,7 @@ HERE
 
     my $good = [];
     my $bad  = [];
+    my $inv  = [];
 
     for my $line ( @examples ) {
         $line =~ s/\s*$//;
@@ -228,12 +243,15 @@ HERE
         elsif ( $line =~ /BAD\s+(.+)/ ) {
             push( @{$bad}, $1 );
         }
+        elsif ( $line =~ /INV\s+(.+)/ ) {
+            push( @{$inv}, $1 );
+        }
         else {
             die "Invalid line: $line";
         }
     }
 
-    return ($good,$bad);
+    return ($good, $bad, $inv);
 }
 
 done_testing();
