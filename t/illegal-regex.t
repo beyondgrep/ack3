@@ -7,7 +7,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 2;
+plan tests => 1;
 
 prep_environment();
 
@@ -20,19 +20,6 @@ subtest 'Check diags' => sub {
 $ACK: Invalid regex '(set|get)_user_(id|(username)'
 Regex: (set|get)_user_(id|(username)
                       ^---HERE Unmatched ( in regex
-HERE
-    is_empty_array( $output, 'No output' );
-    lists_match( $stderr, \@expected, 'Error body' );
-};
-
-
-subtest 'Curly brace' => sub {
-    my ($output,$stderr) = run_ack_with_stderr( 'End with opening curly brace {' );
-
-    my @expected = line_split( <<"HERE" );
-$ACK: Invalid regex 'End with opening curly brace {'
-Regex: End with opening curly brace {
-                                    ^---HERE Unescaped left brace in regex is passed through in regex
 HERE
     is_empty_array( $output, 'No output' );
     lists_match( $stderr, \@expected, 'Error body' );
