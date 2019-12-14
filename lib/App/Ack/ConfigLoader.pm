@@ -1083,6 +1083,7 @@ sub mutex_options {
             p => 1,
             passthru => 1,
             'show-types' => 1,
+            v => 1,
         },
         output => {
             A => 1,
@@ -1100,6 +1101,7 @@ sub mutex_options {
             passthru => 1,
             'show-types' => 1,
             u => 1,
+            v => 1,
         },
         p => {
             A => 1,
@@ -1146,6 +1148,8 @@ sub mutex_options {
             L => 1,
             column => 1,
             f => 1,
+            o => 1,
+            output => 1,
         },
         'with-filename' => {
             L => 1,
@@ -1157,7 +1161,6 @@ sub mutex_options {
             g => 1,
         },
     };
-
 }   # End of mutex_options()
 
 

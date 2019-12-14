@@ -30,7 +30,7 @@ sub invalid_combinations {
         [qw(-f)]         => [qw(-v)],
         [@fg]            => [@fg, @pretty, qw(-x -c -u --files-from)],
         [qw(-p)]         => [@context, @file_lists, qw(--passthru -c)],
-        [qw(-v)]         => [qw(--column)],
+        [qw(-v)]         => [qw(--column -o --output)],
         [qw(-u)]         => [@fg, qw(--output)],
         [qw(-x)]         => [qw( --files-from )],
     );

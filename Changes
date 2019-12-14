@@ -7,9 +7,13 @@ NEXT
 Fixed the behavior of --break and --heading.  Using --break would
 implicitly set --noheading, and --heading would implicitly set --nobreak.
 
-The -x and --files-from options are not mutually exclusive.
+The -x and --files-from options can't be used together.  ack will now warn
+you if you try.
 
-Fixed the minimum Getopt::Long required. (GH #287)
+The -v and -o/--output options can't be used together.  ack will now warn
+you if you try.
+
+Fixed the minimum version of the Getopt::Long module required. (GH #287)
 
 
 [FEATURES]
