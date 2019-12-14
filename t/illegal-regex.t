@@ -1,44 +1,51 @@
 #!perl
 
-use warnings;
 use strict;
+use warnings;
 
 use Test::More;
-
 use lib 't';
 use Util;
 
+plan tests => 2;
+
 prep_environment();
 
-# Test for behavior with illegal regexes.
-my @tests = (
-    [ 'illegal pattern',  '?foo', 't/' ],
-    [ 'illegal -g regex', '-g', '?foo', 't/' ],
-);
+my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
 
-plan tests => scalar @tests;
+# This unmatched paren is fatal.
+subtest 'Check fatal' => sub {
+    plan tests => 2;
 
-for ( @tests ) {
-    test_ack_with( @{$_} );
-}
+    my ($output,$stderr) = run_ack_with_stderr( '(set|get)_user_(id|(username)' );
 
-done_testing();
+    my @expected = line_split( <<"HERE" );
+$ACK: Invalid regex '(set|get)_user_(id|(username)'
+Regex: (set|get)_user_(id|(username)
+                      ^---HERE Unmatched ( in regex
+HERE
+    is_empty_array( $output, 'No output' );
+    lists_match( $stderr, \@expected, 'Error body' );
+};
+
+# In Perl 5.20 and below, opening brace at the end doesn't get a warning.
+# In Perl 5.22 and above, we get a warning but the text changes.
+# This opening brace at the end is just a warning, but we still catch it in Perl > 5.20.
+subtest 'Check warning' => sub {
+    if ( $^V < 5.022 ) {
+        return pass( "Perl $^V does not throw a warning on the closing brace" );
+    }
+
+    plan tests => 5;
+
+    my ($output,$stderr) = run_ack_with_stderr( 'foo{' );
+
+    is_empty_array( $output, 'No output' );
+    is( $stderr->[0], "$ACK: Invalid regex 'foo{'", 'Line 1 OK' );
+    is( $stderr->[1], "Regex: foo{", 'Line 2 OK' );
+    like( $stderr->[2], qr/\Q^---HERE Unescaped left brace/, 'The message changes between Perl versions' );
+    is( scalar @{$stderr}, 3, 'Only 3 lines' );
+};
+
 
 exit 0;
-
-
-sub test_ack_with {
-    my $testcase = shift;
-    my @args     = @_;
-
-    return subtest subtest_name( $testcase, @args ) => sub {
-        plan tests => 4;
-
-        my ( $stdout, $stderr ) = run_ack_with_stderr( @args );
-
-        is_empty_array( $stdout, "No STDOUT for $testcase" );
-        is( scalar @{$stderr}, 2, "Two lines of STDERR for $testcase" );
-        like( $stderr->[0], qr/Invalid regex/, "Correct ack error message for $testcase" );
-        like( $stderr->[1], qr/^\s+Quantifier follows nothing/, "Correct type of error for $testcase" );
-    };
-}

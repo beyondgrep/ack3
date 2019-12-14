@@ -14,7 +14,6 @@ Fixed the minimum Getopt::Long required. (GH #287)
 
 [FEATURES]
 Added many new file and directory exclusions to speed up file selection.
-
 * Python's *.pyc, *.pyd and *.pyo compiled files
 * Python's __pycache__ and .pytest_cache directories
 * Linux *.so shared object *.so files
@@ -28,6 +27,15 @@ the top of the listing.
 The --show-types option only has an effect with -f or -g.  ack will now
 tell you if you use --show-types without -f or -g when it will have no
 effect.
+
+The error message ack displays when the regex passed is invalid has been
+improved.  The message is more readable and includes a pointer to the
+offending part of the regex.  For example:
+
+    $ ack 'status: (open|closed|in progress'
+    ack: Invalid regex 'status: (open|closed|in progress'
+    Regex: status: (open|closed|in progress
+                   ^---HERE Unmatched ( in regex
 
 
 v3.2.0      Sun Nov  3 22:52:18 CST 2019
