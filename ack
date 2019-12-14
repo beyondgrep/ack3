@@ -529,18 +529,22 @@ sub build_regex {
 
     defined $str or App::Ack::die( 'No regular expression found.' );
 
-    my $scratch_regex = eval { qr/$str/ };
-    if ( not $scratch_regex ) {
-        my $err = $@;
-        chomp $err;
+    TEST_REGEX: {
+        # Compile the regex to see if it dies or throws warnings.
+        local $SIG{__WARN__} = sub { die @_ };  # Anything that warns becomes a die.
+        my $scratch_regex = eval { qr/$str/ };
+        if ( not $scratch_regex ) {
+            my $err = $@;
+            chomp $err;
 
-        if ( $err =~ m{^(.+?); marked by <-- HERE in m/(.+?) <-- HERE} ) {
-            my ($why, $where) = ($1,$2);
-            my $pointy = ' ' x (6+length($where)) . '^---HERE';
-            App::Ack::die( "Invalid regex '$str'\nRegex: $str\n$pointy $why" );
-        }
-        else {
-            App::Ack::die( "Invalid regex '$str'\n$err" );
+            if ( $err =~ m{^(.+?); marked by <-- HERE in m/(.+?) <-- HERE} ) {
+                my ($why, $where) = ($1,$2);
+                my $pointy = ' ' x (6+length($where)) . '^---HERE';
+                App::Ack::die( "Invalid regex '$str'\nRegex: $str\n$pointy $why" );
+            }
+            else {
+                App::Ack::die( "Invalid regex '$str'\n$err" );
+            }
         }
     }
 

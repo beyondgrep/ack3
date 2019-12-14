@@ -26,4 +26,17 @@ HERE
 };
 
 
+subtest 'Curly brace' => sub {
+    my ($output,$stderr) = run_ack_with_stderr( 'End with opening curly brace {' );
+
+    my @expected = line_split( <<"HERE" );
+$ACK: Invalid regex 'End with opening curly brace {'
+Regex: End with opening curly brace {
+                                    ^---HERE Unmatched ( in regex
+HERE
+    is_empty_array( $output, 'No output' );
+    lists_match( $stderr, \@expected, 'Error body' );
+};
+
+
 exit 0;
