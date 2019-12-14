@@ -28,9 +28,14 @@ HERE
     lists_match( $stderr, \@expected, 'Error body' );
 };
 
-
-# This opening brace at the end is just a warning, but we still catch it.
+# In Perl 5.20 and below, opening brace at the end doesn't get a warning.
+# In Perl 5.22 and above, we get a warning but the text changes.
+# This opening brace at the end is just a warning, but we still catch it in Perl > 5.20.
 subtest 'Check warning' => sub {
+    if ( $^V <= 5.20.0 ) {
+        return pass( "Perl $^V does not throw a warning on the closing brace" );
+    }
+
     plan tests => 5;
 
     my ($output,$stderr) = run_ack_with_stderr( 'foo{' );
