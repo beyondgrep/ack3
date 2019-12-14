@@ -17,9 +17,9 @@ subtest 'Check diags' => sub {
     my ($output,$stderr) = run_ack_with_stderr( '(set|get)_user_(id|(username)' );
 
     my @expected = line_split( <<"HERE" );
-$ACK: Invalid regex '(set|get)_user_(id|(username)' );
-Regex: foo(bar
-          ^---HERE Unmatched ( in regex
+$ACK: Invalid regex '(set|get)_user_(id|(username)'
+Regex: (set|get)_user_(id|(username)
+                      ^---HERE Unmatched ( in regex
 HERE
     is_empty_array( $output, 'No output' );
     lists_match( $stderr, \@expected, 'Error body' );
