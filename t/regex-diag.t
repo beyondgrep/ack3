@@ -11,11 +11,13 @@ plan tests => 1;
 
 prep_environment();
 
-subtest 'Check diags' => sub {
-    my ($output,$stderr) = run_ack_with_stderr( 'foo(bar' );
+my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
 
-    my @expected = line_split( <<'HERE' );
-ack: Invalid regex 'foo(bar'
+subtest 'Check diags' => sub {
+    my ($output,$stderr) = run_ack_with_stderr( '(set|get)_user_(id|(username)' );
+
+    my @expected = line_split( <<"HERE" );
+$ACK: Invalid regex '(set|get)_user_(id|(username)' );
 Regex: foo(bar
           ^---HERE Unmatched ( in regex
 HERE
