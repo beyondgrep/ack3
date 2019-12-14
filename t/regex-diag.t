@@ -7,7 +7,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 1;
+plan tests => 2;
 
 prep_environment();
 
@@ -32,7 +32,7 @@ subtest 'Curly brace' => sub {
     my @expected = line_split( <<"HERE" );
 $ACK: Invalid regex 'End with opening curly brace {'
 Regex: End with opening curly brace {
-                                    ^---HERE Unmatched ( in regex
+                                    ^---HERE Unescaped left brace in regex is passed through in regex
 HERE
     is_empty_array( $output, 'No output' );
     lists_match( $stderr, \@expected, 'Error body' );
