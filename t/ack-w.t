@@ -200,7 +200,6 @@ BAD ending with an escaped closing bracket \]
 # Quantifiers
 OK  thpppt{1,5}
 BAD }starting with an closing curly brace
-INV ending with an opening curly brace{
 BAD ending with an escaped closing curly brace\}
 
 OK  foo+
