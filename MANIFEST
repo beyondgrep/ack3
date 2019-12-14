@@ -101,7 +101,6 @@ t/needs-line-scan.t
 t/noackrc.t
 t/prescan-line-boundaries.t
 t/process-substitution.t
-t/regex-diag.t
 t/runtests.pl
 t/trailing-whitespace.t
 t/zero.t

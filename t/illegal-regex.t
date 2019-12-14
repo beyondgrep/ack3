@@ -1,44 +1,42 @@
 #!perl
 
-use warnings;
 use strict;
+use warnings;
 
 use Test::More;
-
 use lib 't';
 use Util;
 
+plan tests => 2;
+
 prep_environment();
 
-# Test for behavior with illegal regexes.
-my @tests = (
-    [ 'illegal pattern',  '?foo', 't/' ],
-    [ 'illegal -g regex', '-g', '?foo', 't/' ],
-);
+my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
 
-plan tests => scalar @tests;
+subtest 'Check diags' => sub {
+    my ($output,$stderr) = run_ack_with_stderr( '(set|get)_user_(id|(username)' );
 
-for ( @tests ) {
-    test_ack_with( @{$_} );
-}
+    my @expected = line_split( <<"HERE" );
+$ACK: Invalid regex '(set|get)_user_(id|(username)'
+Regex: (set|get)_user_(id|(username)
+                      ^---HERE Unmatched ( in regex
+HERE
+    is_empty_array( $output, 'No output' );
+    lists_match( $stderr, \@expected, 'Error body' );
+};
 
-done_testing();
+
+subtest 'Curly brace' => sub {
+    my ($output,$stderr) = run_ack_with_stderr( 'End with opening curly brace {' );
+
+    my @expected = line_split( <<"HERE" );
+$ACK: Invalid regex 'End with opening curly brace {'
+Regex: End with opening curly brace {
+                                    ^---HERE Unescaped left brace in regex is passed through in regex
+HERE
+    is_empty_array( $output, 'No output' );
+    lists_match( $stderr, \@expected, 'Error body' );
+};
+
 
 exit 0;
-
-
-sub test_ack_with {
-    my $testcase = shift;
-    my @args     = @_;
-
-    return subtest subtest_name( $testcase, @args ) => sub {
-        plan tests => 4;
-
-        my ( $stdout, $stderr ) = run_ack_with_stderr( @args );
-
-        is_empty_array( $stdout, "No STDOUT for $testcase" );
-        is( scalar @{$stderr}, 2, "Two lines of STDERR for $testcase" );
-        like( $stderr->[0], qr/Invalid regex/, "Correct ack error message for $testcase" );
-        like( $stderr->[1], qr/^\s+Quantifier follows nothing/, "Correct type of error for $testcase" );
-    };
-}
