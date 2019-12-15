@@ -3,19 +3,6 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
-[FIXES]
-Fixed the behavior of --break and --heading.  Using --break would
-implicitly set --noheading, and --heading would implicitly set --nobreak.
-
-The -x and --files-from options can't be used together.  ack will now warn
-you if you try.
-
-The -v and -o/--output options can't be used together.  ack will now warn
-you if you try.
-
-Fixed the minimum version of the Getopt::Long module required. (GH #287)
-
-
 [FEATURES]
 Added many new file and directory exclusions to speed up file selection.
 * Python's *.pyc, *.pyd and *.pyo compiled files
@@ -40,6 +27,22 @@ offending part of the regex.  For example:
     ack: Invalid regex 'status: (open|closed|in progress'
     Regex: status: (open|closed|in progress
                    ^---HERE Unmatched ( in regex
+
+Improved the error message when ack gets passed two options that can't be
+used together.
+
+
+[FIXES]
+Fixed the behavior of --break and --heading.  Using --break would
+implicitly set --noheading, and --heading would implicitly set --nobreak.
+
+The -x and --files-from options can't be used together.  ack will now warn
+you if you try.
+
+The -v and -o/--output options can't be used together.  ack will now warn
+you if you try.
+
+Fixed the minimum version of the Getopt::Long module required. (GH #287)
 
 
 v3.2.0      Sun Nov  3 22:52:18 CST 2019

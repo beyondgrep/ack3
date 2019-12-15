@@ -185,7 +185,7 @@ subtest q{Verify that "options" that follow -- aren't factored into the mutual e
     is(get_rc(), 0, 'The ack command should not fail');
 };
 
-subtest q{Verify that mutually exclusive options in different sources don't cause a problem} => sub {
+subtest q{Verify that mutex options in different sources don't cause a problem} => sub {
     my $ackrc = <<'HERE';
 --group
 HERE
@@ -224,13 +224,13 @@ sub are_mutually_exclusive {
             my $opt2_re = quotemeta($opt2);
 
             my $error = $stderr->[0] || ''; # avoid undef warnings
-            if ( $error =~ /Options '$opt1_re' and '$opt2_re' are mutually exclusive/ ||
-                $error =~ /Options '$opt2_re' and '$opt1_re' are mutually exclusive/ ) {
+            if ( $error =~ /Options '$opt1_re' and '$opt2_re' can't be used together/ ||
+                $error =~ /Options '$opt2_re' and '$opt1_re' can't be used together/ ) {
 
-                pass( qq{Error message resembles "Options '$opt1' and '$opt2' are mutually exclusive"} );
+                pass( qq{Error message resembles "Options '$opt1' and '$opt2' can't be used together"} );
             }
             else {
-                fail( qq{Error message does not resemble "Options '$opt1' and '$opt2' are mutually exclusive"} );
+                fail( qq{Error message does not resemble "Options '$opt1' and '$opt2' can't be used together"} );
                 diag("Error message: '$error'");
             }
         };

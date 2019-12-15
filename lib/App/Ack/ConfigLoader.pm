@@ -234,8 +234,7 @@ sub get_arg_spec {
     * Add your option to t/Util.pm#get_expected_options
     * Add your option's description and aliases to dev/generate-completion-scripts.pl
     * Go through the list of options already available, and consider
-      whether your new option can be considered mutually exclusive
-      with another option.
+      whether your new option can be considered mutex with another option.
 
 =end Adding-Options
 
@@ -611,7 +610,7 @@ sub process_args {
 
     my $type_specs = _process_filetypes(\%opt, $arg_sources);
 
-    _check_for_mutually_exclusive_options( $type_specs );
+    _check_for_mutex_options( $type_specs );
 
     _process_other(\%opt, $type_specs, $arg_sources);
     while ( @{$arg_sources} ) {
@@ -722,8 +721,8 @@ sub read_rcfile {
 }
 
 
-# Verifies no mutually-exclusive options were passed.  Dies if they were.
-sub _check_for_mutually_exclusive_options {
+# Verifies no mutex options were passed.  Dies if they were.
+sub _check_for_mutex_options {
     my $type_specs = shift;
 
     my $mutex = mutex_options();
@@ -738,7 +737,7 @@ sub _check_for_mutually_exclusive_options {
             if ( $mutex->{$i}{$j} ) {
                 my $x = $raw->[ $used->{$i} ];
                 my $y = $raw->[ $used->{$j} ];
-                App::Ack::die( "Options '$x' and '$y' are mutually exclusive" );
+                App::Ack::die( "Options '$x' and '$y' can't be used together." );
             }
         }
     }
