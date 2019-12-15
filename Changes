@@ -44,6 +44,9 @@ you if you try.
 
 Fixed the minimum version of the Getopt::Long module required. (GH #287)
 
+The line number and filename separators in --passthru mode now work the
+same as in context (-A/-B/-C) mode.  (GH #291)
+
 
 v3.2.0      Sun Nov  3 22:52:18 CST 2019
 ========================================
