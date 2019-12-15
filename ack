@@ -795,7 +795,7 @@ sub print_matches_in_file {
                 if ( $opt_break && !$has_printed_from_this_file && $has_printed_from_any_file ) {
                     App::Ack::print_blank_line();
                 }
-                print_line_with_options( $filename, $_, $., ':', 1 );
+                print_line_with_options( $filename, $_, $., '-', 1 );
                 $has_printed_from_this_file = 1;
             }
 
