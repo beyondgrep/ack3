@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 192;
+use Test::More tests => 196;
 use lib 't';
 use Util;
 
@@ -73,6 +73,7 @@ are_mutually_exclusive('-o', '-C', ['-o', '-C', 1, $word, $file]);
 are_mutually_exclusive('-o', '--context', ['-o', '--context', 1, $word, $file]);
 are_mutually_exclusive('-o', '--context', ['-o', '--context=1', $word, $file]);
 are_mutually_exclusive('-o', '-f', ['-o', '-f', $word, $file]);
+are_mutually_exclusive('-o', '--passthru', ['-o', '--passthru', $word, $file]);
 
 # --passthru
 are_mutually_exclusive('--passthru', '--output', ['--passthru', '--output', '$&', $word, $file]);
@@ -95,6 +96,9 @@ are_mutually_exclusive('--passthru', '--context', ['--passthru', '--context=1', 
 are_mutually_exclusive('--passthru', '-f', ['--passthru', '-f', $word, $file]);
 are_mutually_exclusive('--passthru', '-g', ['--passthru', '-g', $word, $file]);
 are_mutually_exclusive('--passthru', '--column', ['--passthru', '--column', $word, $file]);
+are_mutually_exclusive('--passthru', '-v', ['--passthru', '-v', $word, $file]);
+are_mutually_exclusive('--passthru', '-o', ['--passthru', '-o', $word, $file]);
+are_mutually_exclusive('--passthru', '--output', ['--passthru', '--output', $word, $file]);
 
 # --output
 for my $opt ( qw( -f -g -c --count ) ) {
@@ -170,6 +174,7 @@ for my $opt ( qw( -f -g ) ) {
     are_mutually_exclusive( $opt, '--break',   [$opt, '--break', $word, $file] );
     are_mutually_exclusive( $opt, '--column',  [$opt, '--column', $word, $file] );
 }
+
 # -x
 are_mutually_exclusive( '-x', '--files-from', ['-x', '--files-from', $word, $file] );
 for my $opt ( qw( -f -g ) ) {
