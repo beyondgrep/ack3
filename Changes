@@ -36,11 +36,12 @@ used together.
 Fixed the behavior of --break and --heading.  Using --break would
 implicitly set --noheading, and --heading would implicitly set --nobreak.
 
-The -x and --files-from options can't be used together.  ack will now warn
-you if you try.
+The following pairs of options don't make sense to use together, and ack will now warn you if you try:
 
-The -v and -o/--output options can't be used together.  ack will now warn
-you if you try.
+* -x and --files-from
+* -v and -o
+* -v and --output
+* -v and --passthru
 
 Fixed the minimum version of the Getopt::Long module required. (GH #287)
 

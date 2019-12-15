@@ -19,7 +19,7 @@ sub invalid_combinations {
         [qw(-l)]         => [@context, @file_lists, @pretty, @filename, @output, qw(--passthru --column --show-types)],
         [qw(-L)]         => [@context, @file_lists, @pretty, @filename, @output, qw(--passthru --column --show-types -c -v)],
         [@output]        => [@context, @file_lists, @output, qw(-c --column --show-types)],
-        [qw(--passthru)] => [@context, @file_lists, @output, qw(-c --column -m -1)],
+        [qw(--passthru)] => [@context, @file_lists, @output, qw(-c --column -m -1 -v)],
         [qw(--match)]    => [qw(-f -g)],
         [qw(-m)]         => [@fg, qw(-1 -c)],
         [qw(-h)]         => [@file_lists],
@@ -30,7 +30,7 @@ sub invalid_combinations {
         [qw(-f)]         => [qw(-v)],
         [@fg]            => [@fg, @pretty, qw(-x -c -u --files-from)],
         [qw(-p)]         => [@context, @file_lists, qw(--passthru -c)],
-        [qw(-v)]         => [qw(--column -o --output)],
+        [qw(-v)]         => [qw(--column -o --output --passthru)],
         [qw(-u)]         => [@fg, qw(--output)],
         [qw(-x)]         => [qw( --files-from )],
     );
