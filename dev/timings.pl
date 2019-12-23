@@ -45,14 +45,15 @@ my %sets = (
         [ '(set|get)_\w+', '-i' ],
     ],
     case => [
-        [ 'xxx-no-match' ],
-        [ 'xxx-no-match', '-i' ],
         [ 'foo' ],
         [ 'foo', '-i' ],
+        [ '[Ff][Oo][Oo]' ],
         [ 'foo\w+' ],
         [ 'foo\w+', '-i' ],
+        [ '[Ff][Oo][Oo]\w+' ],
         [ '(set|get)_\w+' ],
         [ '(set|get)_\w+', '-i' ],
+        [ '([Ss][Ee][Tt]|[Gg][Ee][Tt])_\w+' ],
     ],
     range => [
         [ 'foo' ],
