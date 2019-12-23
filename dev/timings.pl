@@ -44,6 +44,16 @@ my %sets = (
         [ '(set|get)_\w+' ],
         [ '(set|get)_\w+', '-i' ],
     ],
+    case => [
+        [ 'xxx-no-match' ],
+        [ 'xxx-no-match', '-i' ],
+        [ 'foo' ],
+        [ 'foo', '-i' ],
+        [ 'foo\w+' ],
+        [ 'foo\w+', '-i' ],
+        [ '(set|get)_\w+' ],
+        [ '(set|get)_\w+', '-i' ],
+    ],
     range => [
         [ 'foo' ],
         [ 'foo', '--range-start=^sub' ],
