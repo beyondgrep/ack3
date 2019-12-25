@@ -146,7 +146,7 @@ sub _options_block {
 # Emacs swap files
 --ignore-file=match:/^#.+#$/
 
-# vi/vim swap files http://vim.org/
+# vi/vim swap files https://www.vim.org/
 --ignore-file=match:/[._].*[.]swp$/
 
 # core dumps
@@ -293,7 +293,7 @@ sub _options_block {
 --type-add=gsp:ext:gsp
 
 # Haskell
-# http://www.haskell.org/
+# https://www.haskell.org/
 --type-add=haskell:ext:hs,lhs
 
 # HTML
@@ -357,7 +357,7 @@ sub _options_block {
 --type-add=ocaml:ext:ml,mli,mll,mly
 
 # Perl
-# http://perl.org/
+# https://perl.org/
 --type-add=perl:ext:pl,pm,pod,t,psgi
 --type-add=perl:firstlinematch:/^#!.*\bperl/
 
@@ -386,7 +386,7 @@ sub _options_block {
 --type-add=rr:ext:R
 
 # reStructured Text
-# http://docutils.sourceforge.net/rst.html
+# https://docutils.sourceforge.io/rst.html
 --type-add=rst:ext:rst
 
 # Ruby
