@@ -1,7 +1,7 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
-v3.3.0
+v3.3.0      Sat Dec 28 16:00:21 CST 2019
 ========================================
 [FEATURES]
 The error message ack displays when the regex passed is invalid has been
