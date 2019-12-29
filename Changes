@@ -16,7 +16,7 @@ offending part of the regex.  For example:
 Added many new file and directory exclusions to speed up file selection.
 * Python's *.pyc, *.pyd and *.pyo compiled files
 * Python's __pycache__ and .pytest_cache directories
-* Linux *.so shared object *.so files
+* Linux *.so shared object files
 * Windows dynamic-link library *.dll files
 * gettext compiled *.mo translation files
 * macOS's __MACOSX directories and .DS_Store files
