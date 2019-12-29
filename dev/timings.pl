@@ -95,12 +95,12 @@ my %sets = (
     ],
     types => [
         [ 'foo' ],
-        [ 'foo', '--perl' ],
-        [ 'foo', '--noperl' ],
-        [ 'foo', '--python' ],
-        [ 'foo', '--nopython' ],
-        [ 'foo', '--ocaml' ],
-        [ 'foo', '--noocaml' ],
+        [ 'foo', '--type=perl' ],
+        [ 'foo', '--type=noperl' ],
+        [ 'foo', '--type=python' ],
+        [ 'foo', '--type=nopython' ],
+        [ 'foo', '--type=ocaml' ],
+        [ 'foo', '--type=noocaml' ],
     ],
 );
 
