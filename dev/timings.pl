@@ -93,6 +93,15 @@ my %sets = (
         [ '\w+date', '-w' ],
         [ '\w+date', '-w', '-i' ],
     ],
+    types => [
+        [ 'foo' ],
+        [ 'foo', '--perl' ],
+        [ 'foo', '--noperl' ],
+        [ 'foo', '--python' ],
+        [ 'foo', '--nopython' ],
+        [ 'foo', '--ocaml' ],
+        [ 'foo', '--noocaml' ],
+    ],
 );
 
 
