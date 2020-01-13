@@ -1,7 +1,7 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
-NEXT
+v3.3.1      Mon Jan 13 10:27:16 CST 2020
 ========================================
 [FIXES]
 Some regexes would be shown as invalid when used with the -Q option.  Since

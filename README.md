@@ -75,7 +75,7 @@ See the [Community](https://beyondgrep.com/community/) page.
 
 # License
 
-Copyright 2005-2019 Andy Lester.
+Copyright 2005-2020 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the
