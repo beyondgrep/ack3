@@ -1,6 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
+NEXT
+========================================
+[FIXES]
+Some regexes would be shown as invalid when used with the -Q option.  Since
+the -Q tells ack to treat the regex as a literal, this shouldn't be
+possible.  (GH#294)
+
+
 v3.3.0      Sat Dec 28 16:00:21 CST 2019
 ========================================
 [FEATURES]

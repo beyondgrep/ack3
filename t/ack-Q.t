@@ -5,12 +5,14 @@ use warnings;
 
 use Test::More;
 
-plan tests => 2;
+plan tests => 3;
 
 use lib 't';
 use Util;
 
 prep_environment();
+
+my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
 
 # The unquoted "+" in "svn+ssh" will make the match fail.
 
@@ -47,5 +49,32 @@ HERE
         ack_lists_match( [ @args, $arg ], \@expected, "$arg should make svn+ssh finable" );
     }
 };
+
+
+subtest 'Patterns that would be invalid if not -Q' => sub {
+    plan tests => 21;
+
+    my %problems = (
+        '*' => 'Quantifier follows nothing in regex',
+        '[' => 'Unmatched [ in regex',
+        '(' => 'Unmatched ( in regex',
+    );
+
+    while ( my ($problem, $explanation) = each %problems ) {
+        my ($output,$stderr) = run_ack_with_stderr( $problem );
+
+        is_empty_array( $output, 'No output' );
+        is( $stderr->[0], "$ACK: Invalid regex '$problem'", 'Line 1 OK' );
+        is( $stderr->[1], "Regex: $problem", 'Line 2 OK' );
+        like( $stderr->[2], qr/\Q^---HERE $explanation/, 'Does the explanation match?' );
+        is( scalar @{$stderr}, 3, 'Only 3 lines' );
+    }
+
+    for my $problem ( keys %problems ) {
+        my @results = run_ack( '-Q', $problem );
+        cmp_ok( scalar @results, '>', 100, 'When we quote, all is happy and we get lots of results' );
+    }
+};
+
 
 exit 0;

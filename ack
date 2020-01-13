@@ -529,7 +529,7 @@ sub build_regex {
 
     defined $str or App::Ack::die( 'No regular expression found.' );
 
-    TEST_REGEX: {
+    if ( !$opt->{Q} ) {
         # Compile the regex to see if it dies or throws warnings.
         local $SIG{__WARN__} = sub { die @_ };  # Anything that warns becomes a die.
         my $scratch_regex = eval { qr/$str/ };
