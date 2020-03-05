@@ -317,7 +317,7 @@ sub _options_block {
 # JSON
 # https://json.org/
 --type-add=json:ext:json
-
+d
 # Kotlin
 # https://kotlinlang.org/
 --type-add=kotlin:ext:kt,kts
