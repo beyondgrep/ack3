@@ -249,6 +249,9 @@ sub _options_block {
 # C++ header files
 --type-add=hpp:ext:hpp,hh,h,hxx
 
+# QML
+--type-add=qml:ext:qml,qrc
+
 # C#
 --type-add=csharp:ext:cs
 
