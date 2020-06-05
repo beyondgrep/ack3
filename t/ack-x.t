@@ -56,6 +56,9 @@ subtest 'Basics' => sub {
 # We have to show that -s supresses errors on missing and unreadable files,
 # while still giving results on files that are there.
 subtest 'GH #175' => sub {
+
+    plan skip_all => q{Can't be run as root} if $> == 0;
+
     plan tests => 5;
 
     my @search_files;
