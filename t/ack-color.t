@@ -8,7 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 14;
+plan tests => 15;
 
 prep_environment();
 
@@ -131,7 +131,23 @@ subtest 'Passing args for colors' => sub {
         "${red}$file${color_end}",
         "${bold_white_on_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
     ] );
+};
 
+subtest 'Filename colors with count' => sub {
+    plan tests => 2;
+
+    my $file = reslash( 't/text/bill-of-rights.txt' );
+    my $expected = "${red}$file${color_end}:1";
+    my @args = qw(
+        Congress
+        --count
+        --with-filename
+        --color
+        --color-filename=red
+    );
+
+    my @results = run_ack( @args, $file );
+    is_deeply( \@results, [ $expected ], "Filename colored when called with '--color'" );
 };
 
 
