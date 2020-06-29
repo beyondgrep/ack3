@@ -134,20 +134,33 @@ subtest 'Passing args for colors' => sub {
 };
 
 subtest 'Filename colors with count' => sub {
-    plan tests => 2;
+    plan tests => 5;
 
-    my $file = reslash( 't/text/bill-of-rights.txt' );
-    my $expected = "${red}$file${color_end}:1";
-    my @args = qw(
+    my $file                   = reslash('t/text/bill-of-rights.txt');
+    my $expected_with_color    = "${red}$file${color_end}:1";
+    my $expected_without_color = "$file:1";
+    my @args                   = qw(
         Congress
         --count
         --with-filename
-        --color
         --color-filename=red
     );
 
-    my @results = run_ack( @args, $file );
-    is_deeply( \@results, [ $expected ], "Filename colored when called with '--color'" );
+    my @interactive_results = run_ack_interactive( @args, $file );
+    is_deeply( \@interactive_results, [$expected_with_color], "Filename colored when run interactively" );
+
+    my @non_interactive_colorless_results = run_ack( @args, $file );
+    is_deeply(
+        \@non_interactive_colorless_results,
+        [$expected_without_color], "Filename not colored when output is redirected",
+    );
+
+    my @args_with_color                 = ( @args, "--color" );
+    my @non_interactive_colored_results = run_ack( @args_with_color, $file );
+    is_deeply(
+        \@non_interactive_colored_results,
+        [$expected_with_color], "Filename colored when output is redirected and '--color' is used",
+    );
 };
 
 
