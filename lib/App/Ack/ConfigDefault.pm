@@ -452,6 +452,10 @@ sub _options_block {
 # http//template-toolkit.org/
 --type-add=ttml:ext:tt,tt2,ttml
 
+# TOML
+# https://toml.io/
+--type-add=toml:ext:toml
+
 # Typescript
 # https://www.typescriptlang.org/
 --type-add=ts:ext:ts,tsx

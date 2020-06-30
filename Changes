@@ -8,6 +8,8 @@ would not be colored like when getting normal search results.  Now it will.
 Thanks to Matthew Hughes for adding the feature, and Ophir Lifshitz for the
 suggestion. (GH#282)
 
+Added --toml for the TOML filetype. (GH#306)
+
 [FIXES]
 The test t/ack-x.t would fail when run as root. Now it is skipped. Thanks,
 Michael LaGrasta. (GH#217)
