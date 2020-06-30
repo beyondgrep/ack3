@@ -135,6 +135,11 @@ subtest 'Passing args for colors' => sub {
 
 
 subtest 'Filename colors with count' => sub {
+    if ( !has_io_pty() ) {
+        plan skip_all => 'IO::Pty is required for this test';
+        return;
+    }
+
     plan tests => 6;
 
     # Try it with default color.
