@@ -324,7 +324,11 @@ sub file_loop_c {
 
         if ( !$opt_l || $matches_for_this_file > 0 ) {
             if ( $opt_show_filename ) {
-                App::Ack::say( $file->name, ':', $matches_for_this_file );
+                my $display_filename = $file->name;
+                if ( $opt_color ) {
+                    $display_filename = Term::ANSIColor::colored($display_filename, $ENV{ACK_COLOR_FILENAME});
+                }
+                App::Ack::say( $display_filename, ':', $matches_for_this_file );
             }
             else {
                 App::Ack::say( $matches_for_this_file );

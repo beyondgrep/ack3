@@ -8,7 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 14;
+plan tests => 15;
 
 prep_environment();
 
@@ -131,7 +131,46 @@ subtest 'Passing args for colors' => sub {
         "${red}$file${color_end}",
         "${bold_white_on_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
     ] );
+};
 
+
+subtest 'Filename colors with count' => sub {
+    plan tests => 6;
+
+    # Try it with default color.
+    my $file = reslash('t/text/bill-of-rights.txt');
+    my $expected_with_color = "${green_bold}$file${color_end}:1";
+    my $expected_without_color = "$file:1";
+    my @args = qw(
+        Congress
+        --count
+        --with-filename
+    );
+
+    my @default_results = run_ack_interactive( @args, $file );
+    is_deeply( \@default_results, [$expected_with_color], 'Filename colored by default' );
+
+    # Now try it with red as the color.
+    $expected_with_color = "${red}$file${color_end}:1";
+    @args = ( @args, '--color-filename=red' );
+
+    my @red_results = run_ack_interactive( @args, $file );
+    is_deeply( \@red_results, [$expected_with_color], 'Color is now red' );
+
+
+    # Now redirect our output and make sure the color doesn't come up.
+    my @non_interactive_colorless_results = run_ack( @args, $file );
+    is_deeply(
+        \@non_interactive_colorless_results,
+        [$expected_without_color], "Filename not colored when output is redirected",
+    );
+
+    # Now redirect output, but add --color explicitly.
+    my @non_interactive_colored_results = run_ack( @args, '--color', $file );
+    is_deeply(
+        \@non_interactive_colored_results,
+        [$expected_with_color], "Filename colored when output is redirected and '--color' is used",
+    );
 };
 
 
