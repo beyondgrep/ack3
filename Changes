@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-v3.4.0      Mon Jun 29 22:12:18 CDT 2020
+v3.4.0      Mon Jun 29 23:04:18 CDT 2020
 ========================================
 [FEATURES]
 When calling "ack -c" to get a list of filenames and counts, the filename
