@@ -62,6 +62,12 @@ cp ~/ack3/Changes static/changes.txt
 perl static/ack-v3.x.y > tt/ack-help.txt
 ```
 
+* Regenerate the help types
+
+```
+perl static/ack-v3.x.y --help-types > tt/ack-help-types.txt
+```
+
 * Regenerate the HTML help page
 
 ```
@@ -77,6 +83,9 @@ make
 make test
 make rsync
 ```
+
+* Commit all changes. Some files will be updated, and some will be new.
+
 
 ## GitHub cleanup
 
