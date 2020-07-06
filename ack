@@ -2163,7 +2163,7 @@ Options are then loaded from the command line.
 ack is based at GitHub at L<https://github.com/beyondgrep/ack3>
 
 Please report any bugs or feature requests to the issues list at
-Github: L<https://github.com/beyondgrep/ack3/issues>.
+GitHub: L<https://github.com/beyondgrep/ack3/issues>.
 
 Please include the operating system that you're using; the output of
 the command C<ack --version>; and any customizations in your F<.ackrc>
@@ -2190,7 +2190,7 @@ L<https://beyondgrep.com/>
 
 L<https://github.com/beyondgrep/ack3>
 
-=item * The ack issues list at Github
+=item * The ack issues list at GitHub
 
 L<https://github.com/beyondgrep/ack3/issues>
 

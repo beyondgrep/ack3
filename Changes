@@ -241,7 +241,7 @@ Add -p as a shorter version of --proximate.
 Added -P as a negation of --proximate.  It is the same as --proximate=0.
 If you have --proximate in an .ackrc, -P can be used to cancel it.
 
-Added --ts for Typescript.
+Added --ts for TypeScript.
 
 
 2.999_03 Fri Jan 19 11:02:46 CST 2018
