@@ -268,6 +268,10 @@ sub _options_block {
 # https://elixir-lang.org/
 --type-add=elixir:ext:ex,exs
 
+# Elm
+# https://elm-lang.org
+--type-add=elm:ext:elm
+
 # Emacs Lisp
 # https://www.gnu.org/software/emacs
 --type-add=elisp:ext:el
