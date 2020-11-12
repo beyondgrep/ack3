@@ -451,7 +451,7 @@ we'd use a character class of just space C<< [ ] >>:
 (We could use a C<\ > escaped space, but that's hard to read, especially hard to tell if wrong.
 Is that one space or two there?)
 
-(L<regex cheatsheat comparing ack's perlRe with (e)grep, sed, ...|https://remram44.github.io/regex-cheatsheet/regex.html>
+(L<regex cheatsheet comparing ack's perlRe with (e)grep, sed, ...|https://remram44.github.io/regex-cheatsheet/regex.html>
 
 =head2 Summarize the file-types in your project
 
@@ -566,7 +566,7 @@ While grep can do this
 it's rather slow for large files!
 
 The standard Unix/Linux tool for this is C<comm>.  In C<comm> terms, the request is the C<comm -23 file1 file2>
-option.  With no args, Column 1 is words only in file1, Columnn 2 is words only in file2, and Column 3 is words
+option.  With no args, Column 1 is words only in file1, Column 2 is words only in file2, and Column 3 is words
 in both files 1 and 2.
 
 The mnemonic is: C<-23> is C<minus 2,3>, i.e. omit columns 2 (file 2 words) and 3 (both files words).
