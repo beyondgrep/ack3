@@ -380,6 +380,10 @@ sub _options_block {
 # https://plone.org/
 --type-add=plone:ext:pt,cpt,metadata,cpy,py
 
+# PureScript
+# https://www.purescript.org
+--type-add=purescript:ext:purs
+
 # Python
 # https://www.python.org/
 --type-add=python:ext:py
