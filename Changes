@@ -1,5 +1,11 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[FEATURES]
+Added support for the Elm language. (GH#316)
+
+
 v3.4.0      Mon Jun 29 23:04:18 CDT 2020
 ========================================
 [FEATURES]
