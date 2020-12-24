@@ -1,0 +1,129 @@
+name: testsuite
+
+on:
+  push:
+    branches:
+      - "*"
+    tags-ignore:
+      - "*"
+  pull_request:
+
+jobs:
+  ubuntu:
+    env:
+      PERL_USE_UNSAFE_INC: 0
+      AUTHOR_TESTING: 1
+      AUTOMATED_TESTING: 1
+      RELEASE_TESTING: 1
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: perl -V
+        run: perl -V
+      - name: Install perl-doc
+        run: sudo apt-get install perl-doc
+      - name: Install dependencies
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          cpanfile: "cpanfile"
+      - name: Makefile.PL
+        run: perl -I$(pwd) Makefile.PL
+      - name: make test
+        run: make test
+
+  linux:
+    name: "linux ${{ matrix.perl-version }}"
+    needs: [ubuntu]
+    runs-on: ubuntu-latest
+
+    env:
+      PERL_USE_UNSAFE_INC: 0
+      AUTHOR_TESTING: 1
+      AUTOMATED_TESTING: 1
+      RELEASE_TESTING: 1
+      PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
+
+    strategy:
+      matrix:
+        perl-version:
+          - "latest"
+          - "5.32"
+          - "5.30"
+          - "5.28"
+          - "5.26"
+          - "5.24"
+          - "5.22"
+          - "5.20"
+          - "5.18"
+          - "5.16"
+          - "5.14"
+          - "5.12"
+          - "5.10"
+
+    container:
+      image: perl:${{ matrix.perl-version }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: perl -V
+        run: perl -V
+      - name: Install Dependencies
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          sudo: false
+          cpanfile: "cpanfile"
+      - run: perl Makefile.PL
+      - run: make
+      - run: make test
+
+  macOS:
+    needs: [ubuntu, linux]
+    runs-on: macOS-latest
+
+    env:
+      PERL_USE_UNSAFE_INC: 0
+      AUTHOR_TESTING: 1
+      AUTOMATED_TESTING: 1
+      RELEASE_TESTING: 1
+      PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Perl
+        run: brew install perl
+      - name: perl -V
+        run: perl -V
+      - name: Install Dependencies
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          sudo: false
+          cpanfile: "cpanfile"
+      - run: perl Makefile.PL
+      - run: make
+      - run: make test
+
+  windows:
+    needs: [ubuntu, linux]
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Perl
+        run: |
+          choco install strawberryperl
+          echo 'PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin' >> $GITHUB_ENV
+      - name: perl -V
+        run: perl -V
+      - name: Install Dependencies
+        uses: perl-actions/install-with-cpanm@v1
+        with:
+          sudo: false
+          cpanfile: "cpanfile"
+      - name: perl Makefile.PL
+        run: perl Makefile.PL
+      - name: make
+        run: make
+      - name: Run Tests
+        run: make test
