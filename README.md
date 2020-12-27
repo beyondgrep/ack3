@@ -1,7 +1,4 @@
-# Build status of dev branch
-
-* Linux [![Build Status](https://travis-ci.org/beyondgrep/ack3.png?branch=dev)](https://travis-ci.org/beyondgrep/ack3)
-* Windows [![Build Status](https://ci.appveyor.com/api/projects/status/github/beyondgrep/ack3)](https://ci.appveyor.com/project/petdance/ack3)
+* [![Build Status](https://github.com/beyondgrep/ack3/workflows/testsuite/badge.svg?branch=dev)](https://github.com/beyondgrep/ack3/actions?query=workflow%3Atestsuite+branch%3Adev)
 * [CPAN Testers](http://cpantesters.org/distro/A/ack.html)
 
 # ack 3
