@@ -1,6 +1,3 @@
-* [![Build Status](https://github.com/beyondgrep/ack3/workflows/testsuite/badge.svg?branch=dev)](https://github.com/beyondgrep/ack3/actions?query=workflow%3Atestsuite+branch%3Adev)
-* [CPAN Testers](http://cpantesters.org/distro/A/ack.html)
-
 # ack 3
 
 ack is a code-searching tool, similar to grep but optimized for
@@ -16,6 +13,8 @@ ack is written and maintained by Andy Lester (andy@petdance.com).
     * [ack-announce](https://groups.google.com/d/forum/ack-announce), announcements-only
     * [ack-users](https://groups.google.com/d/forum/ack-users), for users of ack
     * [ack-dev](https://groups.google.com/d/forum/ack-dev), for ack development
+* [Build status ![Build Status](https://github.com/beyondgrep/ack3/workflows/testsuite/badge.svg?branch=dev)](https://github.com/beyondgrep/ack3/actions?query=workflow%3Atestsuite+branch%3Adev)
+* [CPAN Testers](https://cpantesters.org/distro/A/ack.html)
 
 # Building
 
