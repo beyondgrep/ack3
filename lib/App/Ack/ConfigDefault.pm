@@ -203,6 +203,17 @@ sub _options_block {
 --type-add=cmake:is:CMakeLists.txt
 --type-add=cmake:ext:cmake
 
+# Bazel build tool
+# https://docs.bazel.build/versions/master/skylark/bzl-style.html
+--type-add=bazel:ext:bzl
+# https://docs.bazel.build/versions/master/guide.html#bazelrc-the-bazel-configuration-file
+--type-add=bazel:ext:bazelrc
+# https://docs.bazel.build/versions/master/build-ref.html#BUILD_files
+--type-add=bazel:is:BUILD
+# https://docs.bazel.build/versions/master/build-ref.html#workspace
+--type-add=bazel:is:WORKSPACE
+
+
 # Actionscript
 --type-add=actionscript:ext:as,mxml
 
