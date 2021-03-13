@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.5.0      Fri Mar 12 22:29:44 CST 2021
 ========================================
 [FIXES]
 Reworked the option parsing to run correctly with Getopt::Long 2.38.
