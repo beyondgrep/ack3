@@ -2,6 +2,9 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[FIXES]
+Reworked the option parsing to run correctly with Getopt::Long 2.38.
+
 [FEATURES]
 Added support for the Elm language. (GH#316)
 

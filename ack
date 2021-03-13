@@ -9,6 +9,7 @@ use 5.010001;
 
 use File::Spec ();
 use File::Next ();
+use Getopt::Long ();
 
 use App::Ack ();
 use App::Ack::ConfigLoader ();
@@ -113,8 +114,8 @@ MAIN: {
         $ENV{ACK_COLOR_COLNO}    ||= 'bold yellow';
     }
 
-    my $p = App::Ack::ConfigLoader::opt_parser( 'no_auto_abbrev', 'pass_through' );
-    $p->getoptions(
+    App::Ack::ConfigLoader::configure_parser( 'no_auto_abbrev', 'pass_through' );
+    Getopt::Long::GetOptions(
         help     => sub { App::Ack::show_help(); exit; },
         version  => sub { App::Ack::print( App::Ack::get_version_statement() ); exit; },
         man      => sub { App::Ack::show_man(); },
