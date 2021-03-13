@@ -14,16 +14,14 @@
     make disttest
 
 * Push to GitHub to force a check of the branch.
-    * Check the status
-    * https://ci.appveyor.com/project/petdance/ack3
-    * https://travis-ci.org/beyondgrep/ack3
+    * Check the status at https://github.com/beyondgrep/ack3/actions
 
 ## Make a release
 
-* Merge to master and build
+* Merge to main and build
 
 ```
-git co master
+git co main
 git merge dev
 perl Makefile.PL
 make tardist
