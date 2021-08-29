@@ -450,7 +450,7 @@ sub show_help_rgb {
 ack allows customization of the colors it uses when presenting matches
 onscreen.  See the "ACK COLORS" section of the ack manual (ack --man).
 
-Colors may be specified as "rggNNN" where "NNN" is a triplet of digits
+Colors may be specified as "rgbNNN" where "NNN" is a triplet of digits
 from 0 to 5 specifying the intensity of red, green and blue, respectively.
 
 Here is a grid of the 216 possible values for NNN.
