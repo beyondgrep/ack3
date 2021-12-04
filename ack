@@ -905,20 +905,23 @@ sub print_line_with_options {
     my @line_parts;
 
     if ( $opt_show_filename && defined($filename) ) {
-        my $colno;
-        $colno = get_match_colno() if $opt_column;
+        # Because you can't "local"-ize lexical variables...
+        my ( $_filename, $_lineno ) = ( $filename, $lineno );
+
+        my $_colno;
+        $_colno = get_match_colno() if $opt_column;
         if ( $opt_color ) {
-            $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
-            $lineno   = Term::ANSIColor::colored( $lineno,   $ENV{ACK_COLOR_LINENO} );
-            $colno    = Term::ANSIColor::colored( $colno,    $ENV{ACK_COLOR_COLNO} ) if $opt_column;
+            $_filename = Term::ANSIColor::colored( $_filename, $ENV{ACK_COLOR_FILENAME} );
+            $_lineno   = Term::ANSIColor::colored( $_lineno,   $ENV{ACK_COLOR_LINENO} );
+            $_colno    = Term::ANSIColor::colored( $_colno,    $ENV{ACK_COLOR_COLNO} ) if $opt_column;
         }
         if ( $opt_heading ) {
-            push @line_parts, $lineno;
+            push @line_parts, $_lineno;
         }
         else {
-            push @line_parts, $filename, $lineno;
+            push @line_parts, $_filename, $_lineno;
         }
-        push @line_parts, $colno if $opt_column;
+        push @line_parts, $_colno if $opt_column;
     }
 
     if ( $opt_output ) {
