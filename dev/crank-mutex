@@ -25,7 +25,7 @@ sub invalid_combinations {
         [qw(-h)]         => [@file_lists],
         [qw(-H)]         => [@file_lists],
         [qw(-c)]         => [@context, @pretty, @fg, qw(--column)],
-        [qw(--column)]   => [@file_lists],
+        [qw(--column)]   => [@file_lists, qw(--no-lineno)],
         [@context]       => [@file_lists],
         [qw(-f)]         => [qw(-v)],
         [@fg]            => [@fg, @pretty, qw(-x -c -u --files-from)],

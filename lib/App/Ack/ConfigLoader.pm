@@ -296,6 +296,7 @@ sub get_arg_spec {
         'heading!'          => \$opt->{heading},
         'h|no-filename'     => \$opt->{h},
         'H|with-filename'   => \$opt->{H},
+        'no-lineno'         => \$opt->{no_lineno},
         'i|ignore-case'     => sub { $opt->{i} = 1; $opt->{S} = 0; },
         'I|no-ignore-case'  => sub { $opt->{i} = 0; $opt->{S} = 0; },
         'ignore-directory|ignore-dir=s' => _generate_ignore_dir('--ignore-dir', $opt),
@@ -949,6 +950,7 @@ sub mutex_options {
             f => 1,
             g => 1,
             l => 1,
+            'no-lineno' => 1,
             o => 1,
             output => 1,
             passthru => 1,
@@ -1066,6 +1068,9 @@ sub mutex_options {
         'no-filename' => {
             L => 1,
             l => 1,
+        },
+        'no-lineno' => {
+            column => 1,
         },
         o => {
             A => 1,

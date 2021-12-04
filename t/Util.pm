@@ -864,6 +864,7 @@ sub get_expected_options {
         '--match',
         '--max-count',
         '--no-filename',
+        '--no-lineno',
         '--no-recurse',
         '--nobreak',
         '--nocolor',

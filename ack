@@ -41,6 +41,7 @@ our $opt_heading;
 our $opt_L;
 our $opt_l;
 our $opt_m;
+our $opt_no_lineno;
 our $opt_output;
 our $opt_passthru;
 our $opt_p;
@@ -144,6 +145,7 @@ MAIN: {
     $opt_L              = $opt->{L};
     $opt_l              = $opt->{l};
     $opt_m              = $opt->{m};
+    $opt_no_lineno      = $opt->{no_lineno};
     $opt_output         = $opt->{output};
     $opt_p              = $opt->{p};
     $opt_passthru       = $opt->{passthru};
@@ -915,12 +917,8 @@ sub print_line_with_options {
             $_lineno   = Term::ANSIColor::colored( $_lineno,   $ENV{ACK_COLOR_LINENO} );
             $_colno    = Term::ANSIColor::colored( $_colno,    $ENV{ACK_COLOR_COLNO} ) if $opt_column;
         }
-        if ( $opt_heading ) {
-            push @line_parts, $_lineno;
-        }
-        else {
-            push @line_parts, $_filename, $_lineno;
-        }
+        push @line_parts, $_filename unless $opt_heading;    # We've already printed it...
+        push @line_parts, $_lineno unless $opt_no_lineno;
         push @line_parts, $_colno if $opt_column;
     }
 
@@ -1459,6 +1457,11 @@ searched.
 
 Print a filename heading above each file's results.  This is the default
 when used interactively.
+
+=item B<--no-lineno>
+
+Suppress the prefixing of line numbers on output.  Can't be combined with
+B<--column>.
 
 =item B<--help>
 
