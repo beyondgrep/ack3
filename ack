@@ -1259,7 +1259,7 @@ instance of the C<< <body> >>, you could do
 
 Or to search after Perl's `__DATA__` or `__END__` markers, you would do
 
-    ack pattern --range-end='^__(END|DATA)__'
+    ack pattern --range-start='^__(END|DATA)__'
 
 It's possible for a range to start and stop on the same line.  For example
 
