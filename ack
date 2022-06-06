@@ -1255,11 +1255,11 @@ C<--range-start> to the end of the file.
 For example, if you wanted to search all HTML files up until the first
 instance of the C<< <body> >>, you could do
 
-    ack foo --range-end='<body>'
+    ack foo --html --range-end='<body>'
 
 Or to search after Perl's `__DATA__` or `__END__` markers, you would do
 
-    ack pattern --range-end='^__(END|DATA)__'
+    ack pattern --perl --range-start='^__(END|DATA)__'
 
 It's possible for a range to start and stop on the same line.  For example
 
