@@ -12,6 +12,9 @@ Added support for the Purescript language. (GH#317)
 
 Added support for the Bazel build tool. (GH#327)
 
+[DOCS]
+Fixed incorrect example in the docs for --range-start. Thanks, Alex Beamish.
+
 
 v3.4.0      Mon Jun 29 23:04:18 CDT 2020
 ========================================
