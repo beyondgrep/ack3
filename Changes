@@ -1,5 +1,14 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[FEATURES]
+Added default ignores for Python's pickle serialization format (GH#348)
+
+[DOCS]
+Fixed incorrect example in the docs for --range-start. Thanks, Alex Beamish.
+
+
 v3.5.0      Fri Mar 12 22:29:44 CST 2021
 ========================================
 [FIXES]
@@ -11,9 +20,6 @@ Added support for the Elm language. (GH#316)
 Added support for the Purescript language. (GH#317)
 
 Added support for the Bazel build tool. (GH#327)
-
-[DOCS]
-Fixed incorrect example in the docs for --range-start. Thanks, Alex Beamish.
 
 
 v3.4.0      Mon Jun 29 23:04:18 CDT 2020

@@ -173,8 +173,13 @@ sub _options_block {
 # Common archives, as an optimization
 --ignore-file=ext:gz,tar,tgz,zip
 
-# Python compiles modules
+# Python compiled modules
 --ignore-file=ext:pyc,pyd,pyo
+
+# Python's pickle serialization format
+# https://docs.python.org/2/library/pickle.html#example
+# https://docs.python.org/3.7/library/pickle.html#examples
+--ignore-file=ext:pkl,pickle
 
 # C extensions
 --ignore-file=ext:so
