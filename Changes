@@ -5,6 +5,12 @@ NEXT
 [FEATURES]
 Added default ignores for Python's pickle serialization format (GH#348)
 
+Added support for the Crystal language. Thanks, Gabor Szabo. (GH#340)
+
+Fixed some spelling errors. Thanks, Frieder Bluemle. (GH#310)
+
+Added .sbt as a Scala extension. Thanks, Grzegorz Kaczmarczyk. (GH#322)
+
 [DOCS]
 Fixed incorrect example in the docs for --range-start. Thanks, Alex Beamish.
 
