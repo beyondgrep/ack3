@@ -694,7 +694,7 @@ sub is_lowercase {
     # Get rid of any literal backslashes first to avoid confusion.
     $pat =~ s/\\\\//g;
 
-    my $metacharacter = qr/
+    my $metacharacter = qr{
         |\\A                # Beginning of string
         |\\B                # Not word boundary
         |\\c[a-zA-Z]        # Control characters
@@ -712,7 +712,7 @@ sub is_lowercase {
         |\\X                # ???
         |\\x[0-9A-Fa-f]{2}  # Hex sequence
         |\\Z                # End of string
-    /x;
+    }x;
     $pat =~ s/$metacharacter//g;
 
     my $name = qr/[_A-Za-z][_A-Za-z0-9]*?/;
