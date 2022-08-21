@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 2;
 
 use lib 't';
 use Util;
@@ -59,24 +59,6 @@ subtest 'is:xxx matching' => sub {
         [ @meat ],
         'Multiple is arguments'
     );
-};
-
-
-subtest 'match:xxx matching' => sub {
-    plan tests => 6;
-
-    # The match is case-insensitive, unaffected by -i or -I.
-    for my $u ( 'u', 'U' ) {
-        for my $I ( '-i', '-I', undef ) {
-            my @args = ( qw( -f t/swamp/groceries ), "--ignore-file=match:$u" );
-            push( @args, $I ) if defined $I;
-            ack_sets_match(
-                [ @args ],
-                [ @meat ],
-                'Should only match files with do not have "u" in them: ' . join( ' ', map { $_ // 'undef' } @args )
-            );
-        }
-    }
 };
 
 
