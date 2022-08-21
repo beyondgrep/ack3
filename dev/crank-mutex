@@ -14,6 +14,7 @@ sub invalid_combinations {
     my @file_lists = qw( -f -g -l -L );
     my @output     = qw( -o --output );
     my @fg         = qw( -f -g );
+    my @case       = qw( -i -I --smart-case );
 
     return (
         [qw(-l)]         => [@context, @file_lists, @pretty, @filename, @output, qw(--passthru --column --show-types)],
@@ -27,7 +28,7 @@ sub invalid_combinations {
         [qw(-c)]         => [@context, @pretty, @fg, qw(--column)],
         [qw(--column)]   => [@file_lists],
         [@context]       => [@file_lists],
-        [qw(-f)]         => [qw(-v)],
+        [qw(-f)]         => [qw(-v), @case],
         [@fg]            => [@fg, @pretty, qw(-x -c -u --files-from)],
         [qw(-p)]         => [@context, @file_lists, qw(--passthru -c)],
         [qw(-v)]         => [qw(--column -o --output --passthru)],
