@@ -23,7 +23,7 @@ $bill:53:fact tried by a jury, shall be otherwise re-examined in any Court of
 HERE
 
     my @files = qw( t/text/ );
-    my @args = ( '-i', '--sort', '--', '-E' ); # The -i must be in force for the /-E/ to find "-e"
+    my @args = qw( -i --sort -- -E ); # The -i must be in force for the /-E/ to find "-e"
 
     ack_lists_match( [ @args, @files ], \@expected, 'Looking for militia with metacharacters' );
 };
