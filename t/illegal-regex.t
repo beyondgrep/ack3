@@ -42,7 +42,7 @@ subtest 'Check warning' => sub {
 
     is_empty_array( $output, 'No output' );
     is( $stderr->[0], "$ACK: Invalid regex 'foo{'", 'Line 1 OK' );
-    is( $stderr->[1], "Regex: foo{", 'Line 2 OK' );
+    is( $stderr->[1], 'Regex: foo{', 'Line 2 OK' );
     like( $stderr->[2], qr/\Q^---HERE Unescaped left brace/, 'The message changes between Perl versions' );
     is( scalar @{$stderr}, 3, 'Only 3 lines' );
 };
