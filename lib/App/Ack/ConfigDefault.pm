@@ -152,7 +152,7 @@ sub _options_block {
 # core dumps
 --ignore-file=match:/core[.]\d+$/
 
-# minified Javascript
+# minified JavaScript
 --ignore-file=match:/[.-]min[.]js$/
 --ignore-file=match:/[.]js[.]min$/
 
@@ -484,7 +484,7 @@ sub _options_block {
 # https://toml.io/
 --type-add=toml:ext:toml
 
-# Typescript
+# TypeScript
 # https://www.typescriptlang.org/
 --type-add=ts:ext:ts,tsx
 
