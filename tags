@@ -6,7 +6,6 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 ADJACENT_CAPTURE_COLORING	t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
-ARG	t/ack-output.t	/^ARG: {$/;"	l
 ARG_MULTIPLE_FILES	t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
 App::Ack	lib/App/Ack.pm	/^package App::Ack;$/;"	p
 App::Ack::ConfigDefault	lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
@@ -73,6 +72,9 @@ DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
 DASH_NOIGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
 DASH_V	t/ack-1.t	/^DASH_V: {$/;"	l
 DEFAULT_DIR_EXCLUSIONS	t/ack-f.t	/^DEFAULT_DIR_EXCLUSIONS: {$/;"	l
+DOLLAR_1	t/ack-output.t	/^DOLLAR_1: {$/;"	l
+DOLLAR_UNDERSCORE	t/ack-output.t	/^DOLLAR_UNDERSCORE: {$/;"	l
+DOUBLE_QUOTES	t/ack-output.t	/^DOUBLE_QUOTES: {$/;"	l
 DUMP	t/ack-type-del.t	/^DUMP: {$/;"	l
 DUMP	t/internals/ack-dump.t	/^DUMP: {$/;"	l
 EXCLUDE_ONLY	t/inverted-file-filter.t	/^EXCLUDE_ONLY: {$/;"	l
@@ -142,7 +144,6 @@ NO_SWITCHES_ONE_FILE	t/ack-h.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NO_SWITCHES_ONE_FILE	t/basic.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NTESTS	t/file-permission.t	/^use constant NTESTS => 5;$/;"	c
 NUMERIC_SUBSTITUTIONS	t/ack-output.t	/^NUMERIC_SUBSTITUTIONS: {$/;"	l
-OUTPUT_DOUBLE_QUOTES	t/ack-o.t	/^OUTPUT_DOUBLE_QUOTES: {$/;"	l
 PAGER	t/ack-pager.t	/^PAGER: {$/;"	l
 PAGER_ACKRC	t/ack-pager.t	/^PAGER_ACKRC: {$/;"	l
 PAGER_ACKRC_OVERRIDE	t/ack-pager.t	/^PAGER_ACKRC_OVERRIDE: {$/;"	l
@@ -161,6 +162,7 @@ REQUIRE_F_OR_G	t/ack-show-types.t	/^REQUIRE_F_OR_G: {$/;"	l
 RUBY_AND_RAKE	t/ack-show-types.t	/^RUBY_AND_RAKE: {$/;"	l
 RangeFile	t/range.t	/^package RangeFile;$/;"	p
 RangeFile	t/range/rangefile.pm	/^package RangeFile;$/;"	p
+Regex	t/illegal-regex.t	/^Regex: (set|get)_user_(id|(username)$/;"	l
 SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
@@ -192,7 +194,6 @@ WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
 WITH_COLUMNS_AND_CONTEXT	t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
 WITH_DASH_V	t/ack-c.t	/^WITH_DASH_V: {$/;"	l
 WITH_O	t/ack-o.t	/^WITH_O: {$/;"	l
-WITH_OUTPUT	t/ack-o.t	/^WITH_OUTPUT: {$/;"	l
 WITH_S	t/ack-s.t	/^WITH_S: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
@@ -201,7 +202,7 @@ WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 _big_split	t/internals/lowercase.t	/^sub _big_split {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
-_check_for_mutually_exclusive_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutually_exclusive_options {$/;"	s
+_check_for_mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutex_options {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
 _color_cell	lib/App/Ack.pm	/^sub _color_cell {$/;"	s
 _compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
@@ -270,6 +271,7 @@ close	lib/App/Ack/File.pm	/^sub close {$/;"	s
 color	dev/timings.pl	/^sub color {$/;"	s
 color_match	t/ack-passthru.t	/^sub color_match {$/;"	s
 colorize	t/Util.pm	/^sub colorize {$/;"	s
+configure_parser	lib/App/Ack/ConfigLoader.pm	/^sub configure_parser {$/;"	s
 count_matches_in_file	ack	/^sub count_matches_in_file {$/;"	s
 counts_valid	dev/timings.pl	/^sub counts_valid {$/;"	s
 create_filter	lib/App/Ack/Filter.pm	/^sub create_filter {$/;"	s
@@ -381,7 +383,6 @@ no_home	t/internals/config-finder.t	/^sub no_home {$/;"	s
 nytprof	Makefile.PL	/^nytprof: all$/;"	l
 o	t/file-permission.t	/^sub o { return sprintf '%o', shift }$/;"	s
 open	lib/App/Ack/File.pm	/^sub open {$/;"	s
-opt_parser	lib/App/Ack/ConfigLoader.pm	/^sub opt_parser {$/;"	s
 option_in_usage	t/ack-help.t	/^sub option_in_usage {$/;"	s
 options	lib/App/Ack/ConfigDefault.pm	/^sub options {$/;"	s
 options_clean	lib/App/Ack/ConfigDefault.pm	/^sub options_clean {$/;"	s
@@ -430,7 +431,6 @@ subtest_name	t/Util.pm	/^sub subtest_name {$/;"	s
 swamp_files	t/internals/FilterTest.pm	/^sub swamp_files {$/;"	s
 tags	Makefile.PL	/^tags:$/;"	l
 test	Makefile.PL	/^test: test_classic test_standalone$/;"	l
-test_ack_with	t/illegal-regex.t	/^sub test_ack_with {$/;"	s
 test_classic	Makefile.PL	/^test_classic: all$/;"	l
 test_loader	t/internals/config-loader.t	/^sub test_loader {$/;"	s
 test_match	t/ack-match.t	/^sub test_match {$/;"	s
