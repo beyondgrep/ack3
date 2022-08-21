@@ -26,7 +26,10 @@ sub configure_parser {
         no_ignore_case
     );
     Getopt::Long::Configure( @standard, @opts );
+
+    return;
 }
+
 
 sub _generate_ignore_dir {
     my ( $option_name, $opt ) = @_;
