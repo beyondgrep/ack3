@@ -187,6 +187,10 @@ sub _options_block {
 # Compiled gettext files
 --ignore-file=ext:mo
 
+# Visual Studio user and workspace settings
+# https://code.visualstudio.com/docs/getstarted/settings
+--ignore-dir=.vscode
+
 ### Filetypes defined
 
 # Makefiles

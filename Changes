@@ -5,6 +5,9 @@ NEXT
 [FEATURES]
 Added default ignores for Python's pickle serialization format (GH#348)
 
+Added default ignore for Visual Studio's user & workspace settings. Thanks,
+Gabor Szabo. (GH#324)
+
 Added support for the Crystal language. Thanks, Gabor Szabo. (GH#340)
 
 Fixed some spelling errors. Thanks, Frieder Bluemle. (GH#310)
