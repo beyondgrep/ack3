@@ -167,14 +167,14 @@ subtest 'Filename colors with count' => sub {
     my @non_interactive_colorless_results = run_ack( @args, $file );
     is_deeply(
         \@non_interactive_colorless_results,
-        [$expected_without_color], "Filename not colored when output is redirected",
+        [$expected_without_color], 'Filename not colored when output is redirected'
     );
 
     # Now redirect output, but add --color explicitly.
     my @non_interactive_colored_results = run_ack( @args, '--color', $file );
     is_deeply(
         \@non_interactive_colored_results,
-        [$expected_with_color], "Filename colored when output is redirected and '--color' is used",
+        [$expected_with_color], 'Filename colored when output is redirected and --color is used'
     );
 };
 
