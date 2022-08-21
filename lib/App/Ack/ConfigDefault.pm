@@ -268,6 +268,10 @@ sub _options_block {
 # C#
 --type-add=csharp:ext:cs
 
+# Crystal-lang
+# https://crystal-lang.org/
+--type-add=crystal:ext:cr,ecr
+
 # CSS
 # https://www.w3.org/Style/CSS/
 --type-add=css:ext:css
