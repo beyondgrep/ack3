@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.6.0      Sat Aug 20 22:57:47 CDT 2022
 ========================================
 [FEATURES]
 Added default ignores for Python's pickle serialization format (GH#348)
