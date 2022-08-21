@@ -433,7 +433,7 @@ sub _options_block {
 
 # Scala
 # https://www.scala-lang.org/
---type-add=scala:ext:scala
+--type-add=scala:ext:scala,sbt
 
 # Scheme
 # https://groups.csail.mit.edu/mac/projects/scheme/
