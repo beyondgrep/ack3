@@ -134,6 +134,8 @@ test_standalone: all ack-standalone
 test_xt: all
 	$(FULLPERLRUN) t/runtests.pl 0 $(TEST_VERBOSE) "$(INST_LIB)" "$(INST_ARCHLIB)" $(TEST_XT_FILES)
 
+test_all: test_classic test_standalone test_xt
+
 PROF_ARGS = -Mblib blib/script/ack foo ~/parrot
 
 nytprof: all
