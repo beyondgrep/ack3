@@ -189,7 +189,7 @@ sub _options_block {
 
 # Visual Studio user and workspace settings
 # https://code.visualstudio.com/docs/getstarted/settings
---ignore-dir=.vscode
+--ignore-dir=is:.vscode
 
 ### Filetypes defined
 
