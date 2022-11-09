@@ -18,7 +18,7 @@ use Time::HiRes qw(gettimeofday tv_interval);
 
 my $show_colors;
 my $perform_store;
-my $perfom_clear;
+my $perform_clear;
 my $test_others;
 my $num_iterations = 1;
 my $set = 'searching';
@@ -106,7 +106,7 @@ my %sets = (
 
 
 GetOptions(
-    'clear'        => \$perfom_clear,
+    'clear'        => \$perform_clear,
     'store'        => \$perform_store,
     'color'        => \$show_colors,
     'others'       => \$test_others,
@@ -124,7 +124,7 @@ my $invocations = $sets{$set} or die "Unknown set $set: Must be one of: ", join(
 my @invocations = @{$invocations};
 push( @{$_}, $SOURCE_DIR ) for @invocations;
 
-if ($perfom_clear) {
+if ($perform_clear) {
     unlink('.timings.json');
 }
 

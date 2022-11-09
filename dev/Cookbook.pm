@@ -167,7 +167,7 @@ If your desired pattern begins with one word and ends with another, C<-w> is sti
 If your desired pattern starts or ends (or both) with punctuation, using C<-w> may be erroneous.  ack will warn you in this case.
 If you get a warning about C<-w>, Say What You Mean (SWYM).
 If you mean the start of your pattern with punctuation should be
-at the beginning of line B<OR> preceded by a word OR by a space (or tab etc), before the needed punctuation,
+at the beginning of line B<OR> preceeded by a word OR by a space (or tab etc), before the needed punctuation,
 SWYM as C<(?:^|\b|\s)#+\s+(.*)>
 which will find and capture a comment.
 (Try it plain, with C<-o>, and with C<--output='$1'>, which has its own section below)

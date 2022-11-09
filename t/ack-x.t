@@ -53,7 +53,7 @@ subtest 'Basics' => sub {
 
 
 # GH #175: -s doesn't work with -x
-# We have to show that -s supresses errors on missing and unreadable files,
+# We have to show that -s suppresses errors on missing and unreadable files,
 # while still giving results on files that are there.
 subtest 'GH #175' => sub {
 
