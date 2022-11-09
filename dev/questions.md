@@ -61,7 +61,7 @@ dependency ack should have is on File::Next.
 # More Questions (2011-11-04)
 
 **Q:** When adding a filetype to match a file by extension, regex, or name,
-is this comparison case-insenstive? (I'm assuming yes)
+is this comparison case-insensitive? (I'm assuming yes)
 
 **A:** I think that we have to go with case-insensitive, yes.  I
 think anything that would rely on something other than that is just
@@ -76,7 +76,7 @@ another "global" location is needed for ackrc in cases like these? (see File::Sh
 
 **A:** We have to have one ackrc to start with.  I don't think we
 want it as a compile-time option or anything like that.  It has to
-be /etc/ackrc, and then overrideable via some environment option.
+be /etc/ackrc, and then overridable via some environment option.
 
 **Q:** Should we worry about character encodings in filenames when adding file types? I'm thinking
 this might be something for Ack 2.1.

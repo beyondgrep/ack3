@@ -1248,7 +1248,7 @@ lines were in a range and which were out of the range.
 
 You don't have to specify both C<--range-start> and C<--range-end>.  IF
 C<--range-start> is omitted, then the range runs from the first line in the
-file unitl the first line that matches C<--range-end>.  Similarly, if
+file until the first line that matches C<--range-end>.  Similarly, if
 C<--range-end> is omitted, the range runs from the first line matching
 C<--range-start> to the end of the file.
 
