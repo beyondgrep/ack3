@@ -1934,8 +1934,8 @@ There are four different colors ack uses:
     --------    -----------------   ------------------  ---------------
     filename    --color-filename    ACK_COLOR_FILENAME  black on_yellow
     match       --color-match       ACK_COLOR_MATCH     bold green
-    line no.    --color-lineno      ACK COLOR_LINENO    bold yellow
-    column no.  --color-colno       ACK COLOR_COLNO     bold yellow
+    line no.    --color-lineno      ACK_COLOR_LINENO    bold yellow
+    column no.  --color-colno       ACK_COLOR_COLNO     bold yellow
 
 The column number column is only used if the column number is shown because
 of the --column option.
@@ -2325,6 +2325,7 @@ mailing list.
 How appropriate to have I<ack>nowledgements!
 
 Thanks to everyone who has contributed to ack in any way, including
+Volker Glave,
 Axel Beckert,
 Eric Pement,
 Gabor Szabo,
