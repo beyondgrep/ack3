@@ -50,6 +50,7 @@ my %ZSH_DESCRIPTIONS = (
     '--match'                 => 'specify PATTERN explicitly',
     '--max-count'             => 'stop reading after NUM matches',
     '--no-filename'           => q{don't print filenames on output},
+    '--no-lineno'             => q{don't print line numbers on output},
     '--noenv'                 => q{don't consider ackrc files/environment variables for configuration},
     '--output'                => 'output the evaluation of EXPR for each line',
     '--pager'                 => q{direct ack's output through PAGER},

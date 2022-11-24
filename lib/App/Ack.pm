@@ -258,6 +258,7 @@ Search output:
   -H, --with-filename           Print the filename for each match (default:
                                 on unless explicitly searching a single file)
   -h, --no-filename             Suppress the prefixing filename on output
+  --no-lineno                   Suppress the prefixing line number on output
   --[no]column                  Show the column number of the first match
 
   -A NUM, --after-context=NUM   Print NUM lines of trailing context after
