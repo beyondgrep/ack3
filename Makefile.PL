@@ -35,6 +35,7 @@ my %parms = (
         'File::Next'        => '1.18',
         'File::Spec'        => '3.00',
         'File::Temp'        => '0.19', # For newdir()
+        'filetest'          => 0,
         'Getopt::Long'      => '2.38',
         'if'                => 0,
         'List::Util'        => 0,
