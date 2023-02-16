@@ -69,6 +69,8 @@ installed, you can build ack.
 
 See the [Community](https://beyondgrep.com/community/) page.
 
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md) in all your interactions with our project.
+
 # License
 
 Copyright 2005-2023 Andy Lester.
