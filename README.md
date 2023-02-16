@@ -71,7 +71,7 @@ See the [Community](https://beyondgrep.com/community/) page.
 
 # License
 
-Copyright 2005-2022 Andy Lester.
+Copyright 2005-2023 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the
@@ -80,7 +80,7 @@ See also the LICENSE.md file that comes with the ack distribution.
 
 # Support
 
-ack and [beyondgrep.com](https://beyondgrep.com) are supported by [DigitalOcean](https://m.do.co/c/6a437192f552).
+[ack](https://github.com/beyondgrep/ack3) and [beyondgrep.com](https://beyondgrep.com) are supported by [DigitalOcean](https://m.do.co/c/6a437192f552).
 
 <a href="https://m.do.co/c/6a437192f552">
   <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
