@@ -80,7 +80,7 @@ See also the LICENSE.md file that comes with the ack distribution.
 
 # Support
 
-ack and beyondgrep.com are supported by [DigitalOcean](https://m.do.co/c/6a437192f552).
+ack and [beyondgrep.com](https://beyondgrep.com) are supported by [DigitalOcean](https://m.do.co/c/6a437192f552).
 
 <a href="https://m.do.co/c/6a437192f552">
   <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
