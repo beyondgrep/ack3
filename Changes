@@ -10,6 +10,9 @@ match. For example, if you want to search for "dogs" but not if "cats" or
 
     ack dogs --not cats --not fish
 
+Added .Rmd to the list of extensions understood to be R. Thanks, Kieran
+Mace. (GH#358)
+
 
 v3.6.0      Sat Aug 20 22:57:47 CDT 2022
 ========================================
