@@ -13,6 +13,9 @@ match. For example, if you want to search for "dogs" but not if "cats" or
 Added .Rmd to the list of extensions understood to be R. Thanks, Kieran
 Mace. (GH#358)
 
+Added file type for for Powershell (.ps1 and .psm1 files).  Thanks, Thomas
+Gossler, (GH#362)
+
 
 v3.6.0      Sat Aug 20 22:57:47 CDT 2022
 ========================================

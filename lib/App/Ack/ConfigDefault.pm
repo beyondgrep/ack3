@@ -404,6 +404,11 @@ sub _options_block {
 # https://plone.org/
 --type-add=plone:ext:pt,cpt,metadata,cpy,py
 
+# PowerShell
+# https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_scripts
+# https://learn.microsoft.com/en-us/powershell/scripting/developer/module/understanding-a-windows-powershell-module
+--type-add=powershell:ext:ps1,psm1
+
 # PureScript
 # https://www.purescript.org
 --type-add=purescript:ext:purs
