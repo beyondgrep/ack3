@@ -246,6 +246,8 @@ Searching:
   --range-start PATTERN         Specify PATTERN as the start of a match range.
   --range-end PATTERN           Specify PATTERN as the end of a match range.
   --match PATTERN               Specify PATTERN explicitly. Typically omitted.
+  --not PATTERN                 Specifies PATTERN that must not be found on
+                                the line for a match to occur. Repeatable.
 
 Search output:
   --output=expr                 Output the evaluation of expr for each line

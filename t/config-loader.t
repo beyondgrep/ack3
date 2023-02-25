@@ -30,6 +30,7 @@ my %defaults = (
     L            => undef,
     m            => undef,
     n            => undef,
+    not          => [],
     output       => undef,
     p            => undef,
     pager        => undef,

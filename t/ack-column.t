@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 4;
+use Test::More tests => 6;
 
 
 use lib 't';
@@ -32,6 +32,26 @@ HERE
 
     my @files = ( $raven );
     my @args = ( @base_args, '--column' );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Checking column numbers' );
+}
+
+
+WITH_COLUMNS_AND_NOT: {
+    # Verify that the --not does not mess up the column number.
+    my @expected = line_split( <<'HERE' );
+62:24:    With such name as "Nevermore."
+69:26:    Then the bird said, "Nevermore."
+76:18:    Of 'Never -- nevermore.'
+83:24:    Meant in croaking "Nevermore."
+90:26:    She shall press, ah, nevermore!
+125:22:    Shall be lifted--nevermore!
+HERE
+    @expected = map { "${raven}:$_" } @expected;
+
+    my @files = ( $raven );
+    my @args = ( @base_args, '--column', '--not', 'Quoth' );
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Checking column numbers' );

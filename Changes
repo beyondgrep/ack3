@@ -1,5 +1,16 @@
 History file for ack 3.  https://beyondgrep.com/
 
+
+v3.7.0      Sat Feb 25 14:00:57 CST 2023
+========================================
+[FEATURES]
+Added a repeatable --not option to let you supply patterns that should NOT
+match. For example, if you want to search for "dogs" but not if "cats" or
+"fish" are on the same line, you can do:
+
+    ack dogs --not cats --not fish
+
+
 v3.6.0      Sat Aug 20 22:57:47 CDT 2022
 ========================================
 [FEATURES]
