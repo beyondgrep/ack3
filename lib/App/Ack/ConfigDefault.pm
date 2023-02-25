@@ -415,7 +415,8 @@ sub _options_block {
 
 # R
 # https://www.r-project.org/
---type-add=rr:ext:R
+# https://r4ds.had.co.nz/r-markdown.html
+--type-add=rr:ext:R,Rmd
 
 # reStructured Text
 # https://docutils.sourceforge.io/rst.html
