@@ -267,6 +267,8 @@ sub get_arg_spec {
         return;
     }
 
+    $opt->{not} = [];
+
     return {
         1                   => sub { $opt->{1} = $opt->{m} = 1 },
         'A|after-context:-1'  => sub { shift; $opt->{A} = _context_value(shift) },
@@ -330,6 +332,7 @@ sub get_arg_spec {
         },
         'noignore-directory|noignore-dir=s' => _generate_ignore_dir('--noignore-dir', $opt),
         'nopager'           => sub { $opt->{pager} = undef },
+        'not=s'             => $opt->{not},
         'passthru'          => \$opt->{passthru},
         'print0'            => \$opt->{print0},
         'p|proximate:1'     => \$opt->{p},
@@ -1012,6 +1015,7 @@ sub mutex_options {
             l => 1,
             m => 1,
             match => 1,
+            not => 1,
             o => 1,
             output => 1,
             p => 1,
@@ -1078,6 +1082,9 @@ sub mutex_options {
         'no-filename' => {
             L => 1,
             l => 1,
+        },
+        not => {
+            g => 1,
         },
         o => {
             A => 1,

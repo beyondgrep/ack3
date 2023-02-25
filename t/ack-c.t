@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 use lib 't';
 use Util;
@@ -78,6 +78,14 @@ SINGLE_FILE_COUNT: {
     my @expected = ( '3' );
 
     ack_sets_match( [ @args, @files ], \@expected, 'ack -c -h should return one line of results' );
+}
+
+NOT: {
+    my @args     = qw( Montresor -c -h --not God );
+    my @files    = ( 't/text/amontillado.txt' );
+    my @expected = ( 2 );
+
+    ack_sets_match( [ @args, @files ], \@expected, 'One line of results, with an accurate count' );
 }
 
 exit 0;

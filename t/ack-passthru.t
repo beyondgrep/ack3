@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 use lib 't';
 use Util;
@@ -95,6 +95,34 @@ $ozy-14-The lone and level sands stretch far away.
 HERE
 
     my @results = run_ack( qw( li\w+  t/text/ozymandias.txt -H --passthru ) );
+
+    lists_match( \@results, \@expected, q{With filename} );
+};
+
+
+subtest 'With filename and --not' => sub {
+    plan tests => 2;
+
+    my $ozy = reslash( 't/text/ozymandias.txt' );
+    my @expected = line_split( <<"HERE" );
+$ozy-1-I met a traveller from an antique land
+$ozy-2-Who said: Two vast and trunkless legs of stone
+$ozy-3-Stand in the desert... Near them, on the sand,
+$ozy:4:Half sunk, a shattered visage lies, whose frown,
+$ozy:5:And wrinkled lip, and sneer of cold command,
+$ozy-6-Tell that its sculptor well those passions read
+$ozy-7-Which yet survive, stamped on these lifeless things,
+$ozy-8-The hand that mocked them, and the heart that fed:
+$ozy-9-And on the pedestal these words appear:
+$ozy-10-'My name is Ozymandias, king of kings:
+$ozy-11-Look on my works, ye Mighty, and despair!'
+$ozy-12-Nothing beside remains. Round the decay
+$ozy-13-Of that colossal wreck, boundless and bare
+$ozy-14-The lone and level sands stretch far away.
+HERE
+
+    # Same results as the "With filename" test except that we exclude "survive".
+    my @results = run_ack( qw( li\w+  t/text/ozymandias.txt -H --passthru --not survive ) );
 
     lists_match( \@results, \@expected, q{With filename} );
 };
