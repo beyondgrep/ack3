@@ -418,6 +418,11 @@ sub _options_block {
 --type-add=python:ext:py
 --type-add=python:firstlinematch:/^#!.*\bpython/
 
+# Pytest
+# https://pytest.org/
+--type-add=pytest:match:_test[.]py$
+--type-add=pytest:match:^test_.*[.]py$
+
 # R
 # https://www.r-project.org/
 # https://r4ds.had.co.nz/r-markdown.html
@@ -464,6 +469,10 @@ sub _options_block {
 # SQL
 # https://www.iso.org/standard/45498.html
 --type-add=sql:ext:sql,ctl
+
+# Starlark
+# https://github.com/bazelbuild/starlark/
+--type-add=starlark:ext:star
 
 # Stylus
 # http://stylus-lang.com/

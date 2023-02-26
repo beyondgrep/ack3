@@ -1,6 +1,11 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
+NEXT
+========================================
+Add support for Starlark and Pytest filetypes.
+
+
 v3.7.0      Sat Feb 25 14:00:57 CST 2023
 ========================================
 [FEATURES]
