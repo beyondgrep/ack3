@@ -1,4 +1,6 @@
 [codespell]
-skip = .git,*.pdf,*.svg
-#
-# ignore-words-list =
+skip = .git,*.pdf,*.svg,garage,text
+# parms,filetest - common variable
+# isnt - in func names etc
+ignore-words-list = parms,filetest,isnt
+ignore-regex = (qw\(.*ser|type.*edn|DIRECTORYs|Ricardo Signes|Nemo me impune|^fo$|gra\(ph\|nd\))
