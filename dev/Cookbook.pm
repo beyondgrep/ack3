@@ -167,7 +167,7 @@ If your desired pattern begins with one word and ends with another, C<-w> is sti
 If your desired pattern starts or ends (or both) with punctuation, using C<-w> may be erroneous.  ack will warn you in this case.
 If you get a warning about C<-w>, Say What You Mean (SWYM).
 If you mean the start of your pattern with punctuation should be
-at the beginning of line B<OR> preceeded by a word OR by a space (or tab etc), before the needed punctuation,
+at the beginning of line B<OR> preceded by a word OR by a space (or tab etc), before the needed punctuation,
 SWYM as C<(?:^|\b|\s)#+\s+(.*)>
 which will find and capture a comment.
 (Try it plain, with C<-o>, and with C<--output='$1'>, which has its own section below)
@@ -256,11 +256,11 @@ Note, this requires L<Pod::Markdown|https://metacpan.org/pod/Pod::Markdown> plug
 
 =head1 EXAMPLES OF C<< --output >>
 
-The C<-o> and C<< --output expr >> options allow for specifying and formating the output.
+The C<-o> and C<< --output expr >> options allow for specifying and formatting the output.
 
 With look-behind and look-ahead, one "match without matching" for highlighting or C<-o>) purposes.
 The  regex C<< abc\K(def)(?=ghi) >>  will highlight ONLY C<def> in the text, \
-but only if that string is preceeded by C<abc> and C<ghi> follows.
+but only if that string is preceded by C<abc> and C<ghi> follows.
 With C<-o>, it will output C<def> but only when found in context of C<abc>B<<C<def>>>C<ghi>.
 
 HT to L<HN|https://news.ycombinator.com/item?id=15433310>
@@ -522,7 +522,7 @@ fixed tabsets, not with 8-char tabs, alas.
 =head2 TBD Add Elegant nearly- and not-ugly-and- exact solutions that require neither hypothetical, C<\n> as OR nor C<--fgrep-f>
 
 Ack doesn't have C<--fgrep-f> nor does it accept newlines as OR otherwise, as newer grep does.  But grep has
-no C<--passthru>.  L<Requestor|> would like to view the whole files but highlight any of several words in each,
+no C<--passthru>.  L<Requester|> would like to view the whole files but highlight any of several words in each,
 which needs both.  Workaround is ugly:
 
     ack /etc --match "`/bin/ls /home/ | tr '\n' '|' | sed -e 's/|$//'`"
@@ -578,7 +578,7 @@ If the files aren't in nor wanted in sorted order, the shell command or alias ne
 
 with modern C<bash>'s C<< <() >> command substitution as file-pipes.
 
-(That C<< <(fileter $f1) <(filter $f2) >> idiom is also good for pre-filtering input to C<diff> etc.)
+(That C<< <(filter $f1) <(filter $f2) >> idiom is also good for pre-filtering input to C<diff> etc.)
 
 Note for Windows users: Microsoft and Cygwin both provide Linux/GNU commandline utilities for Windows.
 They may have come with the Perl you're using for Ack.
