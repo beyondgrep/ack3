@@ -1595,7 +1595,7 @@ No descending into subdirectories.
 
 =item B<--not=PATTERN>
 
-Specifies a I<PATTERN> that must NOT me true on a given line for a match to
+Specifies a I<PATTERN> that must NOT be true on a given line for a match to
 occur. This option can be repeated.
 
 If you want to find all the lines with "dogs" but not if "cats" or "fish"
