@@ -45,16 +45,9 @@ for my $arg ( @ARGV ) {
         $key =~ s{::}{/}g;
         $filename = $INC{$key} or die "Can't find the file for $arg";
     }
-    my $is_ack = $filename eq 'ack';
 
     warn "Reading $filename\n";
-    if ( !$is_ack ) {
-        push @parts, "{\n";
-    }
     push @parts, _get_code_from_file( $filename );
-    if ( !$is_ack ) {
-        push @parts, "}\n";
-    }
 }
 
 my $code = join( '', @parts );
