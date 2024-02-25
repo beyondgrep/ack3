@@ -3,7 +3,14 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
+[FEATURES]
 Add support for Starlark and Pytest filetypes.
+
+[FIXES]
+The ack-standalone that gets built, and is what's available for download at
+https://beyondgrep.com, now puts each of the modules it pulls in into its
+own lexical scope.  This should fix any future conflicts of pragmata that
+might come up in the future. Thanks, mauke. (GH #376)
 
 
 v3.7.0      Sat Feb 25 14:00:57 CST 2023

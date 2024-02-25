@@ -31,10 +31,8 @@ my $NO_EDIT_COMMENT = <<'EOCOMMENT';
 #
 EOCOMMENT
 
-my $debug_mode = grep { $_ eq '--debug' } @ARGV;
-@ARGV          = grep { $_ ne '--debug' } @ARGV;
-
-my $code = <<"PERL";
+my @parts;
+push @parts, <<"PERL";
 #!/usr/bin/env perl
 $NO_EDIT_COMMENT
 \$App::Ack::STANDALONE = 1;
@@ -47,12 +45,37 @@ for my $arg ( @ARGV ) {
         $key =~ s{::}{/}g;
         $filename = $INC{$key} or die "Can't find the file for $arg";
     }
+    my $is_ack = $filename eq 'ack';
 
     warn "Reading $filename\n";
+    if ( !$is_ack ) {
+        push @parts, "{\n";
+    }
+    push @parts, _get_code_from_file( $filename );
+    if ( !$is_ack ) {
+        push @parts, "}\n";
+    }
+}
+
+my $code = join( '', @parts );
+
+# We only use two of the four constructors in File::Next, so delete the other two.
+for my $unused_func ( qw( dirs everything ) ) {
+    $code =~ s/^sub $unused_func\b.*?^}//sm or die qq{Unable to find the sub "$unused_func" to remove from ack-standalone};
+}
+print $code;
+
+exit 0;
+
+
+sub _get_code_from_file {
+    my $filename = shift;
+
+    my @lines;
     open( my $fh, '<', $filename ) or die "Can't open $filename: $!";
     my $was_in_pod = 0;
     my $in_pod     = 0;
-    $code .= "#line 1 '$filename'\n" if $debug_mode && $filename ne 'ack';
+
     while ( <$fh> ) {
         next if /^use (?:File::Next|App::Ack)/;
 
@@ -60,9 +83,6 @@ for my $arg ( @ARGV ) {
 
         if ( $was_in_pod && !$in_pod ) {
             $was_in_pod = 0;
-            if ($debug_mode) {
-                $code .= "#line $. '$filename'\n";
-            }
         }
 
         # See if we're in module POD blocks.
@@ -86,15 +106,10 @@ for my $arg ( @ARGV ) {
         # Remove Perl::Critic comments.
         # I'd like to remove all comments, but this is a start
         s{\s*##.+critic.*}{};
-        $code .= $_;
+        push @lines, $_;
     }
+
     close $fh;
-}
 
-# We only use two of the four constructors in File::Next, so delete the other two.
-for my $unused_func ( qw( dirs everything ) ) {
-    $code =~ s/^sub $unused_func\b.*?^}//sm or die qq{Unable to find the sub "$unused_func" to remove from ack-standalone};
+    return join( '', @lines );
 }
-print $code;
-
-exit 0;
