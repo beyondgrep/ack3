@@ -48,13 +48,11 @@ for my $arg ( @ARGV ) {
     my $is_ack = $filename eq 'ack';
 
     warn "Reading $filename\n";
-    if ( !$is_ack ) {
-        push @parts, "{\n";
-    }
-    push @parts, _get_code_from_file( $filename );
-    if ( !$is_ack ) {
-        push @parts, "}\n";
-    }
+    push @parts,
+        "{\n",
+        _get_code_from_file( $filename ),
+        "}\n",
+    ;
 }
 
 my $code = join( '', @parts );
