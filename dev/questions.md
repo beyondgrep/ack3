@@ -3,7 +3,7 @@
 **Q:** From what I understand, shebang matches look for a regular expression
 like this:
 
-    m|^#!/usr/bin/(?<interpeter>\w+)|
+    m|^#!/usr/bin/(?<interpreter>\w+)|
 
 and looks up `$+{'interpreter'}` in a hash for its corresponding
 language (or some similar algorithm).  What if the shebang line is

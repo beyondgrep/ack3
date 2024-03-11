@@ -1045,7 +1045,7 @@ the test, and include the function name without repetitively typing it.
         my $user = shift;
         my $foo  = shift;
         my $bar  = shift;
-        my $msg  = shfit;
+        my $msg  = shift;
 
         return subtest subtest_name( $foo, $bar, $msg ) => sub {
             ....
