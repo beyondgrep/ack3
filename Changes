@@ -6,6 +6,8 @@ NEXT
 [FEATURES]
 Add support for Starlark and Pytest filetypes.
 
+Add support for Terraform. Thanks, Thiago Perrotta. (GH #377)
+
 [FIXES]
 The ack-standalone that gets built, and is what's available for download at
 https://beyondgrep.com, now puts each of the modules it pulls in into its

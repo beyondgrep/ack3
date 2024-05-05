@@ -491,6 +491,10 @@ sub _options_block {
 # https://www.tcl.tk/
 --type-add=tcl:ext:tcl,itcl,itk
 
+# Terraform
+# https://github.com/hashicorp/terraform
+--type-add=terraform=.tf,.tfvars
+
 # TeX & LaTeX
 # https://www.latex-project.org/
 --type-add=tex:ext:tex,cls,sty
