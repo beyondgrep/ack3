@@ -9,34 +9,23 @@ on:
   pull_request:
 
 jobs:
-  ubuntu:
-    env:
-      PERL_USE_UNSAFE_INC: 0
-      AUTHOR_TESTING: 1
-      AUTOMATED_TESTING: 1
-      RELEASE_TESTING: 1
-
+  # Builds a list of Perl versions to work with.
+  perl-versions:
     runs-on: ubuntu-latest
-
+    name: List Perl versions
+    outputs:
+      perl-versions: ${{ steps.action.outputs.perl-versions }}
     steps:
-      - uses: actions/checkout@v2
-      - name: perl -V
-        run: perl -V
-      - name: Install perl-doc
-        run: sudo apt-get install perl-doc
-      - name: Install dependencies
-        uses: perl-actions/install-with-cpanm@v1
+      - id: action
+        uses: perl-actions/perl-versions@v1
         with:
-          cpanfile: "cpanfile"
-      - name: Makefile.PL
-        run: perl -I$(pwd) Makefile.PL
-      - name: make test
-        run: make test
+          since-perl: v5.10
+          with-devel: true
 
   linux:
-    name: "linux ${{ matrix.perl-version }}"
-    needs: [ubuntu]
     runs-on: ubuntu-latest
+    name: "Perl ${{ matrix.perl-version }}"
+    needs: [perl-versions]
 
     env:
       PERL_USE_UNSAFE_INC: 0
@@ -46,42 +35,27 @@ jobs:
       PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
 
     strategy:
+      fail-fast: false
       matrix:
-        perl-version:
-          - "latest"
-          - "5.36"
-          - "5.34"
-          - "5.32"
-          - "5.30"
-          - "5.28"
-          - "5.26"
-          - "5.24"
-          - "5.22"
-          - "5.20"
-          - "5.18"
-          - "5.16"
-          - "5.14"
-          - "5.12"
-          - "5.10"
+        perl-version: ${{ fromJson (needs.perl-versions.outputs.perl-versions) }}
 
-    container:
-      image: perl:${{ matrix.perl-version }}
+    container: perldocker/perl-tester:${{ matrix.perl-version }}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: perl -V
-        run: perl -V
-      - name: Install Dependencies
+      - uses: actions/checkout@v4
+      - run: perl -V
+      - name: Install dependencies
         uses: perl-actions/install-with-cpanm@v1
         with:
-          sudo: false
           cpanfile: "cpanfile"
+          sudo: false
+      - run: perl -MFile::Next -e1
       - run: perl Makefile.PL
       - run: make
       - run: make test
 
   macOS:
-    needs: [ubuntu, linux]
+    needs: [perl-versions]
     runs-on: macOS-latest
 
     env:
@@ -92,40 +66,39 @@ jobs:
       PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Perl
-        run: brew install perl
-      - name: perl -V
-        run: perl -V
-      - name: Install Dependencies
+      - uses: actions/checkout@v4
+      - run: brew install perl
+      - run: perl -V
+      - name: Install dependencies
         uses: perl-actions/install-with-cpanm@v1
         with:
-          sudo: false
           cpanfile: "cpanfile"
+          sudo: false
+      - run: perl -MFile::Next -e1
       - run: perl Makefile.PL
       - run: make
       - run: make test
 
   windows:
-    needs: [ubuntu, linux]
     runs-on: windows-latest
+    name: "windows"
+    needs: [perl-versions]
+    env:
+      PERL_USE_UNSAFE_INC: 0
+      AUTHOR_TESTING: 1
+      AUTOMATED_TESTING: 1
+      RELEASE_TESTING: 1
+      PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Perl
-        run: |
-          choco install strawberryperl
-          echo 'PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin' >> $GITHUB_ENV
-      - name: perl -V
-        run: perl -V
-      - name: Install Dependencies
+      - uses: actions/checkout@v4
+      - run: perl -V
+      - name: Install dependencies
         uses: perl-actions/install-with-cpanm@v1
         with:
-          sudo: false
           cpanfile: "cpanfile"
-      - name: perl Makefile.PL
-        run: perl Makefile.PL
-      - name: make
-        run: make
-      - name: Run Tests
-        run: make test
+          sudo: false
+      - run: perl -MFile::Next -e1
+      - run: perl Makefile.PL
+      - run: make
+      - run: make test
