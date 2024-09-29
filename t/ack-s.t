@@ -27,10 +27,7 @@ WITH_S: {
     is_empty_array( $stderr, 'Nothing in stderr' );
 }
 
-# Test on restricted directories.
-SKIP: {
-    skip 'Fails under Travis.  See GH#200.', 1 if $ENV{TRAVIS};
-
+RESTRICTED_DIRECTORIES: {
     my @args = qw( hello -s );
 
     my $dir = File::Temp->newdir;
