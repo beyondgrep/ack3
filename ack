@@ -46,7 +46,6 @@ our $opt_passthru;
 our $opt_p;
 our $opt_range_start;
 our $opt_range_end;
-our $opt_range_invert;
 our $opt_regex;
 our $opt_show_filename;
 our $opt_show_types;
@@ -152,7 +151,6 @@ MAIN: {
     $opt_passthru       = $opt->{passthru};
     $opt_range_start    = $opt->{range_start};
     $opt_range_end      = $opt->{range_end};
-    $opt_range_invert   = $opt->{range_invert};
     $opt_regex          = $opt->{regex};
     $opt_show_filename  = $opt->{show_filename};
     $opt_show_types     = $opt->{show_types};
