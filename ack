@@ -724,12 +724,12 @@ sub print_matches_in_file {
             chomp;
             $match_colno = undef;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
             my $does_match;
             if ( $in_range ) {
                 $does_match = /$search_re/o;
-                if ( $does_match && $search_not_re ) {
+                if ( $does_match && defined($search_not_re) ) {
                     local @-;
                     $does_match = !/$search_not_re/o;
                 }
@@ -774,7 +774,7 @@ sub print_matches_in_file {
                 }
             }
 
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
 
             last if ($max_count == 0) && ($after_context_pending == 0);
         }
@@ -787,11 +787,11 @@ sub print_matches_in_file {
         while ( <$fh> ) {
             chomp;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
             $match_colno = undef;
             my $does_match = /$search_re/o;
-            if ( $does_match && $search_not_re ) {
+            if ( $does_match && defined($search_not_re) ) {
                 local @-;
                 $does_match = !/$search_not_re/o;
             }
@@ -818,7 +818,7 @@ sub print_matches_in_file {
                 $has_printed_from_this_file = 1;
             }
 
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
 
             last if $max_count == 0;
         }
@@ -832,11 +832,11 @@ sub print_matches_in_file {
         while ( <$fh> ) {
             chomp;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
             if ( $in_range ) {
                 my $does_match = /$search_re/o;
-                if ( $does_match && $search_not_re ) {
+                if ( $does_match && defined($search_not_re) ) {
                     # local @-; No need to localize this because we don't use @-.
                     $does_match = !/$search_not_re/o;
                 }
@@ -856,7 +856,7 @@ sub print_matches_in_file {
                 }
             }
 
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
 
             last if $max_count == 0;
         }
@@ -870,7 +870,7 @@ sub print_matches_in_file {
         while ( <$fh> ) {
             chomp;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && $opt_range_start && /$opt_range_start/o );
+            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
             if ( $in_range ) {
                 $match_colno = undef;
@@ -910,7 +910,7 @@ sub print_matches_in_file {
                 }
             }
 
-            $in_range = 0 if ( $using_ranges && $in_range && $opt_range_end && /$opt_range_end/o );
+            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
 
             last if $max_count == 0;
         }
