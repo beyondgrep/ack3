@@ -795,10 +795,8 @@ sub print_matches_in_file {
                 local @-;
                 $does_match = !/$search_not_re/o;
             }
-            if ( $in_range && ($opt_v xor $does_match) ) {
-                if ( !$opt_v ) {
-                    $match_colno = $-[0] + 1;
-                }
+            if ( $in_range && $does_match ) {
+                $match_colno = $-[0] + 1;
                 if ( !$has_printed_from_this_file ) {
                     if ( $opt_break && $has_printed_from_any_file ) {
                         App::Ack::print_blank_line();
