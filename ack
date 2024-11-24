@@ -873,7 +873,7 @@ sub print_matches_in_file {
             if ( $in_range ) {
                 $match_colno = undef;
                 my $is_match = /$search_re/o;
-                if ( $is_match && $search_not_re ) {
+                if ( $is_match && defined($search_not_re) ) {
                     local @-;
                     $is_match = !/$search_not_re/o;
                 }
@@ -1108,10 +1108,10 @@ sub count_matches_in_file {
         if ( $using_ranges ) {
             while ( <$fh> ) {
                 chomp;
-                $in_range = 1 if ( !$in_range && $opt_range_start && /$opt_range_start/o );
+                $in_range = 1 if ( !$in_range && defined($opt_range_start) && /$opt_range_start/o );
                 if ( $in_range ) {
                     my $is_match = /$search_re/o;
-                    if ( $is_match && $search_not_re ) {
+                    if ( $is_match && defined($search_not_re) ) {
                         $is_match = !/$search_not_re/o;
                     }
                     if ( $is_match xor $opt_v ) {
@@ -1119,14 +1119,14 @@ sub count_matches_in_file {
                         last if $bail;
                     }
                 }
-                $in_range = 0 if ( $in_range && $opt_range_end && /$opt_range_end/o );
+                $in_range = 0 if ( $in_range && defined($opt_range_end) && /$opt_range_end/o );
             }
         }
         else {
             while ( <$fh> ) {
                 chomp;
                 my $is_match = /$search_re/o;
-                if ( $is_match && $search_not_re ) {
+                if ( $is_match && defined($search_not_re) ) {
                     $is_match = !/$search_not_re/o;
                 }
                 if ( $is_match xor $opt_v ) {
