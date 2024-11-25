@@ -229,10 +229,6 @@ MAIN: {
             $stats{scan_re} = $scan_re;
             $stats{search_not_re} = $search_not_re;
         }
-        # XXX What is this checking for?
-        if ( $search_re && $search_re =~ /\n/ ) {
-            App::Ack::exit_from_ack( 0 );
-        }
         my @start;
         if ( not defined $opt->{files_from} ) {
             @start = @ARGV;
@@ -399,6 +395,7 @@ sub _compile_descend_filter {
     };
 }
 
+
 sub _compile_file_filter {
     my ( $opt, $start ) = @_;
 
@@ -505,7 +502,7 @@ sub _compile_file_filter {
             $match_found = 0;
         }
         return $match_found;
-    };
+    };  # End of compiled sub
 }
 
 
@@ -529,6 +526,7 @@ sub get_file_id {
         }
     }
 }
+
 
 # Returns a regex object based on a string and command-line options.
 # Dies when the regex $str is undefined (i.e. not given on command line).
