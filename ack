@@ -710,39 +710,179 @@ sub print_matches_in_file {
 
     # Check for context before the main loop, so we don't pay for it if we don't need it.
     if ( $is_tracking_context ) {
-        local $_ = undef;
+        $nmatches = pmif_context( $fh, $filename, $display_filename, $max_count );
+    }
+    elsif ( $opt_passthru ) {
+        $nmatches = pmif_passthru( $fh, $filename, $display_filename, $max_count );
+    }
+    elsif ( $opt_v ) {
+        $nmatches = pmif_opt_v( $fh, $filename, $display_filename, $max_count );
+    }
+    else {
+        $nmatches = pmif_normal( $fh, $filename, $display_filename, $max_count );
+    }
 
-        $after_context_pending = 0;
+    return $nmatches;
+}
 
-        my $in_range = range_setup();
 
-        while ( <$fh> ) {
-            chomp;
-            $match_colno = undef;
+sub pmif_context {
+    my $fh = shift;
+    my $filename = shift;
+    my $display_filename = shift;
+    my $max_count = shift;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+    my $in_range = range_setup();
+    my $has_printed_from_this_file = 0;
+    my $nmatches = 0;
 
-            my $does_match;
-            if ( $in_range ) {
-                $does_match = /$search_re/o;
-                if ( $does_match && defined($search_not_re) ) {
-                    local @-;
-                    $does_match = !/$search_not_re/o;
-                }
-                if ( $opt_v ) {
-                    $does_match = !$does_match;
-                }
-                else {
-                    if ( $does_match ) {
-                        # @- = @LAST_MATCH_START
-                        $match_colno = $-[0] + 1;
-                    }
+    $after_context_pending = 0;
+    local $_ = undef;
+
+    while ( <$fh> ) {
+        chomp;
+        $match_colno = undef;
+
+        $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+
+        my $does_match;
+        if ( $in_range ) {
+            $does_match = /$search_re/o;
+            if ( $does_match && defined($search_not_re) ) {
+                local @-;
+                $does_match = !/$search_not_re/o;
+            }
+            if ( $opt_v ) {
+                $does_match = !$does_match;
+            }
+            else {
+                if ( $does_match ) {
+                    # @- = @LAST_MATCH_START
+                    $match_colno = $-[0] + 1;
                 }
             }
+        }
 
-            if ( $does_match && $max_count ) {
+        if ( $does_match && $max_count ) {
+            if ( !$has_printed_from_this_file ) {
+                $stats{filematches}++;
+                if ( $opt_break && $has_printed_from_any_file ) {
+                    App::Ack::print_blank_line();
+                }
+                if ( $opt_show_filename && $opt_heading ) {
+                    App::Ack::say( $display_filename );
+                }
+            }
+            print_line_with_context( $filename, $_, $. );
+            $has_printed_from_this_file = 1;
+            $stats{linematches}++;
+            $nmatches++;
+            $max_count--;
+        }
+        else {
+            if ( $after_context_pending ) {
+                # Disable $opt_column since there are no matches in the context lines.
+                local $opt_column = 0;
+                print_line_with_options( $filename, $_, $., '-' );
+                --$after_context_pending;
+            }
+            elsif ( $n_before_ctx_lines ) {
+                # Save line for "before" context.
+                $before_context_buf[$before_context_pos] = $_;
+                $before_context_pos = ($before_context_pos+1) % $n_before_ctx_lines;
+            }
+        }
+
+        $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
+
+        last if ($max_count == 0) && ($after_context_pending == 0);
+    }
+
+    return $nmatches;
+}
+
+
+sub pmif_passthru {
+    my $fh = shift;
+    my $filename = shift;
+    my $display_filename = shift;
+    my $max_count = shift;
+
+    my $in_range = range_setup();
+    my $has_printed_from_this_file = 0;
+    my $nmatches = 0;
+
+    local $_ = undef;
+
+    while ( <$fh> ) {
+        chomp;
+
+        $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+
+        $match_colno = undef;
+        my $does_match = /$search_re/o;
+        if ( $does_match && defined($search_not_re) ) {
+            local @-;
+            $does_match = !/$search_not_re/o;
+        }
+        if ( $in_range && $does_match ) {
+            $match_colno = $-[0] + 1;
+            if ( !$has_printed_from_this_file ) {
+                if ( $opt_break && $has_printed_from_any_file ) {
+                    App::Ack::print_blank_line();
+                }
+                if ( $opt_show_filename && $opt_heading ) {
+                    App::Ack::say( $display_filename );
+                }
+            }
+            print_line_with_options( $filename, $_, $., ':' );
+            $has_printed_from_this_file = 1;
+            $nmatches++;
+            $max_count--;
+        }
+        else {
+            if ( $opt_break && !$has_printed_from_this_file && $has_printed_from_any_file ) {
+                App::Ack::print_blank_line();
+            }
+            print_line_with_options( $filename, $_, $., '-', 1 );
+            $has_printed_from_this_file = 1;
+        }
+
+        $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
+
+        last if $max_count == 0;
+    }
+
+    return $nmatches;
+}
+
+
+sub pmif_opt_v {
+    my $fh = shift;
+    my $filename = shift;
+    my $display_filename = shift;
+    my $max_count = shift;
+
+    my $in_range = range_setup();
+    my $has_printed_from_this_file = 0;
+    my $nmatches = 0;
+
+    $match_colno = undef;
+    local $_ = undef;
+
+    while ( <$fh> ) {
+        chomp;
+
+        $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+
+        if ( $in_range ) {
+            my $does_match = /$search_re/o;
+            if ( $does_match && defined($search_not_re) ) {
+                # local @-; No need to localize this because we don't use @-.
+                $does_match = !/$search_not_re/o;
+            }
+            if ( !$does_match ) {
                 if ( !$has_printed_from_this_file ) {
-                    $stats{filematches}++;
                     if ( $opt_break && $has_printed_from_any_file ) {
                         App::Ack::print_blank_line();
                     }
@@ -752,48 +892,49 @@ sub print_matches_in_file {
                 }
                 print_line_with_context( $filename, $_, $. );
                 $has_printed_from_this_file = 1;
-                $stats{linematches}++;
                 $nmatches++;
                 $max_count--;
             }
-            else {
-                if ( $after_context_pending ) {
-                    # Disable $opt_column since there are no matches in the context lines.
-                    local $opt_column = 0;
-                    print_line_with_options( $filename, $_, $., '-' );
-                    --$after_context_pending;
-                }
-                elsif ( $n_before_ctx_lines ) {
-                    # Save line for "before" context.
-                    $before_context_buf[$before_context_pos] = $_;
-                    $before_context_pos = ($before_context_pos+1) % $n_before_ctx_lines;
-                }
-            }
-
-            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
-
-            last if ($max_count == 0) && ($after_context_pending == 0);
         }
+
+        $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
+
+        last if $max_count == 0;
     }
-    elsif ( $opt_passthru ) {
-        local $_ = undef;
 
-        my $in_range = range_setup();
+    return $nmatches;
+}
 
-        while ( <$fh> ) {
-            chomp;
 
-            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+sub pmif_normal {
+    my $fh = shift;
+    my $filename = shift;
+    my $display_filename = shift;
+    my $max_count = shift;
 
+    my $in_range = range_setup();
+    my $has_printed_from_this_file = 0;
+    my $nmatches = 0;
+
+    my $last_match_lineno;
+    local $_ = undef;
+
+    while ( <$fh> ) {
+        chomp;
+
+        $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
+
+        if ( $in_range ) {
             $match_colno = undef;
-            my $does_match = /$search_re/o;
-            if ( $does_match && defined($search_not_re) ) {
+            my $is_match = /$search_re/o;
+            if ( $is_match && defined($search_not_re) ) {
                 local @-;
-                $does_match = !/$search_not_re/o;
+                $is_match = !/$search_not_re/o;
             }
-            if ( $in_range && $does_match ) {
+            if ( $is_match ) {
                 $match_colno = $-[0] + 1;
                 if ( !$has_printed_from_this_file ) {
+                    $stats{filematches}++;
                     if ( $opt_break && $has_printed_from_any_file ) {
                         App::Ack::print_blank_line();
                     }
@@ -801,115 +942,29 @@ sub print_matches_in_file {
                         App::Ack::say( $display_filename );
                     }
                 }
+                if ( $opt_p ) {
+                    if ( $last_match_lineno ) {
+                        if ( $. > $last_match_lineno + $opt_p ) {
+                            App::Ack::print_blank_line();
+                        }
+                    }
+                    elsif ( !$opt_break && $has_printed_from_any_file ) {
+                        App::Ack::print_blank_line();
+                    }
+                }
+                s/[\r\n]+$//;
                 print_line_with_options( $filename, $_, $., ':' );
                 $has_printed_from_this_file = 1;
                 $nmatches++;
+                $stats{linematches}++;
                 $max_count--;
+                $last_match_lineno = $.;
             }
-            else {
-                if ( $opt_break && !$has_printed_from_this_file && $has_printed_from_any_file ) {
-                    App::Ack::print_blank_line();
-                }
-                print_line_with_options( $filename, $_, $., '-', 1 );
-                $has_printed_from_this_file = 1;
-            }
-
-            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
-
-            last if $max_count == 0;
         }
-    }
-    elsif ( $opt_v ) {
-        local $_ = undef;
 
-        $match_colno = undef;
-        my $in_range = range_setup();
+        $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
 
-        while ( <$fh> ) {
-            chomp;
-
-            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
-
-            if ( $in_range ) {
-                my $does_match = /$search_re/o;
-                if ( $does_match && defined($search_not_re) ) {
-                    # local @-; No need to localize this because we don't use @-.
-                    $does_match = !/$search_not_re/o;
-                }
-                if ( !$does_match ) {
-                    if ( !$has_printed_from_this_file ) {
-                        if ( $opt_break && $has_printed_from_any_file ) {
-                            App::Ack::print_blank_line();
-                        }
-                        if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::say( $display_filename );
-                        }
-                    }
-                    print_line_with_context( $filename, $_, $. );
-                    $has_printed_from_this_file = 1;
-                    $nmatches++;
-                    $max_count--;
-                }
-            }
-
-            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
-
-            last if $max_count == 0;
-        }
-    }
-    else {  # Normal search: No context, no -v, no --passthru
-        local $_ = undef;
-
-        my $last_match_lineno;
-        my $in_range = range_setup();
-
-        while ( <$fh> ) {
-            chomp;
-
-            $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
-
-            if ( $in_range ) {
-                $match_colno = undef;
-                my $is_match = /$search_re/o;
-                if ( $is_match && defined($search_not_re) ) {
-                    local @-;
-                    $is_match = !/$search_not_re/o;
-                }
-                if ( $is_match ) {
-                    $match_colno = $-[0] + 1;
-                    if ( !$has_printed_from_this_file ) {
-                        $stats{filematches}++;
-                        if ( $opt_break && $has_printed_from_any_file ) {
-                            App::Ack::print_blank_line();
-                        }
-                        if ( $opt_show_filename && $opt_heading ) {
-                            App::Ack::say( $display_filename );
-                        }
-                    }
-                    if ( $opt_p ) {
-                        if ( $last_match_lineno ) {
-                            if ( $. > $last_match_lineno + $opt_p ) {
-                                App::Ack::print_blank_line();
-                            }
-                        }
-                        elsif ( !$opt_break && $has_printed_from_any_file ) {
-                            App::Ack::print_blank_line();
-                        }
-                    }
-                    s/[\r\n]+$//;
-                    print_line_with_options( $filename, $_, $., ':' );
-                    $has_printed_from_this_file = 1;
-                    $nmatches++;
-                    $stats{linematches}++;
-                    $max_count--;
-                    $last_match_lineno = $.;
-                }
-            }
-
-            $in_range = 0 if ( $using_ranges && $in_range && defined($opt_range_end) && /$opt_range_end/o );
-
-            last if $max_count == 0;
-        }
+        last if $max_count == 0;
     }
 
     return $nmatches;
