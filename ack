@@ -689,11 +689,7 @@ sub file_loop_normal {
 sub print_matches_in_file {
     my $file = shift;
 
-    my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
-    my $nmatches  = 0;
     my $filename  = $file->name;
-
-    my $has_printed_from_this_file = 0;
 
     my $fh = $file->open;
     if ( !$fh ) {
@@ -709,6 +705,8 @@ sub print_matches_in_file {
     }
 
     # Check for context before the main loop, so we don't pay for it if we don't need it.
+    my $nmatches;
+    my $max_count = $opt_m || -1;   # Go negative for no limit so it can never reduce to 0.
     if ( $is_tracking_context ) {
         $nmatches = pmif_context( $fh, $filename, $display_filename, $max_count );
     }
