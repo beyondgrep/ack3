@@ -150,11 +150,14 @@ MY	Makefile.PL	/^package MY;$/;"	p
 MY	Makefile.PL	/^sub MY::postamble {$/;"	s
 MY	Makefile.PL	/^sub MY::test {$/;"	s
 NEEDS_LINE_SCAN	t/needs-line-scan.t	/^NEEDS_LINE_SCAN: {$/;"	l
+NEVERMORE_NOT_QUOTH	t/boolean.t	/^NEVERMORE_NOT_QUOTH: {$/;"	l
+NEVERMORE_NOT_QUOTH_NOT_THE	t/boolean.t	/^NEVERMORE_NOT_QUOTH_NOT_THE: {$/;"	l
 NOIGNORE_DIR_RELATIVE_PATHS	t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$/;"	l
 NOIGNORE_SUBDIR_WINS	t/ack-ignore-dir.t	/^NOIGNORE_SUBDIR_WINS: {$/;"	l
 NORMAL_CASE	t/ack-v.t	/^NORMAL_CASE: {$/;"	l
 NORMAL_COLOR	t/ack-color.t	/^NORMAL_COLOR: {$/;"	l
 NOT	t/ack-c.t	/^NOT: {$/;"	l
+NO_BOOLEANS	t/boolean.t	/^NO_BOOLEANS: {$/;"	l
 NO_GROUPING	t/ack-group.t	/^NO_GROUPING: {$/;"	l
 NO_O	t/ack-o.t	/^NO_O: {$/;"	l
 NO_PAGER	t/ack-pager.t	/^NO_PAGER: {$/;"	l
@@ -180,6 +183,7 @@ POSTMATCH	t/ack-output.t	/^POSTMATCH: {$/;"	l
 POSTMATCH_MULTIPLE_FILES	t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
 PREMATCH	t/ack-output.t	/^PREMATCH: {$/;"	l
 PREMATCH_MULTIPLE_FILES	t/ack-output.t	/^PREMATCH_MULTIPLE_FILES: {$/;"	l
+QUOTH_NOT_NEVERMORE	t/boolean.t	/^QUOTH_NOT_NEVERMORE: {$/;"	l
 REQUIRE_F_OR_G	t/ack-show-types.t	/^REQUIRE_F_OR_G: {$/;"	l
 RESTRICTED_DIRECTORIES	t/ack-s.t	/^RESTRICTED_DIRECTORIES: {$/;"	l
 RUBY_AND_RAKE	t/ack-show-types.t	/^RUBY_AND_RAKE: {$/;"	l
@@ -220,7 +224,6 @@ WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 _big_split	t/lowercase.t	/^sub _big_split {$/;"	s
-_build_search_not_re	ack	/^sub _build_search_not_re {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutex_options {$/;"	s
@@ -280,7 +283,8 @@ bar	t/range/rangefile.pm	/^sub bar {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
-build_regex	ack	/^sub build_regex {$/;"	s
+build_regex	lib/App/Ack.pm	/^sub build_regex {$/;"	s
+build_search_not_re	lib/App/Ack.pm	/^sub build_search_not_re {$/;"	s
 caret_X	t/Util.pm	/^sub caret_X {$/;"	s
 cathy	lib/App/Ack.pm	/^sub cathy {$/;"	s
 check_for_option_in_man_output	xt/man.t	/^sub check_for_option_in_man_output {$/;"	s

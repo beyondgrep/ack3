@@ -734,4 +734,116 @@ sub is_lowercase {
 }
 
 
+# Returns a regex object based on a string and command-line options.
+# Dies when the regex $str is undefined (i.e. not given on command line).
+
+sub build_regex {
+    my $str = shift;
+    my $opt = shift;
+
+    defined $str or App::Ack::die( 'No regular expression found.' );
+
+    if ( !$opt->{Q} ) {
+        # Compile the regex to see if it dies or throws warnings.
+        local $SIG{__WARN__} = sub { App::Ack::die @_ };  # Anything that warns becomes a die.
+        my $scratch_regex = eval { qr/$str/ };
+        if ( not $scratch_regex ) {
+            my $err = $@;
+            chomp $err;
+
+            if ( $err =~ m{^(.+?); marked by <-- HERE in m/(.+?) <-- HERE} ) {
+                my ($why, $where) = ($1,$2);
+                my $pointy = ' ' x (6+length($where)) . '^---HERE';
+                App::Ack::die( "Invalid regex '$str'\nRegex: $str\n$pointy $why" );
+            }
+            else {
+                App::Ack::die( "Invalid regex '$str'\n$err" );
+            }
+        }
+    }
+
+    # Check for lowercaseness before we do any modifications.
+    my $regex_is_lc = App::Ack::is_lowercase( $str );
+
+    $str = quotemeta( $str ) if $opt->{Q};
+
+    my $scan_str = $str;
+
+    # Whole words only.
+    if ( $opt->{w} ) {
+        my $ok = 1;
+
+        if ( $str =~ /^\\[wd]/ ) {
+            # Explicit \w is good.
+        }
+        else {
+            # Can start with \w, (, [ or dot.
+            if ( $str !~ /^[\w\(\[\.]/ ) {
+                $ok = 0;
+            }
+        }
+
+        # Can end with \w, }, ), ], +, *, or dot.
+        if ( $str !~ /[\w\}\)\]\+\*\?\.]$/ ) {
+            $ok = 0;
+        }
+        # ... unless it's escaped.
+        elsif ( $str =~ /\\[\}\)\]\+\*\?\.]$/ ) {
+            $ok = 0;
+        }
+
+        if ( !$ok ) {
+            App::Ack::die( '-w will not do the right thing if your regex does not begin and end with a word character.' );
+        }
+
+        if ( $str =~ /^\w+$/ ) {
+            # No need for fancy regex if it's a simple word.
+            $str = sprintf( '\b(?:%s)\b', $str );
+        }
+        else {
+            $str = sprintf( '(?:^|\b|\s)\K(?:%s)(?=\s|\b|$)', $str );
+        }
+    }
+
+    if ( $opt->{i} || ($opt->{S} && $regex_is_lc) ) {
+        $_ = "(?i)$_" for ( $str, $scan_str );
+    }
+
+    my $scan_regex = undef;
+    my $regex = eval { qr/$str/ };
+    if ( $regex ) {
+        if ( $scan_str !~ /\$/ ) {
+            # No line_scan is possible if there's a $ in the regex.
+            $scan_regex = eval { qr/$scan_str/m };
+        }
+    }
+    else {
+        my $err = $@;
+        chomp $err;
+        App::Ack::die( "Invalid regex '$str':\n  $err" );
+    }
+
+    return ($regex, $scan_regex);
+}
+
+
+sub build_search_not_re {
+    my $opt = shift;
+
+    my @not = @{$opt->{not}};
+
+    if ( @not ) {
+        my @built;
+        for my $re ( @not ) {
+            my ($built,undef) = App::Ack::build_regex( $re, $opt );
+            push( @built, $built );
+        }
+        return join( '|', @built );
+    }
+
+    return;
+}
+
+
+
 1; # End of App::Ack
