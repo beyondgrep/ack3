@@ -743,7 +743,13 @@ sub build_regex {
 
     defined $str or App::Ack::die( 'No regular expression found.' );
 
-    if ( !$opt->{Q} ) {
+    # Check for lowercaseness before we do any modifications.
+    my $regex_is_lc = App::Ack::is_lowercase( $str );
+
+    if ( $opt->{Q} ) {
+        $str = quotemeta( $str );
+    }
+    else {
         # Compile the regex to see if it dies or throws warnings.
         local $SIG{__WARN__} = sub { App::Ack::die @_ };  # Anything that warns becomes a die.
         my $scratch_regex = eval { qr/$str/ };
@@ -761,11 +767,6 @@ sub build_regex {
             }
         }
     }
-
-    # Check for lowercaseness before we do any modifications.
-    my $regex_is_lc = App::Ack::is_lowercase( $str );
-
-    $str = quotemeta( $str ) if $opt->{Q};
 
     my $scan_str = $str;
 
