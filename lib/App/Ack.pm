@@ -751,7 +751,7 @@ sub build_regex {
     }
     else {
         # Compile the regex to see if it dies or throws warnings.
-        local $SIG{__WARN__} = sub { App::Ack::die @_ };  # Anything that warns becomes a die.
+        local $SIG{__WARN__} = sub { CORE::die @_ };  # Anything that warns becomes a die.
         my $scratch_regex = eval { qr/$str/ };
         if ( not $scratch_regex ) {
             my $err = $@;
