@@ -92,7 +92,10 @@ DASH_LC	t/ack-c.t	/^DASH_LC: {$/;"	l
 DASH_LV	t/ack-l.t	/^DASH_LV: {$/;"	l
 DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
 DASH_NOIGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
+DASH_Q	t/build_regex.t	/^DASH_Q: {$/;"	l
 DASH_V	t/ack-1.t	/^DASH_V: {$/;"	l
+DASH_i	t/build_regex.t	/^DASH_i: {$/;"	l
+DASH_w	t/build_regex.t	/^DASH_w: {$/;"	l
 DEFAULT_DIR_EXCLUSIONS	t/ack-f.t	/^DEFAULT_DIR_EXCLUSIONS: {$/;"	l
 DOLLAR_1	t/ack-output.t	/^DOLLAR_1: {$/;"	l
 DOLLAR_UNDERSCORE	t/ack-output.t	/^DOLLAR_UNDERSCORE: {$/;"	l
@@ -179,6 +182,7 @@ PAGER_WITH_OPTS	t/ack-pager.t	/^PAGER_WITH_OPTS: {$/;"	l
 PIPE_INTO_ACK	t/from-stdin.t	/^PIPE_INTO_ACK: {$/;"	l
 PIPE_INTO_DASH_C	t/from-stdin.t	/^PIPE_INTO_DASH_C: {$/;"	l
 PIPE_INTO_DASH_I	t/from-stdin.t	/^PIPE_INTO_DASH_I: {$/;"	l
+PLAIN	t/build_regex.t	/^PLAIN: {$/;"	l
 POSTMATCH	t/ack-output.t	/^POSTMATCH: {$/;"	l
 POSTMATCH_MULTIPLE_FILES	t/ack-output.t	/^POSTMATCH_MULTIPLE_FILES: {$/;"	l
 PREMATCH	t/ack-output.t	/^PREMATCH: {$/;"	l
@@ -192,6 +196,7 @@ SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
 SKIP	t/file-permission.t	/^SKIP: {$/;"	l
+SMARTCASE	t/build_regex.t	/^SMARTCASE: {$/;"	l
 SMART_CASE	t/longopts.t	/^SMART_CASE: {$/;"	l
 SPECIFYING_A_BAK_FILE	t/command-line-files.t	/^SPECIFYING_A_BAK_FILE: {$/;"	l
 STANDARD_GROUPING	t/ack-group.t	/^STANDARD_GROUPING: {$/;"	l
@@ -224,6 +229,7 @@ WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 _big_split	t/lowercase.t	/^sub _big_split {$/;"	s
+_check	t/build_regex.t	/^sub _check {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutex_options {$/;"	s

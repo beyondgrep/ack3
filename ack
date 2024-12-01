@@ -286,9 +286,11 @@ MAIN: {
     close $App::Ack::fh;
 
     App::Ack::exit_from_ack( $nmatches );
-}
+} # End of MAIN
 
-# End of MAIN
+
+exit 0;
+
 
 sub file_loop_fg {
     my $files = shift;

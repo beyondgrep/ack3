@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 4;
+use Test::More tests => 12;
 
 use App::Ack;
 
@@ -15,6 +15,31 @@ PLAIN: {
         '(?-xism:foo)',
         '(?m-xis:foo)',
         'Nuthin fancy'
+    );
+    _check(
+        'foo-bar',
+        {},
+        '(?-xism:foo-bar)',
+        '(?m-xis:foo-bar)',
+        'Not just a plain word'
+    );
+}
+
+
+SMARTCASE: {
+    _check(
+        'foo',
+        { S => 1 },
+        '(?-xism:(?i)foo)',
+        '(?m-xis:(?i)foo)',
+        'Smartcase on a lowercase word'
+    );
+    _check(
+        'Foo',
+        { S => 1 },
+        '(?-xism:Foo)',
+        '(?m-xis:Foo)',
+        'Smartcase on a mixed-case word'
     );
 }
 
@@ -44,6 +69,45 @@ DASH_i: {
         '(?-xism:(?i)NeXT)',
         '(?m-xis:(?i)NeXT)',
         'Simple -i'
+    );
+}
+
+
+DASH_w: {
+    _check(
+        'wookie',
+        { w => 1 },
+        '(?-xism:\b(?:wookie)\b)',
+        '(?m-xis:wookie)',
+        'Simple -w'
+    );
+    _check(
+        'wookie-boogie',
+        { w => 1 },
+        '(?-xism:(?:^|\b|\s)\K(?:wookie-boogie)(?=\s|\b|$))',
+        '(?m-xis:wookie-boogie)',
+        'Not just a single word'
+    );
+    _check(
+        'blah.*',
+        { w => 1 },
+        '(?-xism:(?:^|\b|\s)\K(?:blah.*)(?=\s|\b|$))',
+        '(?m-xis:blah.*)',
+        '-w on something ending with metacharacters'
+    );
+    _check(
+        '[abc]thing',
+        { w => 1 },
+        '(?-xism:(?:^|\b|\s)\K(?:[abc]thing)(?=\s|\b|$))',
+        '(?m-xis:[abc]thing)',
+        '-w on something beginning with a range'
+    );
+    _check(
+        '[abc]thing.+?',
+        { w => 1 },
+        '(?-xism:(?:^|\b|\s)\K(?:[abc]thing.+?)(?=\s|\b|$))',
+        '(?m-xis:[abc]thing.+?)',
+        '-w on something beginning with a range and ending with metacharacters'
     );
 }
 
