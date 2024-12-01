@@ -450,7 +450,7 @@ sub _compile_file_filter {
             else {
                 my @dirs = File::Spec->splitdir($File::Next::dir);
 
-                my $is_ignoring = 0;
+                my $is_ignoring;
 
                 for ( my $i = 0; $i < @dirs; $i++) {
                     my $dir_rsrc = App::Ack::File->new(File::Spec->catfile(@dirs[0 .. $i]));
@@ -550,7 +550,7 @@ my $after_context_pending;
 my $printed_lineno;
 
 my $is_first_match;
-state $has_printed_from_any_file = 0;
+state $has_printed_from_any_file;
 
 
 sub file_loop_normal {
@@ -641,7 +641,7 @@ sub pmif_context {
     my $max_count = shift;
 
     my $in_range = range_setup();
-    my $has_printed_from_this_file = 0;
+    my $has_printed_from_this_file;
     my $nmatches = 0;
 
     $after_context_pending = 0;
@@ -717,7 +717,7 @@ sub pmif_passthru {
     my $max_count = shift;
 
     my $in_range = range_setup();
-    my $has_printed_from_this_file = 0;
+    my $has_printed_from_this_file;
     my $nmatches = 0;
 
     local $_ = undef;
@@ -772,7 +772,7 @@ sub pmif_opt_v {
     my $max_count = shift;
 
     my $in_range = range_setup();
-    my $has_printed_from_this_file = 0;
+    my $has_printed_from_this_file;
     my $nmatches = 0;
 
     $match_colno = undef;
@@ -821,7 +821,7 @@ sub pmif_normal {
     my $max_count = shift;
 
     my $in_range = range_setup();
-    my $has_printed_from_this_file = 0;
+    my $has_printed_from_this_file;
     my $nmatches = 0;
 
     my $last_match_lineno;
