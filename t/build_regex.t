@@ -8,6 +8,10 @@ use Test::More tests => 12;
 use App::Ack;
 
 
+# Note: All of the expected strings have to be in the format before Perl 5.14.
+# The _check() function does the transformation.
+# Old style: (?m-xis:blah.*)
+# New style: (?^m:blah.*)
 PLAIN: {
     _check(
         'foo',
@@ -130,6 +134,16 @@ sub _check {
         $opt->{$_} //= [] for qw( and or not );
 
         my ($match, $scan) = App::Ack::build_regex( $str, $opt );
+
+        if ( "$]" ge '5.014' ) {
+            # Passed in expressions are in Perl 5.10 format. If we are running newer
+            # than that, convert the expected string representations.
+            for my $re ( $exp_match, $exp_scan ) {
+                if ( defined($re) ) {
+                    $re =~ s/^\(\?([xism]*)-[xism]*:/(?^$1:/;
+                }
+            }
+        }
 
         is( $match, $exp_match, 'match matches' );
         is( $scan, $exp_scan, 'scan matches' );
