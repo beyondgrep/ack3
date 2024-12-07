@@ -29,6 +29,8 @@ our @EXPORT = qw(
     is_empty_array
     is_nonempty_array
 
+    regex_eq
+
     first_line_like
     build_ack_invocation
     adjust_executable
@@ -1229,6 +1231,27 @@ sub adjust_executable {
     }
 
     return @cmd;
+}
+
+
+sub regex_eq {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $got = shift;
+    my $exp = shift;
+    my $msg = shift;
+
+    if ( "$]" ge '5.014' ) {
+        # Passed in expressions are in Perl 5.10 format. If we are running newer
+        # than that, convert the expected string representations.
+        for my $re ( $got, $exp ) {
+            if ( defined($re) ) {
+                $re =~ s/^\(\?([xism]*)-[xism]*:/(?^$1:/;
+            }
+        }
+    }
+
+    return is( $got, $exp, $msg );
 }
 
 

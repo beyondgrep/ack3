@@ -7,6 +7,9 @@ use Test::More tests => 12;
 
 use App::Ack;
 
+use lib 't';
+use Util;
+
 
 # Note: All of the expected strings have to be in the format before Perl 5.14.
 # The _check() function does the transformation.
@@ -135,17 +138,7 @@ sub _check {
 
         my ($match, $scan) = App::Ack::build_regex( $str, $opt );
 
-        if ( "$]" ge '5.014' ) {
-            # Passed in expressions are in Perl 5.10 format. If we are running newer
-            # than that, convert the expected string representations.
-            for my $re ( $exp_match, $exp_scan ) {
-                if ( defined($re) ) {
-                    $re =~ s/^\(\?([xism]*)-[xism]*:/(?^$1:/;
-                }
-            }
-        }
-
-        is( $match, $exp_match, 'match matches' );
-        is( $scan, $exp_scan, 'scan matches' );
+        regex_eq( $match, $exp_match, 'match matches' );
+        regex_eq( $scan, $exp_scan, 'scan matches' );
     };
 }
