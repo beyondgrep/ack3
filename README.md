@@ -73,7 +73,7 @@ Please follow the [Code of Conduct](CODE_OF_CONDUCT.md) in all your interactions
 
 # License
 
-Copyright 2005-2023 Andy Lester.
+Copyright 2005-2024 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the

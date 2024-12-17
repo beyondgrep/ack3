@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-our $VERSION = 'v3.7.0'; # Check https://beyondgrep.com/ for updates
+our $VERSION = 'v3.8.0'; # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
 
@@ -2512,7 +2512,7 @@ Andy Lester, C<< <andy at petdance.com> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005-2023 Andy Lester.
+Copyright 2005-2024 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the Artistic License v2.0.
