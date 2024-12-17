@@ -470,10 +470,6 @@ sub _options_block {
 # https://www.iso.org/standard/45498.html
 --type-add=sql:ext:sql,ctl
 
-# Starlark
-# https://github.com/bazelbuild/starlark/
---type-add=starlark:ext:star
-
 # Stylus
 # http://stylus-lang.com/
 --type-add=stylus:ext:styl
