@@ -15,6 +15,7 @@ G_NO_PRINT0: {
         t/text/amontillado.txt
         t/text/bill-of-rights.txt
         t/text/constitution.txt
+        t/text/movies.txt
         t/text/ozymandias.txt
     );
 
@@ -32,6 +33,7 @@ G_PRINT0: {
         t/text/amontillado.txt
         t/text/bill-of-rights.txt
         t/text/constitution.txt
+        t/text/movies.txt
         t/text/ozymandias.txt
     ) ) . "\0"; # string of filenames separated and concluded with null byte
 

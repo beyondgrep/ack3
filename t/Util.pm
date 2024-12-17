@@ -75,6 +75,8 @@ our @EXPORT = qw(
 
     msg
     subtest_name
+
+    permutate
 );
 
 my $orig_wd;
@@ -1252,6 +1254,24 @@ sub regex_eq {
     }
 
     return is( $got, $exp, $msg );
+}
+
+
+# From https://stackoverflow.com/questions/635768/how-can-i-generate-all-permutations-of-an-array-in-perl
+sub permutate {
+    return [@_] if @_ <= 1;
+
+    return map {
+        my ($f, @r) = list_with_x_first($_, @_);
+        map [$f, @$_], permutate(@r);
+    } 0..$#_;
+}
+
+
+sub list_with_x_first {
+    return if @_ == 1;
+    my $i = shift;
+    return @_[$i, 0..$i-1, $i+1..$#_];
 }
 
 

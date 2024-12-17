@@ -55,14 +55,17 @@ our $opt_v;
 # Flag if we need any context tracking.
 our $is_tracking_context;
 
-# The regex that we search for in each file.
-our $search_re;
+# The regex that we use to match each line in the file.
+our $re_match;
+
+# Regex for matching for highlighting in matched lines.
+our $re_hilite;
 
 # The regex that matches for things we want to exclude via the --not option.
-our $search_not_re;
+our $re_not;
 
-# Special /m version of our $search_re.
-our $scan_re;
+# Version of the match regex for checking to see if the file should be scanned line-by-line.
+our $re_scan;
 
 our @special_vars_used_by_opt_output;
 
@@ -206,16 +209,18 @@ MAIN: {
         }
     }
 
+
     # Set up file filters.
     my $files;
     if ( $App::Ack::is_filter_mode && !$opt->{files_from} ) { # probably -x
         $files     = App::Ack::Files->from_stdin();
         $opt_regex //= shift @ARGV;
-        ($search_re, $scan_re) = App::Ack::build_regex( $opt_regex, $opt );
-        $search_not_re = App::Ack::build_search_not_re( $opt );
-        $stats{search_re} = $search_re;
-        $stats{scan_re} = $scan_re;
-        $stats{search_not_re} = $search_not_re;
+        defined $opt_regex or App::Ack::die( 'No regular expression found.' );
+        ($re_match, $re_not, $re_hilite, $re_scan) = App::Ack::build_all_regexes( $opt_regex, $opt );
+        $stats{re_match}  = $re_match;
+        $stats{re_not}    = $re_not;
+        $stats{re_hilite} = $re_hilite;
+        $stats{re_scan}   = $re_scan;
     }
     else {
         if ( $opt_f ) {
@@ -223,11 +228,12 @@ MAIN: {
         }
         else {
             $opt_regex //= shift @ARGV;
-            ($search_re, $scan_re) = App::Ack::build_regex( $opt_regex, $opt );
-            $search_not_re = App::Ack::build_search_not_re( $opt );
-            $stats{search_re} = $search_re;
-            $stats{scan_re} = $scan_re;
-            $stats{search_not_re} = $search_not_re;
+            defined $opt_regex or App::Ack::die( 'No regular expression found.' );
+            ($re_match, $re_not, $re_hilite, $re_scan) = App::Ack::build_all_regexes( $opt_regex, $opt );
+            $stats{re_match}  = $re_match;
+            $stats{re_not}    = $re_not;
+            $stats{re_hilite} = $re_hilite;
+            $stats{re_scan}   = $re_scan;
         }
         my @start;
         if ( not defined $opt->{files_from} ) {
@@ -275,7 +281,7 @@ MAIN: {
 
     if ( $opt_debug ) {
         require List::Util;
-        my @stats = qw( search_re scan_re search_not_re prescans linescans filematches linematches );
+        my @stats = qw( re_match re_scan re_not prescans linescans filematches linematches );
         my $width = List::Util::max( map { length } @stats );
 
         for my $stat ( @stats ) {
@@ -429,7 +435,7 @@ sub _compile_file_filter {
 
     return sub {
         if ( $opt_g ) {
-            if ( $File::Next::name =~ /$search_re/o ) {
+            if ( $File::Next::name =~ /$re_match/o ) {
                 return 0 if $opt_v;
             }
             else {
@@ -578,7 +584,7 @@ sub file_loop_normal {
         my $needs_line_scan = 1;
         if ( !$opt_passthru && !$opt_v ) {
             $stats{prescans}++;
-            if ( $file->may_be_present( $scan_re ) ) {
+            if ( $file->may_be_present( $re_scan ) ) {
                 $file->reset();
             }
             else {
@@ -655,10 +661,10 @@ sub pmif_context {
 
         my $does_match;
         if ( $in_range ) {
-            $does_match = /$search_re/o;
-            if ( $does_match && defined($search_not_re) ) {
+            $does_match = /$re_match/o;
+            if ( $does_match && defined($re_not) ) {
                 local @-;
-                $does_match = !/$search_not_re/o;
+                $does_match = !/$re_not/o;
             }
             if ( $opt_v ) {
                 $does_match = !$does_match;
@@ -728,10 +734,10 @@ sub pmif_passthru {
         $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
         $match_colno = undef;
-        my $does_match = /$search_re/o;
-        if ( $does_match && defined($search_not_re) ) {
+        my $does_match = /$re_match/o;
+        if ( $does_match && defined($re_not) ) {
             local @-;
-            $does_match = !/$search_not_re/o;
+            $does_match = !/$re_not/o;
         }
         if ( $in_range && $does_match ) {
             $match_colno = $-[0] + 1;
@@ -784,10 +790,10 @@ sub pmif_opt_v {
         $in_range = 1 if ( $using_ranges && !$in_range && defined($opt_range_start) && /$opt_range_start/o );
 
         if ( $in_range ) {
-            my $does_match = /$search_re/o;
-            if ( $does_match && defined($search_not_re) ) {
+            my $does_match = /$re_match/o;
+            if ( $does_match && defined($re_not) ) {
                 # local @-; No need to localize this because we don't use @-.
-                $does_match = !/$search_not_re/o;
+                $does_match = !/$re_not/o;
             }
             if ( !$does_match ) {
                 if ( !$has_printed_from_this_file ) {
@@ -834,10 +840,10 @@ sub pmif_normal {
 
         if ( $in_range ) {
             $match_colno = undef;
-            my $is_match = /$search_re/o;
-            if ( $is_match && defined($search_not_re) ) {
+            my $is_match = /$re_match/o;
+            if ( $is_match && defined($re_not) ) {
                 local @-;
-                $is_match = !/$search_not_re/o;
+                $is_match = !/$re_not/o;
             }
             if ( $is_match ) {
                 $match_colno = $-[0] + 1;
@@ -905,7 +911,7 @@ sub print_line_with_options {
     }
 
     if ( $opt_output ) {
-        while ( $line =~ /$search_re/og ) {
+        while ( $line =~ /$re_match/og ) {
             my $output = $opt_output;
             if ( @special_vars_used_by_opt_output ) {
                 no strict;
@@ -927,7 +933,7 @@ sub print_line_with_options {
 
         # We have to do underlining before any highlighting because highlighting modifies string length.
         if ( $opt_underline && !$skip_coloring ) {
-            while ( $line =~ /$search_re/og ) {
+            while ( $line =~ /$re_hilite/og ) {
                 my $match_start = $-[0] // next;
                 my $match_end = $+[0];
                 my $match_length = $match_end - $match_start;
@@ -942,7 +948,7 @@ sub print_line_with_options {
         if ( $opt_color && !$skip_coloring ) {
             my $highlighted = 0; # If highlighted, need to escape afterwards.
 
-            while ( $line =~ /$search_re/og ) {
+            while ( $line =~ /$re_hilite/og ) {
                 my $match_start = $-[0] // next;
                 my $match_end = $+[0];
                 my $match_length = $match_end - $match_start;
@@ -1054,7 +1060,7 @@ sub count_matches_in_file {
     }
     else {
         if ( !$opt_v ) {
-            if ( !$file->may_be_present( $scan_re ) ) {
+            if ( !$file->may_be_present( $re_scan ) ) {
                 $do_scan = 0;
             }
         }
@@ -1071,9 +1077,9 @@ sub count_matches_in_file {
                 chomp;
                 $in_range = 1 if ( !$in_range && defined($opt_range_start) && /$opt_range_start/o );
                 if ( $in_range ) {
-                    my $is_match = /$search_re/o;
-                    if ( $is_match && defined($search_not_re) ) {
-                        $is_match = !/$search_not_re/o;
+                    my $is_match = /$re_match/o;
+                    if ( $is_match && defined($re_not) ) {
+                        $is_match = !/$re_not/o;
                     }
                     if ( $is_match xor $opt_v ) {
                         ++$nmatches;
@@ -1086,9 +1092,9 @@ sub count_matches_in_file {
         else {
             while ( <$fh> ) {
                 chomp;
-                my $is_match = /$search_re/o;
-                if ( $is_match && defined($search_not_re) ) {
-                    $is_match = !/$search_not_re/o;
+                my $is_match = /$re_match/o;
+                if ( $is_match && defined($re_not) ) {
+                    $is_match = !/$re_not/o;
                 }
                 if ( $is_match xor $opt_v ) {
                     ++$nmatches;
@@ -1292,6 +1298,24 @@ matches for lines within the range.
 =item B<--ackrc>
 
 Specifies an ackrc file to load after all others; see L</"ACKRC LOCATION SEMANTICS">.
+
+=item B<--and=PATTERN>
+
+Specifies a I<PATTERN> that MUST ALSO be found on a given line for a match to
+occur. This option can be repeated.
+
+If you want to find all the lines with both "dogs" or "cats", use:
+
+    ack dogs --and cats
+
+Note that the options that affect "dogs" also affect "cats", so if you have
+
+    ack -i -w dogs --and cats
+
+then the search for both "dogs" and "cats" will be case-insensitive and be
+word-limited.
+
+See also C<--or> and C<--not>.
 
 =item B<-A I<NUM>>, B<--after-context=I<NUM>>
 
@@ -1547,13 +1571,33 @@ if you have
 
     ack -i -w dogs --not cats
 
-the the search for both "dogs" and "cats" will be case-insensitive and be
+then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
+
+See also C<--and> and C<--or>.
 
 =item B<-o>
 
 Show only the part of each line matching PATTERN (turns off text
 highlighting).  This is exactly the same as C<--output=$&>.
+
+=item B<--or=PATTERN>
+
+Specifies a I<PATTERN> that MAY be found on a given line for a match to
+occur. This option can be repeated.
+
+If you want to find all the lines with "dogs" or "cats", use:
+
+    ack dogs --or cats
+
+Note that the options that affect "dogs" also affect "cats", so if you have
+
+    ack -i -w dogs --or cats
+
+then the search for both "dogs" and "cats" will be case-insensitive and be
+word-limited.
+
+See also C<--and> and C<--not>.
 
 =item B<--output=I<expr>>
 
@@ -1585,7 +1629,7 @@ The number of the line in the file.
 
 =item C<$&>, C<$`> and C<$'>
 
-C<$&> is the the string matched by the pattern, C<$`> is what
+C<$&> is the string matched by the pattern, C<$`> is what
 precedes the match, and C<$'> is what follows it.  If the pattern
 is C<gra(ph|nd)> and the string is "lexicographic", then C<$&> is
 "graph", C<$`> is "lexico" and C<$'> is "ic".
@@ -1844,7 +1888,7 @@ an F<.ackrc> file - then you do not have to define your types over and
 over again. In the following examples the options will always be shown
 on one command line so that they can be easily copy & pasted.
 
-File types can be specified both with the the I<--type=xxx> option,
+File types can be specified both with the I<--type=xxx> option,
 or the file type as an option itself.  For example, if you create
 a filetype of "cobol", you can specify I<--type=cobol> or simply
 I<--cobol>.  File types must be at least two characters long.  This

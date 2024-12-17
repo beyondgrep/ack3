@@ -234,6 +234,7 @@ subtest '-v works on -g' => sub {
     my @expected = qw(
         t/text/bill-of-rights.txt
         t/text/gettysburg.txt
+        t/text/movies.txt
     );
     my $file_regex = 'n';
 
@@ -291,6 +292,7 @@ subtest 'test -g on a path' => sub {
         t/text/bill-of-rights.txt
         t/text/constitution.txt
         t/text/gettysburg.txt
+        t/text/movies.txt
         t/text/number.txt
         t/text/numbered-text.txt
         t/text/ozymandias.txt
@@ -311,6 +313,7 @@ t/(text)/amontillado.txt
 t/(text)/bill-of-rights.txt
 t/(text)/constitution.txt
 t/(text)/gettysburg.txt
+t/(text)/movies.txt
 t/(text)/number.txt
 t/(text)/numbered-(text).txt
 t/(text)/ozymandias.txt
@@ -343,6 +346,7 @@ t/text/amontillado.txt
 t/text/bill-of-rights.txt
 t/text/constitution.txt
 t/text/gettysburg.txt
+t/text/movies.txt
 t/text/number.txt
 t/text/numbered-text.txt
 t/text/ozymandias.txt

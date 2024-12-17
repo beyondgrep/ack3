@@ -21,6 +21,7 @@ my @matching = qw(
 my @nonmatching = qw(
     t/text/amontillado.txt
     t/text/gettysburg.txt
+    t/text/movies.txt
     t/text/number.txt
     t/text/numbered-text.txt
     t/text/ozymandias.txt
@@ -59,6 +60,7 @@ DASH_CAPITAL_L: {
     my @expected = qw(
         t/text/bill-of-rights.txt
         t/text/constitution.txt
+        t/text/movies.txt
         t/text/number.txt
         t/text/numbered-text.txt
         t/text/ozymandias.txt
@@ -83,6 +85,7 @@ DASH_LV: {
         t/text/bill-of-rights.txt
         t/text/constitution.txt
         t/text/gettysburg.txt
+        t/text/movies.txt
         t/text/number.txt
         t/text/numbered-text.txt
         t/text/ozymandias.txt

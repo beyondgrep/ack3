@@ -16,6 +16,7 @@ DASH_C: {
         t/text/bill-of-rights.txt:0
         t/text/constitution.txt:0
         t/text/gettysburg.txt:1
+        t/text/movies.txt:0
         t/text/number.txt:0
         t/text/numbered-text.txt:0
         t/text/ozymandias.txt:0
@@ -38,6 +39,7 @@ WITH_DASH_V: {
         t/text/bill-of-rights.txt:45
         t/text/constitution.txt:259
         t/text/gettysburg.txt:15
+        t/text/movies.txt:25
         t/text/number.txt:1
         t/text/numbered-text.txt:20
         t/text/ozymandias.txt:9

@@ -28,6 +28,7 @@
 !_TAG_PROGRAM_VERSION	6.1.0	//
 ADJACENT_CAPTURE_COLORING	t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
+AND	t/boolean.t	/^AND: {$/;"	l
 ARG_MULTIPLE_FILES	t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
 App::Ack	lib/App/Ack.pm	/^package App::Ack;$/;"	p
 App::Ack::ConfigDefault	lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
@@ -160,6 +161,7 @@ NOIGNORE_SUBDIR_WINS	t/ack-ignore-dir.t	/^NOIGNORE_SUBDIR_WINS: {$/;"	l
 NORMAL_CASE	t/ack-v.t	/^NORMAL_CASE: {$/;"	l
 NORMAL_COLOR	t/ack-color.t	/^NORMAL_COLOR: {$/;"	l
 NOT	t/ack-c.t	/^NOT: {$/;"	l
+NOT	t/boolean.t	/^NOT: {$/;"	l
 NO_BOOLEANS	t/boolean.t	/^NO_BOOLEANS: {$/;"	l
 NO_GROUPING	t/ack-group.t	/^NO_GROUPING: {$/;"	l
 NO_O	t/ack-o.t	/^NO_O: {$/;"	l
@@ -172,6 +174,7 @@ NO_SWITCHES_ONE_FILE	t/ack-h.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NO_SWITCHES_ONE_FILE	t/basic.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NTESTS	t/file-permission.t	/^use constant NTESTS => 5;$/;"	c
 NUMERIC_SUBSTITUTIONS	t/ack-output.t	/^NUMERIC_SUBSTITUTIONS: {$/;"	l
+OR	t/boolean.t	/^OR: {$/;"	l
 PAGER	t/ack-pager.t	/^PAGER: {$/;"	l
 PAGER_ACKRC	t/ack-pager.t	/^PAGER_ACKRC: {$/;"	l
 PAGER_ACKRC_OVERRIDE	t/ack-pager.t	/^PAGER_ACKRC_OVERRIDE: {$/;"	l
@@ -228,6 +231,7 @@ WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
+_argjoin	t/boolean.t	/^sub _argjoin {$/;"	s
 _big_split	t/lowercase.t	/^sub _big_split {$/;"	s
 _check	t/build_regex.t	/^sub _check {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
@@ -248,6 +252,7 @@ _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_code_from_file	squash	/^sub _get_code_from_file {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
+_movies_are	t/boolean.t	/^sub _movies_are {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
 _options_used	lib/App/Ack/ConfigLoader.pm	/^sub _options_used {$/;"	s
@@ -289,8 +294,8 @@ bar	t/range/rangefile.pm	/^sub bar {$/;"	s
 basename	lib/App/Ack/File.pm	/^sub basename {$/;"	s
 bisect	dev/find-minimum-dep-versions.pl	/^sub bisect (&@) {$/;"	s
 build_ack_invocation	t/Util.pm	/^sub build_ack_invocation {$/;"	s
+build_all_regexes	lib/App/Ack.pm	/^sub build_all_regexes {$/;"	s
 build_regex	lib/App/Ack.pm	/^sub build_regex {$/;"	s
-build_search_not_re	lib/App/Ack.pm	/^sub build_search_not_re {$/;"	s
 caret_X	t/Util.pm	/^sub caret_X {$/;"	s
 cathy	lib/App/Ack.pm	/^sub cathy {$/;"	s
 check_for_option_in_man_output	xt/man.t	/^sub check_for_option_in_man_output {$/;"	s
@@ -382,6 +387,7 @@ is_lowercase	lib/App/Ack.pm	/^sub is_lowercase {$/;"	s
 is_nonempty_array	t/Util.pm	/^sub is_nonempty_array {$/;"	s
 is_windows	t/Util.pm	/^sub is_windows {$/;"	s
 line_split	t/Util.pm	/^sub line_split {$/;"	s
+list_with_x_first	t/Util.pm	/^sub list_with_x_first {$/;"	s
 lists_match	t/Util.pm	/^sub lists_match {$/;"	s
 main	Makefile.PL	/^package main;$/;"	p
 make_unreadable	t/Util.pm	/^sub make_unreadable {$/;"	s
@@ -413,6 +419,7 @@ option_in_usage	t/ack-help.t	/^sub option_in_usage {$/;"	s
 options	lib/App/Ack/ConfigDefault.pm	/^sub options {$/;"	s
 options_clean	lib/App/Ack/ConfigDefault.pm	/^sub options_clean {$/;"	s
 output_to_pipe	lib/App/Ack.pm	/^sub output_to_pipe {$/;"	s
+permutate	t/Util.pm	/^sub permutate {$/;"	s
 pipe_into_ack	t/Util.pm	/^sub pipe_into_ack {$/;"	s
 pipe_into_ack_with_stderr	t/Util.pm	/^sub pipe_into_ack_with_stderr {$/;"	s
 pmif_context	ack	/^sub pmif_context {$/;"	s
@@ -430,6 +437,7 @@ process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 range_setup	ack	/^sub range_setup {$/;"	s
 read_file	t/Util.pm	/^sub read_file {$/;"	s
 read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
+regex_eq	t/Util.pm	/^sub regex_eq {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s
 reset	lib/App/Ack/File.pm	/^sub reset {$/;"	s

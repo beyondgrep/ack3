@@ -246,7 +246,11 @@ Searching:
   --range-start PATTERN         Specify PATTERN as the start of a match range.
   --range-end PATTERN           Specify PATTERN as the end of a match range.
   --match PATTERN               Specify PATTERN explicitly. Typically omitted.
-  --not PATTERN                 Specifies PATTERN that must not be found on
+  --and PATTERN                 Specifies PATTERN that MUST also be found on
+                                the line for a match to occur. Repeatable.
+  --or PATTERN                  Specifies PATTERN that MAY also be found on
+                                the line for a match to occur. Repeatable.
+  --not PATTERN                 Specifies PATTERN that must NOT be found on
                                 the line for a match to occur. Repeatable.
 
 Search output:
@@ -741,8 +745,6 @@ sub build_regex {
     my $str = shift;
     my $opt = shift;
 
-    defined $str or App::Ack::die( 'No regular expression found.' );
-
     # Check for lowercaseness before we do any modifications.
     my $regex_is_lc = App::Ack::is_lowercase( $str );
 
@@ -828,23 +830,65 @@ sub build_regex {
 }
 
 
-sub build_search_not_re {
+sub build_all_regexes {
+    my $opt_regex = shift;
     my $opt = shift;
 
-    my @not = @{$opt->{not}};
+    my $re_match;
+    my $re_not;
+    my $re_hilite;
+    my $re_scan;
 
-    if ( @not ) {
-        my @built;
-        for my $re ( @not ) {
-            my ($built,undef) = App::Ack::build_regex( $re, $opt );
-            push( @built, $built );
+    my @parts;
+
+    # AND: alpha and beta
+    if ( @parts = @{$opt->{and}} ) {
+        my @match_parts;
+        my @hilite_parts;
+
+        for my $part ( $opt_regex, @parts ) {
+            my ($match, $scan) = build_regex( $part, $opt );
+            push @match_parts, "(?=.*$match)";
+            push @hilite_parts, $match;
+            $re_scan //= $scan;
         }
-        return join( '|', @built );
+        $re_match  = join( '', @match_parts );      # All required, not optional.
+        $re_hilite = join( '|', @hilite_parts );
+    }
+    # OR: alpha OR beta
+    elsif ( @parts = @{$opt->{or}} ) {
+        my @match_parts;
+        my @scan_parts;
+
+        for my $part ( $opt_regex, @parts ) {
+            my ($match, $scan) = build_regex( $part, $opt );
+            push @match_parts, $match;
+            push @scan_parts, $scan;
+        }
+
+        $re_match = join( '|', @match_parts );
+        $re_hilite = $re_match;
+        $re_scan = join( '|', @scan_parts );
+    }
+    # NOT: alpha NOT beta
+    elsif ( @parts = @{$opt->{not}} ) {
+        ($re_match, $re_scan) = build_regex( $opt_regex, $opt );
+
+        my @not_parts;
+        for my $part ( @parts ) {
+            (my $re, undef) = build_regex( $part, $opt );
+            push @not_parts, $re;
+        }
+        $re_not = join( '|', @not_parts );
+    }
+    # No booleans.
+    else {
+        ($re_match, $re_scan) = build_regex( $opt_regex, $opt );
+        $re_hilite = $re_match;
     }
 
-    return;
+    return ($re_match, $re_not, $re_hilite, $re_scan);
 }
-
 
 
 1; # End of App::Ack

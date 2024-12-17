@@ -13,6 +13,7 @@ use App::Ack::ConfigLoader;
 delete @ENV{qw( PAGER ACK_PAGER ACK_PAGER_COLOR )};
 
 my %defaults = (
+    and          => [],
     'break'      => undef,
     c            => undef,
     color        => undef,
@@ -31,6 +32,7 @@ my %defaults = (
     m            => undef,
     n            => undef,
     not          => [],
+    or           => [],
     output       => undef,
     p            => undef,
     pager        => undef,
