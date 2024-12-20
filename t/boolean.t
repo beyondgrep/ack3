@@ -9,7 +9,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 90;
+plan tests => 104;
 
 prep_environment();
 
@@ -102,6 +102,56 @@ NOT: {
             'Groundhog Day',
             'Little Shop of Horrors',
         ]
+    );
+
+    _movies_are(
+        [qw( Murray --not Ramis --not Martin )],
+        [
+            'Caddyshack',
+            'Groundhog Day',
+        ]
+    );
+
+    _movies_are(
+        [qw( Murray --not Martin --not Ramis )],
+        [
+            'Caddyshack',
+            'Groundhog Day',
+        ]
+    );
+
+    _movies_are(
+        [qw( Murray --not Martin --not Ramis --not Chase )],
+        [
+            'Groundhog Day',
+        ]
+    );
+
+    _movies_are(
+        [qw( Murray --not Martin --not Ramis --not Chase --not Elliott )],
+        []
+    );
+
+    _movies_are(
+        [qw( Ramis --not Murray )],
+        []
+    );
+
+    # Do some --not that aren't there.
+    _movies_are(
+        [qw( Murray --not Cher )],
+        [
+            'Caddyshack',
+            'Ghostbusters',
+            'Groundhog Day',
+            'Little Shop of Horrors',
+            'Stripes',
+        ]
+    );
+
+    _movies_are(
+        [qw( Cher --not Murray )],
+        []
     );
 }
 
