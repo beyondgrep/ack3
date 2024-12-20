@@ -1315,7 +1315,8 @@ Note that the options that affect "dogs" also affect "cats", so if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also C<--or> and C<--not>.
+See also the other two boolean options C<--or> and C<--not>, neither of
+which can be used with C<--and>.
 
 =item B<-A I<NUM>>, B<--after-context=I<NUM>>
 
@@ -1574,7 +1575,8 @@ if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also C<--and> and C<--or>.
+See also the other two boolean options C<--and> and C<--or>, neither of
+which can be used with C<--not>.
 
 =item B<-o>
 
@@ -1597,7 +1599,8 @@ Note that the options that affect "dogs" also affect "cats", so if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also C<--and> and C<--not>.
+See also the other two boolean options C<--and> and C<--not>, neither of
+which can be used with C<--or>.
 
 =item B<--output=I<expr>>
 
