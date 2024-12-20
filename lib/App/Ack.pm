@@ -846,14 +846,19 @@ sub build_all_regexes {
         my @match_parts;
         my @hilite_parts;
 
-        for my $part ( $opt_regex, @parts ) {
-            my ($match, $scan) = build_regex( $part, $opt );
+        for my $part ( @parts ) {
+            my ($match, undef) = build_regex( $part, $opt );
             push @match_parts, "(?=.*$match)";
             push @hilite_parts, $match;
-            $re_scan //= $scan;
         }
-        $re_match  = join( '', @match_parts );      # All required, not optional.
+
+        my ($match, $scan) = build_regex( $opt_regex, $opt );
+        push @match_parts, ".*$match";
+        push @hilite_parts, $match;
+
+        $re_match  = join( '', @match_parts );
         $re_hilite = join( '|', @hilite_parts );
+        $re_scan   = $scan;
     }
     # OR: alpha OR beta
     elsif ( @parts = @{$opt->{or}} ) {
@@ -866,9 +871,9 @@ sub build_all_regexes {
             push @scan_parts, $scan;
         }
 
-        $re_match = join( '|', @match_parts );
+        $re_match  = join( '|', @match_parts );
         $re_hilite = $re_match;
-        $re_scan = join( '|', @scan_parts );
+        $re_scan   = join( '|', @scan_parts );
     }
     # NOT: alpha NOT beta
     elsif ( @parts = @{$opt->{not}} ) {
