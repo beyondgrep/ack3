@@ -1,11 +1,11 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
-v3.8.0
+v3.8.0      Fri Dec 20 22:07:26 CST 2024
 ========================================
 [FEATURES]
 Add --and and --or options to allow combinations of search terms. This is
-in addition to the --not that was added in v3.7.0.
+in addition to the --not that was added in v3.7.0. (GH #385)
 
 Add support for Pytest filetype.
 
