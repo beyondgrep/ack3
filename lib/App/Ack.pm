@@ -878,6 +878,7 @@ sub build_all_regexes {
     # NOT: alpha NOT beta
     elsif ( @parts = @{$opt->{not}} ) {
         ($re_match, $re_scan) = build_regex( $opt_regex, $opt );
+        $re_hilite = $re_match;
 
         my @not_parts;
         for my $part ( @parts ) {
