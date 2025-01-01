@@ -1,7 +1,7 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
-v3.8.1      Tue Dec 31 21:16:49 CST 2024
+v3.8.1      Tue Dec 31 21:22:59 CST 2024
 ========================================
 [ENHANCEMENTS]
 The rules for Pytest were modified so that zsh's ad hoc scraping of
