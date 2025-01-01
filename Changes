@@ -1,6 +1,13 @@
 History file for ack 3.  https://beyondgrep.com/
 
 
+v3.8.1      Tue Dec 31 21:16:49 CST 2024
+========================================
+[ENHANCEMENTS]
+The rules for Pytest were modified so that zsh's ad hoc scraping of
+filetypes for tab completion wouldn't blow up. (GH #386)
+
+
 v3.8.0      Fri Dec 20 22:07:26 CST 2024
 ========================================
 [FEATURES]

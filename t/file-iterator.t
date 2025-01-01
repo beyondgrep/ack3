@@ -45,6 +45,7 @@ UNFILTERED: {
             t/swamp/favicon.ico
             t/swamp/file.bar
             t/swamp/file.foo
+            t/swamp/foo_test.py
             t/swamp/fresh.css
             t/swamp/fresh.css.min
             t/swamp/fresh.min.css
@@ -114,6 +115,8 @@ UNFILTERED: {
             t/swamp/service.svc
             t/swamp/solution8.tar
             t/swamp/stuff.cmake
+            t/swamp/test.py
+            t/swamp/test_foo.py
             t/swamp/CMakeLists.txt
             t/swamp/swamp/ignoreme.txt
             ),

@@ -420,8 +420,10 @@ sub _options_block {
 
 # Pytest
 # https://pytest.org/
---type-add=pytest:match:_test[.]py$
---type-add=pytest:match:^test_.*[.]py$
+# Pytest files are *.py files that start with test_ or end with _test.py
+# https://docs.pytest.org/en/stable/explanation/goodpractices.html#test-discovery
+--type-add=pytest:match:_test\.py$
+--type-add=pytest:match:^test_.*\.py$
 
 # R
 # https://www.r-project.org/

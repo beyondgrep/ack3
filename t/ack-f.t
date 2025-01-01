@@ -20,6 +20,7 @@ DEFAULT_DIR_EXCLUSIONS: {
         t/swamp/example.R
         t/swamp/file.bar
         t/swamp/file.foo
+        t/swamp/foo_test.py
         t/swamp/fresh.css
         t/swamp/groceries/another_subdir/fruit
         t/swamp/groceries/another_subdir/junk
@@ -62,6 +63,8 @@ DEFAULT_DIR_EXCLUSIONS: {
         t/swamp/sample.rake
         t/swamp/service.svc
         t/swamp/stuff.cmake
+        t/swamp/test_foo.py
+        t/swamp/test.py
         t/swamp/CMakeLists.txt
         t/swamp/swamp/ignoreme.txt
         ),

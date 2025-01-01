@@ -81,6 +81,9 @@ subtest 'More testing' => sub {
         t/swamp/fresh.css
         t/swamp/lua-shebang-test
         t/swamp/notes.md
+        t/swamp/test.py
+        t/swamp/test_foo.py
+        t/swamp/foo_test.py
     );
 
     my @files_no_perl = qw(
@@ -106,6 +109,9 @@ subtest 'More testing' => sub {
         t/swamp/fresh.css
         t/swamp/lua-shebang-test
         t/swamp/notes.md
+        t/swamp/test.py
+        t/swamp/test_foo.py
+        t/swamp/foo_test.py
     );
 
 

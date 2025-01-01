@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 5;
 
 use lib 't';
 use Util;
@@ -50,5 +50,37 @@ subtest 'ASP.NET' => sub {
     sets_match( \@results, \@expected, __FILE__ );
 };
 
+
+subtest Python => sub {
+    my @expected = qw(
+        t/swamp/test.py
+        t/swamp/foo_test.py
+        t/swamp/test_foo.py
+    );
+
+    my @args = qw( -f -t python t/swamp );
+    ack_sets_match( [ @args ], \@expected, 'With -t python' );
+
+    @args = qw( -f --python t/swamp );
+    ack_sets_match( [ @args ], \@expected, 'With --python' );
+};
+
+
+subtest Pytest => sub {
+    my @expected = qw(
+        t/swamp/foo_test.py
+        t/swamp/test_foo.py
+    );
+
+    my @args = qw( -f -t pytest t/swamp );
+    ack_sets_match( [ @args ], \@expected, 'With -t pytest' );
+
+    @args = qw( -f --pytest t/swamp );
+    ack_sets_match( [ @args ], \@expected, 'With --pytest' );
+};
+
+
 done_testing();
+
+
 exit 0;
