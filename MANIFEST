@@ -35,13 +35,11 @@ t/00-load.t
 t/FilterTest.pm
 t/ack-1.t
 t/ack-Q.t
-t/ack-c.t
 t/ack-c.yaml
 t/ack-color.t
 t/ack-column.t
 t/ack-create-ackrc.t
 t/ack-dump.t
-t/ack-f.t
 t/ack-f.yaml
 t/ack-files-from.t
 t/ack-g.t
@@ -53,7 +51,6 @@ t/ack-i.barfly
 t/ack-i.t
 t/ack-ignore-dir.t
 t/ack-ignore-file.t
-t/ack-k.t
 t/ack-k.yaml
 t/ack-l.t
 t/ack-m.t
@@ -72,7 +69,6 @@ t/ack-type-del.t
 t/ack-type.t
 t/ack-underline.barfly
 t/ack-underline.t
-t/ack-v.t
 t/ack-v.yaml
 t/ack-version.t
 t/ack-w.barfly
@@ -80,7 +76,6 @@ t/ack-w.t
 t/ack-x.t
 t/anchored.t
 t/bad-ackrc-opt.t
-t/basic.t
 t/basic.yaml
 t/boolean.t
 t/build_regex.t
