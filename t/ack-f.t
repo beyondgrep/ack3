@@ -14,8 +14,10 @@ my @tests = read_tests( 't/ack-f.yaml' );
 
 for my $test ( @tests ) {
     subtest $test->{name} => sub () {
-        ack_sets_match( $test->{args}, $test->{output}, $test->{name} );
-        is( get_rc(), $test->{rc} );
+        for my $args ( @{$test->{args}} ) {
+            ack_sets_match( $args, $test->{output}, $test->{name} );
+            is( get_rc(), $test->{rc} );
+        }
     };
 }
 

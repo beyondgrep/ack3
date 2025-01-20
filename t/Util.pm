@@ -1292,7 +1292,12 @@ sub read_tests {
         }
         $test->{output} = \@lines;
 
-        $test->{args} = [ split( / /, $test->{args} ) ];
+        my $args = $test->{args};
+        $args = [ $args ] unless ref($args);
+        for ( @$args ) {
+            $_ = [ split / / ];
+        }
+        $test->{args} = $args;
     }
 
     return @tests;
