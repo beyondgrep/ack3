@@ -54,6 +54,7 @@ t/ack-i.t
 t/ack-ignore-dir.t
 t/ack-ignore-file.t
 t/ack-k.t
+t/ack-k.yaml
 t/ack-l.t
 t/ack-m.t
 t/ack-man.t
@@ -72,6 +73,7 @@ t/ack-type.t
 t/ack-underline.barfly
 t/ack-underline.t
 t/ack-v.t
+t/ack-v.yaml
 t/ack-version.t
 t/ack-w.barfly
 t/ack-w.t
