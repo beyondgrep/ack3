@@ -1,6 +1,7 @@
 # test_foo.py IS a pytest test, as well as Python.
+# This test doesn't test anything meaningful. It's just here for filetype tests.
+# But it should pass.
 
-code = 0
-
-# This should fail
-assert code == 1
+def test_reality():
+    code = 1
+    assert code == 1
