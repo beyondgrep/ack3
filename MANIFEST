@@ -37,7 +37,7 @@ t/ack-1.t
 t/ack-Q.t
 t/ack-c.yaml
 t/ack-color.t
-t/ack-column.t
+t/ack-column.yaml
 t/ack-create-ackrc.t
 t/ack-dump.t
 t/ack-f.yaml

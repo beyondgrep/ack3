@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use lib 't';
 use Util;
@@ -20,7 +20,12 @@ MAIN: {
             for my $test ( @tests ) {
                 for my $args ( @{$test->{args}} ) {
                     subtest $file . ' ' . join( ', ', @{$args} ) => sub {
-                        ack_sets_match( $args, $test->{stdout}, $test->{name} );
+                        if ( $test->{ordered} ) {
+                            ack_lists_match( $args, $test->{stdout}, $test->{name} );
+                        }
+                        else {
+                            ack_sets_match( $args, $test->{stdout}, $test->{name} );
+                        }
                         is( get_rc(), $test->{exitcode} );
                     }
                 }

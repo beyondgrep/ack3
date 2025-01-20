@@ -1,0 +1,45 @@
+---
+name: With --columns
+args: nevermore --column -w -i --with-filename --noenv t/text/raven.txt
+ordered: true
+stdout: |
+  t/text/raven.txt:55:23:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:62:24:    With such name as "Nevermore."
+  t/text/raven.txt:69:26:    Then the bird said, "Nevermore."
+  t/text/raven.txt:76:18:    Of 'Never -- nevermore.'
+  t/text/raven.txt:83:24:    Meant in croaking "Nevermore."
+  t/text/raven.txt:90:26:    She shall press, ah, nevermore!
+  t/text/raven.txt:97:23:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:104:23:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:111:23:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:118:23:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:125:22:    Shall be lifted--nevermore!
+
+---
+name: With --column and --not
+args: nevermore --not Quoth -w -i --with-filename --noenv --column t/text/raven.txt
+ordered: true
+stdout: |
+  t/text/raven.txt:62:24:    With such name as "Nevermore."
+  t/text/raven.txt:69:26:    Then the bird said, "Nevermore."
+  t/text/raven.txt:76:18:    Of 'Never -- nevermore.'
+  t/text/raven.txt:83:24:    Meant in croaking "Nevermore."
+  t/text/raven.txt:90:26:    She shall press, ah, nevermore!
+  t/text/raven.txt:125:22:    Shall be lifted--nevermore!
+
+---
+name: Without columns
+args: nevermore -w -i --with-filename --noenv --no-column t/text/raven.txt
+ordered: true
+stdout: |
+  t/text/raven.txt:55:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:62:    With such name as "Nevermore."
+  t/text/raven.txt:69:    Then the bird said, "Nevermore."
+  t/text/raven.txt:76:    Of 'Never -- nevermore.'
+  t/text/raven.txt:83:    Meant in croaking "Nevermore."
+  t/text/raven.txt:90:    She shall press, ah, nevermore!
+  t/text/raven.txt:97:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:104:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:111:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:118:    Quoth the Raven, "Nevermore."
+  t/text/raven.txt:125:    Shall be lifted--nevermore!

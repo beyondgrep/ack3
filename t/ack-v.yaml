@@ -1,6 +1,7 @@
 ---
 name: Normal case
 args: -v w t/text/ozymandias.txt
+ordered: true
 stdout: |
   I met a traveller from an antique land
   Stand in the desert... Near them, on the sand,
@@ -12,6 +13,7 @@ stdout: |
 ---
 name: Ignore case
 args: -i -v w t/text/ozymandias.txt
+ordered: true
 stdout: |
   I met a traveller from an antique land
   Stand in the desert... Near them, on the sand,
@@ -22,6 +24,7 @@ stdout: |
 ---
 name: With not
 args: -i -v the --not them t/text/ozymandias.txt
+ordered: true
 stdout: |
   I met a traveller from an antique land
   Who said: Two vast and trunkless legs of stone

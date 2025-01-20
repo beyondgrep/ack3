@@ -1290,8 +1290,11 @@ sub read_tests {
 
         $test->{args} = _split_args( $test->{args} );
 
-        # Assume successful run unless otherwise specified.
+        # Assume successful run.
         $test->{exitcode} //= 0;
+
+        # Assume order doesn't matter.
+        $test->{ordered} //= 0;
 
         _validate_test( $test );
     }
@@ -1328,11 +1331,12 @@ sub _validate_test {
     my $test = shift;
 
     my @valid_keys = qw(
-        name
         args
         exitcode
-        stdout
+        name
+        ordered
         stderr
+        stdout
     );
     for my $key ( keys %{$test} ) {
         die "Invalid key $key" unless _in( $key, \@valid_keys );

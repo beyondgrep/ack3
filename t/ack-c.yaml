@@ -1,6 +1,7 @@
 ---
 name: -c
 args: God -c --sort-files t/text
+ordered: true
 stdout: |
   t/text/amontillado.txt:2
   t/text/bill-of-rights.txt:0
@@ -21,6 +22,7 @@ stdout: |
 ---
 name: -c and -v
 args: the -i -w -v -c --sort-files t/text
+ordered: true
 stdout: |
   t/text/amontillado.txt:206
   t/text/bill-of-rights.txt:45
@@ -35,6 +37,7 @@ stdout: |
 ---
 name: -c and -l
 args: congress -i -l -c --sort-files t/text
+ordered: true
 stdout: |
   t/text/bill-of-rights.txt:1
   t/text/constitution.txt:29
