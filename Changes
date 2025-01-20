@@ -1,5 +1,9 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+ack now needs YAML::PP to run its tests.
+
 
 v3.8.1      Tue Dec 31 21:22:59 CST 2024
 ========================================

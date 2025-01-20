@@ -41,6 +41,7 @@ t/ack-column.t
 t/ack-create-ackrc.t
 t/ack-dump.t
 t/ack-f.t
+t/ack-f.yaml
 t/ack-files-from.t
 t/ack-g.t
 t/ack-group.t

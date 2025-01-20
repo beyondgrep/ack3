@@ -51,6 +51,9 @@ my %parms = (
         'version'           => 0,
         ( $^O eq 'MSWin32' ? ('Win32::ShellQuote' => '0.002001') : () ),
     },
+    TEST_REQUIRES => {
+        'YAML::PP'          => 0,
+    },
     MAN3PODS            => {}, # no need for man pages for any of the .pm files
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'ack-3* nytprof* stderr.log stdout.log completion.*' },

@@ -15,6 +15,7 @@ use File::Temp ();
 use Scalar::Util qw( tainted );
 use Term::ANSIColor ();
 use Test::More;
+use YAML::PP;
 
 our @EXPORT = qw(
     prep_environment
@@ -77,6 +78,8 @@ our @EXPORT = qw(
     subtest_name
 
     permutate
+
+    read_tests
 );
 
 my $orig_wd;
@@ -1272,6 +1275,27 @@ sub list_with_x_first {
     return if @_ == 1;
     my $i = shift;
     return @_[$i, 0..$i-1, $i+1..$#_];
+}
+
+
+sub read_tests {
+    my $filename = shift;
+
+    my $ypp = YAML::PP->new;
+    my @tests = $ypp->load_file( $filename );
+
+    for my $test ( @tests ) {
+        my @lines;
+        if ( $test->{output} ) {
+            @lines = split( /\n/, $test->{output} );
+            chomp $lines[-1] if @lines;
+        }
+        $test->{output} = \@lines;
+
+        $test->{args} = [ split( / /, $test->{args} ) ];
+    }
+
+    return @tests;
 }
 
 
