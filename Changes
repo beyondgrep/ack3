@@ -4,6 +4,10 @@ NEXT
 ========================================
 ack now needs YAML::PP to run its tests.
 
+[FIXES]
+ack's would always set a return code of 1 if -c was used.  Now it properly
+returns 1 if no files match, and 0 if any files match.
+
 
 v3.8.1      Tue Dec 31 21:22:59 CST 2024
 ========================================

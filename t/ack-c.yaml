@@ -1,0 +1,65 @@
+---
+name: -c
+args: God -c --sort-files t/text
+rc: 0
+output: |
+  t/text/amontillado.txt:2
+  t/text/bill-of-rights.txt:0
+  t/text/constitution.txt:0
+  t/text/gettysburg.txt:1
+  t/text/movies.txt:0
+  t/text/number.txt:0
+  t/text/numbered-text.txt:0
+  t/text/ozymandias.txt:0
+  t/text/raven.txt:2
+
+---
+name: -c and --no-filename
+args: God -c --no-filename t/text
+rc: 0
+output: |
+  5
+
+---
+name: -c and -v
+args: the -i -w -v -c --sort-files t/text
+rc: 0
+output: |
+  t/text/amontillado.txt:206
+  t/text/bill-of-rights.txt:45
+  t/text/constitution.txt:259
+  t/text/gettysburg.txt:15
+  t/text/movies.txt:25
+  t/text/number.txt:1
+  t/text/numbered-text.txt:20
+  t/text/ozymandias.txt:9
+  t/text/raven.txt:77
+
+---
+name: -c and -l
+args: congress -i -l -c --sort-files t/text
+rc: 0
+output: |
+  t/text/bill-of-rights.txt:1
+  t/text/constitution.txt:29
+
+---
+name: -c and -h
+args: Montresor -c -h t/text
+rc: 0
+output: |
+  3
+
+---
+name: Normal count
+args: Montresor -c -h t/text/amontillado.txt
+rc: 0
+output: |
+  3
+
+---
+name: Count with --not
+args: Montresor -c -h --not God t/text/amontillado.txt
+rc: 0
+output: |
+  2

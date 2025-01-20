@@ -17,7 +17,7 @@ our $VERSION;
 our $COPYRIGHT;
 BEGIN {
     $VERSION = 'v3.8.1'; # Check https://beyondgrep.com/ for updates
-    $COPYRIGHT = 'Copyright 2005-2024 Andy Lester.';
+    $COPYRIGHT = 'Copyright 2005-2025 Andy Lester.';
 }
 our $STANDALONE = 0;
 our $ORIGINAL_PROGRAM_NAME;

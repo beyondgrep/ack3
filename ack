@@ -323,9 +323,14 @@ sub file_loop_fg {
 sub file_loop_c {
     my $files = shift;
 
+    my $nmatched_files = 0;
+
     my $total_count = 0;
     while ( defined( my $file = $files->next ) ) {
         my $matches_for_this_file = count_matches_in_file( $file );
+        if ( $matches_for_this_file ) {
+            ++$nmatched_files;
+        }
 
         if ( not $opt_show_filename ) {
             $total_count += $matches_for_this_file;
@@ -350,7 +355,7 @@ sub file_loop_c {
         App::Ack::say( $total_count );
     }
 
-    return;
+    return $nmatched_files;
 }
 
 
@@ -2517,7 +2522,7 @@ Andy Lester, C<< <andy at petdance.com> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2005-2024 Andy Lester.
+Copyright 2005-2025 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the Artistic License v2.0.

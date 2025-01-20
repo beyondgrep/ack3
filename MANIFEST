@@ -36,6 +36,7 @@ t/FilterTest.pm
 t/ack-1.t
 t/ack-Q.t
 t/ack-c.t
+t/ack-c.yaml
 t/ack-color.t
 t/ack-column.t
 t/ack-create-ackrc.t
@@ -78,6 +79,7 @@ t/ack-x.t
 t/anchored.t
 t/bad-ackrc-opt.t
 t/basic.t
+t/basic.yaml
 t/boolean.t
 t/build_regex.t
 t/command-line-files.t
