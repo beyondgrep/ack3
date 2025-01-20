@@ -32,8 +32,6 @@ def sorted_output(block: str):
 
 
 def run_test(test):
-    print(test)
-
     for args in test["args"]:
         args = args.split()
         command = ["perl", "-Mblib", "ack", "--noenv"] + args

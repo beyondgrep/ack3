@@ -57,7 +57,7 @@ t/ack-m.t
 t/ack-man.t
 t/ack-match.t
 t/ack-n.t
-t/ack-o.t
+t/ack-o.yaml
 t/ack-output.t
 t/ack-pager.t
 t/ack-passthru.t
