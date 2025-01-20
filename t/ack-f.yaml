@@ -1,8 +1,7 @@
 ---
 name: Default directory exclusions
 args: -f t/swamp
-rc: 0
-output: |
+stdout: |
   t/swamp/0
   t/swamp/c-header.h
   t/swamp/c-source.c
@@ -63,8 +62,7 @@ output: |
 ---
 name: Combined filters
 args: -f t/swamp -t perl -t rake
-rc: 0
-output: |
+stdout: |
   t/swamp/0
   t/swamp/constitution-100k.pl
   t/swamp/perl.pm
@@ -82,5 +80,5 @@ output: |
 ---
 name: Exit code with no matches
 args: "-f t/swamp --type-add=baz:ext:baz -t baz"
-rc: 1
-output:
+exitcode: 1
+stdout:

@@ -1,22 +1,19 @@
 ---
 name: No switches, one directory
 args: consecrated t/text
-rc: 0
-output: |
+stdout: |
   t/text/gettysburg.txt:14:struggled here, have consecrated it, far above our poor power to add or
 
 ---
 name: No switches, one file
 args: strict t/swamp/options.pl
-rc: 0
-output: |
+stdout: |
   use strict;
 
 ---
 name: No switches, multiple files
 args: strict t/text/constitution.txt t/swamp/pipe-stress-freaks.F t/swamp/options.pl
-rc: 0
-output: |
+stdout: |
   t/text/constitution.txt:225:such District (not exceeding ten Miles square) as may, by Cession of
   t/swamp/options.pl:2:use strict;
 
@@ -25,8 +22,7 @@ name: With inclusion switch
 args:
   - strict -H t/swamp/options.pl
   - strict --with-filename t/swamp/options.pl
-rc: 0
-output: |
+stdout: |
   t/swamp/options.pl:2:use strict;
 
 ---
@@ -34,6 +30,5 @@ name: With exclusion switch, multiple files
 args:
   - strict -h t/swamp/options.pl t/swamp/crystallography-weenies.f
   - strict --no-filename t/swamp/options.pl t/swamp/crystallography-weenies.f
-rc: 0
-output: |
+stdout: |
   use strict;

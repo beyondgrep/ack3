@@ -12,6 +12,7 @@ use Cwd ();
 use File::Next ();
 use File::Spec ();
 use File::Temp ();
+use List::Util qw( any );
 use Scalar::Util qw( tainted );
 use Term::ANSIColor ();
 use Test::More;
@@ -1285,22 +1286,67 @@ sub read_tests {
     my @tests = $ypp->load_file( $filename );
 
     for my $test ( @tests ) {
-        my @lines;
-        if ( $test->{output} ) {
-            @lines = split( /\n/, $test->{output} );
-            chomp $lines[-1] if @lines;
-        }
-        $test->{output} = \@lines;
+        $test->{stdout} = _lineify( $test->{stdout} );
 
-        my $args = $test->{args};
-        $args = [ $args ] unless ref($args);
-        for ( @$args ) {
-            $_ = [ split / / ];
-        }
-        $test->{args} = $args;
+        $test->{args} = _split_args( $test->{args} );
+
+        # Assume successful run unless otherwise specified.
+        $test->{exitcode} //= 0;
+
+        _validate_test( $test );
     }
 
     return @tests;
+}
+
+
+sub _split_args {
+    my $args = shift;
+
+    $args = [ $args ] unless ref($args);
+    for ( @{$args} ) {
+        $_ = [ split / / ];
+    }
+    return $args;
+}
+
+
+sub _lineify {
+    my $block = shift;
+
+    my @lines;
+    if ( $block ) {
+        @lines = split( /\n/, $block );
+        chomp $lines[-1] if @lines;
+    }
+
+    return \@lines;
+}
+
+
+sub _validate_test {
+    my $test = shift;
+
+    my @valid_keys = qw(
+        name
+        args
+        exitcode
+        stdout
+        stderr
+    );
+    for my $key ( keys %{$test} ) {
+        die "Invalid key $key" unless _in( $key, \@valid_keys );
+    }
+
+    return;
+}
+
+
+sub _in {
+    my $needle = shift;
+    my $haystack = shift;
+
+    return any { $_ eq $needle } @{$haystack};
 }
 
 

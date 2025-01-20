@@ -16,7 +16,7 @@ for my $test ( @tests ) {
     subtest $test->{name} => sub () {
         for my $args ( @{$test->{args}} ) {
             my @results = run_ack( @{$args} );
-            lists_match( \@results, $test->{output}, $test->{name} );
+            lists_match( \@results, $test->{stdout}, $test->{name} );
         }
     };
 }

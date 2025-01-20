@@ -15,8 +15,8 @@ my @tests = read_tests( 't/ack-c.yaml' );
 for my $test ( @tests ) {
     subtest $test->{name} => sub () {
         for my $args ( @{$test->{args}} ) {
-            ack_sets_match( $args, $test->{output}, $test->{name} );
-            is( get_rc(), $test->{rc} );
+            ack_sets_match( $args, $test->{stdout}, $test->{name} );
+            is( get_rc(), $test->{exitcode} );
         }
     };
 }
