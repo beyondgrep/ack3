@@ -62,7 +62,7 @@ t/ack-output.t
 t/ack-pager.t
 t/ack-passthru.t
 t/ack-print0.t
-t/ack-proximate.t
+t/ack-proximate.yaml
 t/ack-s.t
 t/ack-show-types.t
 t/ack-type-del.t

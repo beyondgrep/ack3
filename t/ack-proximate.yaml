@@ -1,0 +1,158 @@
+---
+name: Basic --proximate
+args:
+  - court t/text -i --group --sort -p
+  - court t/text -i --group --sort --proximate
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt
+  53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt
+  199:To constitute Tribunals inferior to the supreme Court;
+
+  372:Judges of the supreme Court, and all other Officers of the United States,
+
+  376:in the Courts of Law, or in the Heads of Departments.
+
+  404:Court, and in such inferior Courts as the Congress may from time to
+
+  406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+  425:and those in which a State shall be Party, the supreme Court shall
+
+  427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+  441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: Ungrouped --proximate
+args:
+  - court t/text -i --nogroup --sort -p
+  - court t/text -i --nogroup --sort --proximate
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt:199:To constitute Tribunals inferior to the supreme Court;
+
+  t/text/constitution.txt:372:Judges of the supreme Court, and all other Officers of the United States,
+
+  t/text/constitution.txt:376:in the Courts of Law, or in the Heads of Departments.
+
+  t/text/constitution.txt:404:Court, and in such inferior Courts as the Congress may from time to
+
+  t/text/constitution.txt:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+  t/text/constitution.txt:425:and those in which a State shall be Party, the supreme Court shall
+
+  t/text/constitution.txt:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+  t/text/constitution.txt:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: --proximate with a number
+args:
+  - court t/text -i --sort --group -p2
+  - court t/text -i --sort --group --proximate=2
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt
+  53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt
+  199:To constitute Tribunals inferior to the supreme Court;
+
+  372:Judges of the supreme Court, and all other Officers of the United States,
+
+  376:in the Courts of Law, or in the Heads of Departments.
+
+  404:Court, and in such inferior Courts as the Congress may from time to
+  406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+  425:and those in which a State shall be Party, the supreme Court shall
+  427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+  441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: Ungrouped --proximate with a number
+args:
+  - court t/text -i --sort --nogroup -p2
+  - court t/text -i --sort --nogroup --proximate=2
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt:199:To constitute Tribunals inferior to the supreme Court;
+
+  t/text/constitution.txt:372:Judges of the supreme Court, and all other Officers of the United States,
+
+  t/text/constitution.txt:376:in the Courts of Law, or in the Heads of Departments.
+
+  t/text/constitution.txt:404:Court, and in such inferior Courts as the Congress may from time to
+  t/text/constitution.txt:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+  t/text/constitution.txt:425:and those in which a State shall be Party, the supreme Court shall
+  t/text/constitution.txt:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+
+  t/text/constitution.txt:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: Ungrouped --proximate=20
+args:
+  - court t/text -i --sort --nogroup -p20
+  - court t/text -i --sort --nogroup --proximate=20
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt:199:To constitute Tribunals inferior to the supreme Court;
+
+  t/text/constitution.txt:372:Judges of the supreme Court, and all other Officers of the United States,
+  t/text/constitution.txt:376:in the Courts of Law, or in the Heads of Departments.
+
+  t/text/constitution.txt:404:Court, and in such inferior Courts as the Congress may from time to
+  t/text/constitution.txt:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+  t/text/constitution.txt:425:and those in which a State shall be Party, the supreme Court shall
+  t/text/constitution.txt:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+  t/text/constitution.txt:441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: --proximate with a number and --not
+args:
+  - court --not law t/text -i --sort --group -p2
+  - court --not law t/text -i --sort --group --proximate=2
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt
+  53:fact tried by a jury, shall be otherwise re-examined in any Court of
+
+  t/text/constitution.txt
+  199:To constitute Tribunals inferior to the supreme Court;
+
+  372:Judges of the supreme Court, and all other Officers of the United States,
+
+  404:Court, and in such inferior Courts as the Congress may from time to
+  406:Courts, shall hold their Offices during good Behaviour, and shall, at
+
+  425:and those in which a State shall be Party, the supreme Court shall
+
+  441:of two Witnesses to the same overt Act, or on Confession in open Court.
+
+---
+name: -P overrides -p and --proximate
+args:
+  - court t/text -i --sort --nogroup -p20 -P
+  - court t/text -i --sort --nogroup --proximate=20 -P
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:53:fact tried by a jury, shall be otherwise re-examined in any Court of
+  t/text/constitution.txt:199:To constitute Tribunals inferior to the supreme Court;
+  t/text/constitution.txt:372:Judges of the supreme Court, and all other Officers of the United States,
+  t/text/constitution.txt:376:in the Courts of Law, or in the Heads of Departments.
+  t/text/constitution.txt:404:Court, and in such inferior Courts as the Congress may from time to
+  t/text/constitution.txt:406:Courts, shall hold their Offices during good Behaviour, and shall, at
+  t/text/constitution.txt:425:and those in which a State shall be Party, the supreme Court shall
+  t/text/constitution.txt:427:the supreme Court shall have appellate Jurisdiction, both as to Law and
+  t/text/constitution.txt:441:of two Witnesses to the same overt Act, or on Confession in open Court.
