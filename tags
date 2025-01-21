@@ -29,6 +29,9 @@
 ADJACENT_CAPTURE_COLORING	t/ack-color.t	/^ADJACENT_CAPTURE_COLORING: {$/;"	l
 AFTER	t/context.t	/^AFTER: {$/;"	l
 AND	t/boolean.t	/^AND: {$/;"	l
+AND	t/highlighting.t	/^    AND: {$/;"	l
+AND	t/highlighting.t	/^AND: {$/;"	l
+AND_AND	t/highlighting.t	/^    AND_AND: {$/;"	l
 ARG_MULTIPLE_FILES	t/ack-output.t	/^ARG_MULTIPLE_FILES: {$/;"	l
 App::Ack	lib/App/Ack.pm	/^package App::Ack;$/;"	p
 App::Ack::ConfigDefault	lib/App/Ack/ConfigDefault.pm	/^package App::Ack::ConfigDefault;$/;"	p
@@ -60,7 +63,6 @@ Barfly::Block	t/Barfly.pm	/^package Barfly::Block;$/;"	p
 CAPTURE_PARSED	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_PARSED: {$/;"	l
 CAPTURE_RAW	lib/App/Ack/ConfigLoader.pm	/^    CAPTURE_RAW: {$/;"	l
 CHARACTER_SUBSTITUTIONS	t/ack-output.t	/^CHARACTER_SUBSTITUTIONS: {$/;"	l
-COMBINED_FILTERS	t/ack-f.t	/^COMBINED_FILTERS: {$/;"	l
 COMBOS_1	t/ack-output.t	/^COMBOS_1: {$/;"	l
 COMBOS_2	t/ack-output.t	/^COMBOS_2: {$/;"	l
 COMBOS_3	t/ack-output.t	/^COMBOS_3: {$/;"	l
@@ -75,13 +77,11 @@ CONTEXT_OVERLAPPING_COLOR	t/context.t	/^CONTEXT_OVERLAPPING_COLOR: {$/;"	l
 CONTEXT_OVERLAPPING_COLOR_AFTER	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_AFTER: {$/;"	l
 CONTEXT_OVERLAPPING_COLOR_BEFORE	t/context.t	/^CONTEXT_OVERLAPPING_COLOR_BEFORE: {$/;"	l
 COUNT_PRINT0	t/ack-print0.t	/^COUNT_PRINT0: {$/;"	l
-DASH_C	t/ack-c.t	/^DASH_C: {$/;"	l
 DASH_CAPITAL_L	t/ack-l.t	/^DASH_CAPITAL_L: {$/;"	l
 DASH_F	t/ack-1.t	/^DASH_F: {$/;"	l
 DASH_F	t/zero.t	/^DASH_F: {$/;"	l
 DASH_F_CWD	t/zero.t	/^DASH_F_CWD: {$/;"	l
 DASH_G	t/ack-1.t	/^DASH_G: {$/;"	l
-DASH_HC	t/ack-c.t	/^DASH_HC: {$/;"	l
 DASH_IGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR: {$/;"	l
 DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_IGNORES_RELATIVE_PATHS: {$/;"	l
 DASH_IGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
@@ -89,7 +89,6 @@ DASH_IGNORE_DIR_WITH_DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH
 DASH_IGNORE_DIR_WITH_SLASH	t/ack-ignore-dir.t	/^DASH_IGNORE_DIR_WITH_SLASH: {$/;"	l
 DASH_L	t/ack-1.t	/^DASH_L: {$/;"	l
 DASH_L	t/ack-l.t	/^DASH_L: {$/;"	l
-DASH_LC	t/ack-c.t	/^DASH_LC: {$/;"	l
 DASH_LV	t/ack-l.t	/^DASH_LV: {$/;"	l
 DASH_NOIGNORE_DIR	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR: {$/;"	l
 DASH_NOIGNORE_DIR_MULTIPLE_TIMES	t/ack-ignore-dir.t	/^DASH_NOIGNORE_DIR_MULTIPLE_TIMES: {$/;"	l
@@ -97,14 +96,12 @@ DASH_Q	t/build_regex.t	/^DASH_Q: {$/;"	l
 DASH_V	t/ack-1.t	/^DASH_V: {$/;"	l
 DASH_i	t/build_regex.t	/^DASH_i: {$/;"	l
 DASH_w	t/build_regex.t	/^DASH_w: {$/;"	l
-DEFAULT_DIR_EXCLUSIONS	t/ack-f.t	/^DEFAULT_DIR_EXCLUSIONS: {$/;"	l
 DOLLAR_1	t/ack-output.t	/^DOLLAR_1: {$/;"	l
 DOLLAR_UNDERSCORE	t/ack-output.t	/^DOLLAR_UNDERSCORE: {$/;"	l
 DOUBLE_QUOTES	t/ack-output.t	/^DOUBLE_QUOTES: {$/;"	l
 DUMP	t/ack-dump.t	/^DUMP: {$/;"	l
 DUMP	t/ack-type-del.t	/^DUMP: {$/;"	l
 EXCLUDE_ONLY	t/inverted-file-filter.t	/^EXCLUDE_ONLY: {$/;"	l
-EXIT_CODE	t/ack-f.t	/^EXIT_CODE: {$/;"	l
 FILENAME_SUBSTITUTION_1	t/ack-output.t	/^FILENAME_SUBSTITUTION_1 : {$/;"	l
 FILENAME_SUBSTITUTION_2	t/ack-output.t	/^FILENAME_SUBSTITUTION_2 : {$/;"	l
 FILENAME_SUBSTITUTION_3	t/ack-output.t	/^FILENAME_SUBSTITUTION_3 : {$/;"	l
@@ -160,21 +157,24 @@ NOIGNORE_DIR_RELATIVE_PATHS	t/ack-ignore-dir.t	/^NOIGNORE_DIR_RELATIVE_PATHS: {$
 NOIGNORE_SUBDIR_WINS	t/ack-ignore-dir.t	/^NOIGNORE_SUBDIR_WINS: {$/;"	l
 NORMAL_CASE	t/ack-v.t	/^NORMAL_CASE: {$/;"	l
 NORMAL_COLOR	t/ack-color.t	/^NORMAL_COLOR: {$/;"	l
-NOT	t/ack-c.t	/^NOT: {$/;"	l
 NOT	t/boolean.t	/^NOT: {$/;"	l
+NOT	t/highlighting.t	/^    NOT: {$/;"	l
+NOT	t/highlighting.t	/^NOT: {$/;"	l
+NOT_AGAIN	t/highlighting.t	/^    NOT_AGAIN: {$/;"	l
 NO_BOOLEANS	t/boolean.t	/^NO_BOOLEANS: {$/;"	l
 NO_GROUPING	t/ack-group.t	/^NO_GROUPING: {$/;"	l
 NO_O	t/ack-o.t	/^NO_O: {$/;"	l
 NO_PAGER	t/ack-pager.t	/^NO_PAGER: {$/;"	l
 NO_SPECIALS_IN_OUTPUT_EXPRESSION	t/ack-output.t	/^NO_SPECIALS_IN_OUTPUT_EXPRESSION : {$/;"	l
 NO_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
-NO_SWITCHES_MULTIPLE_FILES	t/basic.t	/^NO_SWITCHES_MULTIPLE_FILES: {$/;"	l
-NO_SWITCHES_ONE_DIRECTORY	t/basic.t	/^NO_SWITCHES_ONE_DIRECTORY: {$/;"	l
 NO_SWITCHES_ONE_FILE	t/ack-h.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
-NO_SWITCHES_ONE_FILE	t/basic.t	/^NO_SWITCHES_ONE_FILE: {$/;"	l
 NTESTS	t/file-permission.t	/^use constant NTESTS => 5;$/;"	c
 NUMERIC_SUBSTITUTIONS	t/ack-output.t	/^NUMERIC_SUBSTITUTIONS: {$/;"	l
 OR	t/boolean.t	/^OR: {$/;"	l
+OR	t/highlighting.t	/^    OR: {$/;"	l
+OR	t/highlighting.t	/^OR: {$/;"	l
+ORIGINAL	t/highlighting.t	/^    ORIGINAL: {$/;"	l
+OR_OR	t/highlighting.t	/^    OR_OR: {$/;"	l
 PAGER	t/ack-pager.t	/^PAGER: {$/;"	l
 PAGER_ACKRC	t/ack-pager.t	/^PAGER_ACKRC: {$/;"	l
 PAGER_ACKRC_OVERRIDE	t/ack-pager.t	/^PAGER_ACKRC_OVERRIDE: {$/;"	l
@@ -195,7 +195,6 @@ REQUIRE_F_OR_G	t/ack-show-types.t	/^REQUIRE_F_OR_G: {$/;"	l
 RESTRICTED_DIRECTORIES	t/ack-s.t	/^RESTRICTED_DIRECTORIES: {$/;"	l
 RUBY_AND_RAKE	t/ack-show-types.t	/^RUBY_AND_RAKE: {$/;"	l
 RangeFile	t/range/rangefile.pm	/^package RangeFile;$/;"	p
-SINGLE_FILE_COUNT	t/ack-c.t	/^SINGLE_FILE_COUNT: {$/;"	l
 SINGLE_TEXT_MATCH	t/ack-1.t	/^SINGLE_TEXT_MATCH: {$/;"	l
 SKIP	t/ack-passthru.t	/^SKIP: {$/;"	l
 SKIP	t/file-permission.t	/^SKIP: {$/;"	l
@@ -223,20 +222,18 @@ WITHOUT_S	t/ack-s.t	/^WITHOUT_S: {$/;"	l
 WITH_COLUMNS	t/ack-column.t	/^WITH_COLUMNS: {$/;"	l
 WITH_COLUMNS_AND_CONTEXT	t/context.t	/^WITH_COLUMNS_AND_CONTEXT: {$/;"	l
 WITH_COLUMNS_AND_NOT	t/ack-column.t	/^WITH_COLUMNS_AND_NOT: {$/;"	l
-WITH_DASH_V	t/ack-c.t	/^WITH_DASH_V: {$/;"	l
 WITH_NOT	t/ack-v.t	/^WITH_NOT: {$/;"	l
 WITH_O	t/ack-o.t	/^WITH_O: {$/;"	l
 WITH_S	t/ack-s.t	/^WITH_S: {$/;"	l
 WITH_SWITCHES_MULTIPLE_FILES	t/ack-h.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
-WITH_SWITCHES_MULTIPLE_FILES	t/basic.t	/^WITH_SWITCHES_MULTIPLE_FILES: {$/;"	l
 WITH_SWITCHES_ONE_FILE	t/ack-h.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
-WITH_SWITCHES_ONE_FILE	t/basic.t	/^WITH_SWITCHES_ONE_FILE: {$/;"	l
 _argjoin	t/boolean.t	/^sub _argjoin {$/;"	s
 _big_split	t/lowercase.t	/^sub _big_split {$/;"	s
 _check	t/build_regex.t	/^sub _check {$/;"	s
 _check_command_for_taintedness	t/Util.pm	/^sub _check_command_for_taintedness {$/;"	s
 _check_for_ackrc	lib/App/Ack/ConfigFinder.pm	/^sub _check_for_ackrc {$/;"	s
 _check_for_mutex_options	lib/App/Ack/ConfigLoader.pm	/^sub _check_for_mutex_options {$/;"	s
+_check_it	t/highlighting.t	/^sub _check_it {$/;"	s
 _check_message	t/Util.pm	/^sub _check_message {$/;"	s
 _color_cell	lib/App/Ack.pm	/^sub _color_cell {$/;"	s
 _compare_opts	lib/App/Ack/ConfigLoader.pm	/^sub _compare_opts {$/;"	s
@@ -252,6 +249,8 @@ _generate_error_handler	lib/App/Ack/Files.pm	/^sub _generate_error_handler {$/;"
 _generate_ignore_dir	lib/App/Ack/ConfigLoader.pm	/^sub _generate_ignore_dir {$/;"	s
 _get_code_from_file	squash	/^sub _get_code_from_file {$/;"	s
 _get_good_and_bad	t/ack-w.t	/^sub _get_good_and_bad {$/;"	s
+_in	t/Util.pm	/^sub _in {$/;"	s
+_lineify	t/Util.pm	/^sub _lineify {$/;"	s
 _movies_are	t/boolean.t	/^sub _movies_are {$/;"	s
 _my_program	lib/App/Ack.pm	/^sub _my_program {$/;"	s
 _options_block	lib/App/Ack/ConfigDefault.pm	/^sub _options_block {$/;"	s
@@ -270,11 +269,13 @@ _save_rgb_grid	dev/generate-rgb-codes.pl	/^sub _save_rgb_grid {$/;"	s
 _show_color_grid	lib/App/Ack.pm	/^sub _show_color_grid {$/;"	s
 _show_hue_sat_grid	dev/generate-rgb-codes.pl	/^sub _show_hue_sat_grid {$/;"	s
 _show_rgb_grid	lib/App/Ack.pm	/^sub _show_rgb_grid {$/;"	s
+_split_args	t/Util.pm	/^sub _split_args {$/;"	s
 _test_home_ackrc	t/forbidden-options.t	/^sub _test_home_ackrc {$/;"	s
 _test_project_ackrc	t/forbidden-options.t	/^sub _test_project_ackrc {$/;"	s
 _type_handler	lib/App/Ack/ConfigLoader.pm	/^    sub _type_handler {$/;"	s
 _uninvert_filter	lib/App/Ack/ConfigLoader.pm	/^sub _uninvert_filter {$/;"	s
 _untaint	t/Barfly.pm	/^sub _untaint {$/;"	s
+_validate_test	t/Util.pm	/^sub _validate_test {$/;"	s
 _where	dev/generate-rgb-codes.pl	/^sub _where {$/;"	s
 _write_file	t/Util.pm	/^sub _write_file {$/;"	s
 ack_error_matches	t/Util.pm	/^sub ack_error_matches {$/;"	s
@@ -437,6 +438,7 @@ process_args	lib/App/Ack/ConfigLoader.pm	/^sub process_args {$/;"	s
 range_setup	ack	/^sub range_setup {$/;"	s
 read_file	t/Util.pm	/^sub read_file {$/;"	s
 read_rcfile	lib/App/Ack/ConfigLoader.pm	/^sub read_rcfile {$/;"	s
+read_tests	t/Util.pm	/^sub read_tests {$/;"	s
 regex_eq	t/Util.pm	/^sub regex_eq {$/;"	s
 register_filter	lib/App/Ack/Filter.pm	/^sub register_filter {$/;"	s
 remove_defaults_and_globals	t/noenv.t	/^sub remove_defaults_and_globals {$/;"	s

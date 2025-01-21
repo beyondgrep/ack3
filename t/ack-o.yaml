@@ -1,0 +1,25 @@
+---
+name: No -o
+args: 'the\s+\S+ t/text/gettysburg.txt'
+ordered: true
+stdout: |
+  but it can never forget what they did here. It is for us the living,
+  rather, to be dedicated here to the unfinished work which they who
+  here dedicated to the great task remaining before us -- that from these
+  the last full measure of devotion -- that we here highly resolve that
+  shall have a new birth of freedom -- and that government of the people,
+  by the people, for the people, shall not perish from the earth.
+
+---
+name: With -o
+args: 'the\s+\S+ t/text/gettysburg.txt -o'
+ordered: true
+stdout: |
+  the living,
+  the unfinished
+  the great
+  the last
+  the people,
+  the people,
+  the people,
+  the earth.

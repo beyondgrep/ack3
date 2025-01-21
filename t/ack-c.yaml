@@ -1,8 +1,8 @@
 ---
 name: -c
 args: God -c --sort-files t/text
-rc: 0
-output: |
+ordered: true
+stdout: |
   t/text/amontillado.txt:2
   t/text/bill-of-rights.txt:0
   t/text/constitution.txt:0
@@ -16,15 +16,14 @@ output: |
 ---
 name: -c and --no-filename
 args: God -c --no-filename t/text
-rc: 0
-output: |
+stdout: |
   5
 
 ---
 name: -c and -v
 args: the -i -w -v -c --sort-files t/text
-rc: 0
-output: |
+ordered: true
+stdout: |
   t/text/amontillado.txt:206
   t/text/bill-of-rights.txt:45
   t/text/constitution.txt:259
@@ -38,28 +37,25 @@ output: |
 ---
 name: -c and -l
 args: congress -i -l -c --sort-files t/text
-rc: 0
-output: |
+ordered: true
+stdout: |
   t/text/bill-of-rights.txt:1
   t/text/constitution.txt:29
 
 ---
 name: -c and -h
 args: Montresor -c -h t/text
-rc: 0
-output: |
+stdout: |
   3
 
 ---
 name: Normal count
 args: Montresor -c -h t/text/amontillado.txt
-rc: 0
-output: |
+stdout: |
   3
 
 ---
 name: Count with --not
 args: Montresor -c -h --not God t/text/amontillado.txt
-rc: 0
-output: |
+stdout: |
   2

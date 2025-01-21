@@ -26,6 +26,7 @@ on 'test' => sub {
     requires 'Scalar::Util'  => 0;
     requires 'Test::Harness' => '2.50'; # Something reasonably newish
     requires 'Test::More'    => '0.98'; # For subtest()
+    requires 'YAML::PP'      => 0;
 
     if ( $^O ne 'MSWin32' ) {
         requires 'IO::Pty' => 0;

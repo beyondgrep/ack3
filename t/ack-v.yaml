@@ -1,0 +1,38 @@
+---
+name: Normal case
+args: -v w t/text/ozymandias.txt
+ordered: true
+stdout: |
+  I met a traveller from an antique land
+  Stand in the desert... Near them, on the sand,
+  Which yet survive, stamped on these lifeless things,
+  The hand that mocked them, and the heart that fed:
+  'My name is Ozymandias, king of kings:
+  Nothing beside remains. Round the decay
+
+---
+name: Ignore case
+args: -i -v w t/text/ozymandias.txt
+ordered: true
+stdout: |
+  I met a traveller from an antique land
+  Stand in the desert... Near them, on the sand,
+  The hand that mocked them, and the heart that fed:
+  'My name is Ozymandias, king of kings:
+  Nothing beside remains. Round the decay
+
+---
+name: With not
+args: -i -v the --not them t/text/ozymandias.txt
+ordered: true
+stdout: |
+  I met a traveller from an antique land
+  Who said: Two vast and trunkless legs of stone
+  Stand in the desert... Near them, on the sand,
+  Half sunk, a shattered visage lies, whose frown,
+  And wrinkled lip, and sneer of cold command,
+  Tell that its sculptor well those passions read
+  The hand that mocked them, and the heart that fed:
+  'My name is Ozymandias, king of kings:
+  Look on my works, ye Mighty, and despair!'
+  Of that colossal wreck, boundless and bare

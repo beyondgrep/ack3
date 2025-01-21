@@ -1,0 +1,40 @@
+---
+name: Simple -l
+args:
+  - strict t/text -l
+  - strict t/text --files-with-matches
+stdout: |
+  t/text/bill-of-rights.txt
+  t/text/constitution.txt
+
+---
+name: Simple -L
+args:
+  - strict t/text -L
+  - strict t/text --files-without-matches
+stdout: |
+  t/text/amontillado.txt
+  t/text/gettysburg.txt
+  t/text/movies.txt
+  t/text/number.txt
+  t/text/numbered-text.txt
+  t/text/ozymandias.txt
+  t/text/raven.txt
+
+---
+name: -l with inverted match
+args:
+  - religion t/text -l -v
+  - religion t/text -l --invert-match
+  - religion t/text --files-with-matches -v
+  - religion t/text --files-with-matches --invert-match
+stdout: |
+  t/text/amontillado.txt
+  t/text/bill-of-rights.txt
+  t/text/constitution.txt
+  t/text/gettysburg.txt
+  t/text/movies.txt
+  t/text/number.txt
+  t/text/numbered-text.txt
+  t/text/ozymandias.txt
+  t/text/raven.txt
