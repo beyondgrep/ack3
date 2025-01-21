@@ -120,7 +120,7 @@ t/prescan-line-boundaries.t
 t/process-substitution.t
 t/runtests.pl
 t/trailing-whitespace.t
-t/zero.t
+t/zero.yaml
 
 t/etc/buttonhook.xml.xxx
 t/etc/shebang.empty.xxx
