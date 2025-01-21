@@ -1,6 +1,6 @@
 import glob
-import yaml
 import subprocess
+import yaml
 
 
 def test_via_yaml_data():
@@ -25,27 +25,23 @@ def massage_test(test: dict):
 
 
 def sorted_output(block: str):
-    if block:
-        return sorted([x.rstrip() for x in block.split("\n")])
-
-    return None
+    return sorted([x.rstrip() for x in block.split("\n")]) if block else None
 
 
 def run_test(test):
     for args in test["args"]:
-        args = args.split()
-        command = ["perl", "-Mblib", "ack", "--noenv"] + args
+        command = ["perl", "-Mblib", "ack", "--noenv"] + args.split()
         result = subprocess.run(
             command, capture_output=True, text=True, check=(not test["exitcode"])
         )
 
-    if test["exitcode"]:
-        assert result.returncode == test["exitcode"]
+        if test["exitcode"]:
+            assert result.returncode == test["exitcode"]
 
-    if "ordered" in test and test["ordered"]:
-        assert result.stdout == test["stdout"]
-    else:
-        assert sorted_output(result.stdout) == sorted_output(test["stdout"])
+        if "ordered" in test and test["ordered"]:
+            assert result.stdout == test["stdout"]
+        else:
+            assert sorted_output(result.stdout) == sorted_output(test["stdout"])
 
 
 test_via_yaml_data()
