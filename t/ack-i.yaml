@@ -1,0 +1,125 @@
+---
+name: Straight -i
+args:
+  - APPLE t/swamp/groceries/fruit t/swamp/groceries/junk t/swamp/groceries/meat -i
+  - APPLE t/swamp/groceries/fruit t/swamp/groceries/junk t/swamp/groceries/meat --ignore-case
+ordered: true
+stdout: |
+  t/swamp/groceries/fruit:1:apple
+  t/swamp/groceries/junk:1:apple fritters
+
+---
+name: No -i or -I
+args:
+  - foo
+  - foo -I
+  - foo --no-smart-case
+ordered: true
+stdin: |
+  Football
+  foo bar
+  foOtball
+  bluhblah
+  football
+stdout: |
+  foo bar
+  football
+
+---
+name: Normal -i
+args:
+  - foo -i
+  - foo --ignore-case
+  - Foo -i
+  - Foo --ignore-case
+ordered: true
+stdin: |
+  Football
+  foo bar
+  pickles
+  foOtball
+  bluhblah
+  football
+stdout: |
+  Football
+  foo bar
+  foOtball
+  football
+
+---
+name: Smartcase invoked
+args:
+  - foo --smart-case
+  - foo -S
+ordered: true
+stdin: |
+  football
+  foo bar
+  Football
+  foOtball
+stdout: |
+  football
+  foo bar
+  Football
+  foOtball
+
+---
+name: Smartcase invoked because of the case of the search string
+args:
+  - Foo --smart-case
+  - Foo -S
+ordered: true
+stdin: |
+  football
+  foo bar
+  Football
+  foOtball
+stdout: |
+  Football
+
+---
+name: -i overrides --smart-case
+args:
+  - Foo --smart-case -i
+  - foo --smart-case -i
+  - Foo -S -i
+  - foo -S -i
+ordered: true
+stdin: |
+  football
+  foo bar
+  Football
+  foOtball
+stdout: |
+  football
+  foo bar
+  Football
+  foOtball
+
+---
+name: -I overrides -i
+args:
+  - Foo -i -I
+  - Foo --ignore-case -I
+ordered: true
+stdin: |
+  Football
+  football
+  foo bar
+  foOtball
+stdout: |
+  Football
+
+---
+name: -I overrides --smart-case
+args:
+  - Foo --smart-case -I
+  - Foo -S -I
+ordered: true
+stdin: |
+  Football
+  football
+  foo bar
+  foOtball
+stdout: |
+  Football

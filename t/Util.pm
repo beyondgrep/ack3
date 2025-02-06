@@ -1341,6 +1341,7 @@ sub _validate_test {
         indent-stdout
         name
         ordered
+        stdin
         stderr
         stdout
     );

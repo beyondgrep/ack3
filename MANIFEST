@@ -47,8 +47,7 @@ t/ack-group.t
 t/ack-h.yaml
 t/ack-help-types.t
 t/ack-help.t
-t/ack-i.barfly
-t/ack-i.t
+t/ack-i.yaml
 t/ack-ignore-dir.t
 t/ack-ignore-file.t
 t/ack-k.yaml
