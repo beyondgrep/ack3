@@ -1,0 +1,130 @@
+---
+name: Straight -w
+args: -w foo
+ordered: true
+stdin: |
+  foo
+  foo bar
+  foobar
+  foot
+  underfoot
+  football
+  foo-foo football
+  End of the line foo
+  I pity da foo'.
+stdout: |
+  foo
+  foo bar
+  foo-foo football
+  End of the line foo
+  I pity da foo'.
+
+---
+name: -w and optional character
+args:
+  - -w foot?
+  - -w (foot?)
+  - "-w (?:foot?)"
+ordered: true
+stdin: |
+  foo
+  foot
+  Trampled underfoot
+  foobarf
+  foo-bar
+  foo-bart
+  Our ten-foot foo-bird is foobar.
+  football
+stdout: |
+  foo
+  foot
+  foo-bar
+  foo-bart
+  Our ten-foot foo-bird is foobar.
+
+---
+name: -w and optional character, highlighting
+args: -w foot? --underline
+ordered: true
+stdin: |
+  Trampled underfoot
+  foobarf
+  Our ten-foot foo-bird is foobar.
+  football
+stdout: |
+  Our ten-foot foo-bird is foobar.
+          ^^^^ ^^^
+
+---
+name: -w and optional group
+args:
+  - -w foo(bar)?
+ordered: true
+stdin: |
+  foo
+  foobar
+  foo-bar
+  foo-bart
+  Trampled underfoot
+  foobarf
+stdout: |
+  foo
+  foobar
+  foo-bar
+  foo-bart
+  
+---
+name: -w and alternation
+args:
+  - -w foo|bar
+  - -w (foo|bar)
+ordered: true
+stdin: |
+  bar
+  barfly
+  barometric
+  foo
+  fubar
+  schmfoo
+  schmofool
+  subarometric
+stdout: |
+  bar
+  foo
+
+---
+name: -w and function definition
+args:
+  - -w (set|get)_user_(name|perm)
+  - -w ((set|get)_user_(name|perm))
+  - "-w (?:(?:set|get)_user_(?:name|perm))"
+  - "-w (?:(set|get)_user_(name|perm))"
+  - "-w ((?:set|get)_user_(?:name|perm))"
+ordered: true
+stdin: |
+  get_user_perm
+  get_user_permission
+  reset_user_name
+  set_user_name
+stdout: |
+  get_user_perm
+  set_user_name
+
+---
+name: Single-letter words
+args:
+  - -w \w
+ordered: true
+stdin: |
+  A
+  b
+  c
+  !E!
+  NO
+  dd
+  xxx
+stdout: |
+  A
+  b
+  c
+  !E!

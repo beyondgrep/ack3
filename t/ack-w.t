@@ -3,17 +3,14 @@
 use warnings;
 use strict;
 
-use Test::More tests => 15;
+use Test::More tests => 8;
 
 use lib 't';
 use Util;
-use Barfly;
 
 prep_environment();
 
 my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
-
-Barfly->run_tests( 't/ack-w.barfly' );
 
 subtest '-w with trailing metachar \w' => sub {
     plan tests => 1;

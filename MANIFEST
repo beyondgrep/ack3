@@ -70,8 +70,8 @@ t/ack-underline.barfly
 t/ack-underline.t
 t/ack-v.yaml
 t/ack-version.t
-t/ack-w.barfly
 t/ack-w.t
+t/ack-w.yaml
 t/ack-x.t
 t/anchored.t
 t/bad-ackrc-opt.t
