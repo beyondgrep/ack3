@@ -27,7 +27,6 @@ lib/App/Ack/Filter/MatchGroup.pm
 
 squash
 
-t/Barfly.pm
 t/Util.pm
 t/test-pager
 
@@ -66,8 +65,6 @@ t/ack-s.t
 t/ack-show-types.t
 t/ack-type-del.t
 t/ack-type.t
-t/ack-underline.barfly
-t/ack-underline.t
 t/ack-v.yaml
 t/ack-version.t
 t/ack-w.t

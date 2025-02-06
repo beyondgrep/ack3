@@ -7,7 +7,6 @@ use lib 't';
 use Test::More tests => 8;
 
 use Util;
-use Barfly;
 
 prep_environment();
 

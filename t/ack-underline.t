@@ -3,19 +3,12 @@
 use warnings;
 use strict;
 
-use Test::More tests => 8;
+use Test::More tests => 7;
 
 use lib 't';
 use Util;
-use Barfly;
 
 prep_environment();
-
-# Run some basic tests.
-Barfly->run_tests( 't/ack-underline.barfly' );
-
-# Most of the rest of this file is done manually rather than in Barfly
-# because Barfly relies on --underline working correctly.
 
 my $bill_ = reslash( 't/text/bill-of-rights.txt' );
 my $getty = reslash( 't/text/gettysburg.txt' );
