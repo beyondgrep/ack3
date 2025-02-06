@@ -44,7 +44,7 @@ t/ack-f.yaml
 t/ack-files-from.t
 t/ack-g.t
 t/ack-group.t
-t/ack-h.t
+t/ack-h.yaml
 t/ack-help-types.t
 t/ack-help.t
 t/ack-i.barfly

@@ -1,0 +1,27 @@
+---
+name: No switches, one file
+args: strict t/swamp/options.pl
+stdout: |
+  use strict;
+
+---
+name: No switches, multiple files
+args: strict t/swamp/options.pl t/swamp/pipe-stress-freaks.F
+stdout: |
+  t/swamp/options.pl:2:use strict;
+
+---
+name: With switches, one file
+args:
+  - strict t/swamp/options.pl -H
+  - strict t/swamp/options.pl --with-filename
+stdout: |
+  t/swamp/options.pl:2:use strict;
+
+---
+name: With switches, multiple files
+args:
+  - strict t/swamp/options.pl t/swamp/crystallography-weenies.f -h
+  - strict t/swamp/options.pl t/swamp/crystallography-weenies.f --no-filename
+stdout: |
+  use strict;
