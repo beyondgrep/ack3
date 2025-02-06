@@ -1,0 +1,24 @@
+---
+name: -m
+args: -m 3 -w the t/text/bill-of-rights.txt t/text/constitution.txt
+stdout: |
+  t/text/bill-of-rights.txt:4:or prohibiting the free exercise thereof; or abridging the freedom of
+  t/text/bill-of-rights.txt:5:speech, or of the press; or the right of the people peaceably to assemble,
+  t/text/bill-of-rights.txt:6:and to petition the Government for a redress of grievances.
+  t/text/constitution.txt:3:We the People of the United States, in Order to form a more perfect
+  t/text/constitution.txt:4:Union, establish Justice, insure domestic Tranquility, provide for the
+  t/text/constitution.txt:5:common defense, promote the general Welfare, and secure the Blessings
+
+---
+name: -1
+args: -1 -w the t/text/bill-of-rights.txt t/text/constitution.txt
+stdout: |
+  t/text/bill-of-rights.txt:4:or prohibiting the free exercise thereof; or abridging the freedom of
+
+---
+name: -m with -l
+args: -m 3 -l -w --sort the t/text/
+stdout: |
+  t/text/amontillado.txt
+  t/text/bill-of-rights.txt
+  t/text/constitution.txt

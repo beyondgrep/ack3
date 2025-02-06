@@ -53,7 +53,7 @@ t/ack-ignore-dir.t
 t/ack-ignore-file.t
 t/ack-k.yaml
 t/ack-l.yaml
-t/ack-m.t
+t/ack-m.yaml
 t/ack-man.t
 t/ack-match.t
 t/ack-n.t
