@@ -1,0 +1,154 @@
+---
+name: Dollar 1
+args: --output=x$1x free(\S+) t/text/
+stdout: |
+  t/text/bill-of-rights.txt:4:xdomx
+  t/text/gettysburg.txt:23:xdomx
+
+---
+name: Dollar underbar
+args: free --output=$_x$_ t/text/gettysburg.txt
+stdout: |
+  shall have a new birth of freedom -- and that government of the people,xshall have a new birth of freedom -- and that government of the people,
+
+---
+name: Dollar underbar with multiple files
+args: free --sort-files -h --output=$_ t/text/
+ordered: true
+stdout: |
+  or prohibiting the free exercise thereof; or abridging the freedom of
+  or prohibiting the free exercise thereof; or abridging the freedom of
+  A well regulated Militia, being necessary to the security of a free State,
+  Number of free Persons, including those bound to Service for a Term
+  shall have a new birth of freedom -- and that government of the people,
+
+---
+name: Double quotes
+args: (free\w*) --sort-files --output="$1" t/text/
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:4:"free"
+  t/text/bill-of-rights.txt:4:"freedom"
+  t/text/bill-of-rights.txt:10:"free"
+  t/text/constitution.txt:32:"free"
+  t/text/gettysburg.txt:23:"freedom"
+
+---
+name: Match
+args: free --output=$& t/text/gettysburg.txt
+stdout: |
+  free
+
+---
+name: Match multiple files
+args: free --output=$& --sort-files t/text/
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:4:free
+  t/text/bill-of-rights.txt:4:free
+  t/text/bill-of-rights.txt:10:free
+  t/text/constitution.txt:32:free
+  t/text/gettysburg.txt:23:free
+
+---
+name: Prematch
+args: freedom --output=$` t/text/gettysburg.txt
+stdout: "shall have a new birth of "
+
+---
+name: Prematch multiple files
+args: freedom -h --output=$` t/text/
+ordered: true
+# Note the trailing whitespace on the two lines of output.
+stdout: |
+  or prohibiting the free exercise thereof; or abridging the 
+  shall have a new birth of 
+
+---
+name: Postmatch
+args: freedom --output=$' t/text/gettysburg.txt
+indent-stdout: 1
+stdout:
+  -- and that government of the people,
+
+---
+name: Postmatch multiple files
+args: freedom -h --output=$' t/text/
+indent-stdout: 1
+stdout: |
+  of
+  -- and that government of the people,
+
+---
+name: Subpattern match
+args: (love).+(God).+(Montresor) --output=$1-$2-$3 t/text/amontillado.txt
+stdout: |
+  love-God-Montresor
+
+---
+name: Subpattern match in multiple files
+args: (\w+)\s(free)\s(\w+) -h --sort-files --output=$1-$2-$3 t/text/
+ordered: true
+stdout: |
+  the-free-exercise
+  a-free-State
+  of-free-Persons
+
+---
+name: Input line number
+args: "quartered --output=line:$. t/text/bill-of-rights.txt"
+stdout: |
+  line:15
+
+---
+name: Input line number in multiple files
+args: "free --output=line:$. --sort t/text/"
+ordered: true
+stdout: |
+  t/text/bill-of-rights.txt:4:line:4
+  t/text/bill-of-rights.txt:4:line:4
+  t/text/bill-of-rights.txt:10:line:10
+  t/text/constitution.txt:32:line:32
+  t/text/gettysburg.txt:23:line:23
+
+---
+name: Last paren match
+args: (love)|(hate) --sort-files --output=$+ t/text/
+ordered: true
+stdout: |
+  t/text/amontillado.txt:124:love
+  t/text/amontillado.txt:309:love
+  t/text/amontillado.txt:311:love
+  t/text/constitution.txt:267:hate
+
+---
+name: Combos 1
+args: (love)|(hate) --sort-files --output=$+-$.-$' t/text/
+ordered: true
+stdout: |
+  t/text/amontillado.txt:124:love-124-d; you are happy,
+  t/text/amontillado.txt:309:love-309- of God, Montresor!"
+  t/text/amontillado.txt:311:love-311- of God!"
+  t/text/constitution.txt:267:hate-267-ver, from any King, Prince, or foreign State.
+
+---
+name: Combos 2
+args: (happy) --sort-files -i --output=$1-$&-$1 t/text/
+ordered: true
+stdout: |
+  t/text/amontillado.txt:124:happy-happy-happy
+  t/text/raven.txt:73:happy-happy-happy
+
+---
+name: Combos 3
+args: (happy) --sort-files -i --output=$`---$'--$+ t/text/
+ordered: true
+stdout: |
+  t/text/amontillado.txt:124:precious. You are rich, respected, admired, beloved; you are ---,--happy
+  t/text/raven.txt:73:Caught from some un--- master whom unmerciful Disaster--happy
+
+---
+name: Numeric substitution
+args: (\d\d) --output=Section-$1-on-line-$. t/text/bill-of-rights.txt t/text/constitution.txt
+stdout: |
+  t/text/constitution.txt:269:Section-10-on-line-269
