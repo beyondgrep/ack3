@@ -90,6 +90,7 @@ t/double-hyphen.t
 t/empty-lines.t
 t/exit-code.t
 t/ext-filter.t
+t/file-filter-inverted.yaml
 t/file-iterator.t
 t/file-permission.t
 t/filetype-detection.yaml
@@ -104,7 +105,6 @@ t/incomplete-last-line.t
 t/interactive.t
 t/invalid-ackrc.t
 t/invalid-options.t
-t/inverted-file-filter.t
 t/is-filter.t
 t/line-endings.t
 t/longopts.t
