@@ -81,7 +81,6 @@ args:
 ordered: true
 stdin: |
   bar
-  barfly
   barometric
   foo
   fubar
@@ -111,20 +110,55 @@ stdout: |
   set_user_name
 
 ---
-name: Single-letter words
+name: single-letter words
 args:
   - -w \w
 ordered: true
 stdin: |
-  A
+  a
   b
   c
-  !E!
-  NO
+  !e!
+  no
   dd
   xxx
 stdout: |
-  A
+  a
   b
   c
-  !E!
+  !e!
+
+---
+name: -w with trailing metacharacters
+args:
+  - Milit\w\w -w -h --sort-files t/text/bill-of-rights.txt
+  - Milit.. -w -h --sort-files t/text/bill-of-rights.txt
+ordered: true
+stdout: |
+  A well regulated Militia, being necessary to the security of a free State,
+  cases arising in the land or naval forces, or in the Militia, when in
+
+---
+name: Begins and ends with word char
+args: Militia -w t/text/bill-of-rights.txt
+ordered: true
+stdout: |
+  A well regulated Militia, being necessary to the security of a free State,
+  cases arising in the land or naval forces, or in the Militia, when in
+
+---
+name: Begins/ends with grouping parens. First/last char of regex is not a word, disabling the word boundary check at the end of the match.
+args:
+  - Militia() -w t/text/bill-of-rights.txt
+  - ()Militia -w t/text/bill-of-rights.txt
+  - (Militia) -w t/text/bill-of-rights.txt
+ordered: true
+stdout: |
+  A well regulated Militia, being necessary to the security of a free State,
+  cases arising in the land or naval forces, or in the Militia, when in
+
+---
+name: Alternating numbers
+args: 650|660|670|680 -w t/text/number.txt
+exitcode: 1
+stdout: ""

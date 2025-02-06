@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 8;
+use Test::More tests => 1;
 
 use lib 't';
 use Util;
@@ -11,111 +11,6 @@ use Util;
 prep_environment();
 
 my $ACK = $ENV{ACK_TEST_STANDALONE} ? 'ack-standalone' : 'ack';
-
-subtest '-w with trailing metachar \w' => sub {
-    plan tests => 1;
-
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = ( 'Milit\w\w', qw( -w -h --sort-files ) );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for militia with metacharacters' );
-};
-
-
-subtest '-w with trailing dot' => sub {
-    plan tests => 1;
-
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = ( 'Milit..', qw( -w -h --sort-files ) );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Milit..' );
-};
-
-
-subtest 'Begins and ends with word char' => sub {
-    plan tests => 1;
-
-    # Normal case of whole word match.
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = qw( Militia -w -h --sort-files );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia as whole word' );
-};
-
-
-subtest 'Ends with grouping parens' => sub {
-    plan tests => 1;
-
-    # The last character of the regexp is not a word, disabling the word boundary check at the end of the match.
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = ( 'Militia()', qw( -w -h --sort-files ) );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not end with word char' );
-};
-
-
-subtest 'Begins with grouping parens' => sub {
-    plan tests => 1;
-
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = ( '()Militia', qw( -w -h --sort-files ) );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not begin with word char' );
-};
-
-
-subtest 'Wrapped in grouping parens' => sub {
-    plan tests => 1;
-
-    my @expected = line_split( <<'HERE' );
-A well regulated Militia, being necessary to the security of a free State,
-cases arising in the land or naval forces, or in the Militia, when in
-HERE
-
-    my @files = qw( t/text/bill-of-rights.txt );
-    my @args = ( '(Militia)', qw( -w -h --sort-files ) );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Looking for Militia with word flag, but regexp does not begin or end with word char' );
-};
-
-
-# Test for issue ack2#443
-subtest 'Alternating numbers' => sub {
-    plan tests => 1;
-
-    my @expected = ();
-
-    my @files = qw( t/text/number.txt );
-
-    my @args = ( '650|660|670|680', '-w' );
-
-    ack_lists_match( [ @args, @files ], \@expected, 'Alternations should also respect boundaries when using -w' );
-};
 
 
 # In ack3, we try to warn people if they are misusing -w.
