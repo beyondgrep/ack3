@@ -1,0 +1,46 @@
+---
+name: Lua shebang
+args:
+  - t/swamp -f -t lua
+  - t/swamp -f --lua
+stdout: |
+  t/swamp/lua-shebang-test
+
+---
+name: R extensions
+args:
+  - -f -t rr
+  - -f --rr
+stdout: |
+  t/swamp/example.R
+
+---
+name: ASP.NET
+args:
+  - -f -t aspx
+  - -f --aspx
+stdout: |
+  t/swamp/MasterPage.master
+  t/swamp/Sample.ascx
+  t/swamp/Sample.asmx
+  t/swamp/sample.aspx
+  t/swamp/service.svc
+
+---
+name: Python
+args:
+  - t/swamp -f -t python
+  - t/swamp -f --python
+stdout: |
+  t/swamp/test.py
+  t/swamp/foo_test.py
+  t/swamp/test_foo.py
+
+---
+name: Pytest
+args:
+  - t/swamp -f -t pytest
+  - t/swamp -f --pytest
+stdout: |
+  t/swamp/foo_test.py
+  t/swamp/test_foo.py
