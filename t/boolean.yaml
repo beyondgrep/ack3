@@ -1,0 +1,48 @@
+---
+name: No booleans
+args: -i nevermore t/text/raven.txt
+ordered: true
+indent-stdout: 4
+stdout: |
+  Quoth the Raven, "Nevermore."
+  With such name as "Nevermore."
+  Then the bird said, "Nevermore."
+  Of 'Never -- nevermore.'
+  Meant in croaking "Nevermore."
+  She shall press, ah, nevermore!
+  Quoth the Raven, "Nevermore."
+  Quoth the Raven, "Nevermore."
+  Quoth the Raven, "Nevermore."
+  Quoth the Raven, "Nevermore."
+  Shall be lifted--nevermore!
+
+---
+name: Nevermore not quoth
+args: -i nevermore --not quoth t/text/raven.txt
+ordered: true
+indent-stdout: 4
+stdout: |
+  With such name as "Nevermore."
+  Then the bird said, "Nevermore."
+  Of 'Never -- nevermore.'
+  Meant in croaking "Nevermore."
+  She shall press, ah, nevermore!
+  Shall be lifted--nevermore!
+
+---
+name: Nevermore not quoth not the
+args: -i nevermore --not quoth --not the t/text/raven.txt
+ordered: true
+indent-stdout: 4
+stdout: |
+  With such name as "Nevermore."
+  Of 'Never -- nevermore.'
+  Meant in croaking "Nevermore."
+  She shall press, ah, nevermore!
+  Shall be lifted--nevermore!
+
+---
+name: Quoth not nevermore
+args: quoth --not nevermore -i t/text/raven.txt
+exitcode: 1
+stdout: ""

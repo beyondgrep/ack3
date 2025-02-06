@@ -78,6 +78,7 @@ t/anchored.t
 t/bad-ackrc-opt.t
 t/basic.yaml
 t/boolean.t
+t/boolean.yaml
 t/build_regex.t
 t/command-line-files.t
 t/config-backwards-compat.t

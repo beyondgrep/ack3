@@ -1267,7 +1267,7 @@ sub permutate {
 
     return map {
         my ($f, @r) = list_with_x_first($_, @_);
-        map [$f, @$_], permutate(@r);
+        map [$f, @{$_}], permutate(@r);
     } 0..$#_;
 }
 
@@ -1287,6 +1287,11 @@ sub read_tests {
 
     for my $test ( @tests ) {
         $test->{stdout} = _lineify( $test->{stdout} );
+
+        if ( my $n = $test->{'indent-stdout'} ) {
+            my $indent = ' ' x $n;
+            $_ = "$indent$_" for @{$test->{stdout}};
+        }
 
         $test->{args} = _split_args( $test->{args} );
 
@@ -1333,6 +1338,7 @@ sub _validate_test {
     my @valid_keys = qw(
         args
         exitcode
+        indent-stdout
         name
         ordered
         stderr
