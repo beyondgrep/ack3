@@ -9,16 +9,16 @@ stdout: |
 ---
 name: R extensions
 args:
-  - -f -t rr
-  - -f --rr
+  - t/swamp -f -t rr
+  - t/swamp -f --rr
 stdout: |
   t/swamp/example.R
 
 ---
 name: ASP.NET
 args:
-  - -f -t aspx
-  - -f --aspx
+  - t/swamp -f -t aspx
+  - t/swamp -f --aspx
 stdout: |
   t/swamp/MasterPage.master
   t/swamp/Sample.ascx

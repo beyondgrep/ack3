@@ -2,7 +2,8 @@ History file for ack 3.  https://beyondgrep.com/
 
 NEXT
 ========================================
-ack now needs YAML::PP to run its tests.
+ack now needs YAML::PP to run its tests. Many of ack's tests are stored in
+YAML files for flexibility.
 
 [FIXES]
 ack's would always set a return code of 1 if -c was used.  Now it properly
