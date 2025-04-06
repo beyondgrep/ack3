@@ -1,0 +1,13 @@
+---
+# The unquoted "+" in "svn+ssh" will make the match fail.
+name: Plus sign without -Q
+args: svn+ssh t/swamp
+exitcode: 1
+stdout:
+
+---
+name: Plus sign with -Q
+args: svn+ssh t/swamp -Q
+stdout: |
+  t/swamp/Rakefile:44:  baseurl = "svn+ssh:/#{ENV['USER']}@rubyforge.org/var/svn/#{PKG_NAME}"
+  t/swamp/Rakefile:50:  baseurl = "svn+ssh:/#{ENV['USER']}@rubyforge.org/var/svn/#{PKG_NAME}"
