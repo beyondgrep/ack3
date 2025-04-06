@@ -1,7 +1,6 @@
 ---
-name: -c
-args: God -c --sort-files t/text
-ordered: true
+name: -c finds things
+args: God -c t/text
 stdout: |
   t/text/amontillado.txt:2
   t/text/bill-of-rights.txt:0
@@ -12,6 +11,21 @@ stdout: |
   t/text/numbered-text.txt:0
   t/text/ozymandias.txt:0
   t/text/raven.txt:2
+
+---
+name: -c finds nothing
+args: NOTTHERE -c t/text
+exitcode: 1
+stdout: |
+  t/text/amontillado.txt:0
+  t/text/bill-of-rights.txt:0
+  t/text/constitution.txt:0
+  t/text/gettysburg.txt:0
+  t/text/movies.txt:0
+  t/text/number.txt:0
+  t/text/numbered-text.txt:0
+  t/text/ozymandias.txt:0
+  t/text/raven.txt:0
 
 ---
 name: -c and --no-filename
@@ -41,6 +55,13 @@ ordered: true
 stdout: |
   t/text/bill-of-rights.txt:1
   t/text/constitution.txt:29
+
+---
+name: -c and -l find nothing
+args: NOTTHERE -i -l -c --sort-files t/text
+ordered: true
+exitcode: 1
+stdout:
 
 ---
 name: -c and -h
