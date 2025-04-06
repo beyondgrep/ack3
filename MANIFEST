@@ -72,7 +72,7 @@ t/ack-version.t
 t/ack-w.t
 t/ack-w.yaml
 t/ack-x.t
-t/anchored.t
+t/anchored.yaml
 t/bad-ackrc-opt.t
 t/basic.yaml
 t/boolean.t
