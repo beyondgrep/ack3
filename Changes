@@ -1,12 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.8.2      Sun Apr  6 10:45:04 CDT 2025
 ========================================
 ack now needs YAML::PP to run its tests. Many of ack's tests are stored in
 YAML files for flexibility.
 
 [FIXES]
-ack's would always set a return code of 1 if -c was used.  Now it properly
+ack would always set a return code of 1 if -c was used.  Now it properly
 returns 1 if no files match, and 0 if any files match.
 
 
