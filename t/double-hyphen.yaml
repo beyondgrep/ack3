@@ -1,0 +1,9 @@
+---
+name: Double-hyphen allows hyphens after
+args: -i --sort -- -E t/text
+  # The -i must be in force for the /-E/ to find "-e"
+ordered: true
+stdout: |
+  t/text/amontillado.txt:284:to the yells of him who clamored. I re-echoed--I aided--I surpassed
+  t/text/amontillado.txt:327:I re-erected the old rampart of bones. For the half of a century
+  t/text/bill-of-rights.txt:53:fact tried by a jury, shall be otherwise re-examined in any Court of

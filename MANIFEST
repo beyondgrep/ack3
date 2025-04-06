@@ -42,6 +42,7 @@ t/ack-dump.t
 t/ack-f.yaml
 t/ack-files-from.t
 t/ack-g.t
+t/ack-g.yaml
 t/ack-group.t
 t/ack-h.yaml
 t/ack-help-types.t
@@ -84,7 +85,7 @@ t/config-loader.t
 t/context-with-newlines.t
 t/context.t
 t/default-filter.t
-t/double-hyphen.t
+t/double-hyphen.yaml
 t/empty-lines.t
 t/exit-code.t
 t/ext-filter.t
