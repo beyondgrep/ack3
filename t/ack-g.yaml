@@ -1,0 +1,121 @@
+---
+name: No metacharacters
+args: -g Makefile t/
+stdout: |
+  t/swamp/Makefile
+  t/swamp/Makefile.PL
+  t/swamp/notaMakefile
+
+---
+name: With metacharacters
+args: -g swam.......htm t/
+stdout: |
+  t/swamp/html.htm
+  t/swamp/html.html
+
+---
+name: Front anchor
+args: -g ^t.swamp.c t/swamp
+stdout: |
+  t/swamp/c-header.h
+  t/swamp/c-source.c
+  t/swamp/constitution-100k.pl
+  t/swamp/crystallography-weenies.f
+
+---
+name: Back anchor
+args: -g pl$ t/swamp
+stdout: |
+  t/swamp/constitution-100k.pl
+  t/swamp/options-crlf.pl
+  t/swamp/options.pl
+  t/swamp/perl.pl
+
+---
+name: Case-insensitive via -i
+args: -i -g PIPE t/swamp
+stdout: |
+  t/swamp/pipe-stress-freaks.F
+
+---
+name: Case-insensitive via (?i:)
+args: -g (?i:PIPE) t/swamp
+stdout: |
+  t/swamp/pipe-stress-freaks.F
+
+---
+name: Negate -i via -I
+args: -i -I -g PIPE t/swamp
+exitcode: 1
+stdout:
+
+---
+name: Negate -I via -i
+args: -I -i -g PIPE t/swamp
+stdout: |
+  t/swamp/pipe-stress-freaks.F
+
+---
+name: File on command line is always searched
+args: -g emacs t/swamp/#emacs-workfile.pl#
+stdout: |
+  t/swamp/#emacs-workfile.pl#
+
+---
+name: File on command line is always searched, even with wrong filetype
+args: -t html -g notes t/swamp/notes.md
+stdout: |
+  t/swamp/notes.md
+
+---
+name: -Q works on -g, part 1
+args: -g file.bar$ t
+stdout: |
+  t/swamp/file.bar
+
+---
+name: -Q works on -g, part 2
+args: -g file.bar$ t -Q
+exitcode: 1
+stdout: |
+
+---
+name: -w works on -g
+args: -w -g number t/text
+stdout: |
+  t/text/number.txt
+
+---
+name: -v works on -g
+args: -v -g n t/text
+stdout: |
+  t/text/bill-of-rights.txt
+  t/text/gettysburg.txt
+  t/text/movies.txt
+
+---
+name: --smart-case works on -g
+args: --smart-case -g f$ t/swamp
+stdout: |
+  t/swamp/pipe-stress-freaks.F
+  t/swamp/crystallography-weenies.f
+
+---
+name: --smart-case works on -g
+args: --smart-case -g F$ t/swamp
+stdout: |
+  t/swamp/pipe-stress-freaks.F
+
+---
+name: -g on a path
+args: -g text t/text
+stdout: |
+  t/text/amontillado.txt
+  t/text/bill-of-rights.txt
+  t/text/constitution.txt
+  t/text/gettysburg.txt
+  t/text/movies.txt
+  t/text/number.txt
+  t/text/numbered-text.txt
+  t/text/ozymandias.txt
+  t/text/raven.txt
