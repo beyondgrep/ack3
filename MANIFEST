@@ -32,7 +32,7 @@ t/test-pager
 
 t/00-load.t
 t/FilterTest.pm
-t/ack-1.t
+t/ack-1.yaml
 t/ack-Q.t
 t/ack-c.yaml
 t/ack-color.t

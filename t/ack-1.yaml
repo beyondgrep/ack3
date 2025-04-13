@@ -1,0 +1,36 @@
+---
+name: All the Montresors
+args: Montresor -h t/text
+stdout: |
+  the catacombs of the Montresors.
+  "The Montresors," I replied, "were a great and numerous family."
+  "For the love of God, Montresor!"
+
+---
+name: Stop at one Montresor
+args: Montresor -1 -h t/text
+stdout: |
+  the catacombs of the Montresors.
+
+---
+name: With dash v
+args: c -1 -h -v t/text/raven.txt
+stdout: '    Only this and nothing more."'
+
+---
+name: Dash f
+args: -1 -f --sort-files t/swamp
+stdout:
+  t/swamp/0
+
+---
+name: Dash g
+args: -1 -g fresh t/
+stdout:
+  t/swamp/fresh.css
+
+---
+name: Dash l
+args: -1 -l --sort-files the t/text
+stdout: |
+  t/text/amontillado.txt
