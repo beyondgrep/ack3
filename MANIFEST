@@ -84,6 +84,7 @@ t/config-finder.t
 t/config-loader.t
 t/context-with-newlines.t
 t/context.t
+t/context.yaml
 t/default-filter.t
 t/double-hyphen.yaml
 t/empty-lines.t

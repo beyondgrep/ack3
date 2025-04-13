@@ -1,0 +1,107 @@
+---
+name: Checks also beginning of file.
+args: a -w -B1 t/text/ozymandias.txt
+ordered: true
+stdout: |
+  I met a traveller from an antique land
+  --
+  Stand in the desert... Near them, on the sand,
+  Half sunk, a shattered visage lies, whose frown,
+
+---
+name: Before with line number
+args: sand --sort-files -B2 t/text/ozymandias.txt t/text/bill-of-rights.txt
+ordered: true
+stdout: |
+  t/text/ozymandias.txt-1-I met a traveller from an antique land
+  t/text/ozymandias.txt-2-Who said: Two vast and trunkless legs of stone
+  t/text/ozymandias.txt:3:Stand in the desert... Near them, on the sand,
+  --
+  t/text/ozymandias.txt-12-Nothing beside remains. Round the decay
+  t/text/ozymandias.txt-13-Of that colossal wreck, boundless and bare
+  t/text/ozymandias.txt:14:The lone and level sands stretch far away.
+
+---
+name: Checks also end of file.
+args: sands -A2 t/text/ozymandias.txt
+ordered: true
+stdout: |
+  The lone and level sands stretch far away.
+
+---
+name: Context defaults to 2.
+args: Montresor -w -C t/text/amontillado.txt
+stdout: |
+  "Yes,"I said, "let us be gone."
+
+  "For the love of God, Montresor!"
+
+  "Yes," I said, "for the love of God!"
+
+---
+name: Context 1
+args: foot -w -C 1 t/text/amontillado.txt
+stdout: |
+  requesting him to be cautious as he followed. We came at length to
+  the foot of the descent, and stood together on the damp ground of
+  the catacombs of the Montresors.
+  --
+
+  "A huge human foot d'or, in a field azure; the foot crushes a serpent
+  rampant whose fangs are imbedded in the heel."
+
+---
+name: Context 0 means no context
+args: Montresor -w -C 0 t/text/amontillado.txt
+stdout: |
+  "For the love of God, Montresor!"
+
+---
+name: -1 must not stop the ending context from displaying.
+args: right -1 -C1 t/text/bill-of-rights.txt
+stdout: |
+  or prohibiting the free exercise thereof; or abridging the freedom of
+  speech, or of the press; or the right of the people peaceably to assemble,
+  and to petition the Government for a redress of grievances.
+
+---
+name: -C with overlapping contexts (adjacent lines)
+args: -C 05|06 t/text/numbered-text.txt
+stdout: |
+  This is line 03
+  This is line 04
+  This is line 05
+  This is line 06
+  This is line 07
+  This is line 08
+
+---
+name: -C with contexts that touch.
+args: -C 03|08 t/text/numbered-text.txt
+stdout: |
+  This is line 01
+  This is line 02
+  This is line 03
+  This is line 04
+  This is line 05
+  This is line 06
+  This is line 07
+  This is line 08
+  This is line 09
+  This is line 10
+
+---
+name: -C with contexts that just don't touch.
+args: -C 03|09 t/text/numbered-text.txt
+stdout: |
+  This is line 01
+  This is line 02
+  This is line 03
+  This is line 04
+  This is line 05
+  --
+  This is line 07
+  This is line 08
+  This is line 09
+  This is line 10
+  This is line 11
