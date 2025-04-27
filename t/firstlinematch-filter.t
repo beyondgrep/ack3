@@ -14,7 +14,6 @@ filter_test(
         't/swamp/#emacs-workfile.pl#',
         't/swamp/0',
         't/swamp/Makefile.PL',
-        't/swamp/__pycache__/notes.pl',
         't/swamp/options-crlf.pl',
         't/swamp/options.pl',
         't/swamp/options.pl.bak',

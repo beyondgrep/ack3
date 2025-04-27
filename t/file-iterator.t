@@ -34,7 +34,6 @@ UNFILTERED: {
 
     sets_match( \@files, [qw(
             t/swamp/0
-            t/swamp/__pycache__/notes.pl
             t/swamp/blib/ignore.pm
             t/swamp/blib/ignore.pod
             t/swamp/constitution-100k.pl
