@@ -140,6 +140,9 @@ test_xt: all
 
 test_all: test_classic test_standalone test_xt
 
+pytest: all
+	pytest --log-cli-level=INFO
+
 PROF_ARGS = -Mblib blib/script/ack foo ~/parrot
 
 nytprof: all

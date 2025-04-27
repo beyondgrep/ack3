@@ -1,47 +1,88 @@
+import difflib
 import glob
+import logging
 import subprocess
 import yaml
 
 
-def test_via_yaml_data():
-    filenames = glob.glob("t/*.yaml")
+logger = logging.getLogger(__name__)
+
+
+def test_all_yaml_files():
+    filenames = glob.glob('t/*.yaml')
     for filename in filenames:
-        with open(filename, "r") as f:
-            tests = yaml.load_all(f, yaml.FullLoader)
-            for test in tests:
-                test = massage_test(test)
-                run_test(test)
+        logger.info('YAML: %s' % filename)
+        with open(filename, 'r') as f:
+            cases = yaml.load_all(f, yaml.FullLoader)
+            for case in cases:
+                case = massage_case(case)
+                run_case(case)
 
 
-def massage_test(test: dict):
-    if "exitcode" not in test:
-        test["exitcode"] = 0
+def massage_case(case: dict):
+    """
+    Takes the raw case from the YAML and sets defaults.
+    """
+    if 'exitcode' not in case:
+        case['exitcode'] = 0
 
-    # Make an array of args arrays out of it if it"s not already.
-    if not isinstance(test["args"], list):
-        test["args"] = [test["args"]]
+    # Make an array of args arrays out of it if it's not already.
+    if not isinstance(case['args'], list):
+        case['args'] = [case['args']]
 
-    return test
+    if case['stdout'] is None:
+        case['stdout'] = ''
+
+    return case
 
 
-def sorted_output(block: str):
-    return sorted([x.rstrip() for x in block.split("\n")]) if block else None
+def expected_lines(test):
+    lines = test['stdout'].splitlines()
+    if indent := test.get('indent-stdout', 0):
+        lines = [' ' * indent + x for x in lines]
+
+    return lines
 
 
-def run_test(test):
-    for args in test["args"]:
-        command = ["perl", "-Mblib", "ack", "--noenv"] + args.split()
+def show_diff(exp, got):
+    """
+    Shows the diffs between two sets of strings
+    """
+    diff = '\n'.join(
+        difflib.unified_diff(
+            exp, got, fromfile='expected', tofile='got', lineterm=''
+        )
+    )
+    print(diff)
+
+
+def run_case(case):
+    """
+    Runs an individual case from the YAML.
+    """
+    logger.info('    Case: %s' % case['name'])
+    for args in case['args']:
+        command = ['perl', '-Mblib', 'ack', '--noenv'] + args.split()
+        logger.info('    Command: %s' % ' '.join(command))
         result = subprocess.run(
-            command, capture_output=True, text=True, check=(not test["exitcode"])
+            command,
+            input=case.get('stdin',None),
+            capture_output=True,
+            text=True,
+            check=(not case['exitcode']),
         )
 
-        if test["exitcode"]:
-            assert result.returncode == test["exitcode"]
+        if case['exitcode']:
+            assert result.returncode == case['exitcode']
 
-        if "ordered" in test and test["ordered"]:
-            assert result.stdout == test["stdout"]
-        else:
-            assert sorted_output(result.stdout) == sorted_output(test["stdout"])
+        exp_lines = expected_lines(case)
+        got_lines = result.stdout.splitlines()
+        if not case.get('ordered', False):
+            got_lines = sorted(got_lines)
+            exp_lines = sorted(exp_lines)
+
+        # show_diff(exp_lines, got_lines)
+        assert got_lines == exp_lines
 
 
-test_via_yaml_data()
+test_all_yaml_files()
