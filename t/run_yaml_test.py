@@ -1,18 +1,29 @@
 import difflib
 import glob
 import logging
+import os
 import subprocess
-import yaml
+import sys
+
+
+try:
+    import yaml
+except ImportError:
+    print('Unable to import yaml module')
+    sys.exit(1)
 
 
 logger = logging.getLogger(__name__)
 
 
 def test_all_yaml_files():
+    """
+    Walk all the YAML files and run their tests.
+    """
     filenames = glob.glob('t/*.yaml')
     for filename in filenames:
         logger.info('YAML: %s' % filename)
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding='UTF-8') as f:
             cases = yaml.load_all(f, yaml.FullLoader)
             for case in cases:
                 case = massage_case(case)
@@ -36,9 +47,12 @@ def massage_case(case: dict):
     return case
 
 
-def expected_lines(test):
-    lines = test['stdout'].splitlines()
-    if indent := test.get('indent-stdout', 0):
+def expected_lines(case):
+    """
+    Gets the lines expected from the case, adjusting on the settings.
+    """
+    lines = case['stdout'].splitlines()
+    if indent := case.get('indent-stdout', 0):
         lines = [' ' * indent + x for x in lines]
 
     return lines
@@ -62,11 +76,15 @@ def run_case(case):
     """
     logger.info('    Case: %s' % case['name'])
     for args in case['args']:
-        command = ['perl', '-Mblib', 'ack', '--noenv'] + args.split()
+        if os.getenv('DIRK'):
+            command = ['./dirk']
+        else:
+            command = ['perl', '-Mblib', 'ack', '--noenv']
+        command += args.split()
         logger.info('    Command: %s' % ' '.join(command))
         result = subprocess.run(
             command,
-            input=case.get('stdin',None),
+            input=case.get('stdin', None),
             capture_output=True,
             text=True,
             check=(not case['exitcode']),

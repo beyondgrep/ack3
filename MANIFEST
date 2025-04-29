@@ -119,6 +119,7 @@ t/noenv.t
 t/prescan-line-boundaries.t
 t/process-substitution.t
 t/runtests.pl
+t/run_yaml_test.py
 t/trailing-whitespace.t
 t/zero.yaml
 
