@@ -82,13 +82,21 @@ def run_case(case):
             command = ['perl', '-Mblib', 'ack', '--noenv']
         command += args.split()
         logger.info('    Command: %s' % ' '.join(command))
-        result = subprocess.run(
-            command,
-            input=case.get('stdin', None),
-            capture_output=True,
-            text=True,
-            check=(not case['exitcode']),
-        )
+
+        try:
+            result = subprocess.run(
+                command,
+                input=case.get('stdin', None),
+                capture_output=True,
+                text=True,
+                check=(not case['exitcode']),
+            )
+        except subprocess.CalledProcessError as e:
+            print('STDOUT from', command)
+            print(repr(e.stdout))
+            print('STDERR from', command)
+            print(repr(e.stderr))
+            raise
 
         if case['exitcode']:
             assert result.returncode == case['exitcode']
