@@ -77,7 +77,7 @@ def run_case(case):
     logger.info('    Case: %s' % case['name'])
     for args in case['args']:
         if os.getenv('DIRK'):
-            command = ['./dirk']
+            command = ['./dirk', '--nocolor']
         else:
             command = ['perl', '-Mblib', 'ack', '--noenv']
         command += args.split()
