@@ -2,6 +2,7 @@
 name: Lua shebang
 args:
   - t/swamp -f -t lua
+args-ack3:
   - t/swamp -f --lua
 stdout: |
   t/swamp/lua-shebang-test
@@ -10,6 +11,7 @@ stdout: |
 name: R extensions
 args:
   - t/swamp -f -t rr
+args-ack3:
   - t/swamp -f --rr
 stdout: |
   t/swamp/example.R
@@ -18,6 +20,7 @@ stdout: |
 name: ASP.NET
 args:
   - t/swamp -f -t aspx
+args-ack3:
   - t/swamp -f --aspx
 stdout: |
   t/swamp/MasterPage.master
@@ -30,6 +33,7 @@ stdout: |
 name: Python
 args:
   - t/swamp -f -t python
+args-ack3:
   - t/swamp -f --python
 stdout: |
   t/swamp/test.py
@@ -40,6 +44,7 @@ stdout: |
 name: Pytest
 args:
   - t/swamp -f -t pytest
+args-ack3:
   - t/swamp -f --pytest
 stdout: |
   t/swamp/foo_test.py

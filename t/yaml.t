@@ -25,7 +25,12 @@ MAIN: {
                     print {$fh} $stdin;
                     close $fh;
                 }
-                for my $args ( @{$test->{args}} ) {
+
+                my @args = (
+                    @{$test->{args}},
+                    @{$test->{'args-ack3'} // []},
+                );
+                for my $args ( @args ) {
                     if ( $tempfilename ) {
                         $args = [ @{$args}, $tempfilename ];
                     }

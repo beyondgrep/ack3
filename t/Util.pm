@@ -1293,7 +1293,9 @@ sub read_tests {
             $_ = "$indent$_" for @{$test->{stdout}};
         }
 
-        $test->{args} = _split_args( $test->{args} );
+        for my $i ( qw( args args-ack3 ) ) {
+            $test->{$i} = _split_args( $test->{$i} ) if $test->{$i};
+        }
 
         # Assume successful run.
         $test->{exitcode} //= 0;
@@ -1335,8 +1337,10 @@ sub _lineify {
 sub _validate_test {
     my $test = shift;
 
+    # args-ack3 is for args that are only for ack3.
     my @valid_keys = qw(
         args
+        args-ack3
         exitcode
         indent-stdout
         name
