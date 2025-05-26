@@ -20,7 +20,7 @@ def test_all_yaml_files():
     """
     Walk all the YAML files and run their tests.
     """
-    filenames = glob.glob('t/*.yaml')
+    filenames = sorted(glob.glob('t/*.yaml'))
     for filename in filenames:
         logger.info('YAML: %s' % filename)
         with open(filename, 'r', encoding='UTF-8') as f:
