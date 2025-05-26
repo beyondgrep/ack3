@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 26;
+use Test::More;
 use Term::ANSIColor qw(color);
 
 use lib 't';
@@ -13,6 +13,8 @@ if ( not has_io_pty() ) {
     plan skip_all => q{You need to install IO::Pty to run this test};
     exit(0);
 }
+
+plan tests => 26;
 
 prep_environment();
 
