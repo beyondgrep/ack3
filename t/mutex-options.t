@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 196;
+use Test::More tests => 178;
 use lib 't';
 use Util;
 
@@ -12,20 +12,6 @@ prep_environment();
 my $file = 't/text/raven.txt';
 my $word = 'nevermore';
 
-
-# Order doesn't matter.  They are reported in alphabetical order.
-for my $opt ( qw( -p --proximate ) ) {
-    are_mutually_exclusive( '-f', $opt, ['-f', $opt] );
-    are_mutually_exclusive( '-f', $opt, [$opt, '-f'] );
-}
-
-# Check for abbreviations. https://github.com/beyondgrep/ack3/issues/57
-for my $opt ( qw( --pro --prox --proxima --proximat --proximate ) ) {
-    are_mutually_exclusive( '-f', '--proximate',
-        ['-f', $opt, '4'],
-        ['-f', "$opt=4"],
-    );
-}
 
 # XXX Should also handle --files-with-matches and --files-without-matches.  See https://github.com/beyondgrep/ack3/issues/57
 are_mutually_exclusive('-l', '-L', ['-l', '-L', $word, $file]);
@@ -115,14 +101,6 @@ are_mutually_exclusive('--output', '--after-context', ['--output=$&', '--after-c
 are_mutually_exclusive('--output', '--before-context', ['--output=$&', '--before-context=2', $word, $file]);
 are_mutually_exclusive('--output', '--context', ['--output=$&', '--context=2', $word, $file]);
 
-# --match
-for my $opt ( qw( -f -g ) ) {
-    are_mutually_exclusive('--match', $opt,
-        ['--match', $word, $opt, $file],
-        ['--match=science', $opt, $file],
-    );
-}
-
 # --max-count
 for my $opt ( qw( -1 -c -f -g ) ) {
     are_mutually_exclusive( '-m', $opt, ['-m', 1, $opt, $word, $file] );
@@ -181,6 +159,7 @@ for my $opt ( qw( -f -g ) ) {
     are_mutually_exclusive( $opt, '-x',   [$opt, '-x', $word, $file] );
     are_mutually_exclusive( $opt, '--files-from', [$opt, '--files-from', $word, $file] );
 }
+
 
 subtest q{Verify that "options" that follow -- aren't factored into the mutual exclusivity} => sub {
     my ( $stdout, $stderr ) = run_ack_with_stderr('-A', 5, $word, $file, '--', '-l');

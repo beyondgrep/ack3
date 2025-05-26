@@ -119,3 +119,32 @@ stdout: |
   t/text/numbered-text.txt
   t/text/ozymandias.txt
   t/text/raven.txt
+
+---
+name: -g and --and
+args: -g foo --and test t/
+stdout: |
+  t/swamp/foo_test.py
+  t/swamp/test_foo.py
+
+---
+name: -g and --not
+args: -g foo --not test t/
+stdout: |
+  t/etc/shebang.foobar.xxx
+  t/swamp/file.foo
+
+---
+name: -g and --or
+args: -g foo --or ample t/
+stdout: |
+  t/etc/shebang.foobar.xxx
+  t/swamp/example.R
+  t/swamp/file.foo
+  t/swamp/foo_test.py
+  t/swamp/Sample.ascx
+  t/swamp/Sample.asmx
+  t/swamp/sample.asp
+  t/swamp/sample.aspx
+  t/swamp/sample.rake
+  t/swamp/test_foo.py

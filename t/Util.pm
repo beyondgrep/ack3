@@ -59,7 +59,7 @@ our @EXPORT = qw(
     sets_match
     ack_lists_match
     ack_sets_match
-    ack_error_matches
+    ack_stderr_matches
 
     untaint
 
@@ -653,7 +653,7 @@ sub ack_sets_match {
 }
 
 
-sub ack_error_matches {
+sub ack_stderr_matches {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     my $args     = shift;
@@ -661,13 +661,16 @@ sub ack_error_matches {
     my $msg      = shift;
 
     return subtest subtest_name( $msg, $args, $expected ) => sub {
-        plan tests => 4;
+        plan tests => 2;
 
         my ( $stdout, $stderr ) = run_ack_with_stderr( @{$args} );
-        isnt( get_rc(), 0, 'Nonzero error' );
         is_empty_array( $stdout, 'No normal output' );
-        is( scalar @{$stderr}, 1, 'Just one error' );
-        like( $stderr->[0], $expected, 'Error matches' );
+
+        # Sometimes we run as ack, sometimes as ack-standalone.
+        for ( @{$stderr} ) {
+            s/^ack-standalone/ack/g;
+        }
+        return lists_match( $stderr, $expected, 'stderr matches' );
     };
 }
 
@@ -1286,7 +1289,11 @@ sub read_tests {
     my @tests = $ypp->load_file( $filename );
 
     for my $test ( @tests ) {
-        $test->{stdout} = _lineify( $test->{stdout} );
+        for my $i ( qw( stdout stderr ) ) {
+            if ( exists $test->{$i} ) {
+                $test->{$i} = _lineify( $test->{$i} );
+            }
+        }
 
         if ( my $n = $test->{'indent-stdout'} ) {
             my $indent = ' ' x $n;
@@ -1351,6 +1358,9 @@ sub _validate_test {
     );
     for my $key ( keys %{$test} ) {
         die "Invalid key $key" unless _in( $key, \@valid_keys );
+    }
+    if ( not exists $test->{stdout} ) {
+        die "stdout must always be specified.";
     }
 
     return;

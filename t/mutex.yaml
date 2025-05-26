@@ -1,0 +1,73 @@
+---
+# Order doesn't matter.  They are reported in alphabetical order.
+name: -f and -g
+args:
+  - -f -g WORD
+  - -g WORD -f
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-f' and '-g' can't be used together.
+
+---
+name: -f and -p
+args:
+  - -f -p
+  - -f -p 2
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-f' and '-p' can't be used together.
+
+---
+name: -f and --proximate
+args:
+  - -f --proximate
+  - -f --proximate 2
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-f' and '--proximate' can't be used together.
+
+---
+# Check for abbreviations. https://github.com/beyondgrep/ack3/issues/57
+name: -f and --proximate abbreviations
+args:
+  - -f --pro
+  - -f --prox
+  - -f --proxi
+  - -f --proxim
+  - -f --proxima
+  - -f --proximat
+  - -f --proximate
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-f' and '--proximate' can't be used together.
+
+---
+name: -f and --match
+args:
+  - -f --match WORD
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-f' and '--match' can't be used together.
+
+---
+name: -g and --match
+args:
+  - -g WORD --match WORD
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '-g' and '--match' can't be used together.
+
+---
+name: --or and --and
+args:
+  - this --or that --and other
+exitcode: 255
+stdout:
+stderr: |
+  ack: Options '--and' and '--or' can't be used together.

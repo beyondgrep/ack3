@@ -440,7 +440,12 @@ sub _compile_file_filter {
 
     return sub {
         if ( $opt_g ) {
-            if ( $File::Next::name =~ /$re_match/o ) {
+            my $match = ($File::Next::name =~ /$re_match/o);
+            if ( $match && $re_not ) {
+                $match = ($File::Next::name !~ /$re_not/o);
+            }
+
+            if ( $match ) {
                 return 0 if $opt_v;
             }
             else {
@@ -1320,8 +1325,7 @@ Note that the options that affect "dogs" also affect "cats", so if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also the other two boolean options C<--or> and C<--not>, neither of
-which can be used with C<--and>.
+C<--and> cannot be used with C<--or>.
 
 =item B<-A I<NUM>>, B<--after-context=I<NUM>>
 
@@ -1580,9 +1584,6 @@ if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also the other two boolean options C<--and> and C<--or>, neither of
-which can be used with C<--not>.
-
 =item B<-o>
 
 Show only the part of each line matching PATTERN (turns off text
@@ -1604,8 +1605,7 @@ Note that the options that affect "dogs" also affect "cats", so if you have
 then the search for both "dogs" and "cats" will be case-insensitive and be
 word-limited.
 
-See also the other two boolean options C<--and> and C<--not>, neither of
-which can be used with C<--or>.
+C<--or> cannot be used with C<--and>.
 
 =item B<--output=I<expr>>
 

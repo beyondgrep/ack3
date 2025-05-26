@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 24;
+use Test::More tests => 25;
 
 use lib 't';
 use Util;
@@ -34,14 +34,26 @@ MAIN: {
                     if ( $tempfilename ) {
                         $args = [ @{$args}, $tempfilename ];
                     }
-                    subtest $test->{name} . ' ' . join( ', ', @{$args} ) => sub {
-                        if ( $test->{ordered} ) {
-                            ack_lists_match( $args, $test->{stdout}, $test->{name} );
+                    subtest $test->{name} . ': ack ' . join( ' ', @{$args} ) => sub {
+                        if ( exists $test->{stderr} ) {
+                            ack_stderr_matches( $args, $test->{stderr}, $test->{name} );
+                            is( get_rc(), $test->{exitcode}, 'Exit code matches' );
                         }
                         else {
-                            ack_sets_match( $args, $test->{stdout}, $test->{name} );
+                            if ( exists $test->{stdout} ) {
+                                my $stdout = $test->{stdout};
+                                if ( $test->{ordered} ) {
+                                    ack_lists_match( $args, $test->{stdout}, $test->{name} );
+                                }
+                                else {
+                                    ack_sets_match( $args, $test->{stdout}, $test->{name} );
+                                }
+                                is( get_rc(), $test->{exitcode}, 'Exit code matches' );
+                            }
+                            else {
+                                fail( "stdout must always be specified" );
+                            }
                         }
-                        is( get_rc(), $test->{exitcode} );
                     }
                 }
                 if ( $tempfilename ) {

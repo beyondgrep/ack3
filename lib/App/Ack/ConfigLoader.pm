@@ -933,8 +933,6 @@ sub mutex_options {
             'with-filename' => 1,
         },
         and => {
-            g => 1,
-            not => 1,
             or => 1,
         },
         break => {
@@ -1012,7 +1010,6 @@ sub mutex_options {
             C => 1,
             H => 1,
             L => 1,
-            and => 1,
             break => 1,
             c => 1,
             column => 1,
@@ -1025,9 +1022,7 @@ sub mutex_options {
             l => 1,
             m => 1,
             match => 1,
-            not => 1,
             o => 1,
-            or => 1,
             output => 1,
             p => 1,
             passthru => 1,
@@ -1094,10 +1089,6 @@ sub mutex_options {
             L => 1,
             l => 1,
         },
-        not => {
-            and => 1,
-            g => 1,
-        },
         o => {
             A => 1,
             B => 1,
@@ -1117,7 +1108,6 @@ sub mutex_options {
         },
         or => {
             and => 1,
-            g => 1,
         },
         output => {
             A => 1,
