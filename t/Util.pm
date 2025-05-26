@@ -1346,6 +1346,7 @@ sub _validate_test {
 
     # args-ack3 is for args that are only for ack3.
     my @valid_keys = qw(
+        ack3-only
         args
         args-ack3
         exitcode
