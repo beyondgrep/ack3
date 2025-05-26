@@ -6,6 +6,11 @@ The --not option can be used with either --and or --or.
 
 The -g option can now use any of the boolean options, --and, --or or --not.
 
+[FIXES]
+When using --output='$f', the filename would be colorized in the output
+line, but should not have been.  This has been fixed. Thanks, Dabrien
+'Dabe' Murphy. (GH #350)
+
 
 v3.8.2      Sun Apr  6 10:45:04 CDT 2025
 ========================================

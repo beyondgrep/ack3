@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 10;
+use Test::More tests => 14;
 
 use lib 't';
 use Util;
@@ -66,6 +66,24 @@ HERE
 }
 
 
+FILENAME_SUBSTITUTION_MULTIPLE : {
+    my @expected = line_split( <<'HERE' );
+t/text/amontillado.txt:3:t/text/amontillado.txt:3:The thousand injuries of Fortunato I had borne as I best could; but
+t/text/constitution.txt:38:t/text/constitution.txt:38:thirty Thousand, but each State shall have at Least one Representative;
+t/text/constitution.txt:241:t/text/constitution.txt:241:Congress prior to the Year one thousand eight hundred and eight, but
+t/text/constitution.txt:501:t/text/constitution.txt:501:which may be made prior to the Year One thousand eight hundred and eight
+t/text/ozymandias.txt:3:t/text/ozymandias.txt:3:Stand in the desert... Near them, on the sand,
+t/text/ozymandias.txt:14:t/text/ozymandias.txt:14:The lone and level sands stretch far away.
+HERE
+
+    my @files = qw( t/text );
+    my @args = qw( sand --output=$f:$.:$_ --sort );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Multiple files with matching line' );
+}
+
+
 NO_SPECIALS_IN_OUTPUT_EXPRESSION : {
     my @expected = line_split( <<'HERE' );
 literal
@@ -77,6 +95,24 @@ HERE
     my @results = run_ack( @args, @files );
 
     lists_match( \@results, \@expected, 'Filename with last match' );
+}
+
+
+LITERAL_MULTIPLE_FILES : {
+    my @expected = line_split( <<'HERE' );
+t/text/amontillado.txt:3:literal
+t/text/constitution.txt:38:literal
+t/text/constitution.txt:241:literal
+t/text/constitution.txt:501:literal
+t/text/ozymandias.txt:3:literal
+t/text/ozymandias.txt:14:literal
+HERE
+
+    my @files = qw( t/text );
+    my @args = qw( sand --output=literal --sort );
+    my @results = run_ack( @args, @files );
+
+    lists_match( \@results, \@expected, 'Multiple files with literal replacement' );
 }
 
 

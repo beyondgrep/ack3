@@ -59,6 +59,7 @@ t/ack-n.t
 t/ack-o.yaml
 t/ack-output.t
 t/ack-output.yaml
+t/ack-output-color.t
 t/ack-pager.t
 t/ack-passthru.t
 t/ack-print0.t

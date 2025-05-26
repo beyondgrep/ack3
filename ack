@@ -904,20 +904,29 @@ sub print_line_with_options {
     my @line_parts;
 
     if ( $opt_show_filename && defined($filename) ) {
-        my $colno;
-        $colno = get_match_colno() if $opt_column;
+        my $disp_filename;
+        my $disp_lineno;
         if ( $opt_color ) {
-            $filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
-            $lineno   = Term::ANSIColor::colored( $lineno,   $ENV{ACK_COLOR_LINENO} );
-            $colno    = Term::ANSIColor::colored( $colno,    $ENV{ACK_COLOR_COLNO} ) if $opt_column;
-        }
-        if ( $opt_heading ) {
-            push @line_parts, $lineno;
+            $disp_filename = Term::ANSIColor::colored( $filename, $ENV{ACK_COLOR_FILENAME} );
+            $disp_lineno   = Term::ANSIColor::colored( $lineno,   $ENV{ACK_COLOR_LINENO} );
         }
         else {
-            push @line_parts, $filename, $lineno;
+            $disp_filename = $filename;
+            $disp_lineno   = $lineno;
         }
-        push @line_parts, $colno if $opt_column;
+
+        if ( $opt_heading ) {
+            push @line_parts, $disp_lineno;
+        }
+        else {
+            push @line_parts, $disp_filename, $disp_lineno;
+        }
+
+        if ( $opt_column ) {
+            my $colno = get_match_colno();
+            $colno = Term::ANSIColor::colored( $colno, $ENV{ACK_COLOR_COLNO} ) if $opt_color;
+            push @line_parts, $colno;
+        }
     }
 
     if ( $opt_output ) {
