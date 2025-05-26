@@ -1,0 +1,14 @@
+---
+name: Errors without -s
+args: search-term non-existent-file.txt
+exitcode: 1
+stdout:
+stderr: |
+  ack: non-existent-file.txt: No such file or directory
+
+---
+name: Errors with -s
+args: -s search-term non-existent-file.txt
+exitcode: 1
+stdout:
+stderr:

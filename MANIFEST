@@ -65,6 +65,7 @@ t/ack-passthru.t
 t/ack-print0.t
 t/ack-proximate.yaml
 t/ack-s.t
+t/ack-s.yaml
 t/ack-show-types.t
 t/ack-type-del.t
 t/ack-type.t
