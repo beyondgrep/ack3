@@ -822,7 +822,7 @@ BEGIN {
             local $Test::Builder::Level = $Test::Builder::Level + 1;
             Test::More::fail(<<'HERE');
 Your system doesn't seem to have IO::Pty, and the developers
-forgot to check in this test file.  Please file a bug report
+forgot to check for it in this test file.  Please file an issue
 at https://github.com/beyondgrep/ack3/issues with the name of
 the file that generated this failure.
 HERE

@@ -9,12 +9,17 @@ use Term::ANSIColor qw(color);
 use lib 't';
 use Util;
 
+if ( not has_io_pty() ) {
+    plan skip_all => q{You need to install IO::Pty to run this test};
+    exit(0);
+}
+
 prep_environment();
 
-my $CFN      = color 'bold green';
-my $CRESET   = color 'reset';
-my $CLN      = color 'bold yellow';
-my $CM       = color 'black on_yellow';
+my $CFN      = color( 'bold green' );
+my $CRESET   = color( 'reset' );
+my $CLN      = color( 'bold yellow' );
+my $CM       = color( 'black on_yellow' );
 my $LINE_END = "\e[0m\e[K";
 
 DOLLAR_1: {
