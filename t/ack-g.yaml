@@ -77,7 +77,7 @@ stdout: |
 name: -Q works on -g, part 2
 args: -g file.bar$ t -Q
 exitcode: 1
-stdout: |
+stdout:
 
 ---
 name: -w works on -g
@@ -148,3 +148,25 @@ stdout: |
   t/swamp/sample.aspx
   t/swamp/sample.rake
   t/swamp/test_foo.py
+
+---
+name: No starting directory specified
+args: -g non t/foo/non-existent
+exitcode: 1
+stdout:
+stderr: |
+  ack: t/foo/non-existent: No such file or directory
+
+---
+name: No files found returns 1
+args: -g foo t/text
+exitcode: 1
+stdout:
+stderr:
+
+---
+name: Files found returns 0
+args: -g raven t/text
+exitcode: 0
+stdout: |
+  t/text/raven.txt
