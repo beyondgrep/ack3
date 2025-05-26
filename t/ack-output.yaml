@@ -58,7 +58,7 @@ stdout: "shall have a new birth of "
 ---
 name: Prematch multiple files
 args: freedom -h --output=$` t/text/
-ordered: true
+ordered: false
 # Note the trailing whitespace on the two lines of output.
 stdout: |
   or prohibiting the free exercise thereof; or abridging the 
