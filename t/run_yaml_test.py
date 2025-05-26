@@ -22,12 +22,19 @@ def test_all_yaml_files():
     """
     filenames = sorted(glob.glob('t/*.yaml'))
     for filename in filenames:
-        logger.info('YAML: %s' % filename)
+        skipped_ack3_only = 0
+        logger.info(f'YAML: {filename}')
         with open(filename, 'r', encoding='UTF-8') as f:
             cases = yaml.load_all(f, yaml.FullLoader)
             for case in cases:
                 case = massage_case(case)
-                run_case(case)
+                if case.get('ack3-only', False):
+                    skipped_ack3_only += 1
+                else:
+                    run_case(case)
+            if skipped_ack3_only:
+                logger.info(f'    Skipped {skipped_ack3_only} ack3-only case(s)')
+
 
 
 def massage_case(case: dict):

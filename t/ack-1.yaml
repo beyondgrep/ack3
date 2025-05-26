@@ -1,5 +1,6 @@
 ---
 name: All the Montresors
+ack3-only: true
 args: Montresor -h t/text
 stdout: |
   the catacombs of the Montresors.
@@ -8,29 +9,34 @@ stdout: |
 
 ---
 name: Stop at one Montresor
+ack3-only: true
 args: Montresor -1 -h t/text
 stdout: |
   the catacombs of the Montresors.
 
 ---
 name: With dash v
+ack3-only: true
 args: c -1 -h -v t/text/raven.txt
 stdout: '    Only this and nothing more."'
 
 ---
 name: Dash f
+ack3-only: true
 args: -1 -f --sort-files t/swamp
 stdout:
   t/swamp/0
 
 ---
 name: Dash g
+ack3-only: true
 args: -1 -g fresh t/
 stdout:
   t/swamp/fresh.css
 
 ---
 name: Dash l
+ack3-only: true
 args: -1 -l --sort-files the t/text
 stdout: |
   t/text/amontillado.txt
