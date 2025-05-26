@@ -1,6 +1,7 @@
 History file for ack 3.  https://beyondgrep.com/
 
 NEXT
+v3.9.0      Mon May 26 15:02:57 CDT 2025
 ========================================
 The --not option can be used with either --and or --or.
 
