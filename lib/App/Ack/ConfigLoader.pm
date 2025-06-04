@@ -353,6 +353,7 @@ sub get_arg_spec {
         't|type=s'          => \&_type_handler,
         'T=s'               => sub { my ($getopt,$value) = @_; $value="no$value"; _type_handler($getopt,$value); },
         'underline!'        => \$opt->{underline},
+        'nolinenumber!'        => \$opt->{nolinenumber},
         'v|invert-match'    => \$opt->{v},
         'w|word-regexp'     => \$opt->{w},
         'x'                 => sub { $opt->{files_from} = '-' },
