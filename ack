@@ -50,6 +50,7 @@ our $opt_regex;
 our $opt_show_filename;
 our $opt_show_types;
 our $opt_underline;
+our $opt_nolinenumber;
 our $opt_v;
 
 # Flag if we need any context tracking.
@@ -158,6 +159,7 @@ MAIN: {
     $opt_show_filename  = $opt->{show_filename};
     $opt_show_types     = $opt->{show_types};
     $opt_underline      = $opt->{underline};
+    $opt_nolinenumber      = $opt->{nolinenumber};
     $opt_v              = $opt->{v};
 
     if ( $opt_show_types && not( $opt_f || $opt_g ) ) {
@@ -915,12 +917,18 @@ sub print_line_with_options {
             $disp_lineno   = $lineno;
         }
 
+        if ( $opt_nolinenumber ) {
+            $disp_lineno   = "";
+            $separator="";
+        }
+
         if ( $opt_heading ) {
             push @line_parts, $disp_lineno;
         }
         else {
             push @line_parts, $disp_filename, $disp_lineno;
         }
+
 
         if ( $opt_column ) {
             my $colno = get_match_colno();
@@ -1812,6 +1820,10 @@ also L</"Defining your own types">.
 
 The filters associated with TYPE are removed from Ack, and are no longer considered
 for searches.
+
+=item B<--nolinenumber>
+
+disable line number 
 
 =item B<--[no]underline>
 
