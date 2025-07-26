@@ -176,6 +176,9 @@ sub _process_filetypes {
             if ( not $value ) {
                 @filters = map { $_->invert() } @filters;
             }
+            else {
+                _uninvert_filter( $opt, @filters );
+            }
 
             push @{ $opt->{'filters'} }, @filters;
         };
