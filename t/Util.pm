@@ -88,7 +88,7 @@ my @temp_files; # We store temp files here to make sure they're properly reclaim
 
 sub prep_environment {
     my @ack_args   = qw( ACKRC ACK_PAGER HOME ACK_COLOR_MATCH ACK_COLOR_FILENAME ACK_COLOR_LINENO ACK_COLOR_COLNO );
-    my @taint_args = qw( PATH CDPATH IFS ENV );
+    my @taint_args = qw( PATH CDPATH IFS ENV PERLDOC );
     delete @ENV{ @ack_args, @taint_args };
 
     if ( is_windows() ) {
