@@ -2002,8 +2002,8 @@ There are four different colors ack uses:
 
     Aspect      Option              Env. variable       Default
     --------    -----------------   ------------------  ---------------
-    filename    --color-filename    ACK_COLOR_FILENAME  black on_yellow
-    match       --color-match       ACK_COLOR_MATCH     bold green
+    filename    --color-filename    ACK_COLOR_FILENAME  bold green
+    match       --color-match       ACK_COLOR_MATCH     black on_yellow
     line no.    --color-lineno      ACK_COLOR_LINENO    bold yellow
     column no.  --color-colno       ACK_COLOR_COLNO     bold yellow
 
