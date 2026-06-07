@@ -107,6 +107,7 @@ t/illegal-regex.t
 t/incomplete-last-line.t
 t/interactive.t
 t/invalid-ackrc.t
+t/invalid-context.t
 t/invalid-options.t
 t/is-filter.t
 t/line-endings.t
@@ -117,8 +118,10 @@ t/multiple-captures.t
 t/mutex-options.t
 t/mutex.yaml
 t/named-pipes.t
+t/naughty-filenames.t
 t/needs-line-scan.t
 t/noackrc.t
+t/no-re-eval.t
 t/noenv.t
 t/prescan-line-boundaries.t
 t/process-substitution.t
@@ -153,6 +156,7 @@ t/swamp/MasterPage.master
 t/swamp/Rakefile
 t/swamp/Sample.ascx
 t/swamp/Sample.asmx
+t/swamp/bad-ascii.tar.GZ
 t/swamp/blib/ignore.pm
 t/swamp/blib/ignore.pod
 t/swamp/c-header.h

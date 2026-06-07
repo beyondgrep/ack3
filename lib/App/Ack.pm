@@ -13,6 +13,8 @@ A container for functions for the ack program.
 
 =cut
 
+no re 'eval'; # enforce default, block -Mre=eval to block RCE security fail
+
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {

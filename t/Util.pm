@@ -1232,6 +1232,18 @@ sub adjust_executable {
 
     my $perl = caret_X();
 
+    # ACK_TEST_MODULE_OPTS
+    # If a .t test file wishes to load a module for debug or provocation before Ack starts
+    # e.g.
+    # $ENV{'ACK_TEST_MODULE_OPTS'} = 're=eval' ; attempts to enable runtime code injection in REs
+    #    (which we block, but this is needed to test that we block it)
+    # $ENV{'ACK_TEST_MODULE_OPTS'} = 're=debug' ; would trace REs compilation and execution,
+    #    (which gets rather long so don't check in that way!)
+    if ($ENV{'ACK_TEST_MODULE_OPTS'}){
+        # warn "ACK_TEST_MODULE_OPTS=-M$ENV{'ACK_TEST_MODULE_OPTS'}" ;  #############DEBUG #####
+        unshift( @cmd, "-M$ENV{'ACK_TEST_MODULE_OPTS'}" );
+    }
+
     if ( $ENV{'ACK_TEST_STANDALONE'} ) {
         unshift( @cmd, $perl );
     }

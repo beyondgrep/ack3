@@ -13,6 +13,8 @@ into one container.  See App::Ack::Filter::IsGroup for details.
 
 use strict;
 use warnings;
+no re 'eval'; # Enforce default and block -Mre=eval to block RCE security problem.
+
 use parent 'App::Ack::Filter';
 
 sub new {

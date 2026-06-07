@@ -7,6 +7,8 @@ our $VERSION = 'v3.9.0'; # Check https://beyondgrep.com/ for updates
 
 use 5.010001;
 
+no re 'eval'; # Enforce default and block -Mre=eval to block RCE security problem.
+
 use File::Spec ();
 use File::Next ();
 use Getopt::Long ();
@@ -297,6 +299,13 @@ MAIN: {
 
 exit 0;
 
+# Sanitize a filename for display: replace control chars with '?'
+sub _safe_filename {
+    my $s = shift;
+    $s =~ s/[^\x20-\x7E\t]/?/g;
+    return $s;
+}
+
 
 sub file_loop_fg {
     my $files = shift;
@@ -307,10 +316,10 @@ sub file_loop_fg {
             App::Ack::show_types( $file );
         }
         elsif ( $opt_g ) {
-            print_line_with_options( undef, $file->name, 0, $App::Ack::ors );
+            print_line_with_options( undef, _safe_filename( $file->name ), 0, $App::Ack::ors );
         }
         else {
-            App::Ack::say( $file->name );
+            App::Ack::say( _safe_filename( $file->name ) );
         }
         ++$nmatches;
         last if defined($opt_m) && ($nmatches >= $opt_m);
@@ -615,7 +624,7 @@ sub file_loop_normal {
 sub print_matches_in_file {
     my $file = shift;
 
-    my $filename  = $file->name;
+    my $filename = _safe_filename($file->name);
 
     my $fh = $file->open;
     if ( !$fh ) {

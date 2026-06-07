@@ -373,8 +373,17 @@ sub get_arg_spec {
 sub _context_value {
     my $val = shift;
 
-    # Contexts default to 2.
-    return (!defined($val) || ($val < 0)) ? 2 : $val;
+      # Contexts default to 2.
+      return 2 if !defined($val) || $val < 0;
+
+      if ( $val > 10_000 ) {
+          App::Ack::die(
+              "Context value $val exceeds the maximum allowed "
+              . "value of 10000."
+          );
+      }
+
+      return $val;
 }
 
 
@@ -427,6 +436,7 @@ sub _process_other {
             $args_for_source = {
                 %{$args_for_source},
                 'pager:s' => $illegal,
+                'follow!' => $illegal,
             };
         }
 

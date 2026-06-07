@@ -105,3 +105,15 @@ stdout: |
   This is line 09
   This is line 10
   This is line 11
+
+---
+name: -C with huge context throws
+args: -C 20000|30000 t/text/numbered-text.txt
+exitcode: 1
+stdout: ""
+
+---
+name: -B with huge context throws
+args: -B 20000|30000 t/text/numbered-text.txt
+exitcode: 1
+stdout: ""

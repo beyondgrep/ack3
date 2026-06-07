@@ -32,7 +32,7 @@ sub _test_project_ackrc {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     return subtest subtest_name() => sub {
-        plan tests => 3;
+        plan tests => 4;
 
         my $base_obj = File::Temp->newdir;
         my $base = $base_obj->dirname;
@@ -51,19 +51,20 @@ sub _test_project_ackrc {
 
         safe_chdir( $projectdir );
 
-        # All three of these options are illegal in a project .ackrc.
-        for my $option ( qw( match output pager ) ) {
+        # All four of these options are illegal in a project .ackrc.
+        for my $option ( qw( match output pager follow ) ) {
             subtest $option => sub {
                 plan tests => 2;
 
                 # /tmp/x/project/.ackrc
-                _create_ackrc( $projectdir, "--$option=$option" );
+                _create_ackrc( $projectdir, "--$option=$option" ) unless 'follow' eq $option;
+                _create_ackrc( $projectdir, "--$option"         ) if     'follow' eq $option;
 
                 # Explicitly pass --env or else the test will ignore .ackrc.
                 my ( $stdout, $stderr ) = run_ack_with_stderr( '-f', '--env' );
 
                 is_empty_array( $stdout, 'No output with the errors' );
-                if ( $option eq 'pager' ) {
+                if ( ($option eq 'pager') || ($option eq 'follow') ) {
                     first_line_like( $stderr, qr/\QOption --$option is forbidden in project .ackrc files/, "$option illegal" );
                 }
                 else {
