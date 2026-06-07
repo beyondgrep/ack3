@@ -1,0 +1,44 @@
+---
+name: --type-set and exclude
+args: >-
+  --ignore-ack-defaults
+  --type-set=cmake:is:CMakeLists.txt
+  --type=nocmake
+  -k -f t/swamp
+exitcode: 1
+stderr: ''
+stdout: ''
+
+---
+name: --type-set and override exclusion
+args: >-
+  --ignore-ack-defaults
+  --type-set=cmake:is:CMakeLists.txt
+  --type=nocmake
+  -t cmake -f t/swamp
+stdout: |
+  t/swamp/CMakeLists.txt
+
+---
+name: --type-set, --type-add, and exclude
+args: >-
+  --ignore-ack-defaults
+  --type-set=cmake:is:CMakeLists.txt
+  --type-add=cmake:ext:cmake
+  --type=nocmake
+  -k -f t/swamp
+exitcode: 1
+stderr: ''
+stdout: ''
+
+---
+name: --type-set, --type-add, and override exclusion
+args: >-
+  --ignore-ack-defaults
+  --type-set=cmake:is:CMakeLists.txt
+  --type-add=cmake:ext:cmake
+  --type=nocmake
+  -t cmake -f t/swamp
+stdout: |
+  t/swamp/CMakeLists.txt
+  t/swamp/stuff.cmake

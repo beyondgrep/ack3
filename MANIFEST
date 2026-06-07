@@ -69,6 +69,7 @@ t/ack-s.yaml
 t/ack-show-types.t
 t/ack-type-del.t
 t/ack-type.t
+t/ack-type.yaml
 t/ack-v.yaml
 t/ack-version.t
 t/ack-w.t
