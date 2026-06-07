@@ -1,6 +1,6 @@
 History file for ack 3.  https://beyondgrep.com/
 
-NEXT
+v3.10.0     Sun Jun  7 11:50:37 CDT 2026
 ========================================
 [SECURITY]
 CVE-2026-49147: filename ANSI escape sequences

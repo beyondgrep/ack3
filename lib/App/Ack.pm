@@ -18,7 +18,7 @@ no re 'eval'; # enforce default, block -Mre=eval to block RCE security fail
 our $VERSION;
 our $COPYRIGHT;
 BEGIN {
-    $VERSION = 'v3.9.0'; # Check https://beyondgrep.com/ for updates
+    $VERSION = 'v3.10.0'; # Check https://beyondgrep.com/ for updates
     $COPYRIGHT = 'Copyright 2005-2026 Andy Lester.';
 }
 our $STANDALONE = 0;
