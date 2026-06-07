@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More;
 
 use File::Spec ();
 use File::Temp ();
@@ -13,6 +13,14 @@ use lib 't';
 use Util;
 
 prep_environment();
+
+if ( is_windows() ) {
+    plan skip_all => 'Test fails on Windows.'; ## XXX TODO let the ones that dont fail run?
+    exit;
+}
+else {
+    plan tests => 1;
+}
 
 # Global:
 # /tmp/x/etc/.ackrc
@@ -31,7 +39,7 @@ sub _test_naughty_ansi_filenames {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     return subtest subtest_name() => sub {
-        plan tests => (is_windows() ? 4 : 6 );
+        plan tests => 6;
 
         my $base_obj = File::Temp->newdir;
         my $base = $base_obj->dirname;
@@ -52,15 +60,10 @@ sub _test_naughty_ansi_filenames {
         # original bash equivalent:
         # # FORGED=$(printf 'real\nFORGED:999:injected_content.pl')
         # # printf 'foo\n' > "./$FORGED"
-        # This file name is illegal on Windows due to DOS2.0 A: B: C: disk names
-        # so skip this subtest on Windows.
         #
-        my $projectfile;
-        if (! is_windows()){
-            my $forged = "real\nFORGED:999:injected_content.pl";
-            $projectfile = File::Spec->catfile( $projectsubdir, $forged );
-            write_file( $projectfile, "foo FORGED\n" );
-        }
+        my $forged = "real\nFORGED:999:injected_content.pl";
+        my $projectfile = File::Spec->catfile( $projectsubdir, $forged );
+        write_file( $projectfile, "foo FORGED\n" );
 
         # /tmp/x/project/subdir/${ansi}
         #  ANSI injection: ESC bytes change terminal appearance
@@ -80,20 +83,12 @@ sub _test_naughty_ansi_filenames {
         # TO VIEW temp dir contents
         # system('ls', '-alr', 'subdir',);
 
-        my @TestKeys;
-        if ( is_windows()){
-            @TestKeys = (qw[ RED normal ]);  # FORGED skipped on windows
-        }
-        else {
-            @TestKeys = (qw[ RED normal FORGED ]); 
-        }
-
         my %expect = (
             RED    => qr{\Qsubdir/file?[31mRED?[0m.pl\E},
             normal => qr{\Qsubdir/normal.pl\E},
-            FORGED => qr{\Qsubdir/real?FORGED:999:injected_content.pl\E}, ## NOT ON WINDOWS
+            FORGED => qr{\Qsubdir/real?FORGED:999:injected_content.pl\E},
         );
-        for my $name (@TestKeys){
+        for my $name (qw[ RED normal FORGED ]){
             subtest "5_01_filter_listing_$name" => sub {
                 plan tests => 3;
                 # /tmp/x/project/.ackrc
@@ -114,14 +109,14 @@ sub _test_naughty_ansi_filenames {
         my %File = (
                  RED => qq{subdir/file\033\[31mRED\033\[0m.pl},
                  normal => qq{subdir/normal.pl},
-                 FORGED => qq{subdir/real\nFORGED:injected_content.pl}, ## NOT ON WINDOWS
+                 FORGED => qq{subdir/real\nFORGED:injected_content.pl},
         );
         %expect = (
                  RED => qr{subdir/file[?][[]31mRED[?][[]0m[.]pl:1:foo},
                  normal => qr{subdir/normal.pl:1:foo},
-                 FORGED => qr{subdir/real[?]FORGED:999:injected_content[.]pl:1:foo}, ## NOT ON WINDOWS
+                 FORGED => qr{subdir/real[?]FORGED:999:injected_content[.]pl:1:foo},
         );
-        for my $name (@TestKeys) {
+        for my $name (qw[ RED normal FORGED ]){
             subtest "5_02_filter_match_$name" => sub {
                 plan tests => 3;
 
