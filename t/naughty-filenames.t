@@ -16,6 +16,7 @@ prep_environment();
 
 if ( is_windows() ) {
     plan skip_all => 'Test fails on Windows.'; ## XXX TODO let the ones that dont fail run?
+    exit;
 }
 
 # Global:
