@@ -11,7 +11,7 @@ This tests whether ack's command line options work as expected.
 
 use Test::More;
 
-plan tests => 52;
+plan tests => 56;
 
 use lib 't';
 use Util;
@@ -135,6 +135,17 @@ for my $arg ( qw( -Q --literal ) ) {
 }
 
 my $expected = reslash( 't/swamp/options.pl' );
+
+# Files
+for my $arg ( qw( -f --files ) ) {
+    my @files   = qw( t/swamp/options.pl );
+    my $results = run_ack( $arg, @files );
+    like(
+        $results,
+        qr{\Q$expected},
+        qq{$arg prints files that would be searched}
+    );
+}
 
 # Files with matches
 for my $arg ( qw( -l --files-with-matches ) ) {
