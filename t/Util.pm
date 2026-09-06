@@ -852,6 +852,7 @@ sub get_expected_options {
         '--create-ackrc',
         '--dump',
         '--env',
+        '--files',
         '--files-from',
         '--files-with-matches',
         '--files-without-matches',

@@ -225,7 +225,7 @@ Default switches may be specified in an .ackrc file. If you want no dependency
 on the environment, turn it off with --noenv.
 
 File select actions:
-  -f                            Only print the files selected, without
+  -f, --files                   Only print the files selected, without
                                 searching.  The PATTERN must not be specified.
   -g                            Same as -f, but only select files matching
                                 PATTERN.
