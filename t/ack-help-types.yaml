@@ -34,8 +34,8 @@ args: >-
   --help-types
 exitcode: 0
 stdout-contains:
-  - '    gotest Filename matches (?^i:_test\.go$)'
-  - '    pytest Filename matches (?^i:_test\.py$); Filename matches (?^i:^test_.*\.py$)'
+  - '    gotest Filename matches /_test\.go$/'
+  - '    pytest Filename matches /_test\.py$/; Filename matches /^test_.*\.py$/'
 
 ---
 name: --help-types for "firstlinematch" filter
