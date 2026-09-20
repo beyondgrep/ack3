@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 27;
+use Test::More tests => 28;
 
 use lib 't';
 use Util;
@@ -50,8 +50,12 @@ MAIN: {
                                 }
                                 is( get_rc(), $test->{exitcode}, 'Exit code matches' );
                             }
+                            elsif ( exists $test->{'stdout-contains'} ) {
+                                ack_stdout_contains( $args, $test->{'stdout-contains'}, $test->{name} );
+                                is( get_rc(), $test->{exitcode}, 'Exit code matches' );
+                            }
                             else {
-                                fail( "stdout must always be specified" );
+                                fail('stdout or stdout-contains must always be specified');
                             }
                         }
                     }

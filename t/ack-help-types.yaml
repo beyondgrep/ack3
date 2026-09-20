@@ -1,0 +1,64 @@
+---
+name: --help-types for "is" filter
+args: >-
+  --ignore-ack-defaults
+  --type-add=make:is:Makefile
+  --type-add=make:is:makefile
+  --type-add=rake:is:Rakefile
+  --help-types
+exitcode: 0
+stdout-contains:
+  - '    make Makefile; makefile'
+  - '    rake Rakefile'
+
+---
+name: --help-types for "ext" filter
+args: >-
+  --ignore-ack-defaults
+  --type-add=go:ext:go
+  --type-add=perl:ext:pl,pm
+  --type-add=perl:ext:t
+  --help-types
+exitcode: 0
+stdout-contains:
+  - '    go   .go'
+  - '    perl .pl .pm; .t'
+
+---
+name: --help-types for "match" filter
+args: >-
+  --ignore-ack-defaults
+  --type-add=gotest:match:/_test\.go$/
+  --type-add=pytest:match:_test\.py$
+  --type-add=pytest:match:^test_.*\.py$
+  --help-types
+exitcode: 0
+stdout-contains:
+  - '    gotest Filename matches (?^i:_test\.go$)'
+  - '    pytest Filename matches (?^i:_test\.py$); Filename matches (?^i:^test_.*\.py$)'
+
+---
+name: --help-types for "firstlinematch" filter
+args: >-
+  --ignore-ack-defaults
+  --type-add=perl:firstlinematch:/^#!.*\bperl/
+  --type-add=python:firstlinematch:^#!.*\bpython
+  --help-types
+exitcode: 0
+stdout-contains:
+  - '    perl   First line matches /^#!.*\bperl/'
+  - '    python First line matches /^#!.*\bpython/'
+
+---
+name: --help-types for mixed filters
+args: >-
+  --ignore-ack-defaults
+  --type-add=perl:ext:pl,pm,t
+  --type-add=perl:firstlinematch:/^#!.*\bperl/
+  --type-add=python:ext:py
+  --type-add=python:firstlinematch:^#!.*\bpython
+  --help-types
+exitcode: 0
+stdout-contains:
+  - '    perl   .pl .pm .t; First line matches /^#!.*\bperl/'
+  - '    python .py; First line matches /^#!.*\bpython/'
