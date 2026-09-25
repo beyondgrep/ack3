@@ -437,6 +437,7 @@ sub _process_other {
                 %{$args_for_source},
                 'pager:s' => $illegal,
                 'follow!' => $illegal,
+                'files-from=s' => $illegal,
             };
         }
 
