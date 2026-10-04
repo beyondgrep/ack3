@@ -12,7 +12,7 @@ use Cwd ();
 use File::Next ();
 use File::Spec ();
 use File::Temp ();
-use List::Util qw( any );
+use List::Util qw( all any );
 use Scalar::Util qw( tainted );
 use Term::ANSIColor ();
 use Test::More;
@@ -59,6 +59,7 @@ our @EXPORT = qw(
     sets_match
     ack_lists_match
     ack_sets_match
+    ack_stdout_contains
     ack_stderr_matches
 
     untaint
@@ -650,6 +651,46 @@ sub ack_sets_match {
 
         return sets_match( \@results, $expected, $msg );
     };
+}
+
+
+sub contains {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my @actual   = @{ +shift };
+    my @expected = @{ +shift };
+    my $msg      = _check_message(shift);
+
+    return subtest subtest_name($msg) => sub {
+        plan tests => 1;
+
+        my $ok = all {
+            my $line = $_;
+            any { $_ eq $line } @actual
+        } @expected;
+
+        if ( !ok($ok) ) {
+            diag( explain( actual => [@actual], expected => [@expected] ) );
+        }
+
+        return $ok;
+    }
+}
+
+sub ack_stdout_contains {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $args     = shift;
+    my $expected = shift;
+    my $msg      = shift;
+
+    return subtest subtest_name( $msg, $args, $expected ) => sub {
+        plan tests => 2;
+
+        my @results = run_ack( @{$args} );
+
+        return contains( \@results, $expected, $msg );
+    }
 }
 
 
@@ -1368,12 +1409,13 @@ sub _validate_test {
         stdin
         stderr
         stdout
+        stdout-contains
     );
     for my $key ( keys %{$test} ) {
         die "Invalid key $key" unless _in( $key, \@valid_keys );
     }
-    if ( not exists $test->{stdout} ) {
-        die "stdout must always be specified.";
+    unless ( exists $test->{stdout} or exists $test->{'stdout-contains'} ) {
+        die "stdout or stdout-contains must always be specified.";
     }
 
     return;

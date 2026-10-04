@@ -45,7 +45,7 @@ t/ack-g.t
 t/ack-g.yaml
 t/ack-group.t
 t/ack-h.yaml
-t/ack-help-types.t
+t/ack-help-types.yaml
 t/ack-help.t
 t/ack-i.yaml
 t/ack-ignore-dir.t
