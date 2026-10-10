@@ -26,6 +26,8 @@ on 'test' => sub {
     requires 'Scalar::Util'  => 0;
     requires 'Test::Harness' => '2.50'; # Something reasonably newish
     requires 'Test::More'    => '0.98'; # For subtest()
+    requires 'Test2::V0'     => '1.302225' ; # for naughty-filenames.t Bag compare; dual-life from Perl v5.040
+    requires 'Test2::Tools::Explain'     => '0.02' ; # for naughty-filenames.t diagnosis
     requires 'YAML::PP'      => 0;
 
     if ( $^O ne 'MSWin32' ) {
