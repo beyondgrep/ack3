@@ -50,7 +50,9 @@ sub inspect {
 sub to_string {
     my ( $self ) = @_;
 
-    return "Filename matches $self->{regex}";
+    ( my $re = $self->{regex} ) =~ s{\([^:]*:(.*)\)$}{$1};
+
+    return "Filename matches /$re/";
 }
 
 BEGIN {
