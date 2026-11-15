@@ -298,7 +298,7 @@ sub get_arg_spec {
                 $opt->{noenv_seen} = 1;
             }
         },
-        f                   => \$opt->{f},
+        'f|files'           => \$opt->{f},
         'files-from=s'      => \$opt->{files_from},
         'filter!'           => \$App::Ack::is_filter_mode,
         flush               => sub { $| = 1 },

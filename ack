@@ -1426,7 +1426,7 @@ B<--flush> flushes output immediately.  This is off by default
 unless ack is running interactively (when output goes to a pipe or
 file).
 
-=item B<-f>
+=item B<-f>, B<--files>
 
 Only print the files that would be searched, without actually doing
 any searching.  PATTERN must not be specified, or it will be taken
