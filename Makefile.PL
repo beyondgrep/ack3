@@ -53,6 +53,9 @@ my %parms = (
     },
     TEST_REQUIRES => {
         'YAML::PP'          => 0,
+        'Test2::V0'         => '0.000162',        ## dual life, core in 5.40
+        'Test2::Compare::Bag' => 0.000162,        ## dual life, implied by V0
+        'Test2::Tools::Explain' => '0.02',        ## not core
     },
     MAN3PODS            => {}, # no need for man pages for any of the .pm files
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },

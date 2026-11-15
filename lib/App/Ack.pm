@@ -198,6 +198,15 @@ CATHY
     return _pic_decode($x);
 }
 
+# Sanitize a filename for display: replace control chars with '?'
+# copy-paste reuse of private utility XXX 
+sub _safe_filename {
+    my $s = shift;
+    $s =~ s/[\x00-\x1f\x7F]/?/g;
+    # $s =~ s/\P{XPosixPrint}/?/g; # NO -- requires full Unicode safety
+    return $s;
+}
+
 sub _pic_decode {
     my($compressed) = @_;
     $compressed =~ s/(.)(.)/$1x(ord($2)-32)/eg;
@@ -661,7 +670,7 @@ sub show_types {
 
     my @types = filetypes( $file );
     my $arrow = @types ? ' => ' : ' =>';
-    App::Ack::say( $file->name, $arrow, join( ',', @types ) );
+    App::Ack::say( _safe_filename($file->name), $arrow, join( ',', @types ) );
 
     return;
 }

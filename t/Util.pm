@@ -18,6 +18,9 @@ use Term::ANSIColor ();
 use Test::More;
 use YAML::PP;
 
+use open qw( :std :encoding(UTF-8) );  ## to allow UTF8 in temp test files
+
+
 our @EXPORT = qw(
     prep_environment
     create_globals

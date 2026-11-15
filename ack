@@ -302,7 +302,8 @@ exit 0;
 # Sanitize a filename for display: replace control chars with '?'
 sub _safe_filename {
     my $s = shift;
-    $s =~ s/[^\x20-\x7E\t]/?/g;
+    $s =~ s/[\x00-\x1f\x7F]/?/g;
+    # $s =~ s/\P{XPosixPrint}/?/g;
     return $s;
 }
 
@@ -348,7 +349,7 @@ sub file_loop_c {
 
         if ( !$opt_l || $matches_for_this_file > 0 ) {
             if ( $opt_show_filename ) {
-                my $display_filename = $file->name;
+                my $display_filename = _safe_filename($file->name);
                 if ( $opt_color ) {
                     $display_filename = Term::ANSIColor::colored($display_filename, $ENV{ACK_COLOR_FILENAME});
                 }
@@ -376,7 +377,7 @@ sub file_loop_lL {
         my $is_match = count_matches_in_file( $file, 1 );
 
         if ( $opt_L ? !$is_match : $is_match ) {
-            App::Ack::say( $file->name );
+            App::Ack::say( _safe_filename($file->name) );
             ++$nmatches;
 
             last if $opt_1;
