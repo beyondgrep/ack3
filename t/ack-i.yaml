@@ -111,6 +111,20 @@ stdout: |
   Football
 
 ---
+name: --no-ignore-case overrides -i
+args:
+  - Foo -i --no-ignore-case
+  - Foo --ignore-case --no-ignore-case
+ordered: true
+stdin: |
+  Football
+  football
+  foo bar
+  foOtball
+stdout: |
+  Football
+
+---
 name: -I overrides --smart-case
 args:
   - Foo --smart-case -I
