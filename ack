@@ -2048,17 +2048,27 @@ and C<ack --help-rgb-colors>.
 
 If the eight standard colors, in their bold, faint and unmodified states,
 aren't enough for you to choose from, you can also specify colors by their
-RGB values.  They are specified as "rgbXYZ" where X, Y, and Z are values
+RGB values or their ANSI terminal values.
+
+RGB values are specified as C<"rgbXYZ"> where X, Y, and Z are values
 between 0 and 5 giving the intensity of red, green and blue, respectively.
-Therefore, "rgb500" is pure red, "rgb505" is purple, and so on.
+Therefore, C<"rgb500"> is pure red, C<"rgb505"> is purple, and so on.
+
+ANSI256 color numbers C<0..255> include the 16 common-denominator colors
+named colors (0..15), 216 RGB colors, and 16 grey colors, and are given
+as a decimal index.  The ANSI values are valid inside
+any C<--color-[item]> where C<rgbRGB> is valid.
 
 Background colors can be specified with the "on_" prefix prepended on an
-RGB color, so that "on_rgb505" would be a purple background.
+RGB or ANSI color, so that C<"on_rgb505"> or C<"on_ANSI128"> would be a purple background.
 
 The modifier attributes of blink, italic, underscore and so on may or may
 not work on the RGB colors.
 
 For a chart of the 216 possible RGB colors, run C<ack --help-rgb-colors>.
+
+For more information, see C<Term::ANSIColor> on CPAN L<https://metacpan.org/pod/Term::ANSIColor>.
+
 
 =head1 ENVIRONMENT VARIABLES
 
