@@ -903,6 +903,16 @@ sub pmif_normal {
     return $nmatches;
 }
 
+sub color_match {
+    my ( $text, $color ) = @_;
+
+    if ( $color =~ /\A([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\z/ ) {
+        return "\e[38;5;$1m${text}\e[0m";
+    }
+
+    return Term::ANSIColor::colored( $text, $color );
+}
+
 
 sub print_line_with_options {
     my ( $filename, $line, $lineno, $separator, $skip_coloring ) = @_;
@@ -983,7 +993,9 @@ sub print_line_with_options {
                 last if $match_length <= 0;
 
                 my $substring    = substr( $line, $match_start, $match_length );
-                my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
+                # my $substitution = Term::ANSIColor::colored( $substring, $ENV{ACK_COLOR_MATCH} );
+                my $substitution = color_match( $substring, $ENV{ACK_COLOR_MATCH} );
+
 
                 # Fourth argument replaces the string specified by the first three.
                 substr( $line, $match_start, $match_length, $substitution );

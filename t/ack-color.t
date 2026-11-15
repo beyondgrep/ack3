@@ -8,7 +8,7 @@ use Test::More;
 use lib 't';
 use Util;
 
-plan tests => 15;
+plan tests => 16;
 
 prep_environment();
 
@@ -131,6 +131,26 @@ subtest 'Passing args for colors' => sub {
         "${red}$file${color_end}",
         "${bold_white_on_green}11${color_end}:${blue_bold}22${color_end}:Look on my works, ye ${cyan_on_red}Mighty${color_end}, and despair!'$line_end",
     ] );
+};
+
+
+subtest 'ANSI 256 colors' => sub {
+    plan tests => 2;
+
+    my $file = reslash( 't/text/ozymandias.txt' );
+    my @args = qw( mighty -i -w --color --color-match=208 );
+    my @results = run_ack( @args, $file );
+
+    is_deeply( \@results, [
+        "Look on my works, ye \e[38;5;208mMighty\e[0m, and despair!'$line_end",
+    ], '256-color match' );
+
+    @args = qw( mighty -i -w --color --color-match=255 );
+    @results = run_ack( @args, $file );
+
+    is_deeply( \@results, [
+        "Look on my works, ye \e[38;5;255mMighty\e[0m, and despair!'$line_end",
+    ], '256-color match at upper bound' );
 };
 
 
