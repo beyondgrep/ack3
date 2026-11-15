@@ -1,5 +1,12 @@
 History file for ack 3.  https://beyondgrep.com/
 
+NEXT
+========================================
+[ENHANCEMENTS]
+Add .jsonc to the --json filetype extensions.
+
+Add --md as a duplicate of --markdown.
+
 v3.10.0     Sun Jun  7 11:50:37 CDT 2026
 ========================================
 [SECURITY]

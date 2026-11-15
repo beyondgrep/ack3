@@ -344,7 +344,7 @@ sub _options_block {
 
 # JSON
 # https://json.org/
---type-add=json:ext:json
+--type-add=json:ext:json,jsonc
 
 # Kotlin
 # https://kotlinlang.org/
@@ -366,6 +366,7 @@ sub _options_block {
 # Markdown
 # https://en.wikipedia.org/wiki/Markdown
 --type-add=markdown:ext:md,markdown
+--type-add=md:ext:md,markdown
 # We understand that there are many ad hoc extensions for markdown
 # that people use.  .md and .markdown are the two that ack recognizes.
 # You are free to add your own in your ackrc file.
